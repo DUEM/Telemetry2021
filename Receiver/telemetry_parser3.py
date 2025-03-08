@@ -69,9 +69,13 @@ class TelemetryParser:
         can_id = can_msg_bytes[0] << 8 | can_msg_bytes[1]
 
         # Translate
-        message_name, message_source, decoded_message = self.decoder.decode_can_msg(
-            can_id, can_msg_bytes[3:]
-        )
+        try:
+            message_name, message_source, decoded_message = self.decoder.decode_can_msg(
+                can_id, can_msg_bytes[3:]
+            )
+        except KeyError:
+            logger.warning("No entry in dbc for CAN ID %x", can_id)
+            return "ID UNRECOGNISED", "ERROR", {"ID": can_id}, msg_time, msg_crc_status
 
         if can_id == 0x0F6 and decoded_message["GpsDay"] != 0:
             self.update_last_gps_time(decoded_message, received_millis_time)
