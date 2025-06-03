@@ -15,6 +15,11 @@ import numpy as np
 import tqdm
 from tqdm.contrib.logging import logging_redirect_tqdm
 
+import logging, sys
+logger = logging.getLogger()
+logger.setLevel(level=logging.INFO)
+logger.addHandler(logging.StreamHandler(sys.stdout))
+
 from telemetryParser2 import translateMsg
 
 parser = argparse.ArgumentParser(description="Convert hex file to csv")
@@ -41,7 +46,7 @@ parser.add_argument(
     type=str,
     help="File writing mode: append or overwrite",
     default="a",
-    choices=["a", "w"],
+    choices=["a", "w", "x"],
 )
 args = parser.parse_args()
 # TODO: we can also consider taking a list of bin files?
@@ -83,7 +88,7 @@ def hex2csv(hex_file, output_csv="output.csv", csv_write_mode=mode) -> None:
                 msg_body = [",".join([str(i), str(j)]) for i, j in msg_body.items()]
                 msg_body = msg_body + (8 - len(msg_body)) * 2 * [""]
                 line = (
-                    f'{msg_time.strftime("%d/%m/%Y %T.%f")},{msg_item},'
+                    f'{msg_time.strftime("%d/%m/%Y")},{msg_time.strftime("%T.%f")},{msg_item},'
                     f'{msg_source},{",".join(msg_body)},{msg_crc_status},{recievedMillisTime}\n'
                 )
                 file.write(line)
