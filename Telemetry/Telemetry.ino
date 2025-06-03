@@ -1,4 +1,4 @@
-#include "src/CANApi/CanApiv04.hpp"
+#include "src/CANApi/CANHelper.hpp"
 #include "SD.hpp"
 #include <SD.h>
 #include "SendMessage.hpp"
@@ -13,27 +13,23 @@
 #define SLEEP_INT 33
 #define FLAG_INT 22
 
-CANHelper::CanMsgHandler CANHandler(MCP_SS);
+CANHelper::CANHandler canHandler(MCP_SS, CAN_50KBPS);
 extern conf config;
 extern File dataFile;
-extern CANHelper::Messages::Telemetry::_TimeAndFix time;
+extern CANHelper::CANHelperBuffer time;
 
-//#define canTestMsg //This was running the whole time and sending false status messages lol
-#ifdef canTestMsg
-CANHelper::Messages::Telemetry::_SystemStatusMessages canTest; //synthetic CAN test
-#endif
-
-uint8_t statusNumber; //For status LEDs
 void setup() { //dont forget to change bitrate to 50KBPS
   Serial.begin(230400);
   DEBUG_PRINTLN("Setting up");
+
+  setupStatusMsg(canHandler);
 
   //Set status LED pinmodes
   pinMode(35, OUTPUT);
   pinMode(37, OUTPUT);
   pinMode(39, OUTPUT);
 
-  statusNumber = 0;
+  uint8_t statusNumber = 0; //For status LEDs
   updateStatusLEDs(++statusNumber);
   //Set pinmodes
   pinMode(12, OUTPUT); //stop SDSS going into slave mode. This might be why the SD card is freezing
@@ -59,11 +55,6 @@ void setup() { //dont forget to change bitrate to 50KBPS
   setPowerStatus(STAT_GOOD);  // Position 0 is power. Send status that setup is happening.
   updateStatus();
 
-  //CAN test test data
-#ifdef canTestMsg
-  canTest.data.Power = 24;
-#endif
-
   DEBUG_PRINTLN("Setup complete");
 }
 
@@ -72,12 +63,9 @@ uint32_t status_timer = millis();
 uint32_t gps_timer = millis();
 uint32_t mppt_timer = millis();
 void loop() {
-  //Serial.println("LOOP START");
-
   powerStatus();  // Check power status
   flagStatus();   // Check flag
-  CANHandler.read();      // Read incoming CAN message and treat accordingly
-  //pollSensor();   // Poll additional sensors
+  canHandler.read();      // Read incoming CAN message and treat accordingly
 
   /* Flush SD file at interval defined in config file */
   if ((millis() - sd_timer) > config.sd_update) {
@@ -101,66 +89,36 @@ void loop() {
 
   /* MPPT Poll */
   if((millis() - mppt_timer) > config.mppt_update) {
-    CANHelper::Messages::Telemetry::_MpptPollJaved javedPoll;
-    CANHelper::Messages::Telemetry::_MpptPollWoof woofPoll;
+    CANHelper::CANHelperBuffer poll;
+    poll.payloadBuffer.as_Telemetry_MpptPollJaved.Blank = 0; //mppt has 1 byte as influx complains of 0 byte payloads. Also doent matter as to which struct its casted to as poll and javed have equal structures
 
-    //Send to radio and SD
-    sendMessage(javedPoll);
-    sendMessage(woofPoll);
+    canHandler.setCanMeta(poll, CAN_META_Telemetry_MpptPollJaved);
+    sendMessage(poll); //send over radio (and SD)
+    canHandler.send(poll); //send to CAN bus
 
-    //Send over CAN bus
-    CANHandler.send(javedPoll);
-    CANHandler.send(woofPoll);
+    canHandler.setCanMeta(poll, CAN_META_Telemetry_MpptPollWoof);
+    sendMessage(poll);
+    canHandler.send(poll);
+
     mppt_timer = millis();
   }
-
-#ifdef canTestMsg
-  CANHandler.send(canTest);
-#endif
-
-  //Serial.println("Reading...");
-  //CANHandler.read();
-
-  //DEBUG_PRINTLN(""); //println break between frames. Easier to read serial
-  //delay(1000); //This breaks GPS. Something to do with Serial overwriting probably
 }
 
-void updateStatusLEDs(uint8_t statusCode)
-{
+void updateStatusLEDs(uint8_t statusCode) {
   digitalWrite(35, (statusCode & 4) ? HIGH : LOW);
   digitalWrite(37, (statusCode & 2) ? HIGH : LOW);
   digitalWrite(39, (statusCode & 1) ? HIGH : LOW);
-  //delay(1000);
 }
 
 //Just relays all CAN messages over radio
-void CANHelper::Messages::processAll(CANHelper::Messages::CANMsg& msg)
-{
+void CANHelper::CanMsgHandler::processAll(CANHelper::CANHelperBuffer& msg) {
   sendMessage(msg);
-
-  //if 0xXX1, its a status message. See updateStatus below
-  /*if(msg.metadata.is & 1) {
-
-  }*/
 }
 
-/*void updateStatus(int pos, uint8_t val) { //wandering if worth adding to library. Then all IDs in format 0xXX1 could be status IDs. Can then log them in status logs
-    // Have as a function so we can add functionality like LEDs.
-    sysStatus.data[pos] = val;
-}*/
-
-void CANHelper::Messages::processMessage(CANHelper::Messages::DriverControls::_SpeedValCurrVal& msg) {
+//test function
+void CANHelper::CanMsgHandler::processMessage(CANHelper::Messages::DriverControls::SpeedValCurrVal& msg) {
   Serial.print("Set Current: ");
-  Serial.print(msg.data.DriverSetCurrent);
+  Serial.print(msg.DriverSetCurrent);
   Serial.print("| Set Speed: ");
-  Serial.println(msg.data.DriverSetSpeed);
-  CANHandler.send(msg); //just reflecting data to confirm message was received
+  Serial.println(msg.DriverSetSpeed);
 }
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_SystemStatusMessages& msg) {}
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_TimeAndFix& msg) {}
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_SpeedAndAngle& msg) {}
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_AltitudeAndSatellites& msg) {}
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_Latitude& msg) {}
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_Longitude& msg) {}
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_MpptPollJaved& msg) {}
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_MpptPollWoof& msg) {}

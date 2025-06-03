@@ -19,15 +19,16 @@ from numpy import uint32
 import logging
 
 logger = logging.getLogger(__name__)
-logger.addHandler(logging.NullHandler)
+logger.addHandler(logging.NullHandler())
 
 # configFile: str = './CANConfig.xslx' #raspberrypi
-configFile: str = '../../CANTranslator/config/CANBusData(saved201022)Modified.xlsm'  # testing with windows
+# configFile: str = '../../CANTranslator/config/CANBusData(saved201022)Modified.xlsm'  # testing with windows
+configFile: str = '../../CANTranslator/config/CANConfig.xlsm'
 
 # TIME REGION
-# lastGPSTime: datetime = datetime(year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc) #Excel does not support timezones tzinfo=timezone.utc
-lastGPSTime: datetime = datetime.now(
-    timezone.utc)  # use this by default until the pi rtc goes out of sync (i.e the UPS fails). It can be resynced if reconnected to internet.
+lastGPSTime: datetime = datetime(year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc) #Excel does not support timezones tzinfo=timezone.utc
+#lastGPSTime: datetime = datetime.now(
+#    timezone.utc)  # use this by default until the pi rtc goes out of sync (i.e the UPS fails). It can be resynced if reconnected to internet.
 # If out of sync AND the GPS rtc has failed, use line above and manually try and set a time close to the current time.
 
 timeFetched: uint32 = uint32(
@@ -119,7 +120,7 @@ def translateMsg(msgBytesAndTime: bytearray) -> tuple[
     try:
         rowForCurrentMessage = config[canId]
     except KeyError:
-        logger.exception("Error. Could not config entry for id " + str(canId))
+        #logger.exception("Error. Could not config entry for id " + str(canId))
         return "ID UNRECOGNISED", "ERROR", {"ID": canId}, msgTime, msgCRCStatus
 
     # Translate
