@@ -4,7 +4,6 @@ from pathlib import Path
 
 import pytest
 
-from fixtures import nrt_bytes, patch_receiver_config, run_in_receiver
 
 
 def test_csv_storer_creates_file(tmp_path, run_in_receiver, patch_receiver_config):

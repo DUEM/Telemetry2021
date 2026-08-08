@@ -1,7 +1,6 @@
 from datetime import timezone, datetime
 from unittest.mock import MagicMock
 
-from fixtures import nrt_bytes, mppt_bytes, run_in_receiver, patch_receiver_config
 
 
 def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):

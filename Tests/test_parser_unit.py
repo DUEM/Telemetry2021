@@ -5,7 +5,6 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from fixtures import nrt_bytes, mppt_bytes, run_in_receiver, patch_receiver_config
 
 
 class TestTelemetryParserTime:

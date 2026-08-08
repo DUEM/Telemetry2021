@@ -1,5 +1,4 @@
 from datetime import timezone, datetime
-from fixtures import run_in_receiver, patch_receiver_config
 
 
 def test_hex2csv(monkeypatch, tmp_path, run_in_receiver):

@@ -5,7 +5,6 @@ from unittest.mock import MagicMock
 
 import pytest
 from influxdb import InfluxDBClient
-from fixtures import patch_receiver_config, nrt_bytes, run_in_receiver
 
 
 @pytest.fixture(scope="function")
