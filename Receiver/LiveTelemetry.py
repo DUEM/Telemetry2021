@@ -1,5 +1,5 @@
 import serial
-from telemetry_storer import store_data, end_session
+from Receiver.telemetry_storer import store_data, end_session
 import atexit
 import signal
 

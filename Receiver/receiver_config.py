@@ -18,10 +18,16 @@ class InfluxCredentials(NamedTuple):
 
 ifCredentials = InfluxCredentials()
 
-# configFile: str = './CANConfig.xslx' #raspberrypi
-configFile: str = "../../0/config/CANBusConfig.xlsm"  # testing with windows
+# Paths are resolved relative to this file, so the receiver can be started from
+# any working directory (e.g. as a service on the Pi).
+_repo_root = PurePath(__file__).parent.parent
 
-dbc_folder = PurePath("../0/")
+# configFile: str = './CANConfig.xslx' #raspberrypi
+configFile: str = str(
+    _repo_root.parent / "CANTranslator/config/CANBusConfig.xlsm"
+)  # testing with windows
+
+dbc_folder = _repo_root / "dbc"
 dbc_files = [
     dbc_folder / "wavesculptor_22.dbc",
     dbc_folder / "MPPT.dbc",
