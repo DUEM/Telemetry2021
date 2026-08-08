@@ -51,12 +51,12 @@ def test_hex2csv2(monkeypatch, tmp_path, run_in_receiver):
             f2lines = [line.replace("Flag/", "") for line in f2lines]
             for i, (line1, line2) in enumerate(zip(f1lines, f2lines)):
                 l1 = line1.split(",")[3:19]
-                l2 = line1.split(",")[3:19]
+                l2 = line2.split(",")[3:19]
                 l1Body = dict()
                 l2Body = dict()
-                for i in range(8):
-                    l1Body[l1[i * 2]] = l1[i * 2 + 1]
-                    l2Body[l2[i * 2]] = l2[i * 2 + 1]
+                for j in range(8):
+                    l1Body[l1[j * 2]] = l1[j * 2 + 1]
+                    l2Body[l2[j * 2]] = l2[j * 2 + 1]
                 assert (
                     l1Body == l2Body
                 ), f"Difference found at line {i}: {line1} != {line2}"
