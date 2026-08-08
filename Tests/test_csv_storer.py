@@ -126,3 +126,22 @@ def test_csv_storer_with_parser_integration(
         assert data_row[1] == "Orion"
         assert data_row[2] == "PackParameters"
         assert data_row[4] == "True"
+
+
+def test_csv_output_configured_via_receiver_config(tmp_path, nrt_bytes, monkeypatch):
+    """csvOutputFile alone should wire a CSVStorer into the module-level storer."""
+    # Arrange
+    csv_path = tmp_path / "wired.csv"
+    monkeypatch.setattr("Receiver.receiver_config.csvOutputFile", str(csv_path))
+
+    from Receiver.telemetry_storer import store_data, end_session
+
+    # Act
+    store_data(nrt_bytes[20])
+    end_session()
+
+    # Assert
+    with open(csv_path) as f:
+        rows = list(csv.reader(f))
+    assert rows[0] == ["Timestamp", "Source", "Item", "Message Body", "CRC"]
+    assert rows[1][1] == "Orion"

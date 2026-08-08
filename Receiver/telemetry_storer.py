@@ -15,7 +15,7 @@ class TelemetryStorer:
         self, parser: TelemetryParser, storage_plugin_list: List[StorerExtension] = None
     ):
         self.parser = parser
-        self.storage_plugin_list = storage_plugin_list
+        self.storage_plugin_list = storage_plugin_list or []
 
     def store_data(self, msg: bytearray) -> None:
         """Decode and store the message.
@@ -40,9 +40,6 @@ class TelemetryStorer:
     def end_session(self):
         for storage_class in self.storage_plugin_list:
             storage_class.close()
-
-
-telemetry_parser = TelemetryParser()
 
 
 class StorerWrapper:
@@ -78,7 +75,7 @@ class StorerWrapper:
             influx_storer = Influx1Storer(receiver_config.ifCredentials)
             storer_extension_list.append(influx_storer)
         self._telemetry_storer = TelemetryStorer(
-            telemetry_parser, storage_plugin_list=storer_extension_list
+            TelemetryParser(), storage_plugin_list=storer_extension_list
         )
         self._is_storer_init = True
 

@@ -19,26 +19,24 @@ def mock_xlsx_workbook(monkeypatch):
         yield workbook_instance, mock_worksheet
 
 
-def test_data_written_to_xlsx(
-    monkeypatch, run_in_receiver, nrt_bytes, patch_receiver_config, mock_xlsx_workbook
-):
+def test_data_written_to_xlsx(nrt_bytes, mock_xlsx_workbook):
     # Arrange
     mock_workbook, mock_worksheet = mock_xlsx_workbook
     from Receiver.telemetry_parser3 import TelemetryParser
-    import Receiver.telemetry_storer
+    from Receiver.storer_extension import ExcelStorer
+    from Receiver.telemetry_storer import TelemetryStorer
 
-    # Arrange
     telemetry_parser = TelemetryParser()
     telemetry_parser.last_gps_time = datetime(
         year=1970, month=1, day=1, hour=3, minute=0, second=0,
         tzinfo=timezone.utc
     )
-    monkeypatch.setattr("Receiver.telemetry_storer.telemetry_parser", telemetry_parser)
+    storer = TelemetryStorer(
+        telemetry_parser, storage_plugin_list=[ExcelStorer("mock.xlsx")]
+    )
 
     # Act
-    from Receiver.telemetry_storer import store_data
-
-    store_data(nrt_bytes[20])
+    storer.store_data(nrt_bytes[20])
 
     # Assert
     assert mock_worksheet.cell.call_args_list == [

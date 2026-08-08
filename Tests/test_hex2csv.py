@@ -1,4 +1,4 @@
-from datetime import timezone, datetime
+from datetime import timedelta, timezone, datetime
 
 
 def test_hex2csv(monkeypatch, tmp_path, run_in_receiver):
@@ -60,3 +60,30 @@ def test_hex2csv2(monkeypatch, tmp_path, run_in_receiver):
                     l1Body == l2Body
                 ), f"Difference found at line {i}: {line1} != {line2}"
                 assert set(line1.split(",")) == set(line2.split(","))
+
+
+def test_sessions_do_not_share_clock_state(tmp_path, run_in_receiver):
+    """Each conversion must start with its own parser.
+
+    hex2csv used to hold `telemetry_parser=TelemetryParser()` as a default
+    argument. Default arguments are evaluated once at import, so every
+    conversion in a process shared one parser, and a second session inherited
+    the first session's GPS clock instead of starting from the current time.
+    """
+    # arrange
+    from Receiver.hex2csv import hex2csv
+
+    # act - two sessions, neither passing an explicit parser
+    hex2csv("Tests/data/MPPT.BIN", f"{tmp_path}/session1.csv", "w")
+    hex2csv("Tests/data/MPPT.BIN", f"{tmp_path}/session2.csv", "w")
+
+    # assert - session 2 starts from the current time, not session 1's GPS clock
+    with open(f"{tmp_path}/session2.csv") as f2:
+        started = datetime.strptime(
+            f2.readline().split(",")[0], "%d/%m/%Y %H:%M:%S.%f"
+        )
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
+    assert abs(now - started) < timedelta(minutes=5), (
+        f"session 2 started at {started}, not near {now}: "
+        f"clock state leaked from session 1"
+    )

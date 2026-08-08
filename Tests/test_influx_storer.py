@@ -43,7 +43,10 @@ def test_data_written_to_influx(
     telemetry_parser.last_gps_time = datetime(
         year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc
     )
-    monkeypatch.setattr("Receiver.telemetry_storer.telemetry_parser", telemetry_parser)
+    # StorerWrapper builds its own parser; hand it this pre-seeded one
+    monkeypatch.setattr(
+        "Receiver.telemetry_storer.TelemetryParser", lambda: telemetry_parser
+    )
 
     # Act
     store_data(nrt_bytes[20])
