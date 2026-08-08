@@ -23,11 +23,11 @@ class TelemetryParser:
         self.time_fetched: uint32 = uint32(0)
 
     def __get_time(self, received_millis: uint32) -> datetime:
-        millis_delta: uint32 = received_millis - self.time_fetched
-        if received_millis < self.time_fetched:
-            millis_delta = (
-                millis_delta + 2**32
-            )  # Unsign the delta. This method should work as long as the GPS update is not older than 2^32-1 milliseconds
+        # uint32 subtraction already wraps around correctly (e.g. 100 - (2**32 - 1000)
+        # -> 1100), so no extra unsigning is needed here. This works as long as the
+        # GPS update is not older than 2**32-1 milliseconds.
+        with np.errstate(over="ignore"):
+            millis_delta: uint32 = received_millis - self.time_fetched
 
         current_time = self.last_gps_time + timedelta(milliseconds=millis_delta.item())
         logger.debug(
