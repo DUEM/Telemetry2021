@@ -1,4 +1,3 @@
-import sys
 from datetime import timezone, datetime
 from typing import NamedTuple
 from unittest.mock import MagicMock
@@ -12,7 +11,10 @@ def mock_influxdb_client(monkeypatch):
     mock_client_class = MagicMock(
         spec=InfluxDBClient
     )
-    monkeypatch.setattr("influxdb.InfluxDBClient", mock_client_class)
+    # patch where the name is looked up, not where it is defined
+    monkeypatch.setattr(
+        "Receiver.storer_extension.InfluxDBClient", mock_client_class
+    )
     mock_client_instance = mock_client_class.return_value
 
     return mock_client_class, mock_client_instance

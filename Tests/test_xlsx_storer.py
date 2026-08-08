@@ -1,7 +1,3 @@
-import sys
-from pathlib import PurePath
-from typing import NamedTuple
-
 import pytest
 from unittest.mock import MagicMock, call, patch
 from datetime import datetime, timezone
@@ -10,29 +6,12 @@ from datetime import datetime, timezone
 
 # Mock the Workbook and Worksheet
 @pytest.fixture(scope="function")
-def mock_xlsx_workbook(monkeypatch, request):
-    class influxCredentials(NamedTuple):
-        enabled: bool = False
-
-    monkeypatch.setattr("Receiver.receiver_config.ifCredentials", influxCredentials())
-
+def mock_xlsx_workbook(monkeypatch):
+    # dbc_files, ifCredentials and csvOutputFile come from patch_receiver_config
     monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "mock.xlsx")
 
-    dbc_folder = PurePath(request.config.rootdir + "/Tests/data/dbc")
-    dbc_files = [
-        dbc_folder / "wavesculptor_22.dbc",
-        dbc_folder / "MPPT.dbc",
-        dbc_folder / "Telemetry.dbc",
-        dbc_folder / "Orion.dbc",
-    ]
-    monkeypatch.setattr("Receiver.receiver_config.dbc_files", dbc_files)
-
-    try:
-        del sys.modules["Receiver.telemetry_storer"]
-    except KeyError:
-        pass
-
-    with patch("openpyxl.Workbook", spec=True) as mock_workbook:
+    # patch where the name is looked up, not where it is defined
+    with patch("Receiver.storer_extension.Workbook", spec=True) as mock_workbook:
         workbook_instance = mock_workbook.return_value
         mock_worksheet = MagicMock()
         workbook_instance.create_sheet.return_value = mock_worksheet

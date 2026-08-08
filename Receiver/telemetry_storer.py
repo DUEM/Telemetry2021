@@ -2,7 +2,7 @@ import logging
 from typing import List
 
 from Receiver.telemetry_parser3 import TelemetryParser
-from Receiver.receiver_config import ifCredentials, xlsxOutputFile, csvOutputFile
+from Receiver import receiver_config
 from Receiver.storer_extension import StorerExtension, ExcelStorer, Influx1Storer, CSVStorer
 
 logger = logging.getLogger(__name__)
@@ -66,15 +66,16 @@ class StorerWrapper:
         return self._telemetry_storer
 
     def init_storer(self):
+        # read config at call time so monkeypatching receiver_config takes effect
         storer_extension_list = []
-        if xlsxOutputFile != "":
-            excel_storer = ExcelStorer(xlsxOutputFile)
+        if receiver_config.xlsxOutputFile != "":
+            excel_storer = ExcelStorer(receiver_config.xlsxOutputFile)
             storer_extension_list.append(excel_storer)
-        if csvOutputFile != "":
-            csv_storer = CSVStorer(csvOutputFile)
+        if receiver_config.csvOutputFile != "":
+            csv_storer = CSVStorer(receiver_config.csvOutputFile)
             storer_extension_list.append(csv_storer)
-        if ifCredentials.enabled:
-            influx_storer = Influx1Storer(ifCredentials)
+        if receiver_config.ifCredentials.enabled:
+            influx_storer = Influx1Storer(receiver_config.ifCredentials)
             storer_extension_list.append(influx_storer)
         self._telemetry_storer = TelemetryStorer(
             telemetry_parser, storage_plugin_list=storer_extension_list

@@ -1,4 +1,3 @@
-import sys
 from pathlib import PurePath
 from typing import NamedTuple
 
@@ -23,27 +22,21 @@ def patch_receiver_config(request, monkeypatch):
     ]
     monkeypatch.setattr("Receiver.receiver_config.dbc_files", dbc_files)
     monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "")
+    monkeypatch.setattr("Receiver.receiver_config.csvOutputFile", "")
 
     class influxCredentials(NamedTuple):
         enabled: bool = False
 
     monkeypatch.setattr("Receiver.receiver_config.ifCredentials", influxCredentials())
 
-    # force reloading of telemetry parser and storer
-    try:
-        del sys.modules["Receiver.telemetry_parser3"]
-    except KeyError:
-        pass
+    # storer_wrapper is a module-level singleton that caches its plugin list on
+    # first use, so give each test a fresh one. Remove once it stops being a
+    # module-level global.
+    import Receiver.telemetry_storer as telemetry_storer
 
-    try:
-        del sys.modules["Receiver.telemetry_storer"]
-    except KeyError:
-        pass
-
-    try:
-        del sys.modules["Receiver.storer_extension"]
-    except KeyError:
-        pass
+    monkeypatch.setattr(
+        telemetry_storer, "storer_wrapper", telemetry_storer.StorerWrapper()
+    )
 
 
 @pytest.fixture(scope="session")

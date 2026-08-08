@@ -2,7 +2,7 @@ import logging
 from typing import Union, Tuple
 
 import cantools.database
-from Receiver.receiver_config import dbc_files
+from Receiver import receiver_config
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -11,7 +11,8 @@ logger.addHandler(logging.NullHandler())
 class DbcDecoder:
     def __init__(self, source_files=None):
         if source_files is None:
-            source_files = dbc_files
+            # read at call time so monkeypatching receiver_config takes effect
+            source_files = receiver_config.dbc_files
         database = cantools.database.Database()
         for dbc_file in source_files:
             database.add_dbc_file(dbc_file)
