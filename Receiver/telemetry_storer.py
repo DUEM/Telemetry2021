@@ -2,8 +2,8 @@ import logging
 from typing import List
 
 from Receiver.telemetry_parser3 import TelemetryParser
-from Receiver.receiver_config import ifCredentials, xlsxOutputFile
-from Receiver.storer_extension import StorerExtension, ExcelStorer, Influx1Storer
+from Receiver.receiver_config import ifCredentials, xlsxOutputFile, csvOutputFile
+from Receiver.storer_extension import StorerExtension, ExcelStorer, Influx1Storer, CSVStorer
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -70,6 +70,9 @@ class StorerWrapper:
         if xlsxOutputFile != "":
             excel_storer = ExcelStorer(xlsxOutputFile)
             storer_extension_list.append(excel_storer)
+        if csvOutputFile != "":
+            csv_storer = CSVStorer(csvOutputFile)
+            storer_extension_list.append(csv_storer)
         if ifCredentials.enabled:
             influx_storer = Influx1Storer(ifCredentials)
             storer_extension_list.append(influx_storer)

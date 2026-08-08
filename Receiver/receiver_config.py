@@ -3,8 +3,13 @@ from typing import NamedTuple
 
 
 # used by all live_calculation scripts
-#xlsxOutputFile: str = './ExcelOutput/ExcelTest.xlsx' #set equal to '' to switch off xslx output
+# Set output file paths to file location to enable storage, or '' to disable
+#xlsxOutputFile: str = './ExcelOutput/ExcelTest.xlsx' #set equal to '' to switch off xlsx output
 xlsxOutputFile: str = ''
+
+# CSV output file - set to enable CSV storage
+# Example: csvOutputFile: str = './Output/telemetry.csv'
+csvOutputFile: str = ''
 
 
 class InfluxCredentials(NamedTuple):

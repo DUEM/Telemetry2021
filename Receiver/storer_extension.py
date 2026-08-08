@@ -1,3 +1,4 @@
+import csv
 import logging
 import os
 
@@ -204,3 +205,114 @@ class Influx1Storer(StorerExtension):
     def close(self) -> None:
         logger.info("Closing InfluxDB connection")
         self.influx_client.close()
+
+
+class CSVStorer(StorerExtension):
+    """Storer for CSV file output.
+
+    Writes decoded CAN messages to a CSV file with the following columns:
+    - Timestamp: ISO format datetime
+    - Source: Message source (e.g., 'Orion', 'Tritium')
+    - Item: Message name (e.g., 'PackParameters')
+    - Data columns: One value per column (field_name, field_value)
+    - CRC: CRC validation status
+
+    A header row with column labels is added when a new file is created.
+    """
+
+    def __init__(self, csv_output_file: Union[str, os.PathLike]):
+        """Initialize CSV storer.
+
+        Args:
+            csv_output_file: Path to the CSV output file. Will be created if
+                it does not exist. Existing files will be appended to.
+
+        Raises:
+            IOError: If the file cannot be opened for writing.
+        """
+        self.csv_output_file = csv_output_file
+        self.csv_file = None
+        self.csv_writer = None
+
+        try:
+            # Check if file exists to determine if we need to write headers
+            file_exists = os.path.exists(csv_output_file)
+
+            # Open file in append mode
+            self.csv_file = open(csv_output_file, mode='a', newline='', encoding='utf-8')
+            self.csv_writer = csv.writer(self.csv_file)
+
+            # Write header if file is new
+            if not file_exists:
+                self._write_header()
+
+        except IOError as e:
+            logger.error(f"Failed to open CSV file {csv_output_file}: {e}")
+            raise
+
+    def _write_header(self) -> None:
+        """Write CSV header row."""
+        if self.csv_writer:
+            headers = ["Timestamp", "Source", "Item", "Message Body", "CRC"]
+            self.csv_writer.writerow(headers)
+            self.csv_file.flush()
+
+    def store_data(
+        self,
+        msg_item: str,
+        msg_source: str,
+        msg_body: dict,
+        msg_time: datetime,
+        msg_crc_status: bool,
+    ) -> None:
+        """Store decoded message data to CSV file.
+
+        Args:
+            msg_item: Message name/identifier
+            msg_source: Message source (sender)
+            msg_body: Dictionary of decoded message fields and values
+            msg_time: Timestamp of the message
+            msg_crc_status: CRC validation result
+
+        Note:
+            Message body fields are written as comma-separated key-value pairs
+            in a single column for compact representation.
+        """
+        if not self.csv_writer:
+            logger.warning("CSV file not initialized; skipping store_data")
+            return
+
+        try:
+            # Format message body as key=value pairs
+            msg_body_str = ",".join(
+                f"{key}={value}" for key, value in msg_body.items()
+            )
+
+            # Write row: timestamp, source, item, body, crc
+            row = [
+                msg_time.isoformat(),
+                msg_source,
+                msg_item,
+                msg_body_str,
+                msg_crc_status,
+            ]
+            self.csv_writer.writerow(row)
+            self.csv_file.flush()
+
+            logger.debug(
+                f"Wrote to CSV: {msg_source}/{msg_item} at {msg_time.isoformat()}"
+            )
+        except Exception as e:
+            logger.error(f"Error writing to CSV: {e}")
+
+    def close(self) -> None:
+        """Close the CSV file and flush any buffered data."""
+        if self.csv_file:
+            try:
+                self.csv_file.close()
+                logger.info(f"Closed CSV output file: {self.csv_output_file}")
+            except Exception as e:
+                logger.error(f"Error closing CSV file: {e}")
+            finally:
+                self.csv_file = None
+                self.csv_writer = None
