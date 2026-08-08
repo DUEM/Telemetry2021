@@ -6,8 +6,10 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
-def run_in_receiver(request, monkeypatch):
-    monkeypatch.chdir(request.config.rootdir + "/Receiver")
+def run_in_receiver():
+    # No-op: tests run from the project root (see pythonpath in pytest.ini).
+    # Kept so existing tests that request it keep resolving.
+    pass
 
 
 @pytest.fixture(autouse=True)

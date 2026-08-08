@@ -12,11 +12,11 @@ def test_hex2csv(monkeypatch, tmp_path, run_in_receiver):
         year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc
     )
     # act
-    hex2csv("../Tests/data/NRT.BIN", f"{tmp_path}/output.csv", "w", tp)
+    hex2csv("Tests/data/NRT.BIN", f"{tmp_path}/output.csv", "w", tp)
 
     # assert
     with open(f"{tmp_path}/output.csv") as f1:
-        with open("../Tests/data/NRT.csv") as f2:
+        with open("Tests/data/NRT.csv") as f2:
             f1lines = f1.readlines()
             f2lines = f2.readlines()
             f2lines = [
@@ -41,11 +41,11 @@ def test_hex2csv2(monkeypatch, tmp_path, run_in_receiver):
     )
 
     # act
-    hex2csv("../Tests/data/MPPT.BIN", f"{tmp_path}/output.csv", "w", tp)
+    hex2csv("Tests/data/MPPT.BIN", f"{tmp_path}/output.csv", "w", tp)
 
     # assert
     with open(f"{tmp_path}/output.csv") as f1:
-        with open("../Tests/data/MPPT.csv") as f2:
+        with open("Tests/data/MPPT.csv") as f2:
             f1lines = f1.readlines()
             f2lines = f2.readlines()
             f2lines = [line.replace("Flag/", "") for line in f2lines]
