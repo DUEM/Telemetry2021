@@ -16,13 +16,14 @@ import tqdm
 from tqdm.contrib.logging import logging_redirect_tqdm
 
 from Receiver.telemetry_parser3 import TelemetryParser
+from Receiver.frame_reader import read_frames
 
 mode = "a"
 def hex2csv(hex_file, output_csv="output.csv", csv_write_mode=mode, telemetry_parser=None) -> None:
     """Convert hex file to csv
 
-    Requires to be executed in a location that telemetryParser2.py can locate
-    the config correctly.
+    Requires to be executed in a location where the dbc files listed in
+    receiver_config can be located.
 
     Args:
         hex_file: hex file path
@@ -35,11 +36,8 @@ def hex2csv(hex_file, output_csv="output.csv", csv_write_mode=mode, telemetry_pa
     """
     if telemetry_parser is None:
         telemetry_parser = TelemetryParser()
-    end_of_frame_marker = b"\x7E"
     time_start = time()
-    with open(hex_file, mode="rb") as file:
-        input_bytes = file.readlines()
-    msgs = bytearray().join(input_bytes).split(end_of_frame_marker)
+    msgs = read_frames(hex_file)
     with open(output_csv, csv_write_mode) as file:
         with logging_redirect_tqdm():
             for msg in tqdm.tqdm(msgs):

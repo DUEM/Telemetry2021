@@ -3,6 +3,8 @@ from typing import NamedTuple
 
 import pytest
 
+from Receiver.frame_reader import read_frames
+
 
 @pytest.fixture(autouse=True)
 def run_in_receiver():
@@ -41,19 +43,9 @@ def patch_receiver_config(request, monkeypatch):
 
 @pytest.fixture(scope="session")
 def nrt_bytes(request):
-    hex_file = request.config.rootdir + "/Tests/data/NRT.BIN"
-    end_of_frame_marker = b"\x7E"
-    with open(hex_file, mode="rb") as file:
-        input_bytes = file.readlines()
-    msgs = bytearray().join(input_bytes).split(end_of_frame_marker)
-    return msgs
+    return read_frames(request.config.rootdir + "/Tests/data/NRT.BIN")
 
 
 @pytest.fixture(scope="session")
 def mppt_bytes(request):
-    hex_file = request.config.rootdir + "/Tests/data/MPPT.BIN"
-    end_of_frame_marker = b"\x7E"
-    with open(hex_file, mode="rb") as file:
-        input_bytes = file.readlines()
-    msgs = bytearray().join(input_bytes).split(end_of_frame_marker)
-    return msgs
+    return read_frames(request.config.rootdir + "/Tests/data/MPPT.BIN")

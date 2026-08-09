@@ -16,25 +16,9 @@ from typing import NamedTuple
 import tqdm
 from influxdb import InfluxDBClient
 
-from Receiver.telemetryParser2 import translateMsg
+from Receiver.telemetry_parser3 import TelemetryParser
+from Receiver.frame_reader import read_frames
 from datetime import datetime
-
-parser = argparse.ArgumentParser(description="Import hex file to influxdb, "
-                                             "configure the influx credentials "
-                                             "in the script before running")
-parser.add_argument(
-    "-i",
-    "--hexfile",
-    action="store",
-    type=str,
-    help="Hex file to import",
-    required=True,
-)
-
-args = parser.parse_args()
-# TODO: we can also consider taking a list of bin files?
-
-hexfile = args.hexfile
 
 
 class influxCredentials(NamedTuple):
@@ -50,28 +34,31 @@ class influxCredentials(NamedTuple):
 ifCredentials = influxCredentials()
 
 
-def hex2influx(hex_file, ) -> None:
+def hex2influx(hex_file, telemetry_parser=None) -> None:
     """Convert hex file to influx
 
     In contrast to telemetryStorer this write up to 5000 CAN messages at a time.
-    Requires to be executed in a location that telemetryParser2.py can locate
-    the config correctly.
 
     Args:
         hex_file: hex file path
+        telemetry_parser: parser to decode with, one is created if not given
 
     Returns:
             None
     """
-    end_of_frame_marker = b"\x7E"
+    if telemetry_parser is None:
+        telemetry_parser = TelemetryParser()
     time_start = time()
-    with open(hex_file, mode="rb") as file:
-        input_bytes = file.readlines()
-    msgs = bytearray().join(input_bytes).split(end_of_frame_marker)
+    msgs = read_frames(hex_file)
     data = list()
     for msg in tqdm.tqdm(msgs, desc=hex_file):
-        msg_item, msg_source, msg_body, msg_time, msg_crc_status = translateMsg(
-            msg)
+        (
+            msg_item,
+            msg_source,
+            msg_body,
+            msg_time,
+            msg_crc_status,
+        ) = telemetry_parser.translate_msg(msg)
         if msg_item == "ID UNRECOGNISED":
             continue
         data.append(
@@ -113,4 +100,20 @@ def to_point(msgItem: str, msgSource: str, msgBody: dict, msgTime: datetime,
     return point
 
 
-hex2influx(hexfile)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Import hex file to influxdb, configure the influx "
+                    "credentials in the script before running"
+    )
+    parser.add_argument(
+        "-i",
+        "--hexfile",
+        action="store",
+        type=str,
+        help="Hex file to import",
+        required=True,
+    )
+    # TODO: we can also consider taking a list of bin files?
+    args = parser.parse_args()
+
+    hex2influx(args.hexfile)
