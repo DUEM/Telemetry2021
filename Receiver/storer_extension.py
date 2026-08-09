@@ -23,6 +23,11 @@ class StorerExtension(ABC):
 
     Additional methods can be implemented to be called by either `store_data`
     or `close`.
+
+    To add a new storage option, subclass this and then add it to
+    `StorerWrapper.init_storer` in `telemetry_storer.py` behind a setting in
+    `receiver_config.py`, following how `CSVStorer` is wired up. Storers can
+    also be passed directly to `TelemetryStorer` if the wrapper is not used.
     """
 
     @abstractmethod

@@ -1,3 +1,10 @@
+"""Shared fixtures for the test suite.
+
+Test captures live in `Tests/data/*.BIN` and are stored without the end of
+frame marker, as `read_frames` splits on it. The expected output for a capture
+sits alongside it as `Tests/data/*.csv`.
+"""
+
 from pathlib import PurePath
 from typing import NamedTuple
 

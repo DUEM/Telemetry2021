@@ -132,3 +132,16 @@ file, and the dbc files used for decoding.
 #### dbc files
 Contains info for all the CAN messages and how to decode them. Generated from 
 the [CANTranslator repo](https://github.com/DUEM/CANTranslator).
+
+## Running the tests
+Run the tests from the root of the repo. The dbc files and test captures are
+found relative to the root, so running from anywhere else will fail.
+```shell
+$ pip install -r Tests/requirements-test.txt
+$ pytest
+```
+To see which lines are not covered, and the coverage figure the pipeline
+enforces:
+```shell
+$ pytest --cov=Receiver --cov=Client --cov-report=term-missing
+```
