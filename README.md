@@ -32,10 +32,10 @@ Check that the script is writing data to influx
 $ systemctl status influxd.service
 $ curl -sl -I http://localhost:8086/ping
 ```
-* Check that the connection info in telemetryStorer.py is correct.
+* Check that the connection info in receiver_config.py is correct.
   * cd to the directory and open the file using nano
   ```shell
-    $ nano telemtryStorer.py 
+    $ nano receiver_config.py 
     ```
   * exit using ctrl+x
 
@@ -106,13 +106,13 @@ $ influx
 |  |- Telemetry2021
 |  |  |- Receiver
 |  |  |  |- LiveTelemetry.py
-|  |  |  |- telemetryParser2.py
-|  |  |  |- telemetryStorer.py
+|  |  |  |- telemetry_parser3.py
+|  |  |  |- telemetry_storer.py
+|  |  |  |- receiver_config.py
 |  |  |  ... 
-|  |- CANTranslator
-|  |  |- config
-|  |  |  |- CANBusData(saved201022)Modified.xlsm
-|  |  ...
+|  |  |- dbc
+|  |  |  |- Orion.dbc
+|  |  |  ...
 |  ...
 |- start-telem.sh 
 ```
@@ -120,14 +120,15 @@ $ influx
 [This repo](https://github.com/DUEM/Telemetry2021)
 #### LiveTelemetry.py
 Entry point for the whole process
-#### telemeteryParser2.py
-Called by `telemetryStorer.py`. References `CANBusData.xlsm` to decode the CAN 
+#### telemetry_parser3.py
+Called by `telemetry_storer.py`. References the dbc files to decode the CAN 
 messages.
-#### telemetryStorer.py
-Uses `telemetryParser2.py` to decode the can messages and stores it in either
-Excel or Influx. Edit this file to configure the influx credentials or the 
-output Excel file. 
-### CANTranslator
-[That repo](https://github.com/DUEM/CANTranslator)
-#### CANBusData.xlsm
-Contains info for all the CAN messages and how to decode them.
+#### telemetry_storer.py
+Uses `telemetry_parser3.py` to decode the can messages and stores it in either
+Excel, CSV or Influx.
+#### receiver_config.py
+Edit this file to configure the influx credentials, the output Excel or CSV 
+file, and the dbc files used for decoding.
+#### dbc files
+Contains info for all the CAN messages and how to decode them. Generated from 
+the [CANTranslator repo](https://github.com/DUEM/CANTranslator).

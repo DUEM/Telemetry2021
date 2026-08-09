@@ -27,11 +27,6 @@ ifCredentials = InfluxCredentials()
 # any working directory (e.g. as a service on the Pi).
 _repo_root = PurePath(__file__).parent.parent
 
-# configFile: str = './CANConfig.xslx' #raspberrypi
-configFile: str = str(
-    _repo_root.parent / "CANTranslator/config/CANBusConfig.xlsm"
-)  # testing with windows
-
 dbc_folder = _repo_root / "dbc"
 dbc_files = [
     dbc_folder / "wavesculptor_22.dbc",

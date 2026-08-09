@@ -37,7 +37,7 @@ ifCredentials = influxCredentials()
 def hex2influx(hex_file, telemetry_parser=None) -> None:
     """Convert hex file to influx
 
-    In contrast to telemetryStorer this write up to 5000 CAN messages at a time.
+    In contrast to telemetry_storer this write up to 5000 CAN messages at a time.
 
     Args:
         hex_file: hex file path
