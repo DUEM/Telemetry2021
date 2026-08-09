@@ -32,4 +32,4 @@ jobs:
           python -m pip install -r Tests/requirements-test.txt
       - name: Test with pytest
         run: |
-          pytest
+          pytest --cov=Receiver --cov=Client --cov-report=term-missing --cov-fail-under=75

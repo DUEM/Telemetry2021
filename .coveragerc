@@ -1,0 +1,12 @@
+[run]
+omit =
+    # entry point, needs real serial hardware
+    Receiver/LiveTelemetry.py
+    # one off utility script with hardcoded paths, runs its job at import
+    Receiver/batch_Read_Hex.py
+    # standalone scripts, not importable as a package (no __init__.py)
+    Receiver/live_calculations/*
+    # pre-refactor code kept for reference
+    Old/*
+    Receiver/Old/*
+    Tests/*

@@ -4,3 +4,7 @@
 # ide files
 .idea/
 .vscode/
+
+# coverage
+.coverage
+htmlcov/
