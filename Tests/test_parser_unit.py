@@ -183,3 +183,35 @@ class TestTelemetryParserGPS:
         # Time should not have been updated
         assert parser.last_gps_time == original_time
 
+
+class TestDbcDecoderAsciiSignals:
+    """Tests for signals the dbc marks with the "ascii" unit."""
+
+    @pytest.mark.parametrize(
+        "can_id, signal, char",
+        [(248, "GpsLat", "N"), (249, "GpsLon", "W")],
+    )
+    def test_hemisphere_decodes_to_str(
+        self, run_in_receiver, patch_receiver_config, can_id, signal, char
+    ):
+        """GPS hemisphere indicators decode to a str, not an int or bytes.
+
+        The storers depend on this: a str is quoted by influx line protocol and
+        written as text by openpyxl and the csv writers. An int would silently
+        write 78 instead of N, and bytes would leak a b'N' repr into the csv.
+        Fails if the dbc loses the "ascii" unit on these signals.
+        """
+        import struct
+        from Receiver.can_dbc_decoder import DbcDecoder
+
+        # Arrange - message is a 4 byte float coordinate plus a 1 byte char
+        decoder = DbcDecoder()
+        msg_bytes = struct.pack("<fc", 5427.34, char.encode())
+
+        # Act
+        _, _, decoded = decoder.decode_can_msg(can_id, msg_bytes)
+
+        # Assert
+        assert decoded[signal] == char
+        assert isinstance(decoded[signal], str)
+

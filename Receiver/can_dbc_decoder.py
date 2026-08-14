@@ -20,8 +20,18 @@ class DbcDecoder:
 
     def decode_can_msg(
         self, can_id, msg_bytes
-    ) -> Tuple[str, str, dict[str, Union[int, float, str, bytes]]]:
-        decode_msg: dict[str, Union[int, float, str, bytes]]
+    ) -> Tuple[str, str, dict[str, Union[int, float, str]]]:
+        """Decode a CAN message into its name, sender and signal values.
+
+        Signal values are int or float, except for signals whose dbc unit is
+        "ascii", which are returned as a single character str. Storers rely on
+        this: a str is quoted by influx line protocol and written as text by
+        openpyxl and the csv writers.
+
+        Returns:
+            (message name, sender, {signal name: value})
+        """
+        decode_msg: dict[str, Union[int, float, str]]
         message = self.database.get_message_by_frame_id(can_id)
         decode_msg = message.decode(msg_bytes)
         name = message.name
@@ -33,9 +43,11 @@ class DbcDecoder:
         else:
             sender = ""
 
-        # convert back to bytes for backwards compatibility
-        if can_id == 248:
-            decode_msg["GpsLat"] = decode_msg["GpsLat"].to_bytes(1, "little")
-        elif can_id == 249:
-            decode_msg["GpsLon"] = decode_msg["GpsLon"].to_bytes(1, "little")
+        # Signals marked with the "ascii" unit in the dbc carry a character, not
+        # a number (the GPS hemisphere indicators N/S and E/W, sent as a char by
+        # the car). Decode to str so every storer renders them as text; bytes
+        # would leak a b'N' repr into the csv outputs.
+        for signal in message.signals:
+            if signal.unit == "ascii":
+                decode_msg[signal.name] = chr(decode_msg[signal.name])
         return name, sender, decode_msg

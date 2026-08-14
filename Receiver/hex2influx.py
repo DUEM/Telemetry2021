@@ -92,8 +92,8 @@ def to_point(msgItem: str, msgSource: str, msgBody: dict, msgTime: datetime,
         return ''
     point = f'{msgSource}/{msgItem} '
     for key, value in msgBody.items():
-        if isinstance(value, bytes):
-            value = '"' + str(value, encoding='utf8') + '"'
+        if isinstance(value, str):  # e.g. GPS hemisphere chars, quote for influx
+            value = f'"{value}"'
         point += f'{key}={value},'
     point = point[:-1]
     point += f' {int(msgTime.timestamp() * 1e3)}'  # convert from seconds to ms

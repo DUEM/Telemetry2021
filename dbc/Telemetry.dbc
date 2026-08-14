@@ -52,11 +52,11 @@ BO_ 247 SpeedAndAngle: 8 Telemetry
 
 BO_ 248 Latitude: 5 Telemetry
  SG_ GpsLatitude : 0|32@1- (1,0) [0|0] "" Vector__XXX
- SG_ GpsLat : 32|8@1- (1,0) [0|0] "" Vector__XXX
+ SG_ GpsLat : 32|8@1+ (1,0) [0|0] "ascii" Vector__XXX
 
 BO_ 249 Longitude: 5 Telemetry
  SG_ GpsLongitude : 0|32@1- (1,0) [0|0] "" Vector__XXX
- SG_ GpsLon : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ GpsLon : 32|8@1+ (1,0) [0|0] "ascii" Vector__XXX
 
 BO_ 250 AltitudeAndSatellites: 5 Telemetry
  SG_ GpsAltitude : 0|32@1- (1,0) [0|0] "" Vector__XXX
@@ -79,4 +79,7 @@ SIG_VALTYPE_ 247 GpsAngle : 1;
 SIG_VALTYPE_ 248 GpsLatitude : 1;
 SIG_VALTYPE_ 249 GpsLongitude : 1;
 SIG_VALTYPE_ 250 GpsAltitude : 1;
+
+CM_ SG_ 248 GpsLat "NMEA latitude hemisphere character, N or S. Not a coordinate - GpsLatitude carries the position. The ascii unit marks it for char decoding in can_dbc_decoder.";
+CM_ SG_ 249 GpsLon "NMEA longitude hemisphere character, E or W. Not a coordinate - GpsLongitude carries the position. The ascii unit marks it for char decoding in can_dbc_decoder.";
 
