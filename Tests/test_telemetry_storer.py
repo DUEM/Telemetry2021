@@ -50,7 +50,7 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
         "CRCFail",
         "",
         {"Data": b"0f00000602085e7a0243000000004872"},
-        datetime(1970, 1, 1, 3, 0),
+        datetime(1970, 1, 1, 3, 0, tzinfo=timezone.utc),
         False,
     )
 
@@ -146,7 +146,7 @@ def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
         "CRCFail",
         "",
         {"Data": b"010007720701d4006d02680f8e72"},
-        datetime(1970, 1, 1, 3, 0),
+        datetime(1970, 1, 1, 3, 0, tzinfo=timezone.utc),
         False,
     )
 

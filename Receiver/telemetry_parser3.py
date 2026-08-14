@@ -55,7 +55,7 @@ class TelemetryParser:
                 "CRCFail",
                 "",
                 {"Data": hexlify(msg_bytes_and_time)},
-                datetime(1970, 1, 1, 3, 0, 0),
+                self.last_gps_time,
                 False,
             )
 
