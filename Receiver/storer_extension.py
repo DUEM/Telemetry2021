@@ -10,6 +10,7 @@ from openpyxl import load_workbook, Workbook
 from os.path import exists as fileExists
 
 from influxdb import InfluxDBClient
+from influxdb.exceptions import InfluxDBClientError
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -199,9 +200,17 @@ class Influx1Storer(StorerExtension):
                 "fields": msg_body,
             }
         ]
-        influx_success = self.influx_client.write_points(
-            body, time_precision="ms", protocol="json"
-        )
+        try:
+            influx_success = self.influx_client.write_points(
+                body, time_precision="ms", protocol="json"
+            )
+        except InfluxDBClientError as e:
+            # e.g. database missing or bad credentials. Log and drop this
+            # message rather than letting it stop the receiver.
+            logger.error(
+                "Influx rejected write for %s/%s: %s", msg_source, msg_item, e
+            )
+            return
         if influx_success is False:
             logger.warning(
                 "Error writing to Influx for %s/%s (%s)", msg_source, msg_item, msg_body
