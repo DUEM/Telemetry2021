@@ -109,3 +109,25 @@ def test_influx_closed(monkeypatch, nrt_bytes, run_in_receiver, patch_receiver_c
         database="mockDB",
     )
     mock_client_instance.close.assert_called_once_with()
+
+
+def test_influx_client_error_logged_not_raised(mock_influxdb_client, caplog):
+    # Arrange
+    from influxdb.exceptions import InfluxDBClientError
+    from Receiver.receiver_config import InfluxCredentials
+    from Receiver.storer_extension import Influx1Storer
+
+    _, mock_client_instance = mock_influxdb_client
+    mock_client_instance.write_points.side_effect = InfluxDBClientError(
+        '{"error":"database not found: \\"mockDB\\""}', 404
+    )
+    storer = Influx1Storer(InfluxCredentials(db="mockDB"))
+    msg_time = datetime(1970, 1, 1, tzinfo=timezone.utc)
+
+    # Act
+    storer.store_data("PackParameters", "Orion", {"PackSoc": 159}, msg_time, True)
+
+    # Assert
+    mock_client_instance.write_points.assert_called_once()
+    assert "Influx rejected write for Orion/PackParameters" in caplog.text
+    assert "database not found" in caplog.text

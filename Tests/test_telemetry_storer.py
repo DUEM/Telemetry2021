@@ -152,3 +152,21 @@ def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
 
     # assert
     assert mock_store_function.call_count == 3
+
+
+def test_store_data_logs_message_at_info(nrt_bytes, caplog):
+    # Arrange
+    import logging
+    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_storer import TelemetryStorer
+
+    storer = TelemetryStorer(TelemetryParser())
+
+    # Act
+    with caplog.at_level(logging.INFO, logger="Receiver.telemetry_storer"):
+        storer.store_data(nrt_bytes[20])
+
+    # Assert
+    assert "Orion/PackParameters" in caplog.text
+    assert "'PackInstVoltage': 1305" in caplog.text
+    assert "CRC OK" in caplog.text
