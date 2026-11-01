@@ -15,7 +15,7 @@ csvOutputFile: str = ''
 class InfluxCredentials(NamedTuple):
     username: str = "admin"
     password: str = "password"
-    db: str = "Test22DB"
+    db: str = "DUSCiESC"
     host: str = "localhost"
     port: int = 8086
     enabled: bool = True
