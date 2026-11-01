@@ -1,7 +1,16 @@
 import serial
 from Receiver.telemetry_storer import store_data, end_session
 import atexit
+import logging
 import signal
+import sys
+
+# print every decoded CAN message (logged at INFO by telemetry_storer) to stdout
+logging.basicConfig(
+    stream=sys.stdout,
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+)
 
 SERIALPORT = '/dev/ttyUSB0' # Raspberry Pi
 #SERIALPORT = '/dev/cu.usbmodem14101' # macOS

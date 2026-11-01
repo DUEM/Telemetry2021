@@ -32,6 +32,14 @@ class TelemetryStorer:
             msg_time,
             msg_crc_status,
         ) = self.parser.translate_msg(msg)
+        logger.info(
+            "%s %s/%s %s CRC %s",
+            msg_time.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            msg_source,
+            msg_item,
+            msg_body,
+            "OK" if msg_crc_status else "FAIL",
+        )
         for storage_plugin in self.storage_plugin_list:
             storage_plugin.store_data(
                 msg_item, msg_source, msg_body, msg_time, msg_crc_status
