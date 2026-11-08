@@ -2,6 +2,11 @@
 Collection of script that each process some data and uploads the calculated 
 parameters back to Influx. 
 
+Install the dependencies (these are separate from the receiver's):
+```shell
+$ pip install -r Receiver/live_calculations/requirements.txt
+```
+
 The scripts will obtain the Influx DB Credentials from `config.py`
 If `config.py` is not present in the current working directory, edit
 the script to add the path `config.py` to path.
