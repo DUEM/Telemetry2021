@@ -167,6 +167,23 @@ def test_store_data_logs_message_at_info(nrt_bytes, caplog):
         storer.store_data(nrt_bytes[20])
 
     # Assert
-    assert "Orion/PackParameters" in caplog.text
+    assert "0x700 Orion/PackParameters" in caplog.text
     assert "'PackInstVoltage': 1305" in caplog.text
     assert "CRC OK" in caplog.text
+
+
+def test_store_data_logs_short_frame_without_can_id(caplog):
+    # Arrange
+    import logging
+    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_storer import TelemetryStorer
+
+    storer = TelemetryStorer(TelemetryParser())
+
+    # Act: two end of frame markers back to back give an empty frame
+    with caplog.at_level(logging.INFO, logger="Receiver.telemetry_storer"):
+        storer.store_data(bytearray())
+
+    # Assert
+    assert "ID ? /CRCFail" in caplog.text
+    assert "CRC FAIL" in caplog.text

@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+from typing import Optional
 from crccheck.crc import Crc16Modbus
 from binascii import hexlify
 
@@ -66,7 +67,7 @@ class TelemetryParser:
         msg_time = self.__get_time(received_millis_time)
 
         # do a lookup in spreadsheet using can id to work out can message type
-        can_id = can_msg_bytes[0] << 8 | can_msg_bytes[1]
+        can_id = self.get_can_id(msg_bytes_and_time)
 
         # Translate
         try:
@@ -101,6 +102,17 @@ class TelemetryParser:
             )
         except ValueError:
             logger.exception("Invalid values for GPS time, %s", str(gps_message))
+
+    @staticmethod
+    def get_can_id(msg_bytes_and_time: bytearray) -> Optional[int]:
+        """Read the CAN ID (ID0 ID1) from a raw frame.
+
+        Returns None if the frame is too short to hold one, which can happen
+        for corrupted frames that fail the CRC check.
+        """
+        if len(msg_bytes_and_time) < 6:
+            return None
+        return msg_bytes_and_time[4] << 8 | msg_bytes_and_time[5]
 
     @staticmethod
     def __check_crc(msg_bytes: bytearray) -> bool:

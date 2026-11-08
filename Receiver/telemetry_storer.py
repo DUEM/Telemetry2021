@@ -32,9 +32,11 @@ class TelemetryStorer:
             msg_time,
             msg_crc_status,
         ) = self.parser.translate_msg(msg)
+        can_id = self.parser.get_can_id(msg)
         logger.info(
-            "%s %s/%s %s CRC %s",
+            "%s %s %s/%s %s CRC %s",
             msg_time.strftime("%Y-%m-%d %H:%M:%S.%f"),
+            "ID ?" if can_id is None else "0x%03X" % can_id,
             msg_source,
             msg_item,
             msg_body,
