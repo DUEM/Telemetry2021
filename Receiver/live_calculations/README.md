@@ -51,10 +51,12 @@ The results are written to the measurement `road_lookup`.
 
 Estimates the theoretical power consumption. It needs:
 
-* the incline from `road_lookup.py` (so run that first)
-* the vehicle velocity from the Tritium motor controller
-* the input voltage and current of the MPPTs
+* the incline from `road_lookup.py`, measurement `road_lookup` (so run that first)
+* the vehicle velocity from the Tritium motor controller, measurement `Tritium/Velocity`
+* the input voltage and current of both MPPTs, measurements `Mppt/Javed` and `Mppt/Woof`
 * (when integrated) wind measurements from the anemometer
+
+These measurement names are set at the top of [live_power.py](live_power.py). They follow the receiver's `<Source>/<Item>` naming from the DBC files (see the [InfluxDB schema](../README.md#influxdb-schema)), so update them if a message or sender is renamed in a DBC file.
 
 For each field it fetches the latest `NPOINTS` points **and** the points from the last `TDELTA` time period. The fields are then resampled to 1 s for the calculation. Because the source data are not on a common time base, this can produce many more points than were read.
 
@@ -64,5 +66,5 @@ The results are written to the measurement `live_power`.
 
 ## Known limitations
 
-* `live_power.py` queries the MPPT data from the measurements `MpptWoof/Mppt` and `MpptJaved/Mppt`. The current [MPPT.dbc](../../dbc/MPPT.dbc) makes the receiver write them as `Mppt/Woof` and `Mppt/Javed`, so the query needs updating before MPPT data is found.
+* `live_power.py` needs all of its inputs. If there is no data in the last `TDELTA` for the incline or for either MPPT (e.g. one MPPT is not sending), it logs which inputs are missing and writes nothing.
 * The default `config.py` sets `ROAD_FILE_PATH` twice. The second value (`Road-Top-Gear-Foo-V1.dat`) is the one used, and neither road file is in this repository.

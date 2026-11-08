@@ -214,7 +214,6 @@ Update the code as above (the `git submodule update --init` step is required, be
 * The serial port is hardwired in [Receiver/LiveTelemetry.py](Receiver/LiveTelemetry.py).
 * InfluxDB details (host, port, user `admin`, password) are stored in plain text, and the database name differs between scripts: `DUSCiESC` (receiver), `Test22DB` (`hex2influx.py`, `live_calculations/config.py`) and `test` (`Client/upload_solarsim.py`).
 * The Excel output saves the whole workbook after every message, which is slow for long sessions.
-* `live_power.py` queries MPPT measurement names that no longer match the DBC files (see [its README](Receiver/live_calculations/README.md#known-limitations)).
 * The Grafana dashboard is not stored in this repository.
 
 **Firmware**

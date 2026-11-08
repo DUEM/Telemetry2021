@@ -10,6 +10,23 @@ from config import influxCredentials, VEHICLE_MASS, G, MOTOR_EFF, CRR, CDA, RHO,
 
 logger = logging.getLogger(__name__)
 
+# Measurement names as written by the receiver: "<Source>/<Item>", i.e. the
+# sender and message name in the dbc files (see Receiver/README.md).
+VELOCITY_MEASUREMENT = "Tritium/Velocity"  # dbc/wavesculptor_22.dbc
+ROAD_LOOKUP_MEASUREMENT = "road_lookup"  # written by road_lookup.py
+# Both MPPTs have the same fields (VoltageIn, CurrentIn), so each one's fields
+# get a suffix to tell them apart once merged.
+MPPT_MEASUREMENTS = {"Mppt/Javed": "1", "Mppt/Woof": "2"}  # dbc/MPPT.dbc
+
+REQUIRED_COLUMNS = [
+    "VehicleVelocity",
+    "Incline",
+    "VoltageIn1",
+    "CurrentIn1",
+    "VoltageIn2",
+    "CurrentIn2",
+]
+
 
 def calc_incline_power(df):
     df.loc[:, "InclineDrag"] = VEHICLE_MASS * G * df.Incline
@@ -57,15 +74,15 @@ def calc_solar_power(df):
 def main(
     if_credentials: influxCredentials = influxCredentials(),
 ) -> None:
-    """Get Latitude and Longitude info off the influxdb and maps it to race
-    distance. Latitude and Longitude from the GPS are in the for DDMM.MMM so
-    this script first converts it back to decimal degrees beforehand. Decoded
-    latitude, longitude and mapped race distance are written back to the
-    influxdb under the measurement "Calculated"
+    """Estimate the power terms from the latest data in influxdb.
+
+    Reads the vehicle velocity, the incline (from road_lookup.py) and the input
+    voltage and current of both MPPTs, resamples them to 1 s, and writes the
+    calculated drive, incline, rolling, aero and solar power back to influxdb
+    under the measurement "live_power".
 
     Args:
         if_credentials: Credentials for influxDB.
-        road_file_path: File path to road file.
 
     Returns:
         None
@@ -89,9 +106,10 @@ def main(
         database=if_credentials.db,
     )
     # TODO: query wind data as well when it is integrated with Influx.
+    measurements = [VELOCITY_MEASUREMENT, ROAD_LOOKUP_MEASUREMENT, *MPPT_MEASUREMENTS]
     query_where = (
-        'SELECT "VehicleVelocity","Incline","VoltageIn","CurrentIn","VoltageIn1","CurrentIn1","VoltageIn2","CurrentIn2"'
-        'FROM "Tritium/Velocity","road_lookup","MpptWoof/Mppt","MpptJaved/Mppt"'
+        'SELECT "VehicleVelocity","Incline","VoltageIn","CurrentIn" '
+        "FROM " + ",".join(f'"{m}"' for m in measurements) + " "
         f"WHERE (time > now() - {TDELTA}) ORDER BY time DESC LIMIT {NPOINTS}"
     )
 
@@ -102,14 +120,31 @@ def main(
         logger.info("No new points to process.")
         return
 
-    # pandas dataframes are mutable so we need to change it back as we delete
-    # and rewrite new points at the end of this.
-    ifdfq["MpptJaved/Mppt"].columns = ["VoltageIn1", "CurrentIn1"]
-    ifdfq["MpptWoof/Mppt"].columns = ["VoltageIn2", "CurrentIn2"]
-    # Reformat the data to a single dataframe and decode
-    df = pd.concat([j.copy() for i, j in ifdfq.items()], axis=1)
-    ifdfq["MpptJaved/Mppt"].columns = ["VoltageIn", "CurrentIn"]
-    ifdfq["MpptWoof/Mppt"].columns = ["VoltageIn", "CurrentIn"]
+    missing_measurements = [m for m in measurements if m not in ifdfq]
+    if missing_measurements:
+        logger.warning("No data in the last %s for: %s", TDELTA, missing_measurements)
+
+    # Each measurement comes back as its own dataframe, holding only the
+    # columns it has data for. Give the MPPT columns their suffix (rename
+    # returns a copy, so the query result is left unchanged), then merge.
+    frames = []
+    for measurement, frame in ifdfq.items():
+        suffix = MPPT_MEASUREMENTS.get(measurement)
+        if suffix is not None:
+            frame = frame.rename(
+                columns={"VoltageIn": f"VoltageIn{suffix}", "CurrentIn": f"CurrentIn{suffix}"}
+            )
+        frames.append(frame)
+    df = pd.concat(frames, axis=1)
+
+    missing_columns = [c for c in REQUIRED_COLUMNS if c not in df.columns]
+    if missing_columns:
+        logger.error(
+            "Cannot calculate power, no data for: %s (is road_lookup.py running, "
+            "and are both MPPTs sending?)",
+            missing_columns,
+        )
+        return
 
     df = (
         df.resample("1s")
