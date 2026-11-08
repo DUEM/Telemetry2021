@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "src/CANApi/CANHelper.hpp"
 #ifndef STATUSMSG_HEADER
 #define STATUSMSG_HEADER
 
@@ -8,7 +9,7 @@
 #define STAT_DEFAULTS   0xBB //not writing to SD
 #define STAT_UNKNOWN    0x00
 
-//void setupStatusMsg();
+void setupStatusMsg(CANHelper::CANHandler canHandler);
 void updateStatus(); //run this periodically (on a timer)
 
 void setPowerStatus(uint8_t);
