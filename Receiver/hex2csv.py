@@ -1,12 +1,16 @@
 """CLI Tool to convert offloaded binary files to csv.
 
-This tool is backwards compatiable to HexReader and will output the csv in the
-same format as the excel file.
+This tool is backwards compatible with HexReader and outputs the csv in the
+same layout as the Excel output: time, item, source, up to eight pairs of field
+name and value, CRC result and the board's millis.
+
+Run it as a module from the top of the repository (it imports the `Receiver`
+package, so `python hex2csv.py` from inside Receiver/ does not work).
 
 usage:
-    `hex2csv.py [-h] -i HEXFILE [-o OUTFILE] [-m {a,w}]`
+    `python3 -m Receiver.hex2csv [-h] -i HEXFILE [-o OUTFILE] [-m {a,w}]`
 example:
-    `python hex2csv.py -i 23071805.BIN -o 230718.csv -m a`
+    `python3 -m Receiver.hex2csv -i 23071805.BIN -o 230718.csv -m a`
 """
 import argparse
 from time import time
@@ -22,8 +26,8 @@ mode = "a"
 def hex2csv(hex_file, output_csv="output.csv", csv_write_mode=mode, telemetry_parser=None) -> None:
     """Convert hex file to csv
 
-    Requires to be executed in a location where the dbc files listed in
-    receiver_config can be located.
+    Decodes with the dbc files listed in receiver_config. Their paths are
+    resolved relative to the repository, so this can be run from anywhere.
 
     Args:
         hex_file: hex file path

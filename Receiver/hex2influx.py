@@ -1,12 +1,18 @@
 """For batch import of data to influx
 
 Does it in batch instead of by line and will be significantly faster compared to
-telemetry Storer
+telemetry Storer.
+
+Uses its own influx credentials (`influxCredentials` below, database `Test22DB`),
+not those in receiver_config. Edit them before use.
+
+Run it as a module from the top of the repository (it imports the `Receiver`
+package, so `python hex2influx.py` from inside Receiver/ does not work).
 
 usage:
-    `hex2influx.py [-h] -i HEXFILE`
+    `python3 -m Receiver.hex2influx [-h] -i HEXFILE`
 example:
-    `python hex2influx.py -i 23071805.BIN`
+    `python3 -m Receiver.hex2influx -i 23071805.BIN`
 """
 
 import argparse

@@ -1,61 +1,68 @@
-# Scripts to live process data
-Collection of script that each process some data and uploads the calculated 
-parameters back to Influx. 
+# Live calculations
 
-Install the dependencies (these are separate from the receiver's):
+Scripts that each read some of the live data from InfluxDB, calculate further values from it, and write the results back to InfluxDB for the Grafana dashboard. They run separately from the [receiver](../README.md), alongside it.
+
+## Dependencies
+
+These are separate from the receiver's. From the top of the repository:
+
 ```shell
-$ pip install -r Receiver/live_calculations/requirements.txt
+pip install -r Receiver/live_calculations/requirements.txt     # S5 (pinned commit), pandas, numpy, influxdb
 ```
 
-The scripts will obtain the Influx DB Credentials from `config.py`
-If `config.py` is not present in the current working directory, edit
-the script to add the path `config.py` to path.
+## Configuration
 
-```python
-import sys
-sys.path.append(r"/path/to/script")
-sys.path.append(r"C:\path\to\script")
+All the scripts read their settings from [config.py](config.py):
+
+| Setting | Used by | Meaning |
+|---|---|---|
+| `influxCredentials` | all | InfluxDB host, port, user, password and database |
+| `ROAD_FILE_PATH` | `road_lookup.py` | SolarSim road file, relative to the directory the script is run from |
+| `TDELTA`, `NPOINTS` | `live_power.py` | How far back to query (e.g. `"2h"`) and the maximum number of points |
+| `VEHICLE_MASS`, `MOTOR_EFF`, `CRR`, `CDA`, `RHO`, `G` | `live_power.py` | Vehicle and physical constants for the power model |
+
+**`config.py` points at database `Test22DB`**, not `DUSCiESC` (the database the receiver writes to). Change `db` in `influxCredentials` before using these scripts with live data.
+
+## Running
+
+The scripts import `config` directly, so run them from **this** directory (unlike the receiver, which is run from the top of the repository):
+
+```shell
+cd Receiver/live_calculations
+python3 road_lookup.py
+python3 live_power.py
 ```
 
-## `road_lookup.py`
-This script gets the GPS latitude and longitude off the influx db and uses
-a SolarSim road file to map the coordinates to the closest linear distance. 
-The mapping is done by finding the point that is closest by Eucledian distance,
-and only maps it to a point if the closest one is within 100m.
+To run them from somewhere else, add this directory to the Python path first, e.g. `PYTHONPATH=Receiver/live_calculations python3 Receiver/live_calculations/road_lookup.py`.
 
-The incline is also created from the Altitude in the road file. The calculation
-is a mirror of that in SolarSim using the central difference method. 
+## road_lookup.py
 
-Processing is done on all data that have not been processed. Once data is used 
-a tag is added to it (`calc_grad`). Once the tag is added the data will not be 
-processed again. 
+Reads the GPS position (`Telemetry/Latitude` and `Telemetry/Longitude`) from InfluxDB and converts it from NMEA `ddmm.mmmm` format to signed decimal degrees. It then uses a SolarSim road file to map each position to the closest distance along the route. The closest road file point is found by Euclidean distance, and a position is only mapped if that point is within 100 m.
 
-All calculated parameters are written back to influx as fields written under the
-measurement `road_lookup`.
+The incline is calculated from the altitude in the road file, using the same central difference method as SolarSim.
 
-**Make sure a road file is uploaded and `config.py` edited to point to the 
-road file**
+Only data that has not yet been processed is used. Once data has been processed, the tag `calc_grad` is added to it, and it is not processed again.
 
-## `live_power.py`
-This script performs live calculations to give estimate of the theoretical power
-consumption.
-It requires Incline to be calculated by `road_lookup.py` to be available, in 
-addition it uses the vehicle velocity from Tritium, voltage and current into th
-MPPTs, and (when integrated) wind measurements from the anemometer.
-It performs the calculation by getting 
-- the latest NPOINTS data points from each field
- 
-    AND 
-- getting the data from the last TDELTA time period. 
+The results are written to the measurement `road_lookup`.
 
-These fields are then resampled to 1s for calculation. That does mean that 
-you can end up with much more datapoint being calculated as the source 
-data are not all on a common timebase. \
-**Some tuning should be done to get a good balance between the amount of data 
-this script processes and the speed of the script or memory used on the Pi**
+**Make sure a road file is available and `ROAD_FILE_PATH` in `config.py` points to it.**
 
+## live_power.py
 
-All calculated parameters are written back to influx as fields written under the
-measurement `live_power`.
+Estimates the theoretical power consumption. It needs:
 
-**Make sure to check the values used in `config.py`**
+* the incline from `road_lookup.py` (so run that first)
+* the vehicle velocity from the Tritium motor controller
+* the input voltage and current of the MPPTs
+* (when integrated) wind measurements from the anemometer
+
+For each field it fetches the latest `NPOINTS` points **and** the points from the last `TDELTA` time period. The fields are then resampled to 1 s for the calculation. Because the source data are not on a common time base, this can produce many more points than were read.
+
+**Tune `NPOINTS` and `TDELTA` to balance the amount of data processed against the speed and memory use of the script.**
+
+The results are written to the measurement `live_power`.
+
+## Known limitations
+
+* `live_power.py` queries the MPPT data from the measurements `MpptWoof/Mppt` and `MpptJaved/Mppt`. The current [MPPT.dbc](../../dbc/MPPT.dbc) makes the receiver write them as `Mppt/Woof` and `Mppt/Javed`, so the query needs updating before MPPT data is found.
+* The default `config.py` sets `ROAD_FILE_PATH` twice. The second value (`Road-Top-Gear-Foo-V1.dat`) is the one used, and neither road file is in this repository.
