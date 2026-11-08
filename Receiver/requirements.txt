@@ -1,9 +1,9 @@
+# Receiver: LiveTelemetry, hex2csv, hex2influx and the tests.
+# live_calculations has its own requirements file.
+pyserial ~= 3.5 # NOT "serial", an unrelated package that clashes with the serial module
 influxdb == 5.3.1
-s5 @ git+https://github.com/owentmfoo/S5 # needed for road_lookup and live_power
-pandas >= 2
 openpyxl ~= 3.1.2
 crccheck ~= 1.3.0
-numpy >= 2.0
-serial
-cantools
-openpyxl
+numpy >= 2.0, < 3
+cantools >= 39.4, < 46
+tqdm >= 4.0, < 5 # hex2csv and hex2influx progress bars
