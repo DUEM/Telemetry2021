@@ -1,0 +1,6 @@
+# live_calculations: road_lookup and live_power.
+# S5 has no tag for 1.0b11 (needs numpy 2, pandas >= 2.2.2), so pin the commit
+s5 @ git+https://github.com/owentmfoo/S5@d5c418b9d25efcc410d980578c6127729daefec3
+pandas >= 2.2.2, < 3
+numpy >= 2.0, < 3
+influxdb == 5.3.1
