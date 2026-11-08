@@ -1,6 +1,10 @@
-# Telemetry Operation Guide
+# DUSC Telemetry @ ESC 2024 + ESC 2026
 
 _[ A simplier tele receiver code use for ESC 2024 + ESC 2026 with known limitations; on vehicle code unchanged from earlier BWSC2023 - EG, JCJ, TPB]_
+
+## How to run telemetry
+
+_[ Assuming InfluxDB and Grafana are already setup and installed as required.]_
 
 Check xBee is plugged into the right port: 
 ```shell 
@@ -21,6 +25,8 @@ Check that the script is writing data to influx:
 systemctl status influxd.service
 curl -sl -I http://localhost:8086/ping
 ```
+
+Open web browser to see Grafana interface to: ``http://localhost:3000``
 
 ## Maintainence
 
@@ -117,3 +123,5 @@ to see Grafana.
 * telemetry readings/value entries into the influxDB are not time/position stamped
 * CRC checks on incoming packets are not carried out leading to erroneous telemetry readings being sent to influxDB
 * CANbus decoding uses exhaustive search over a ``CVS`` format config file which has some missing CANBus IDs against vehicle hardware as of 2026.
+* database details are hardwired into the python code
+* have to enter details of serial port and ``bin/csv`` file every time it is run.
