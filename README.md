@@ -1,6 +1,6 @@
 # DUSC Telemetry @ ESC 2024 + ESC 2026
 
-_[ A simplier tele receiver code use for ESC 2024 + ESC 2026 with known limitations; on vehicle code unchanged from earlier BWSC2023 - EG, JCJ, TPB]_
+_[ A simplier telemetry receiver code used for ESC 2024 + ESC 2026 with known limitations; on vehicle code unchanged from earlier BWSC2023 - EG, subseqeuently documented and reorganised by TPB in Nov 2026]_
 
 ## How to run telemetry
 
