@@ -1,0 +1,4 @@
+pandas
+numpy
+pyserial
+influxdb  # InfluxDB 1.x client (not influxdb-client, which is for 2.x)
