@@ -1,0 +1,13 @@
+# Receiver output: keep the directories and the sample test files, ignore race/session logs
+Receiver/BIN/*
+!Receiver/BIN/.gitkeep
+!Receiver/BIN/Test1.BIN
+Receiver/CSV/*
+!Receiver/CSV/.gitkeep
+!Receiver/CSV/Test1.csv
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
