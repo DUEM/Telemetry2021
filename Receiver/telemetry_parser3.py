@@ -14,7 +14,7 @@ logger.addHandler(logging.NullHandler())
 class TelemetryParser:
     def __init__(self):
         self.decoder = DbcDecoder()
-        # use this by default until the pi rtc goes out of sync (i.e the UPS
+        # use this by default until the receiver clock goes out of sync (i.e the UPS
         # fails). It can be resynced if reconnected to internet.
         self.last_gps_time: datetime = datetime.now(timezone.utc)
         # Time since time variables were last updated in seconds

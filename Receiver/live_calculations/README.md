@@ -47,7 +47,7 @@ These fields are then resampled to 1s for calculation. That does mean that
 you can end up with much more datapoint being calculated as the source 
 data are not all on a common timebase. \
 **Some tuning should be done to get a good balance between the amount of data 
-this script processes and the speed of the script or memory used on the Pi**
+this script processes and the speed of the script or memory used on the receiver laptop**
 
 
 All calculated parameters are written back to influx as fields written under the

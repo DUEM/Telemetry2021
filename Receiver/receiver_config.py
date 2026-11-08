@@ -24,7 +24,7 @@ class InfluxCredentials(NamedTuple):
 ifCredentials = InfluxCredentials()
 
 # Paths are resolved relative to this file, so the receiver can be started from
-# any working directory (e.g. as a service on the Pi).
+# any working directory (e.g. as a service on the receiver laptop).
 _repo_root = PurePath(__file__).parent.parent
 
 dbc_folder = _repo_root / "dbc"

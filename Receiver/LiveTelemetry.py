@@ -3,7 +3,7 @@ from Receiver.telemetry_storer import store_data, end_session
 import atexit
 import signal
 
-SERIALPORT = '/dev/ttyUSB0' # Raspberry Pi
+SERIALPORT = '/dev/ttyUSB0' # Linux
 #SERIALPORT = '/dev/cu.usbmodem14101' # macOS
 #SERIALPORT = 'COM8' #Windows
 BAUD = 115200
