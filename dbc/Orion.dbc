@@ -56,5 +56,25 @@ BO_ 1794 CellVoltages: 7 Orion
  SG_ Blank : 55|8@0+ (1,0) [0|0] "" Vector__XXX
 
 
-
-
+CM_ BU_ Orion "Orion BMS (battery management system). It monitors every cell's voltage, the pack temperatures and the pack current, and switches the pack contactors. Its CAN messages are set up in the Orion BMS utility, so the scaling of every signal depends on the profile loaded on Peri's BMS.";
+CM_ BO_ 1792 "Battery pack summary: current, voltage, state of charge and relay states.";
+CM_ SG_ 1792 PackCurrent "Battery pack current. TODO: add the unit, scaling and sign from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 A per bit, signed, positive = discharging, but this file decodes it as unsigned.";
+CM_ SG_ 1792 PackInstVoltage "Total battery pack voltage, measured right now (instantaneous). TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 V per bit (the test capture shows 1305, which would be 130.5 V).";
+CM_ SG_ 1792 PackSoc "Battery state of charge: how full the battery is. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.5 % per bit (the test capture shows 159, which would be 79.5 %).";
+CM_ SG_ 1792 RelayState "Which of the BMS's relay and contactor outputs are on, one bit each. TODO: add the meaning of each bit, from the Orion BMS profile loaded on Peri.";
+CM_ BO_ 1793 "Discharge current limit and pack temperatures.";
+CM_ SG_ 1793 PackDcl "Discharge current limit: the most current the BMS currently allows to be drawn from the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 A per bit.";
+CM_ SG_ 1793 Unknown "Not known. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message (CANBusConfig.xlsm also lists it as unknown).";
+CM_ SG_ 1793 HighTemperatureSensor "Highest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed.";
+CM_ SG_ 1793 LowTemperatureSensors "Lowest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed.";
+CM_ SG_ 1793 Blank "Not used.";
+CM_ BO_ 1794 "Lowest and highest cell voltages in the pack, and the temperature inside the BMS.";
+CM_ SG_ 1794 LowCellVoltage "Voltage of the lowest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit.";
+CM_ SG_ 1794 HighCellVoltage "Voltage of the highest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit.";
+CM_ SG_ 1794 InternalTemperature "Temperature inside the BMS unit. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit.";
+CM_ SG_ 1794 Blank "Not used.";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 1792 104;
+BA_ "GenMsgCycleTime" BO_ 1793 104;
+BA_ "GenMsgCycleTime" BO_ 1794 104;

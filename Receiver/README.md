@@ -70,12 +70,15 @@ Messages are decoded with [cantools](https://cantools.readthedocs.io/) from the 
 | [MPPT.dbc](../dbc/MPPT.dbc) | MPPTs `Javed` and `Woof`, plus the board's MPPT poll requests | `Javed` (0x771), `Woof` (0x772), `MpptPollJaved` (0x711), `MpptPollWoof` (0x712) |
 | [Telemetry.dbc](../dbc/Telemetry.dbc) | The telemetry board itself | GPS `TimeAndFix` (0xF6), `SpeedAndAngle` (0xF7), `Latitude` (0xF8), `Longitude` (0xF9), `AltitudeAndSatellites` (0xFA), `SystemStatusMessages` (0x111) |
 
+**What every message and signal means, its unit and scaling, and what to query in Grafana:** see the generated [CAN signal reference (dbc/SIGNALS.md)](../dbc/SIGNALS.md). For an introduction to CAN and DBC files, and how this documentation is maintained, see [dbc/README.md](../dbc/README.md).
+
 How a DBC entry maps to the output:
 
 * The message name (`BO_ <id> <name>`) becomes the **Item**, e.g. `PackParameters`.
 * The message's sender (the last word of the `BO_` line) becomes the **Source**, e.g. `Orion`.
 * Each signal (`SG_`) becomes one field, using the DBC's scaling, offset and byte order.
 * A signal with the unit `"ascii"` is decoded as a single character instead of a number. This is used for the GPS hemisphere characters `GpsLat` (N/S) and `GpsLon` (E/W).
+* Value tables (`VAL_`, e.g. 255 = "Good") are documentation only: the receiver always stores the number, so InfluxDB fields stay numeric.
 
 GPS latitude and longitude are stored **as sent by the GPS**, in NMEA `ddmm.mmmm` format, with the sign in the separate hemisphere character. They are not converted to decimal degrees by the receiver ([live_calculations/road_lookup.py](live_calculations/road_lookup.py) does this conversion).
 
@@ -83,10 +86,9 @@ The tests decode with the same `dbc/` files, so `pytest` catches a DBC change th
 
 ### Adding a new CAN message
 
-1. Add the message to the right `.dbc` file (or add a new file and list it in `dbc_files` in [receiver_config.py](receiver_config.py)). Use a DBC editor or edit the text directly, and set the sender to the device name you want as the Source.
-2. Check that the file still loads: `python3 -c "import cantools; cantools.database.load_file('dbc/<file>.dbc')"`.
-3. Replay a capture that contains the message (see [Testing without hardware](#testing-without-hardware)) and check the decoded values.
-4. If the board should forward the message, check [../Telemetry/UseMsgList.hpp](../Telemetry/UseMsgList.hpp). By default it forwards every message (`PROCESS_ALL_MSG`).
+Follow the steps in [dbc/README.md](../dbc/README.md#changing-or-adding-a-message-or-signal): edit the `.dbc` file (including a plain-English comment), regenerate `dbc/SIGNALS.md`, and run `pytest`. If you add a new `.dbc` file, also list it in `dbc_files` in [receiver_config.py](receiver_config.py). Then replay a capture that contains the message (see [Testing without hardware](#testing-without-hardware)) and check the decoded values.
+
+Renaming a message, sender or signal, or changing its scaling, changes what is stored in InfluxDB; see the warning in [dbc/README.md](../dbc/README.md#changing-or-adding-a-message-or-signal).
 
 Frames with a CAN ID that is not in any DBC file are logged as a warning and stored as Item `ID UNRECOGNISED`, Source `ERROR`, with the CAN ID as the only field.
 

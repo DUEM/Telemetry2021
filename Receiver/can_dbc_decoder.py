@@ -33,7 +33,10 @@ class DbcDecoder:
         """
         decode_msg: dict[str, Union[int, float, str]]
         message = self.database.get_message_by_frame_id(can_id)
-        decode_msg = message.decode(msg_bytes)
+        # Keep numbers, not value table labels: the VAL_ tables in the dbc
+        # files are documentation (see dbc/SIGNALS.md). Decoding them to text
+        # would turn numeric influx fields into strings.
+        decode_msg = message.decode(msg_bytes, decode_choices=False)
         name = message.name
         sender = message.senders
         if len(sender) > 1:

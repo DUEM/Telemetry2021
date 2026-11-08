@@ -110,8 +110,8 @@ def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
         "Javed",
         "Mppt",
         {
-            "VoltageIn": 508,
-            "CurrentIn": 121,
+            "VoltageIn": 508 * 0.15049,  # raw * scale in dbc/MPPT.dbc
+            "CurrentIn": 121 * 0.00872,
             "VoltageOut": 612,
             "AmbientTemperature": 20,
             "BatteryVoltageLevelReached": 0,
@@ -128,8 +128,8 @@ def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
         "Woof",
         "Mppt",
         {
-            "VoltageIn": 450,
-            "CurrentIn": 121,
+            "VoltageIn": 450 * 0.15049,  # raw * scale in dbc/MPPT.dbc
+            "CurrentIn": 121 * 0.00872,
             "VoltageOut": 614,
             "AmbientTemperature": 20,
             "BatteryVoltageLevelReached": 0,

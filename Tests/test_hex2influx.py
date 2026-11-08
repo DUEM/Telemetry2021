@@ -26,7 +26,8 @@ def test_hex2influx_writes_decoded_points(monkeypatch, run_in_receiver):
 
     javed = [point for point in points if point.startswith("Mppt/Javed")]
     assert javed, "no Mppt/Javed points were decoded"
-    assert "VoltageIn=586" in javed[0]
+    # raw 586 * 0.15049 V per bit (dbc/MPPT.dbc)
+    assert f"VoltageIn={586 * 0.15049}" in javed[0]
     assert javed[0].endswith("1689689137000"), "timestamp is not epoch ms"
 
     # the whole point of this tool is writing in batches rather than per line

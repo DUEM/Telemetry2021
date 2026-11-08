@@ -59,13 +59,11 @@ def calc_aero_power(df):
 
 
 def calc_solar_power(df):
-    # CAN conversion factor from MPPT datasheet
-    df.loc[:, "SolarPower1"] = (
-        df.VoltageIn1 * 0.15049 * df.CurrentIn1 * 8.72 * 1e-3
-    )
-    df.loc[:, "SolarPower2"] = (
-        df.VoltageIn2 * 0.15049 * df.CurrentIn2 * 8.72 * 1e-3
-    )
+    # VoltageIn and CurrentIn are already in V and A: the MPPT datasheet
+    # scaling is applied when decoding (dbc/MPPT.dbc). Data written to influx
+    # before that change is raw and would need 0.15049 V and 8.72 mA per bit.
+    df.loc[:, "SolarPower1"] = df.VoltageIn1 * df.CurrentIn1
+    df.loc[:, "SolarPower2"] = df.VoltageIn2 * df.CurrentIn2
     df.loc[:, "SolarPower"] = (
         df.loc[:, "SolarPower1"] + df.loc[:, "SolarPower2"]
     )

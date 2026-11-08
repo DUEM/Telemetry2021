@@ -24,6 +24,7 @@ _The telemetry system for the Peri vehicle (2026 onwards): the BWSC 2023 on-vehi
 
 * [Telemetry/README.md](Telemetry/README.md): on-vehicle firmware (building, flashing, SD card `config.txt`, radio frame format)
 * [Receiver/README.md](Receiver/README.md): laptop receiver (configuration, DBC decoding, InfluxDB schema, offline tools, testing without hardware)
+* [dbc/SIGNALS.md](dbc/SIGNALS.md): **what every CAN message and signal means**, its unit, and what to query in Grafana (generated from the DBC files; [dbc/README.md](dbc/README.md) introduces CAN and DBC files for non-specialists)
 * [Receiver/live_calculations/README.md](Receiver/live_calculations/README.md): extra values calculated from the live data (route distance, incline, power)
 * [Client/README.md](Client/README.md): uploading a SolarSim race strategy to InfluxDB
 
@@ -160,10 +161,14 @@ Update the code as above (the `git submodule update --init` step is required, be
 ```
 ├── README.md
 ├── dbc/                           (CAN database files used to decode messages, by the receiver and the tests)
+│   ├── README.md                  (CAN and DBC files explained, how to change them)
+│   ├── SIGNALS.md                 (generated reference: every message and signal; do not edit)
 │   ├── wavesculptor_22.dbc        (Tritium motor controller, driver controls)
 │   ├── Orion.dbc                  (BMS)
 │   ├── MPPT.dbc                   (MPPTs and the board's MPPT poll requests)
 │   └── Telemetry.dbc              (the board's own GPS and status messages)
+├── tools
+│   └── dbc_to_markdown.py         (generates dbc/SIGNALS.md from the DBC files)
 ├── Receiver                       (Python receiver software, see Receiver/README.md)
 │   ├── LiveTelemetry.py           (live receiver: serial → decode → storage plugins)
 │   ├── receiver_config.py         (InfluxDB credentials, output files, DBC file list)
@@ -204,6 +209,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 
 **Decoding**
 * Only CAN IDs in the `dbc/` files are decoded. Others are written to InfluxDB as `ERROR/ID UNRECOGNISED`. Check the DBC files cover any new hardware on the vehicle.
+* The Orion BMS signals, and the MPPT `VoltageOut` and `AmbientTemperature`, are still stored as raw values: their scaling has to come from the Orion BMS profile loaded on Peri and the MPPT datasheet. These and the other gaps are marked `TODO: add ...` in the DBC files and listed at the end of [dbc/SIGNALS.md](dbc/SIGNALS.md#still-to-be-documented).
 * GPS latitude and longitude are stored as sent (NMEA `ddmm.mmmm` with a separate N/S, E/W character), not as decimal degrees, so they cannot be used directly by a Grafana map panel. [road_lookup.py](Receiver/live_calculations/road_lookup.py) does the conversion.
 * Latitude and longitude are sent as separate CAN messages, which can lead to mismatched positions.
 

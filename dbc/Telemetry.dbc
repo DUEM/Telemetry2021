@@ -37,29 +37,29 @@ BU_: Telemetry
 
 
 BO_ 246 TimeAndFix: 8 Telemetry
- SG_ GpsHour : 0|8@1+ (1,0) [0|60] "" Vector__XXX
- SG_ GpsMinute : 8|8@1+ (1,0) [0|60] "" Vector__XXX
- SG_ GpsSeconds : 16|8@1+ (1,0) [0|60] "" Vector__XXX
- SG_ GpsDay : 24|8@1+ (1,0) [1|31] "" Vector__XXX
- SG_ GpsMonth : 32|8@1+ (1,0) [1|12] "" Vector__XXX
+ SG_ GpsHour : 0|8@1+ (1,0) [0|23] "h" Vector__XXX
+ SG_ GpsMinute : 8|8@1+ (1,0) [0|59] "min" Vector__XXX
+ SG_ GpsSeconds : 16|8@1+ (1,0) [0|59] "s" Vector__XXX
+ SG_ GpsDay : 24|8@1+ (1,0) [0|31] "" Vector__XXX
+ SG_ GpsMonth : 32|8@1+ (1,0) [0|12] "" Vector__XXX
  SG_ GpsYear : 40|8@1+ (1,0) [0|99] "" Vector__XXX
- SG_ GpsFix : 48|8@1+ (1,0) [0|0] "" Vector__XXX
- SG_ GpsFixquality : 56|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ GpsFix : 48|8@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ GpsFixquality : 56|8@1+ (1,0) [0|2] "" Vector__XXX
 
 BO_ 247 SpeedAndAngle: 8 Telemetry
- SG_ GpsSpeed : 0|32@1- (1,0) [0|0] "" Vector__XXX
- SG_ GpsAngle : 32|32@1- (1,0) [0|0] "" Vector__XXX
+ SG_ GpsSpeed : 0|32@1- (1,0) [0|0] "knots" Vector__XXX
+ SG_ GpsAngle : 32|32@1- (1,0) [0|360] "deg" Vector__XXX
 
 BO_ 248 Latitude: 5 Telemetry
- SG_ GpsLatitude : 0|32@1- (1,0) [0|0] "" Vector__XXX
+ SG_ GpsLatitude : 0|32@1- (1,0) [0|9000] "ddmm.mmmm" Vector__XXX
  SG_ GpsLat : 32|8@1+ (1,0) [0|0] "ascii" Vector__XXX
 
 BO_ 249 Longitude: 5 Telemetry
- SG_ GpsLongitude : 0|32@1- (1,0) [0|0] "" Vector__XXX
+ SG_ GpsLongitude : 0|32@1- (1,0) [0|18000] "dddmm.mmmm" Vector__XXX
  SG_ GpsLon : 32|8@1+ (1,0) [0|0] "ascii" Vector__XXX
 
 BO_ 250 AltitudeAndSatellites: 5 Telemetry
- SG_ GpsAltitude : 0|32@1- (1,0) [0|0] "" Vector__XXX
+ SG_ GpsAltitude : 0|32@1- (1,0) [0|0] "m" Vector__XXX
  SG_ GpsSatellites : 32|8@1+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 273 SystemStatusMessages: 8 Telemetry
@@ -73,13 +73,53 @@ BO_ 273 SystemStatusMessages: 8 Telemetry
  SG_ Spare3 : 56|8@1+ (1,0) [0|0] "" Vector__XXX
 
 
-
+CM_ BU_ Telemetry "The DUSC telemetry board (Arduino Mega 2560, see Telemetry/README.md). It adds its own GPS and status messages to the CAN bus, and polls the MPPTs.";
+CM_ BO_ 246 "GPS date, time and fix status, from the telemetry board's GPS. Sent every gps_update ms (Telemetry/config.txt). The receiver uses it to set the clock for every other message.";
+CM_ SG_ 246 GpsHour "Hour of the GPS time, UTC (0 to 23).";
+CM_ SG_ 246 GpsMinute "Minute of the GPS time.";
+CM_ SG_ 246 GpsSeconds "Second of the GPS time.";
+CM_ SG_ 246 GpsDay "Day of the month of the GPS date. 0 until the GPS has obtained the time.";
+CM_ SG_ 246 GpsMonth "Month of the GPS date (1 to 12). 0 until the GPS has obtained the time.";
+CM_ SG_ 246 GpsYear "Year of the GPS date, last two digits only (e.g. 26 for 2026).";
+CM_ SG_ 246 GpsFix "Whether the GPS has a position fix.";
+CM_ SG_ 246 GpsFixquality "How the GPS position was obtained (NMEA fix quality).";
+CM_ BO_ 247 "Speed and direction of travel from the GPS. Sent every gps_update ms.";
+CM_ SG_ 247 GpsSpeed "Speed over the ground, measured by the GPS, in knots (1 knot = 0.514 m/s). For the motor's own speed measurement see Tritium Velocity.";
+CM_ SG_ 247 GpsAngle "Direction of travel (course over the ground), in degrees clockwise from true north.";
+CM_ BO_ 248 "GPS latitude. Sent every gps_update ms.";
+CM_ SG_ 248 GpsLatitude "Latitude in NMEA ddmm.mmmm format (degrees x 100 + minutes, e.g. 5446.5 is 54 deg 46.5 min), always positive: the sign is in GpsLat. Not decimal degrees: Receiver/live_calculations/road_lookup.py converts it.";
+CM_ SG_ 248 GpsLat "Hemisphere of the latitude: the character N (north) or S (south). The ascii unit makes the receiver decode it as a character.";
+CM_ BO_ 249 "GPS longitude. Sent every gps_update ms.";
+CM_ SG_ 249 GpsLongitude "Longitude in NMEA dddmm.mmmm format (degrees x 100 + minutes), always positive: the sign is in GpsLon. Not decimal degrees: Receiver/live_calculations/road_lookup.py converts it.";
+CM_ SG_ 249 GpsLon "Hemisphere of the longitude: the character E (east) or W (west). The ascii unit makes the receiver decode it as a character.";
+CM_ BO_ 250 "GPS altitude and the number of satellites in use. Sent every gps_update ms.";
+CM_ SG_ 250 GpsAltitude "Altitude above mean sea level, from the GPS.";
+CM_ SG_ 250 GpsSatellites "Number of satellites the GPS is using. More satellites usually means a more accurate position.";
+CM_ BO_ 273 "Telemetry board health. Sent every status_update ms (Telemetry/config.txt). Most bytes use the codes 0xFF good, 0xAA bad, 0xBB using defaults, 0x00 unknown (see Telemetry/README.md).";
+CM_ SG_ 273 Power "0xFF while the board is starting up. After that, the state of the sleep input (pin 33): 1 = car on, 0 = car off. TODO: add what the sleep input (pin 33) is wired to on Peri.";
+CM_ SG_ 273 WritingToSd "Whether the board is logging every message to its SD card.";
+CM_ SG_ 273 GpsTimeObtained "Whether the GPS time was obtained at start-up, within time_fix ms (Telemetry/config.txt).";
+CM_ SG_ 273 LoadedConfig "Whether config.txt was loaded from the SD card (0xFF loaded, 0xBB using defaults). Once the SD log file is open this is replaced by 100 + NN, where the log file is named YYMMDDNN.BIN, or by 90 if the log file could not be opened.";
+CM_ SG_ 273 Flag "State of the marker flag input (pin 22), 0 or 1, for marking a moment in the data. TODO: add what the marker flag input (pin 22) is wired to on Peri, and which state means marked.";
+CM_ SG_ 273 Spare1 "Spare, not used (always 0).";
+CM_ SG_ 273 Spare2 "Spare, not used (always 0).";
+CM_ SG_ 273 Spare3 "Spare, not used (always 0).";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_ "GenMsgCycleTime" BO_ 246 2000;
+BA_ "GenMsgCycleTime" BO_ 247 2000;
+BA_ "GenMsgCycleTime" BO_ 248 2000;
+BA_ "GenMsgCycleTime" BO_ 249 2000;
+BA_ "GenMsgCycleTime" BO_ 250 2000;
+BA_ "GenMsgCycleTime" BO_ 273 1000;
+VAL_ 246 GpsFix 0 "No fix" 1 "Fix" ;
+VAL_ 246 GpsFixquality 0 "Invalid" 1 "GPS" 2 "Differential GPS" ;
+VAL_ 273 Power 255 "Starting up" 1 "Car on" 0 "Car off" ;
+VAL_ 273 WritingToSd 255 "Good" 170 "Bad" 187 "Using defaults" 0 "Unknown" ;
+VAL_ 273 GpsTimeObtained 255 "Good" 170 "Bad" 187 "Using defaults" 0 "Unknown" ;
+VAL_ 273 LoadedConfig 255 "Good" 170 "Bad" 187 "Using defaults" 0 "Unknown" 90 "Log file could not be opened" ;
 SIG_VALTYPE_ 247 GpsSpeed : 1;
 SIG_VALTYPE_ 247 GpsAngle : 1;
 SIG_VALTYPE_ 248 GpsLatitude : 1;
 SIG_VALTYPE_ 249 GpsLongitude : 1;
 SIG_VALTYPE_ 250 GpsAltitude : 1;
-
-CM_ SG_ 248 GpsLat "NMEA latitude hemisphere character, N or S. Not a coordinate - GpsLatitude carries the position. The ascii unit marks it for char decoding in can_dbc_decoder.";
-CM_ SG_ 249 GpsLon "NMEA longitude hemisphere character, E or W. Not a coordinate - GpsLongitude carries the position. The ascii unit marks it for char decoding in can_dbc_decoder.";
-
