@@ -1,0 +1,15 @@
+# Normalise line endings: stored as LF in the repo, checked out natively.
+* text=auto
+
+# Shell scripts must stay LF, even on Windows checkouts
+*.sh text eol=lf
+
+# Binary data: never touch line endings, never try to diff or merge as text
+*.BIN binary
+*.bin binary
+*.xlsx binary
+*.xlsm binary
+*.xls binary
+*.png binary
+*.jpg binary
+*.pdf binary

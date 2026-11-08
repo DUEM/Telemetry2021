@@ -6,7 +6,6 @@ omit =
     Receiver/batch_Read_Hex.py
     # standalone scripts, not importable as a package (no __init__.py)
     Receiver/live_calculations/*
-    # pre-refactor code kept for reference
-    Old/*
-    Receiver/Old/*
+    # standalone client script with its own requirements, not installed by CI
+    Client/*
     Tests/*

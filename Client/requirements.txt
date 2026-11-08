@@ -1,0 +1,6 @@
+# Client: upload_solarsim (standalone, not installed by CI).
+# S5 has no tag for 1.0b11 (needs numpy 2, pandas >= 2.2.2), so pin the commit
+# (same commit as Receiver/live_calculations/requirements.txt)
+s5 @ git+https://github.com/owentmfoo/S5@d5c418b9d25efcc410d980578c6127729daefec3
+pandas >= 2.2.2, < 3
+influxdb == 5.3.1

@@ -4,11 +4,35 @@
 name: Pytest
 
 on:
+  # Only run when Python code, test data or dependencies change (not for
+  # firmware or docs), on the default and active development branches.
   push:
+    branches:
+      - nick-22Library
+      - PERI-DEVELOPMENT-TPB-1126
+    paths:
+      - "Receiver/**"
+      - "Tests/**"
+      - "dbc/**"
+      - "pytest.ini"
+      - ".coveragerc"
+      - ".github/workflows/python-package.yml"
 
   pull_request:
+    paths:
+      - "Receiver/**"
+      - "Tests/**"
+      - "dbc/**"
+      - "pytest.ini"
+      - ".coveragerc"
+      - ".github/workflows/python-package.yml"
 
   workflow_dispatch:
+
+# a newer push to the same branch or PR cancels the run in progress
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -32,4 +56,4 @@ jobs:
           python -m pip install -r Tests/requirements-test.txt
       - name: Test with pytest
         run: |
-          pytest --cov=Receiver --cov=Client --cov-report=term-missing --cov-fail-under=75
+          pytest --cov=Receiver --cov-report=term-missing --cov-fail-under=75

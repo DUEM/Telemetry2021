@@ -5,7 +5,6 @@ frame marker, as `read_frames` splits on it. The expected output for a capture
 sits alongside it as `Tests/data/*.csv`.
 """
 
-from pathlib import PurePath
 from typing import NamedTuple
 
 import pytest
@@ -22,14 +21,8 @@ def run_in_receiver():
 
 @pytest.fixture(autouse=True)
 def patch_receiver_config(request, monkeypatch):
-    dbc_folder = PurePath(request.config.rootdir + "/Tests/data/dbc")
-    dbc_files = [
-        dbc_folder / "wavesculptor_22.dbc",
-        dbc_folder / "MPPT.dbc",
-        dbc_folder / "Telemetry.dbc",
-        dbc_folder / "Orion.dbc",
-    ]
-    monkeypatch.setattr("Receiver.receiver_config.dbc_files", dbc_files)
+    # The DBC files are not patched: tests decode with the same files in dbc/
+    # that the receiver uses, so a DBC change is caught by the tests.
     monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "")
     monkeypatch.setattr("Receiver.receiver_config.csvOutputFile", "")
 

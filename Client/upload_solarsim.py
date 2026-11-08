@@ -5,7 +5,7 @@ This can be run from any client that have connection to the influx database (on
 the same LAN)
 
 To install the required packages:
-`pip install -r requirement.txt`
+`pip install -r Client/requirements.txt`
 
 """
 import logging

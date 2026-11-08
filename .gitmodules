@@ -1,4 +1,4 @@
 [submodule "Telemetry/src/CANApi"]
 	path = Telemetry/src/CANApi
-	url = https://github.com/DUEM/CANApi.git
+	url = ../CANApi.git
 	branch = main
