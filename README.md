@@ -1,56 +1,39 @@
 # Telemetry Operation Guide
 
+_[ A simplier tele receiver code use for ESC 2024 + ESC 2026 with known limitations; on vehicle code unchanged from earlier BWSC2023 - EG, JCJ, TPB]_
 
-Check Arduino is reading CAN msg: 
-* Serial connection to it with the car running. 
-
-Check Pi is receiving packets from the xBee: 
-* Check xBee is plugged into the right port: 
+Check xBee is plugged into the right port: 
 ```shell 
-$ cd /dev	
-$ ls -la
+cd /dev	
+ls -la
 ```
 and check 
 if there is a `ttyUSB0` in the list.
-* Restart `telem.service`: 
+
+Run the following script from the terminal:
 ```shell
-$ systemctl restart telem.service
-```
-* Check that `telem.service` is running: 
-```shell
-$ systemctl status telem.service
-```
-* Check the log and see if there are CAN msgs coming in:
-```shell
-$ journalctl -u telem.service -f
+cd Telemetery2021
+./RunTelemetry.sh
 ```
 
-
-Check that the script is writing data to influx
-* Check if influx is good: 
+Check that the script is writing data to influx:
 ```shell
-$ systemctl status influxd.service
-$ curl -sl -I http://localhost:8086/ping
+systemctl status influxd.service
+curl -sl -I http://localhost:8086/ping
 ```
-* Check that the connection info in telemetryStorer.py is correct.
-  * cd to the directory and open the file using nano
-  ```shell
-    $ nano telemtryStorer.py 
-    ```
-  * exit using ctrl+x
 
 ## Maintainence
 
 Set up new database in influx:
 ``` shell
-$ influx
+influx
 > CREATE DATABASE "DatabaseName"
 > exit
 ```
 
 Export a measurement from influxdb
 ``` shell
-$ influx
+influx
 > SHOW DATABASES
 > use database_name
 > SHOW MEASUREMENTS
@@ -58,76 +41,79 @@ $ influx
 > SELECT * FROM measurement_name > /path/to/export.csv
 ```
 
-## Updating code from GitHub to Pi
-1. Get the latest code from GitHub. Navigate to Telemetry2021 and run the 
-    following command. You'll need internet access for this. 
+## Updating code from GitHub to Laptop
+1. Get the latest code from GitHub. Navigate to Telemetry2021 and run the following command. You'll need internet access for this. 
     ```shell
-   git switch nick-22Library
-   git pull origin nick-22Library
-   git submodule init
-   git submodule update
+   git clone  git@github.com:DUEM/Telemetry2021.git
+   cd Telemetry2021
+   git switch ESC-CODE
+   git pull origin ESC-CODE
    git status
     ```
    and the console should show 
     ```
-    On branch nick-22Library
-    Your branch is up to date with 'origin/nick-22Library'
+    On branch ESC-CODE
+    Your branch is up to date with 'origin/ESC-CODE'
     ``` 
-     
-2. Switch over to the telemetry LAN. Copy the files over onto the pi with the 
-    following command. Enter the password when prompted.  
-    ```shell
-	scp -r * pi@raspberrypi.local:~/telemetry22/Telemetry2021/
-    ``` 
+
+3. Switch over to the telemetry LAN. 
+
+4. Start browser and point to ``localhost:3000``
+to see Grafana.
+
 ## Updating the Telemetry Board
 1. Get the latest code from GitHub. Navigate to Telemetry2021 and run the 
     following command. You'll need internet access for this. 
     ```shell
-   git switch nick-22Library
-   git pull origin nick-22Library
+   git switch ESC-CODE
+   git pull origin ESC-CODE
    git submodule init
    git submodule update
    git status
     ```
    and the console should show 
     ```
-    On branch nick-22Library
-    Your branch is up to date with 'origin/nick-22Library'
+    On branch ESC-CODE
+    Your branch is up to date with 'origin/ESC-CODE'
     ```
 2. In the Arduino IDE, open sketch -> Telemetry2021/Telemetry/Telemetry.ino
    Connect the Arduino to a computer
    Upload Sketch
    Done
 
-## Files on the Pi
+## Files in this Repo
 ```
-~
-|- telemetry22
-|  |- Telemetry2021
-|  |  |- Receiver
-|  |  |  |- LiveTelemetry.py
-|  |  |  |- telemetryParser2.py
-|  |  |  |- telemetryStorer.py
-|  |  |  ... 
-|  |- CANTranslator
-|  |  |- config
-|  |  |  |- CANBusData(saved201022)Modified.xlsm
-|  |  ...
-|  ...
-|- start-telem.sh 
+├── README.md
+├── Receiver                      (python receiver software)
+│   ├── BIN                       (test output)
+│   │   └── Test1.BIN
+│   ├── CAN-decode-sheet.csv       (CAN specification ID/packet/format)
+│   ├── CSV                        (test output)
+│   │   └── Test1.csv
+│   └── Live-Telem-05-09-2024-WIP.py 
+├── RunTelemetry.sh                (run telemetry reciever)
+└── Telemetry (on vehicle ardiuno software - unchanged from [this branch](https://github.com/DUEM/Telemetry2021/tree/nick-22Library))
+    ├── config.txt
+    ├── SD.cpp
+    ├── SD.hpp
+    ├── SendMessage.cpp
+    ├── SendMessage.hpp
+    ├── SensorInputs.cpp
+    ├── SensorInputs.hpp
+    ├── SerialDebugMacros.hpp
+    ├── src
+    │   └── CANApi
+    ├── StatusMsg.cpp
+    ├── StatusMsg.hpp
+    ├── Telemetry.ino
+    └── UseMsgList.hpp
+
 ```
-### Telemetry2021
-[This repo](https://github.com/DUEM/Telemetry2021)
-#### LiveTelemetry.py
-Entry point for the whole process
-#### telemeteryParser2.py
-Called by `telemetryStorer.py`. References `CANBusData.xlsm` to decode the CAN 
-messages.
-#### telemetryStorer.py
-Uses `telemetryParser2.py` to decode the can messages and stores it in either
-Excel or Influx. Edit this file to configure the influx credentials or the 
-output Excel file. 
-### CANTranslator
-[That repo](https://github.com/DUEM/CANTranslator)
-#### CANBusData.xlsm
-Contains info for all the CAN messages and how to decode them.
+
+## Known Limitations
+
+* GPS transmission is independant for latitude and longitude leading to positional mismatches
+* decoding of GPS latitude and longitude is potentially erroneous 
+* telemetry readings/value entries into the influxDB are not time/position stamped
+* CRC checks on incoming packets are not carried out leading to erroneous telemetry readings being sent to influxDB
+* CANbus decoding uses exhaustive search over a ``CVS`` format config file which has some missing CANBus IDs against vehicle hardware as of 2026.
