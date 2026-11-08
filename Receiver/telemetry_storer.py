@@ -74,7 +74,10 @@ class StorerWrapper:
         # read config at call time so monkeypatching receiver_config takes effect
         storer_extension_list = []
         if receiver_config.xlsxOutputFile != "":
-            excel_storer = ExcelStorer(receiver_config.xlsxOutputFile)
+            excel_storer = ExcelStorer(
+                receiver_config.xlsxOutputFile,
+                save_interval=receiver_config.xlsxSaveInterval,
+            )
             storer_extension_list.append(excel_storer)
         if receiver_config.csvOutputFile != "":
             csv_storer = CSVStorer(receiver_config.csvOutputFile)

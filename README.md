@@ -213,7 +213,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 **Usability**
 * The serial port is hardwired in [Receiver/LiveTelemetry.py](Receiver/LiveTelemetry.py).
 * InfluxDB details (host, port, user `admin`, password) are stored in plain text, and the database name differs between scripts: `DUSCiESC` (receiver), `Test22DB` (`hex2influx.py`, `live_calculations/config.py`) and `test` (`Client/upload_solarsim.py`).
-* The Excel output saves the whole workbook after every message, which is slow for long sessions.
+* The Excel output is saved every 10 s (`xlsxSaveInterval`) and when the receiver stops. If the receiver is killed without Ctrl-C, up to that many seconds of rows are missing from the Excel file (the SD card log still has them).
 * The Grafana dashboard is not stored in this repository.
 
 **Firmware**
@@ -224,4 +224,4 @@ Update the code as above (the `git submodule update --init` step is required, be
 * BWSC 2023: on-vehicle firmware and the original spreadsheet-based receiver (see branch `nick-22Library`)
 * ESC 2024: separate, simpler receiver script written by Ethan Glen (EG) (see branch `ESC-CODE`)
 * 2024: receiver rewritten as a Python package with DBC decoding, storage plugins and tests, by Owen Foo (OF)
-* Peri (2026+): updated and tested with Peri (Nov 2026) by Toby B (TPB), Ben G and Ben J
+* Peri (2026+): updated and tested with Peri (Nov 2026) by Toby B (TPB), Ben G (BG) and Ben J (BJ)

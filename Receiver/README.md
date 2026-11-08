@@ -41,6 +41,7 @@ Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are cl
 | InfluxDB host, port, user, password, database | `InfluxCredentials` in [receiver_config.py](receiver_config.py) | `localhost`, `8086`, `admin`, `password`, `DUSCiESC` |
 | InfluxDB on / off | `enabled` in `InfluxCredentials` | on |
 | Excel output | `xlsxOutputFile` in [receiver_config.py](receiver_config.py) | `''` (off) |
+| Excel save interval | `xlsxSaveInterval` in [receiver_config.py](receiver_config.py) | **10** seconds |
 | CSV output | `csvOutputFile` in [receiver_config.py](receiver_config.py) | `''` (off) |
 | CAN database files | `dbc_files` in [receiver_config.py](receiver_config.py) | the four files in [../dbc/](../dbc/) |
 
@@ -116,7 +117,7 @@ Points are stamped with the **vehicle's GPS time**, not the laptop's receive tim
 
 ## Output files
 
-* **Excel** (`xlsxOutputFile`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. The workbook is saved after **every** row, which is slow; use it for short sessions only. When appending, a three-row gap separates sessions.
+* **Excel** (`xlsxOutputFile`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. When appending, a three-row gap separates sessions. Saving rewrites the whole workbook, so it is saved at most every `xlsxSaveInterval` seconds (and straight away for the first row), plus once more when the receiver stops. Stop the receiver with Ctrl-C so the last rows are saved.
 * **CSV** (`csvOutputFile`): one row per message: `Timestamp` (ISO 8601), `Source`, `Item`, `Message Body` (`name=value` pairs in one quoted column), `CRC`.
 
 Note that `hex2csv` (below) writes a **different** CSV layout.

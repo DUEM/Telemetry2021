@@ -6,7 +6,13 @@ and tests silently run against production config. Modules must reach through
 `receiver_config.<name>` at call time instead.
 """
 
-CONFIG_NAMES = ("dbc_files", "xlsxOutputFile", "csvOutputFile", "ifCredentials")
+CONFIG_NAMES = (
+    "dbc_files",
+    "xlsxOutputFile",
+    "xlsxSaveInterval",
+    "csvOutputFile",
+    "ifCredentials",
+)
 
 
 def test_config_is_read_at_call_time():

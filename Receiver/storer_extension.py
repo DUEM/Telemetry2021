@@ -1,6 +1,7 @@
 import csv
 import logging
 import os
+import time
 
 from abc import ABC, abstractmethod
 from datetime import datetime
@@ -57,10 +58,20 @@ class ExcelStorer(StorerExtension):
 
     When appending to an existing file, a gap of three lines will be added
     before the new session.
+
+    Saving rewrites the whole workbook, so the time it takes grows with the
+    file. Rows are therefore saved at most every `save_interval` seconds (the
+    first row is saved straight away, so the file appears as soon as data
+    arrives), and again on `close`.
     """
 
-    def __init__(self, xlsx_output_file: Union[str, os.PathLike]):
+    def __init__(
+        self, xlsx_output_file: Union[str, os.PathLike], save_interval: float = 10.0
+    ):
         self.xlsx_output_file = xlsx_output_file
+        self.save_interval = save_interval
+        # -inf so the first row is saved immediately
+        self._last_save: float = float("-inf")
         # skip first row as that is for column labels
         self.xlsx_out_row_pointer: int = 2
         # if '', disable xlsx output
@@ -138,11 +149,17 @@ class ExcelStorer(StorerExtension):
             column=21, row=xlsx_out_row_pointer, value=msg_crc_status
         )
 
-        # save every time a line is written. NOTE: this can corrupt xlsx file if
-        # program doesn't exit gracefully (i.e. the computer is unplugged).
-        # This is fine as it can be rebuilt using telemetry hex dump on SD card
         self.xlsx_out_row_pointer += 1
-        xlsx_out_workbook.save(xlsx_output_file)
+
+        # Save at most every save_interval seconds, not after every row. If the
+        # program does not exit cleanly (e.g. the computer is unplugged), rows
+        # since the last save are lost from the xlsx (and a save cut short can
+        # corrupt it). This is fine as it can be rebuilt from the telemetry hex
+        # dump on the SD card.
+        now = time.monotonic()
+        if now - self._last_save >= self.save_interval:
+            xlsx_out_workbook.save(xlsx_output_file)
+            self._last_save = now
 
     def close(self) -> None:
         logger.info("Closing xlsx output file")

@@ -74,3 +74,51 @@ def test_xlsx_closed(monkeypatch, nrt_bytes, run_in_receiver, mock_xlsx_workbook
     # Assert
     mock_workbook.save.assert_called_once_with("mock.xlsx")
     mock_workbook.close.assert_called_once_with()
+
+
+def test_xlsx_saved_at_most_once_per_interval(monkeypatch, mock_xlsx_workbook):
+    """Saving rewrites the whole workbook, so it must not happen on every row."""
+    # Arrange
+    mock_workbook, _ = mock_xlsx_workbook
+    from Receiver.storer_extension import ExcelStorer
+
+    clock = [1000.0]
+    monkeypatch.setattr("Receiver.storer_extension.time.monotonic", lambda: clock[0])
+    storer = ExcelStorer("mock.xlsx", save_interval=10.0)
+    msg_time = datetime(2026, 11, 8, 12, tzinfo=timezone.utc)
+
+    def store_row():
+        storer.store_data("PackParameters", "Orion", {"PackSoc": 159}, msg_time, True)
+
+    # Act / Assert
+    store_row()  # first row: saved straight away so the file appears
+    assert mock_workbook.save.call_count == 1
+
+    for _ in range(50):  # many rows within the interval: not saved
+        clock[0] += 0.1
+        store_row()
+    assert mock_workbook.save.call_count == 1
+
+    clock[0] += 5.0  # 10 s since the last save: saved again
+    store_row()
+    assert mock_workbook.save.call_count == 2
+
+    store_row()  # within the new interval: not saved until close
+    storer.close()
+    assert mock_workbook.save.call_count == 3
+    mock_workbook.save.assert_called_with("mock.xlsx")
+    mock_workbook.close.assert_called_once_with()
+
+
+def test_xlsx_save_interval_from_config(monkeypatch, mock_xlsx_workbook):
+    # Arrange
+    monkeypatch.setattr("Receiver.receiver_config.xlsxSaveInterval", 2.5)
+    from Receiver.storer_extension import ExcelStorer
+    from Receiver.telemetry_storer import storer_wrapper
+
+    # Act
+    plugins = storer_wrapper.telemetry_storer.storage_plugin_list
+
+    # Assert
+    excel_storers = [p for p in plugins if isinstance(p, ExcelStorer)]
+    assert [s.save_interval for s in excel_storers] == [2.5]

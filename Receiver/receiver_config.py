@@ -6,6 +6,12 @@ from typing import NamedTuple
 # Set output file paths to file location to enable storage, or '' to disable
 #xlsxOutputFile: str = './ExcelOutput/ExcelTest.xlsx' #set equal to '' to switch off xlsx output
 xlsxOutputFile: str = ''
+# Save the xlsx file at most this often (seconds), and when the receiver stops.
+# Saving rewrites the whole workbook, so saving after every message gets slower
+# as the file grows. If the receiver is killed without stopping cleanly, up to
+# this many seconds of rows are missing from the xlsx (the SD card log on the
+# board still has them).
+xlsxSaveInterval: float = 10.0
 
 # CSV output file - set to enable CSV storage
 # Example: csvOutputFile: str = './Output/telemetry.csv'
