@@ -22,6 +22,7 @@ _The telemetry system for the Peri vehicle (2026 onwards): the BWSC 2023 on-vehi
  Grafana dashboard (not stored in this repository)
 ```
 
+* [SETUP.md](SETUP.md): **building a telemetry laptop from scratch**: Ubuntu (on a laptop, or in a VirtualBox VM with the XBee USB passed through), InfluxDB 1.x and Grafana
 * [Telemetry/README.md](Telemetry/README.md): on-vehicle firmware (building, flashing, SD card `config.txt`, radio frame format)
 * [Receiver/README.md](Receiver/README.md): laptop receiver (configuration, DBC decoding, InfluxDB schema, offline tools, testing without hardware)
 * [dbc/SIGNALS.md](dbc/SIGNALS.md): **what every CAN message and signal means**, its unit, and what to query in Grafana (generated from the DBC files; [dbc/README.md](dbc/README.md) introduces CAN and DBC files for non-specialists)
@@ -59,7 +60,7 @@ For the ESC-CODE version of the race-day steps and limitations, see its [README]
 
 ## First-time setup (telemetry laptop)
 
-_This assumes InfluxDB 1.x and Grafana are already installed and set up. The Grafana dashboard is not stored in this repository._
+_This assumes Ubuntu, InfluxDB 1.x and Grafana are already installed and set up. If they are not, or you are new to Linux, follow [SETUP.md](SETUP.md) instead, which covers everything from a fresh Ubuntu install (including in a VirtualBox VM) to a working test. The Grafana dashboard is not stored in this repository._
 
 ```shell
 git clone -b PERI-DEVELOPMENT-TPB-1126 --recurse-submodules git@github.com:DUEM/Telemetry2021.git
@@ -160,6 +161,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 
 ```
 ├── README.md
+├── SETUP.md                       (building a telemetry laptop: Ubuntu / VirtualBox, InfluxDB, Grafana)
 ├── dbc/                           (CAN database files used to decode messages, by the receiver and the tests)
 │   ├── README.md                  (CAN and DBC files explained, how to change them)
 │   ├── SIGNALS.md                 (generated reference: every message and signal; do not edit)
