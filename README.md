@@ -4,7 +4,7 @@ _A simpler telemetry receiver used for ESC 2024 and ESC 2026, with known limitat
 
 ## System overview
 
-
+![Telemetry Archiecture](./assets/telemetry-architecture.png)
 
 ```
  Vehicle CAN bus (125 kbps)
