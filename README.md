@@ -4,6 +4,8 @@ _The telemetry system for the Peri vehicle (2026 onwards): the BWSC 2023 on-vehi
 
 ## System overview
 
+![Telemetry Archiecture](./assets/telemetry-architecture.png)
+
 ```
  Vehicle CAN bus (125 kbps)
    │  BMS (Orion), motor controller (Tritium WaveSculptor), MPPTs, driver controls ...
