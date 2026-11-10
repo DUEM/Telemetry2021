@@ -377,12 +377,13 @@ These steps follow Microsoft's instructions at <https://code.visualstudio.com/do
    ```
    When asked **Do you trust the authors of the files in this folder?**, choose **Yes, I trust the authors**. Otherwise VS Code opens it in restricted mode, with the Python features turned off.
 6. Tell VS Code to use the telemetry virtual environment from [Part 6](#part-6-install-the-telemetry-code):
-   1. Press **Ctrl+Shift+P** to open the Command Palette (VS Code's search box for every command).
-   2. Type `Python: Select Interpreter` and press Enter.
-   3. Choose **Enter interpreter path...** and enter `~/virtualenvs/telemetry/bin/python`.
+   1. Click _"Untrusted Environment / Folder"_ (blue button, bottom right) - change to Trusted in resulting dialogue and close. 
+   2. Press **Ctrl+Shift+P** to open the Command Palette (VS Code's search box for every command).
+   3. Type `Python: Select Interpreter` and press Enter.
+   4. Choose **Enter interpreter path...** and enter `~/virtualenvs/telemetry/bin/python`.
 
    VS Code's built-in terminal (**Ctrl+`**, the key above Tab) then activates the virtual environment automatically, so you don't need the `source` command there.
-7. Set up the tests panel, so you can run and debug the tests from VS Code:
+8. Set up the tests panel, so you can run and debug the tests from VS Code:
    1. Click the flask icon (**Testing**) in the bar on the left.
    2. Click **Configure Python Tests**, choose **pytest**, then choose **.** (the root directory).
 
