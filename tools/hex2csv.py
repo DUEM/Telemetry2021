@@ -4,13 +4,13 @@ This tool is backwards compatible with HexReader and outputs the csv in the
 same layout as the Excel output: time, item, source, up to eight pairs of field
 name and value, CRC result and the board's millis.
 
-Run it as a module from the top of the repository (it imports the `Receiver`
-package, so `python hex2csv.py` from inside Receiver/ does not work).
+Run it as a script, from any directory. File paths are relative to the
+directory you run it from.
 
 usage:
-    `python3 -m Receiver.hex2csv [-h] -i HEXFILE [-o OUTFILE] [-m {a,w}]`
-example:
-    `python3 -m Receiver.hex2csv -i 23071805.BIN -o 230718.csv -m a`
+    `python3 tools/hex2csv.py [-h] -i HEXFILE [-o OUTFILE] [-m {a,w}]`
+example (from the top of the repository):
+    `python3 tools/hex2csv.py -i 23071805.BIN -o 230718.csv -m a`
 """
 import argparse
 from time import time
@@ -18,6 +18,13 @@ from time import time
 import numpy as np
 import tqdm
 from tqdm.contrib.logging import logging_redirect_tqdm
+
+import sys
+from pathlib import Path
+
+# Run as a script (python3 tools/<name>.py), so put the repository root on the
+# import path to find the Receiver package. Works from any directory.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from Receiver.telemetry_parser3 import TelemetryParser
 from Receiver.frame_reader import read_frames

@@ -122,23 +122,29 @@ Points are stamped with the **vehicle's GPS time**, not the laptop's receive tim
 * **Excel** (`xlsxOutputFile`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. When appending, a three-row gap separates sessions. Saving rewrites the whole workbook, so it is saved at most every `xlsxSaveInterval` seconds (and straight away for the first row), plus once more when the receiver stops. Stop the receiver with Ctrl-C so the last rows are saved.
 * **CSV** (`csvOutputFile`): one row per message: `Timestamp` (ISO 8601), `Source`, `Item`, `Message Body` (`name=value` pairs in one quoted column), `CRC`.
 
-Note that `hex2csv` (below) writes a **different** CSV layout.
+Note that `tools/hex2csv.py` (below) writes a **different** CSV layout.
 
 ## Offline tools (SD card logs)
 
-The board writes every frame to its SD card as `YYMMDDNN.BIN`, in the same frame format as the radio link (see [../Telemetry/README.md](../Telemetry/README.md#sd-card)). These tools decode those files after a session. Run them from the top of the repository:
+The board writes every frame to its SD card as `YYMMDDNN.BIN`, in the same frame format as the radio link (see [../Telemetry/README.md](../Telemetry/README.md#sd-card)). The scripts in [../tools/](../tools/) decode those files after a session. They are ordinary Python scripts: run them with `python3 <path to script>` from any directory, with the virtual environment active. File names are relative to the directory you run them from. From the top of the repository:
 
 ```shell
 # decode to CSV: time,item,source,name1,value1,...,name8,value8,crc_ok,millis
-python3 -m Receiver.hex2csv -i 23071805.BIN -o 230718.csv -m a     # -m a = append (default), w = overwrite
+python3 tools/hex2csv.py -i 23071805.BIN -o 230718.csv -m a     # -m a = append (default), w = overwrite
 
 # import into InfluxDB, in batches of 5000 points (much faster than the live receiver)
-python3 -m Receiver.hex2influx -i 23071805.BIN
+python3 tools/hex2influx.py -i 23071805.BIN
+
+# import every log file in a directory (e.g. the SD card) into InfluxDB, using hex2influx.py
+python3 tools/batch_Read_Hex.py -d /media/$USER/SDCARD -n     # -n: only list the files it would import
+python3 tools/batch_Read_Hex.py -d /media/$USER/SDCARD
 ```
 
-`hex2influx` has its **own** InfluxDB credentials at the top of [hex2influx.py](hex2influx.py) (database `Test22DB`), not the ones in `receiver_config.py`. Edit them before use. Unlike the live receiver, it skips frames with unrecognised CAN IDs.
+Add `-h` to any of these scripts to see all its options.
 
-[batch_Read_Hex.py](batch_Read_Hex.py) runs `hex2influx` on every file in a folder whose name matches a regular expression. Edit `bin_folder` and `regex_pattern` at the top of the script first, then run `python3 -m Receiver.batch_Read_Hex` from the top of the repository.
+[hex2influx.py](../tools/hex2influx.py) has its **own** InfluxDB credentials at the top of the script (database `Test22DB`), not the ones in `receiver_config.py`. Edit them before use. Unlike the live receiver, it skips frames with unrecognised CAN IDs.
+
+[batch_Read_Hex.py](../tools/batch_Read_Hex.py) runs `hex2influx.py` on each file in the directory given with `-d`, in name order. By default it picks the board's log files, named `YYMMDDNN.BIN` (in upper or lower case). To choose other files, give a regular expression that the whole file name must match with `-p`; for example, `-p "231018[0-9]{2}\.BIN"` picks only the files from 18 October 2023. At the end it reports how many files were imported, and lists any that failed.
 
 ## Testing without hardware
 

@@ -1,4 +1,4 @@
-# Receiver: LiveTelemetry, hex2csv, hex2influx and the tests.
+# Receiver: LiveTelemetry, tools/hex2csv.py, tools/hex2influx.py and the tests.
 # live_calculations has its own requirements file.
 pyserial ~= 3.5 # NOT "serial", an unrelated package that clashes with the serial module
 influxdb == 5.3.1

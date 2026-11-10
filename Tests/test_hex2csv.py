@@ -3,7 +3,7 @@ from datetime import timedelta, timezone, datetime
 
 def test_hex2csv(monkeypatch, tmp_path, run_in_receiver):
     # arrange
-    from Receiver.hex2csv import hex2csv
+    from tools.hex2csv import hex2csv
     from Receiver.telemetry_parser3 import TelemetryParser
 
     tp = TelemetryParser()
@@ -31,7 +31,7 @@ def test_hex2csv(monkeypatch, tmp_path, run_in_receiver):
 
 def test_hex2csv2(monkeypatch, tmp_path, run_in_receiver):
     # arrange
-    from Receiver.hex2csv import hex2csv
+    from tools.hex2csv import hex2csv
     from Receiver.telemetry_parser3 import TelemetryParser
 
     tp = TelemetryParser()
@@ -71,7 +71,7 @@ def test_sessions_do_not_share_clock_state(tmp_path, run_in_receiver):
     the first session's GPS clock instead of starting from the current time.
     """
     # arrange
-    from Receiver.hex2csv import hex2csv
+    from tools.hex2csv import hex2csv
 
     # act - two sessions, neither passing an explicit parser
     hex2csv("Tests/data/MPPT.BIN", f"{tmp_path}/session1.csv", "w")

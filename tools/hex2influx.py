@@ -6,13 +6,13 @@ telemetry Storer.
 Uses its own influx credentials (`influxCredentials` below, database `Test22DB`),
 not those in receiver_config. Edit them before use.
 
-Run it as a module from the top of the repository (it imports the `Receiver`
-package, so `python hex2influx.py` from inside Receiver/ does not work).
+Run it as a script, from any directory. File paths are relative to the
+directory you run it from.
 
 usage:
-    `python3 -m Receiver.hex2influx [-h] -i HEXFILE`
-example:
-    `python3 -m Receiver.hex2influx -i 23071805.BIN`
+    `python3 tools/hex2influx.py [-h] -i HEXFILE`
+example (from the top of the repository):
+    `python3 tools/hex2influx.py -i 23071805.BIN`
 """
 
 import argparse
@@ -21,6 +21,13 @@ from typing import NamedTuple
 
 import tqdm
 from influxdb import InfluxDBClient
+
+import sys
+from pathlib import Path
+
+# Run as a script (python3 tools/<name>.py), so put the repository root on the
+# import path to find the Receiver package. Works from any directory.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from Receiver.telemetry_parser3 import TelemetryParser
 from Receiver.frame_reader import read_frames

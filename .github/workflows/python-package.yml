@@ -58,4 +58,4 @@ jobs:
           python -m pip install -r Tests/requirements-test.txt
       - name: Test with pytest
         run: |
-          pytest --cov=Receiver --cov-report=term-missing --cov-fail-under=75
+          pytest --cov=Receiver --cov=tools --cov-report=term-missing --cov-fail-under=75

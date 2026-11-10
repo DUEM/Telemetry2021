@@ -54,7 +54,7 @@ Both branches run the **same firmware** on the vehicle (same [Telemetry/](Teleme
 | Unknown CAN IDs | Stored as `ERROR/ID UNRECOGNISED` | Flagged with sentinel row `99` |
 | Settings | [Receiver/receiver_config.py](Receiver/receiver_config.py) and the top of `LiveTelemetry.py` | Prompted for port and file names on each run; InfluxDB settings hardwired in the script |
 | Live output files | Optional Excel and/or CSV (appended to) | Raw `.BIN` and decoded `.csv` every session (overwritten) |
-| Offline tools | `hex2csv`, `hex2influx` for SD card logs | None |
+| Offline tools | [`tools/hex2csv.py`, `tools/hex2influx.py`](Receiver/README.md#offline-tools-sd-card-logs) for SD card logs | None |
 | Extra calculations | [live_calculations](Receiver/live_calculations/README.md), [SolarSim upload](Client/README.md) | None |
 | Tests | pytest suite in [Tests/](Tests/), run by GitHub Actions | None |
 
@@ -171,7 +171,10 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   ├── Orion.dbc                  (BMS)
 │   ├── MPPT.dbc                   (MPPTs and the board's MPPT poll requests)
 │   └── Telemetry.dbc              (the board's own GPS and status messages)
-├── tools
+├── tools                          (standalone scripts: python3 tools/<script>.py)
+│   ├── hex2csv.py                 (offline: SD card .BIN → CSV)
+│   ├── hex2influx.py              (offline: SD card .BIN → InfluxDB)
+│   ├── batch_Read_Hex.py          (offline: hex2influx.py for a folder of .BIN files)
 │   └── dbc_to_markdown.py         (generates dbc/SIGNALS.md from the DBC files)
 ├── Receiver                       (Python receiver software, see Receiver/README.md)
 │   ├── LiveTelemetry.py           (live receiver: serial → decode → storage plugins)
@@ -181,9 +184,6 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   ├── can_dbc_decoder.py         (DBC lookup with cantools)
 │   ├── telemetry_storer.py        (passes decoded messages to the storage plugins)
 │   ├── storer_extension.py        (InfluxDB, Excel and CSV storage plugins)
-│   ├── hex2csv.py                 (offline: SD card .BIN → CSV)
-│   ├── hex2influx.py              (offline: SD card .BIN → InfluxDB)
-│   ├── batch_Read_Hex.py          (offline: hex2influx for a folder of .BIN files)
 │   ├── requirements.txt
 │   └── live_calculations          (route distance, incline and power, see its README.md)
 ├── Client                         (SolarSim strategy upload to InfluxDB, see Client/README.md)
@@ -222,7 +222,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 
 **Usability**
 * The serial port is hardwired in [Receiver/LiveTelemetry.py](Receiver/LiveTelemetry.py).
-* InfluxDB details (host, port, user `admin`, password) are stored in plain text, and the database name differs between scripts: `DUSCiESC` (receiver), `Test22DB` (`hex2influx.py`, `live_calculations/config.py`) and `test` (`Client/upload_solarsim.py`).
+* InfluxDB details (host, port, user `admin`, password) are stored in plain text, and the database name differs between scripts: `DUSCiESC` (receiver), `Test22DB` (`tools/hex2influx.py`, `live_calculations/config.py`) and `test` (`Client/upload_solarsim.py`).
 * The Excel output is saved every 10 s (`xlsxSaveInterval`) and when the receiver stops. If the receiver is killed without Ctrl-C, up to that many seconds of rows are missing from the Excel file (the SD card log still has them).
 * The Grafana dashboard is not stored in this repository.
 
