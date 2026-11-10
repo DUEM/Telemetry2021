@@ -367,8 +367,9 @@ These steps follow Microsoft's instructions at <https://code.visualstudio.com/do
 4. Install the extensions for Python development:
    ```shell
    code --install-extension ms-python.python      # Python: also installs Pylance (code completion) and the Python Debugger
-   code --install-extension ms-python.pylint      # Pylint: style checks, using the repository's pylintrc
-   code --list-extensions                         # check: the list should include ms-python.python and ms-python.pylint
+   code --install-extension python.vscode-pylance # Pylint: style checks, using the repository's pylintrc
+   code --install-extension ms-python.debugpy     # python debugger
+
    ```
 5. Open the repository in VS Code:
    ```shell
