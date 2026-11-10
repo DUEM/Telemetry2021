@@ -101,14 +101,17 @@ These make the VM window resizable, keep the VM's clock in sync, and let you cop
 1. In the VM, open a terminal and install the tools needed to build them:
    ```shell
    sudo apt update
-   sudo apt install -y build-essential bzip2
+   sudo apt install -y build-essential bzip2 dkms linux-headers-$(uname -r)
    ```
-2. In the VirtualBox menu of the VM window, choose **Devices → Insert Guest Additions CD image**. When Ubuntu offers to run it, choose **Run**, or run it from the terminal:
+2. Install the VirtualBox guest additions package:
    ```shell
-   sudo sh /media/$USER/VBox_GAs_*/VBoxLinuxAdditions.run
+   sudo apt install -y virtualbox-guest-additions-iso
    ```
-3. Restart the VM.
-4. Choose **Devices → Shared Clipboard → Bidirectional**, so you can copy commands from this guide on your computer and paste them into the VM's terminal (with Ctrl+Shift+V).
+3. Restart the VM with reboot
+   ```shell
+   sudo reboot
+   ```
+5. Choose **Devices → Shared Clipboard → Bidirectional**, so you can copy commands from this guide on your computer and paste them into the VM's terminal (with Ctrl+Shift+V).
 
 ---
 
