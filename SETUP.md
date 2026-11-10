@@ -66,11 +66,16 @@ Download the Ubuntu Desktop LTS `.iso` file (about 6 GB) from <https://ubuntu.co
 ### 1.3 Create the VM
 
 1. In VirtualBox, click **New**.
-2. **Name:** `telemetry`. **ISO Image:** choose the Ubuntu `.iso` you downloaded. **Type:** Linux, **Version:** Ubuntu (64-bit).
-3. Tick **Skip Unattended Installation**. You will install Ubuntu yourself in a moment, which avoids problems with the automatically created user account.
-4. **Hardware:** at least **4096 MB** memory and **2** processors.
-5. **Hard disk:** create a virtual hard disk of at least **30 GB**. It only takes up space on your computer as it fills.
-6. Click **Finish**.
+2. Select settings as follows:
+   - **Name:** `telemetry`.
+   - **ISO Image:** choose the Ubuntu `.iso` you downloaded.
+   - **OS:** Linux
+   - **OS Distribution:** Ubuntu.
+   - **Version:** Ubuntu ..... (64-bit).
+5. Untick **Proceed with Unattended Installation**. You will install Ubuntu yourself in a moment, which avoids problems with the automatically created user account.
+6. **Hardware:** at least **4096 MB** memory and **2** processors.
+7. **Hard disk:** create a virtual hard disk of at least **30 GB**. It only takes up space on your computer as it fills.
+8. Click **Finish**.
 
 ### 1.4 Adjust the VM settings
 
