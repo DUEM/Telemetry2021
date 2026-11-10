@@ -111,8 +111,14 @@ These make the VM window resizable, keep the VM's clock in sync, and let you cop
    ```shell
    sudo reboot
    ```
-5. Choose **Devices → Shared Clipboard → Bidirectional**, so you can copy commands from this guide on your computer and paste them into the VM's terminal (with Ctrl+Shift+V).
+4. Choose **Devices → Shared Clipboard → Bidirectional**, so you can copy commands from this guide on your computer and paste them into the VM's terminal (with Ctrl+Shift+V).
 
+5. _If bi-directional copy/paste to from the VM still doesn't work_, then in a terminal in the Ubuntu VM try the following to reinstall X11 guest packages and restart the VM clipboard client (as Ubuntu now default to Wayland, which frequently breaks VirtualBox clipboard sharing):
+   ```shell
+   sudo apt install --reinstall virtualbox-guest-x11
+   killall VBoxClient
+   VBoxClient --clipboard
+   ```
 ---
 
 ## Part 2: Pass the XBee USB through to the VM
