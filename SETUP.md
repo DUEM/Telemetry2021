@@ -119,6 +119,20 @@ These make the VM window resizable, keep the VM's clock in sync, and let you cop
    killall VBoxClient
    VBoxClient --clipboard
    ```
+   It is likely this may break after reboot of the Ubuntu VM so to make it permanent also do the following in the terminal to set it to rerun on startup:
+   ```shell
+   mkdir -p ~/.config/autostart
+   cat << 'EOF' > ~/.config/autostart/vbox-clipboard.desktop
+   [Desktop Entry]
+   Type=Application
+   Name=VirtualBox Clipboard
+   Exec=sh -c "sleep 3 && /usr/bin/VBoxClient --clipboard"
+   Hidden=false
+   NoDisplay=false
+   X-GNOME-Autostart-enabled=true
+   EOF
+   ```
+   
 ---
 
 ## Part 2: Pass the XBee USB through to the VM
