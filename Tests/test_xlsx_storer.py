@@ -22,7 +22,7 @@ def mock_xlsx_workbook(monkeypatch):
 def test_data_written_to_xlsx(nrt_bytes, mock_xlsx_workbook):
     # Arrange
     mock_workbook, mock_worksheet = mock_xlsx_workbook
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
     from Receiver.storer_extension import ExcelStorer
     from Receiver.telemetry_storer import TelemetryStorer
 

@@ -26,7 +26,7 @@ from pathlib import Path
 # import path to find the Receiver package. Works from any directory.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from Receiver.telemetry_parser3 import TelemetryParser
+from Receiver.telemetry_parser import TelemetryParser
 from Receiver.frame_reader import read_frames
 
 mode = "a"

@@ -180,7 +180,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   ├── LiveTelemetry.py           (live receiver: serial → decode → storage plugins)
 │   ├── receiver_config.py         (InfluxDB credentials, output files, DBC file list)
 │   ├── frame_reader.py            (splits a capture into frames on 0x7E)
-│   ├── telemetry_parser3.py       (CRC check, timestamps, decoding)
+│   ├── telemetry_parser.py        (CRC check, timestamps, decoding)
 │   ├── can_dbc_decoder.py         (DBC lookup with cantools)
 │   ├── telemetry_storer.py        (passes decoded messages to the storage plugins)
 │   ├── storer_extension.py        (InfluxDB, Excel and CSV storage plugins)

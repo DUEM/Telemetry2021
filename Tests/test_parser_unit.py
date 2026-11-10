@@ -12,7 +12,7 @@ class TestTelemetryParserTime:
 
     def test_get_time_basic(self, run_in_receiver, patch_receiver_config):
         """Test basic time calculation with no overflow."""
-        from Receiver.telemetry_parser3 import TelemetryParser
+        from Receiver.telemetry_parser import TelemetryParser
         import numpy as np
 
         # Arrange
@@ -33,7 +33,7 @@ class TestTelemetryParserTime:
 
     def test_get_time_with_milliseconds(self, run_in_receiver, patch_receiver_config):
         """Test time calculation with millisecond precision."""
-        from Receiver.telemetry_parser3 import TelemetryParser
+        from Receiver.telemetry_parser import TelemetryParser
         import numpy as np
 
         # Arrange
@@ -61,7 +61,7 @@ class TestTelemetryParserTime:
 
     def test_get_time_with_overflow(self, run_in_receiver, patch_receiver_config):
         """Test time calculation with uint32 overflow wraparound."""
-        from Receiver.telemetry_parser3 import TelemetryParser
+        from Receiver.telemetry_parser import TelemetryParser
         import numpy as np
 
         # Arrange
@@ -96,7 +96,7 @@ class TestTelemetryParserCRC:
 
     def test_check_crc_valid(self, run_in_receiver, patch_receiver_config):
         """Test CRC check with valid CRC."""
-        from Receiver.telemetry_parser3 import TelemetryParser
+        from Receiver.telemetry_parser import TelemetryParser
 
         # Arrange
         parser = TelemetryParser()
@@ -118,7 +118,7 @@ class TestTelemetryParserCRC:
 
     def test_check_crc_invalid(self, run_in_receiver, patch_receiver_config):
         """Test CRC check with corrupted data."""
-        from Receiver.telemetry_parser3 import TelemetryParser
+        from Receiver.telemetry_parser import TelemetryParser
 
         # Arrange
         parser = TelemetryParser()
@@ -137,7 +137,7 @@ class TestTelemetryParserGPS:
 
     def test_update_last_gps_time_valid(self, run_in_receiver, patch_receiver_config):
         """Test GPS time update with valid GPS data."""
-        from Receiver.telemetry_parser3 import TelemetryParser
+        from Receiver.telemetry_parser import TelemetryParser
         import numpy as np
 
         # Arrange
@@ -163,7 +163,7 @@ class TestTelemetryParserGPS:
 
     def test_update_last_gps_time_invalid(self, run_in_receiver, patch_receiver_config):
         """Test GPS time update with invalid values (should not crash)."""
-        from Receiver.telemetry_parser3 import TelemetryParser
+        from Receiver.telemetry_parser import TelemetryParser
         import numpy as np
 
         # Arrange

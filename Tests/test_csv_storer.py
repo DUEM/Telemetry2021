@@ -99,7 +99,7 @@ def test_csv_storer_with_parser_integration(
 ):
     """Test CSVStorer integration with TelemetryParser."""
     from Receiver.storer_extension import CSVStorer
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
     from Receiver.telemetry_storer import TelemetryStorer
 
     csv_path = tmp_path / "integration_test.csv"

@@ -37,7 +37,7 @@ def test_data_written_to_influx(
     monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "")
 
     from Receiver.telemetry_storer import store_data
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
 
     telemetry_parser = TelemetryParser()
     telemetry_parser.last_gps_time = datetime(

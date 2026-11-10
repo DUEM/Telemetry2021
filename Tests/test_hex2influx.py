@@ -5,7 +5,7 @@ from unittest.mock import MagicMock
 def test_hex2influx_writes_decoded_points(monkeypatch, run_in_receiver):
     # arrange
     import tools.hex2influx as hex2influx_module
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
 
     # patch where the name is looked up, not where it is defined
     mock_client = MagicMock()

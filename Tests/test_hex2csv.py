@@ -4,7 +4,7 @@ from datetime import timedelta, timezone, datetime
 def test_hex2csv(monkeypatch, tmp_path, run_in_receiver):
     # arrange
     from tools.hex2csv import hex2csv
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
 
     tp = TelemetryParser()
     tp.last_gps_time = datetime(
@@ -32,7 +32,7 @@ def test_hex2csv(monkeypatch, tmp_path, run_in_receiver):
 def test_hex2csv2(monkeypatch, tmp_path, run_in_receiver):
     # arrange
     from tools.hex2csv import hex2csv
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
 
     tp = TelemetryParser()
     tp.last_gps_time = datetime(

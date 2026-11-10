@@ -1,7 +1,7 @@
 import logging
 from typing import List
 
-from Receiver.telemetry_parser3 import TelemetryParser
+from Receiver.telemetry_parser import TelemetryParser
 from Receiver import receiver_config
 from Receiver.storer_extension import StorerExtension, ExcelStorer, Influx1Storer, CSVStorer
 

@@ -5,7 +5,7 @@ from unittest.mock import MagicMock
 
 def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
     # arrange
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
     from Receiver.telemetry_storer import TelemetryStorer
 
     telemetry_parser = TelemetryParser()
@@ -87,7 +87,7 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
 
 def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
     # arrange
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
     from Receiver.telemetry_storer import TelemetryStorer
 
     telemetry_parser = TelemetryParser()
@@ -157,7 +157,7 @@ def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
 def test_store_data_logs_message_at_info(nrt_bytes, caplog):
     # Arrange
     import logging
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
     from Receiver.telemetry_storer import TelemetryStorer
 
     storer = TelemetryStorer(TelemetryParser())
@@ -175,7 +175,7 @@ def test_store_data_logs_message_at_info(nrt_bytes, caplog):
 def test_store_data_logs_short_frame_without_can_id(caplog):
     # Arrange
     import logging
-    from Receiver.telemetry_parser3 import TelemetryParser
+    from Receiver.telemetry_parser import TelemetryParser
     from Receiver.telemetry_storer import TelemetryStorer
 
     storer = TelemetryStorer(TelemetryParser())
