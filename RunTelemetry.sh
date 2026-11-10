@@ -10,6 +10,6 @@ echo " -> Starting Live Telemetry"
 # new commands - ESC 2026 onwards
 # unchanged since ESC 2024 version (TPB)
 
-cd "Receiver"
+cd Receiver
 python3 ./Live-Telem-05-09-2024-WIP.py
 
