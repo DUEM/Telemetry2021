@@ -324,7 +324,7 @@ The code is cloned over **SSH**, so that changes made on this machine can be com
    source ~/virtualenvs/telemetry/bin/activate
    pip install -r Receiver/requirements.txt
    ```
-   Your prompt now starts with `(telemetry)`. Run the `source` line again in every new terminal before running the receiver.
+   Your prompt now starts with `(telemetry)`. Run the `source` in the above line again in every new terminal before running the receiver.
 8. Check everything works by running the tests:
    ```shell
    pip install -r Tests/requirements-test.txt
