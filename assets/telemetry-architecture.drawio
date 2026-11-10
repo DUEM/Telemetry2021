@@ -1,0 +1,208 @@
+<mxfile host="app.diagrams.net" pages="2">
+  <diagram name="1 - Telemetry architecture" id="0VwjKPNa4pqU9s8WFDpi">
+    <mxGraphModel dx="3334" dy="1841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1550" pageHeight="1050" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="car" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#fdf0ee;strokeColor=#b85450;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fontStyle=1;fontSize=16;" value="ON-BOARD SOLAR CAR (SEND)" vertex="1">
+          <mxGeometry height="640" width="460" x="20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zFWrzQRtxBausERFw3n9-10" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#555555;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fontStyle=1;fontSize=16;align=right;spacingRight=14;dashed=1;" value="Telemetry Board" vertex="1">
+          <mxGeometry height="410" width="405" x="30" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fNZsE5_EuuBPtpo-Phm5-1" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#ffff88;strokeColor=#36393d;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fontStyle=1;fontSize=16;" value="OFF-BOARD (post-run)" vertex="1">
+          <mxGeometry height="200" width="460" x="20" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="rx" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#eef6ea;strokeColor=#82b366;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fontStyle=1;fontSize=16;" value="TELEMETRY RECEIVER (RECEIVE)" vertex="1">
+          <mxGeometry height="840" width="500" x="1000" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="laptop" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#555555;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fontStyle=1;fontSize=16;align=right;spacingRight=14;dashed=1;" value="Telemetry Laptop (Linux)" vertex="1">
+          <mxGeometry height="540" width="440" x="1030" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="can" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" value="&lt;b&gt;CAN bus&lt;/b&gt;&lt;br&gt;vehicle nodes (125 kbps)" vertex="1">
+          <mxGeometry height="60" width="180" x="50" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="telem" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;Telemetry board&lt;/b&gt;&lt;br&gt;Arduino running C/C++ code" vertex="1">
+          <mxGeometry height="80" width="220" x="190" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="zigTx" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;XBee TX&lt;/b&gt;&lt;br&gt;868 MHz" vertex="1">
+          <mxGeometry height="50" width="130" x="340" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="gps" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;GPS module&lt;/b&gt;&lt;br&gt;1 Hz / 10 Hz" vertex="1">
+          <mxGeometry height="60" width="140" x="50" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="gpsdata" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;spacingTop=8;fillColor=#ffffff;dashed=1;strokeColor=#b85450;" value="&lt;b&gt;GPS data - NMEA&lt;/b&gt;&lt;br&gt;• Latitude (HH.MM)&lt;br&gt;• Longitude (HHH.MM)&lt;br&gt;• Time - UTC" vertex="1">
+          <mxGeometry height="90" width="170" x="50" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="sd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" value="&lt;b&gt;SD card&lt;/b&gt;&lt;br&gt;CAN bus log (.bin)" vertex="1">
+          <mxGeometry height="60" width="170" x="260" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="script" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;hex CANbus2CSV&lt;/b&gt; (.py)&lt;br&gt;offline conversion" vertex="1">
+          <mxGeometry height="70" width="210" x="240" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="race" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;Race Strategy Tooling&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="210" x="240" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="zigRx" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;div&gt;&lt;b&gt;XBee RX&lt;/b&gt;&lt;br&gt;868 MHz&lt;b&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="130" x="1050" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="tty" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" value="&lt;b&gt;/dev/ttyUSB0&lt;/b&gt;&lt;br&gt;serial port" vertex="1">
+          <mxGeometry height="60" width="180" x="1050" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="python" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;Python launch&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;script (module)&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="180" x="1050" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="influx" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#ffe6cc;strokeColor=#d79b00;" value="&lt;b&gt;InfluxDB&lt;/b&gt;&lt;br&gt;time-series database" vertex="1">
+          <mxGeometry height="60" width="180" x="1050" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="grafana" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#ffe6cc;strokeColor=#d79b00;" value="&lt;b&gt;Grafana&lt;/b&gt;&lt;br&gt;visualisation" vertex="1">
+          <mxGeometry height="60" width="180" x="1050" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="runtelem" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;;" value="&lt;b&gt;RunTelem.sh&lt;/b&gt;&lt;br&gt;shell launcher" vertex="1">
+          <mxGeometry height="60" width="160" x="1290" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="decoder" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;.CSV/BIN CAN decoder&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="1290" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="browser" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" value="&lt;b&gt;Web browser&lt;/b&gt;&lt;br&gt;dashboard UI" vertex="1">
+          <mxGeometry height="60" width="180" x="1050" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="can" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#b85450;dashed=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" target="telem" value="CAN bus">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="gps" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#6c8ebf;exitX=1;exitY=0.5;entryX=0.2;entryY=1;" target="telem" value="NMEA">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="gps" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#b85450;dashed=1;endArrow=none;" target="gpsdata" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="telem" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#b85450;exitX=0.82;exitY=0;entryX=0.5;entryY=1;" target="zigTx" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#333333;exitX=0.7;exitY=1;entryX=0.5;entryY=0;" value="write .bin">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="299" y="340" as="sourcePoint" />
+            <mxPoint x="300" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="sd" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#6c8ebf;" target="script" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="script" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#6c8ebf;" target="race" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link" edge="1" parent="1" source="zigTx" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#d79b00;dashed=1;strokeWidth=3;fontSize=15;" target="zigRx" value="&lt;b&gt;868 MHz wireless link&amp;nbsp;&lt;/b&gt;&lt;div&gt;(&lt;b&gt;ZIGBEE Protocol - Bandwidth :&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;20 kbit/s (20 kbps))&lt;/span&gt;&lt;b style=&quot;background-color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;&amp;nbsp;&lt;/b&gt;&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.0016" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" source="zigRx" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#333333;" target="tty" value="USB">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" edge="1" parent="1" source="tty" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#333333;" target="python" value="serial stream">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" edge="1" parent="1" source="runtelem" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#666666;dashed=1;exitX=0.5;exitY=1;entryX=1;entryY=0.25;" target="python" value="starts .py">
+          <mxGeometry relative="1" x="-0.0588" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1410" y="310" />
+              <mxPoint x="1410" y="340" />
+              <mxPoint x="1230" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r4" edge="1" parent="1" source="decoder" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#9673a6;startArrow=block;startSize=8;exitX=0;exitY=0.5;entryX=1;entryY=0.75;" target="python" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r5" edge="1" parent="1" source="python" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#333333;" target="influx" value="write (JSON)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r6" edge="1" parent="1" source="influx" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#333333;exitX=0.25;exitY=1;entryX=0.25;entryY=0;" target="grafana" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zFWrzQRtxBausERFw3n9-16" connectable="0" parent="r6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;fontSize=13;labelBackgroundColor=#ffffff;" value="response (SQL)" vertex="1">
+          <mxGeometry relative="1" x="-0.0333" y="-3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r7" edge="1" parent="1" source="grafana" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#b85450;exitX=0.75;exitY=0;entryX=0.75;entryY=1;" target="influx" value="query (SQL)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r8" edge="1" parent="1" source="browser" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#333333;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="grafana" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zFWrzQRtxBausERFw3n9-15" connectable="0" parent="r8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;fontSize=13;labelBackgroundColor=#ffffff;" value="http" vertex="1">
+          <mxGeometry relative="1" x="0.3412" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mock" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;dashed=1;fillColor=#ffffff;strokeColor=#d79b00;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" value="&lt;b&gt;75 mph&lt;/b&gt;&lt;br&gt;&lt;br&gt;Track / gauges" vertex="1">
+          <mxGeometry height="100" width="170" x="1290" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="mockGauge" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fillColor=none;strokeColor=#333333;" value="" vertex="1">
+          <mxGeometry height="50" width="50" x="1395" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="mockDot" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;" value="" vertex="1">
+          <mxGeometry height="10" width="10" x="1400" y="773" as="geometry" />
+        </mxCell>
+        <mxCell id="mockLabel" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=2;fontColor=#d79b00;" value="Dashboard Visualisation mockup" vertex="1">
+          <mxGeometry height="20" width="190" x="1290" y="838" as="geometry" />
+        </mxCell>
+        <mxCell id="rMock" edge="1" parent="1" source="browser" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;dashed=1;strokeColor=#d79b00;" target="mock" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fNZsE5_EuuBPtpo-Phm5-2" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;endSize=8;strokeWidth=2;fontSize=13;labelBackgroundColor=#ffffff;strokeColor=#333333;exitX=0.7;exitY=1;entryX=0.5;entryY=0;" value="read config&amp;nbsp;&lt;div&gt;(JSON)&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.0099" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="379" y="441" as="sourcePoint" />
+            <mxPoint x="378" y="341" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zFWrzQRtxBausERFw3n9-1" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="105" width="390" x="590" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="framebox" parent="zFWrzQRtxBausERFw3n9-1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#fffdf0;strokeColor=#d6b656;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fontStyle=1;fontSize=16;fontSize=14;" value="CAN message frame (8-byte data message + head/tail)" vertex="1">
+          <mxGeometry height="105" width="390" as="geometry" />
+        </mxCell>
+        <mxCell id="f0" parent="zFWrzQRtxBausERFw3n9-1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#ffffff;strokeColor=#333333;fontSize=13;" value="START" vertex="1">
+          <mxGeometry height="45" width="66.38297872340425" x="16.595744680851062" y="41.25" as="geometry" />
+        </mxCell>
+        <mxCell id="f1" parent="zFWrzQRtxBausERFw3n9-1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#ffffff;strokeColor=#333333;fontSize=13;" value="ID" vertex="1">
+          <mxGeometry height="45" width="49.78723404255319" x="87.12765957446808" y="41.25" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" parent="zFWrzQRtxBausERFw3n9-1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" value="8 bytes&lt;br&gt;(byte 0 … 7)" vertex="1">
+          <mxGeometry height="45" width="141.06382978723403" x="141.06382978723403" y="41.25" as="geometry" />
+        </mxCell>
+        <mxCell id="f3" parent="zFWrzQRtxBausERFw3n9-1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#ffffff;strokeColor=#333333;fontSize=13;" value="CRC" vertex="1">
+          <mxGeometry height="45" width="82.97872340425532" x="286.27659574468083" y="41.25" as="geometry" />
+        </mxCell>
+        <mxCell id="zFWrzQRtxBausERFw3n9-3" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#fffdf0;strokeColor=#d6b656;strokeWidth=2;verticalAlign=top;align=left;spacingLeft=14;spacingTop=8;fontStyle=1;fontSize=16;fontSize=14;" value="timestamp&amp;nbsp;" vertex="1">
+          <mxGeometry height="105" width="90" x="496" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="zFWrzQRtxBausERFw3n9-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;fillColor=#ffffff;strokeColor=#333333;fontSize=13;" value="4 bytes&lt;div&gt;(ms)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="45" width="57.87234042553191" x="510.468085106383" y="341.25" as="geometry" />
+        </mxCell>
+        <mxCell id="zFWrzQRtxBausERFw3n9-8" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=0;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;labelPerimeter=1;legacyAnchorPoints=0;rotation=90;size=0.5;" value="" vertex="1">
+          <mxGeometry height="480" width="30" x="723" y="14" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="2 - Tasks and data table" id="Rak3FmkDO9kqQJ_Z0V68">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;spacingTop=8;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;Task list&lt;/b&gt;&lt;br&gt;&lt;br&gt;1. Identify SD card format&lt;br&gt;2. Identify telem board code version (on GitHub?)&lt;br&gt;3. Identify laptop Python version (on GitHub?)&lt;br&gt;4. How is GPS stored on SD + transmitted?&lt;br&gt;5. Zigbee bandwidth: available max? used?" vertex="1">
+          <mxGeometry height="230" width="640" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeWidth=2;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;spacingTop=8;fillColor=#ffe6cc;strokeColor=#d79b00;dashed=1;" value="&lt;b&gt;Dashboard data table (sketch)&lt;/b&gt;&lt;br&gt;&lt;br&gt;Columns: Speed | GPS | Time | Lat | Long&lt;br&gt;(one row circled on the whiteboard, meaning unconfirmed)" vertex="1">
+          <mxGeometry height="150" width="640" x="40" y="310" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
