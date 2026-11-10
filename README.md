@@ -24,7 +24,7 @@ _The telemetry system for the Peri vehicle (2026 onwards): the BWSC 2023 on-vehi
  Grafana dashboard (not stored in this repository)
 ```
 
-* [SETUP.md](SETUP.md): **building a telemetry laptop from scratch**: Ubuntu (on a laptop, or in a VirtualBox VM with the XBee USB passed through), InfluxDB 1.x and Grafana
+* [SETUP.md](SETUP.md): **building a telemetry laptop from scratch**: Ubuntu (on a laptop, or in a VirtualBox VM with the XBee USB passed through), InfluxDB 1.x, Grafana, and VS Code for development
 * [Telemetry/README.md](Telemetry/README.md): on-vehicle firmware (building, flashing, SD card `config.txt`, radio frame format)
 * [Receiver/README.md](Receiver/README.md): laptop receiver (configuration, DBC decoding, InfluxDB schema, offline tools, testing without hardware)
 * [dbc/SIGNALS.md](dbc/SIGNALS.md): **what every CAN message and signal means**, its unit, and what to query in Grafana (generated from the DBC files; [dbc/README.md](dbc/README.md) introduces CAN and DBC files for non-specialists)
@@ -163,7 +163,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 
 ```
 ├── README.md
-├── SETUP.md                       (building a telemetry laptop: Ubuntu / VirtualBox, InfluxDB, Grafana)
+├── SETUP.md                       (building a telemetry laptop: Ubuntu / VirtualBox, InfluxDB, Grafana, VS Code)
 ├── dbc/                           (CAN database files used to decode messages, by the receiver and the tests)
 │   ├── README.md                  (CAN and DBC files explained, how to change them)
 │   ├── SIGNALS.md                 (generated reference: every message and signal; do not edit)

@@ -10,7 +10,8 @@ _How to build a telemetry laptop from scratch: a fresh Ubuntu install with Influ
  Ubuntu (a dedicated laptop, or a VirtualBox virtual machine)
    ├── telemetry receiver (Python, this repository)
    ├── InfluxDB 1.x      database, port 8086, database "DUSCiESC"
-   └── Grafana           dashboards in a web browser, port 3000
+   ├── Grafana           dashboards in a web browser, port 3000
+   └── VS Code           code editor, for development (optional)
 ```
 
 Everything runs on one machine, and needs no internet connection once it is set up.
@@ -334,7 +335,65 @@ The code is cloned over **SSH**, so that changes made on this machine can be com
 
 ---
 
-## Part 7: Check it end to end, without the car
+## Part 7: Install VS Code for development (optional)
+
+[Visual Studio Code](https://code.visualstudio.com/) (VS Code) is a free code editor from Microsoft, with good Python support: it can run the tests, step through code in a debugger, and commit and push to GitHub. You don't need it just to run telemetry.
+
+It is installed from Microsoft's own software repository, so that `sudo apt upgrade` keeps it up to date along with everything else. (Ubuntu's App Center also offers VS Code as a "snap" package; use the steps below instead, so that all the software on this machine is installed and updated the same way.)
+
+These steps follow Microsoft's instructions at <https://code.visualstudio.com/docs/setup/linux>.
+
+1. Add Microsoft's signing key, which lets Ubuntu check that the software really comes from Microsoft:
+   ```shell
+   sudo apt install -y wget gpg
+   wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft.gpg
+   ```
+2. Add Microsoft's VS Code repository. This command writes the repository details into a new file, `/etc/apt/sources.list.d/vscode.sources`. Paste all eight lines at once:
+   ```shell
+   sudo tee /etc/apt/sources.list.d/vscode.sources > /dev/null << 'EOF'
+   Types: deb
+   URIs: https://packages.microsoft.com/repos/code
+   Suites: stable
+   Components: main
+   Architectures: amd64,arm64,armhf
+   Signed-By: /usr/share/keyrings/microsoft.gpg
+   EOF
+   ```
+3. Install VS Code. Its package is called `code`, and so is the command that starts it:
+   ```shell
+   sudo apt update
+   sudo apt install -y code
+   ```
+4. Install the extensions for Python development:
+   ```shell
+   code --install-extension ms-python.python      # Python: also installs Pylance (code completion) and the Python Debugger
+   code --install-extension ms-python.pylint      # Pylint: style checks, using the repository's pylintrc
+   code --list-extensions                         # check: the list should include ms-python.python and ms-python.pylint
+   ```
+5. Open the repository in VS Code:
+   ```shell
+   code ~/Telemetry2021
+   ```
+   When asked **Do you trust the authors of the files in this folder?**, choose **Yes, I trust the authors**. Otherwise VS Code opens it in restricted mode, with the Python features turned off.
+6. Tell VS Code to use the telemetry virtual environment from [Part 6](#part-6-install-the-telemetry-code):
+   1. Press **Ctrl+Shift+P** to open the Command Palette (VS Code's search box for every command).
+   2. Type `Python: Select Interpreter` and press Enter.
+   3. Choose **Enter interpreter path...** and enter `~/virtualenvs/telemetry/bin/python`.
+
+   VS Code's built-in terminal (**Ctrl+`**, the key above Tab) then activates the virtual environment automatically, so you don't need the `source` command there.
+7. Set up the tests panel, so you can run and debug the tests from VS Code:
+   1. Click the flask icon (**Testing**) in the bar on the left.
+   2. Click **Configure Python Tests**, choose **pytest**, then choose **.** (the root directory).
+
+   The tests are listed and run using the settings in the repository's `pytest.ini`.
+
+These choices are saved in `~/Telemetry2021/.vscode/`, which git ignores, so they stay on this machine and are not committed.
+
+VS Code's **Source Control** panel (the branching icon on the left) shows your changes, and can commit and push them to GitHub using the SSH key from [Part 6](#part-6-install-the-telemetry-code).
+
+---
+
+## Part 8: Check it end to end, without the car
 
 You can send a recorded capture through a pair of virtual serial ports, and watch it arrive in InfluxDB and Grafana. This writes the sample data into the `DUSCiESC` database.
 
@@ -392,5 +451,7 @@ To run telemetry:
 | `git clone` or `ssh -T git@github.com` says `Permission denied (publickey)` | GitHub does not have this machine's public key: repeat steps 3 and 4 of [Part 6](#part-6-install-the-telemetry-code), making sure you copied the whole `.pub` line. `ssh -vT git@github.com` shows which key files it tries |
 | `git push` says `Permission to DUEM/Telemetry2021.git denied` | Your GitHub account can read the repository but not write to it: ask the team for write access |
 | InfluxDB or Grafana not running after a restart | `systemctl is-enabled influxdb grafana-server` should print `enabled` twice. If not: `sudo systemctl enable --now influxdb grafana-server` |
+| `code: command not found` | VS Code is not installed: check that steps 1 to 3 of [Part 7](#part-7-install-vs-code-for-development-optional) ran without errors. `cat /etc/apt/sources.list.d/vscode.sources` should show the six lines from `Types:` to `Signed-By:` in step 2 |
+| VS Code says `No module named ...` or does not find the tests | It is using the wrong Python: repeat step 6 of [Part 7](#part-7-install-vs-code-for-development-optional). The Python version and environment in use are shown at the bottom right of the VS Code window |
 | `pip install` fails with `externally-managed-environment` | The virtual environment is not active: run `source ~/virtualenvs/telemetry/bin/activate` first |
 | `apt` says another process is using it (`Could not get lock`) | Ubuntu is installing updates in the background. Wait a few minutes and try again |
