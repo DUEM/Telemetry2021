@@ -267,15 +267,22 @@ Grafana draws the live dashboards in a web browser. These steps follow the offic
    systemctl status grafana-server         # should say "active (running)"; press q to exit
    systemctl is-enabled grafana-server     # should say "enabled"
    ```
-3. Open a web browser on the Ubuntu machine and go to <http://localhost:3000>. Log in with user **admin**, password **admin**, and choose a new password when asked. (With a bridged VM or a laptop on the telemetry network, other computers can use `http://<ubuntu machine's IP address>:3000`; find the address with `hostname -I`.)
-4. Connect Grafana to InfluxDB:
+3. Allow dashboards to refresh faster. By default Grafana will not refresh a dashboard more often than every 5 seconds, which is too slow for live telemetry. This command changes Grafana's `min_refresh_interval` setting to 250 ms (up to 4 refreshes a second), then restarts Grafana so it takes effect:
+   ```shell
+   sudo sed -i '/^\[dashboards\]/,/^\[/ s/^;\?min_refresh_interval *=.*/min_refresh_interval = 250ms/' /etc/grafana/grafana.ini
+   sudo systemctl restart grafana-server
+   sudo grep -n '^min_refresh_interval' /etc/grafana/grafana.ini     # should show: min_refresh_interval = 250ms
+   ```
+   Grafana's settings are in `/etc/grafana/grafana.ini`. Lines in it starting with `;` are comments showing the default value; the command removes the `;` from the `min_refresh_interval` line in the `[dashboards]` section and sets the new value. It changes nothing else, and is safe to run again. You still choose each dashboard's refresh rate yourself, in the refresh picker at the top right of the dashboard (e.g. `1s`).
+4. Open a web browser on the Ubuntu machine and go to <http://localhost:3000>. Log in with user **admin**, password **admin**, and choose a new password when asked. (With a bridged VM or a laptop on the telemetry network, other computers can use `http://<ubuntu machine's IP address>:3000`; find the address with `hostname -I`.)
+5. Connect Grafana to InfluxDB:
    1. In the menu, go to **Connections → Data sources → Add data source**, and choose **InfluxDB**.
    2. **Query language:** InfluxQL.
    3. **URL:** `http://localhost:8086`
    4. **Database:** `DUSCiESC`
    5. **User** and **Password:** leave empty, or enter the ones from Part 4 if you turned authentication on.
    6. Click **Save & test**. It should report that the data source is working.
-5. Add the telemetry dashboard. The Peri Grafana dashboard is **not** stored in this repository:
+6. Add the telemetry dashboard. The Peri Grafana dashboard is **not** stored in this repository:
    * If you have an exported copy (a `.json` file), go to **Dashboards → New → Import** and upload it.
    * Otherwise, build panels with **Dashboards → New → New dashboard → Add visualization**. Choose the InfluxDB data source, switch the query editor to raw mode (the pencil icon), and enter a query such as:
      ```
@@ -448,6 +455,7 @@ To run telemetry:
 | `curl ... /ping` fails, or `influx` says connection refused | `systemctl status influxdb`. To see its log: `journalctl -u influxdb -n 50` |
 | Grafana does not load at `http://localhost:3000` | `systemctl status grafana-server`, and `journalctl -u grafana-server -n 50` |
 | Grafana **Save & test** fails | Check the URL is `http://localhost:8086`, the query language is InfluxQL, and the database `DUSCiESC` exists (`influx -execute 'SHOW DATABASES'`) |
+| A Grafana dashboard will not refresh faster than every 5 seconds | `min_refresh_interval` is not set: repeat step 3 of [Part 5](#part-5-install-grafana) |
 | A Grafana panel shows "No data" | Most often the **time range**: check it covers the time the data was recorded. Then check the measurement name in double quotes, e.g. `"Tritium/Velocity"`, exactly as in [dbc/SIGNALS.md](dbc/SIGNALS.md) |
 | The receiver logs `Influx rejected write` | Read the message: `database not found` means create the database (Part 4, step 5); `field type conflict` means a field changed type, see [dbc/README.md](dbc/README.md#changing-or-adding-a-message-or-signal) |
 | `git clone` or `ssh -T git@github.com` says `Permission denied (publickey)` | GitHub does not have this machine's public key: repeat steps 3 and 4 of [Part 6](#part-6-install-the-telemetry-code), making sure you copied the whole `.pub` line. `ssh -vT git@github.com` shows which key files it tries |
