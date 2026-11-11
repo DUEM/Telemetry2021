@@ -82,19 +82,16 @@ These directories are git-ignored apart from the sample files `Test1.BIN` and `T
 
 ## Testing without hardware
 
-You can replay a capture through a virtual serial port pair. Note that this **writes to the live `DUSCiESC` database**.
+You can replay a capture through a virtual serial port (needs `sudo apt install socat pv`). Note that this **writes to the live `DUSCiESC` database**.
 
 ```shell
-# terminal 1: create a linked pair of virtual serial ports; note the two /dev/pts/N names it prints
-socat -d -d pty,raw,echo=0 pty,raw,echo=0
+# terminal 1: create a one way virtual serial port, and then replay the sample capture through it at a given rate (2500 bytes per second ~= 20 Kbps)
+pv -L 2500 Receiver/BIN/Test1.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0
 
-# terminal 2: run the receiver and give it the FIRST /dev/pts/N name as the port
+# terminal 2: run the receiver and give it /tmp/ttyV0 as the port (it is not in the list of ports shown, type it anyway)
 #             (don't use "Test1" as the output BIN name, or it will overwrite the file being replayed)
 cd Receiver
 python3 ./Live-Telem-05-09-2024-WIP.py
-
-# terminal 3: feed the sample capture into the SECOND port
-cat BIN/Test1.BIN > /dev/pts/M
 ```
 
-Stop the receiver with Ctrl-C when the output stops.
+The replay starts as soon as terminal 1 runs, and data sent before the receiver opens the port is lost, so answer the receiver's prompts promptly. Stop the receiver with Ctrl-C when the output stops.
