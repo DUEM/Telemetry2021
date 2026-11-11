@@ -116,20 +116,20 @@ So that you can match older data:
 |---|---|---|
 | MPPT `VoltageIn` and `CurrentIn` scaled to V and A | raw (multiply by 0.15049 V and 0.00872 A) | V and A |
 | Motor controller status message renamed | `"Tritium/StausInformation"` | `"Tritium/StatusInformation"` |
-| Motor controller moved to Peri's CAN IDs | base address 0x600 (0x600 to 0x617) | base address 0x300 (0x300 to 0x317), same message and signal names |
-| Driver controls moved to Peri's CAN IDs | 0x501, 0x502 | 0x101, 0x102, same names |
+| Motor controller moved to Ortus-T/Peri's CAN IDs | base address 0x600 (0x600 to 0x617) | base address 0x300 (0x300 to 0x317), same message and signal names |
+| Driver controls moved to Ortus-T/Peri's CAN IDs | 0x501, 0x502 | 0x101, 0x102, same names |
 | Current dial message added | | `"DriverControls/DialCurrent"` (0x500) |
 | Old two-motor set-up removed (`Left_*`, `Right_*`, senders `WaveSculptor20_Right` / `Tritium_Right`, `DriverControls_Right`) | 0x23, 0x41 to 0x43, 0x80 to 0x8E, 0x101 | removed: not on Peri, and 0x080 and 0x101 are used by other devices |
 | Orion messages: 8 bytes, with the checksum in byte 7 | 7 bytes | 8 bytes, new `Checksum` field |
 | Comments, units, ranges, value tables and message periods added | | see [SIGNALS.md](SIGNALS.md) |
 
-The CAN IDs now match Peri as recorded at iESC 2026 (the qualifying capture, a section of which is [Tests/data/NRT.BIN](../Tests/data/NRT.BIN)). Data recorded from the 2024 car, with its controller at 0x600, no longer decodes with these files: use the DBC files from git history (before these changes) for it.
+The CAN IDs now match Ortus-T as recorded at iESC 2026 (the qualifying capture, a section of which is [Tests/data/NRT.BIN](../Tests/data/NRT.BIN)). Data recorded from the 2024 car, with its controller at 0x600, no longer decodes with these files: use the DBC files from git history (before these changes) for it.
 
 The Orion BMS signals and the MPPT `VoltageOut` and `AmbientTemperature` are **still raw values**: their scaling has to come from the Orion BMS profile and the MPPT datasheet (see the TODOs).
 
 ## CAN IDs seen but not decoded
 
-These appear in the iESC 2026 qualifying capture, but are in no DBC file, so the receiver stores them as `ERROR/ID UNRECOGNISED`. Together they are most of the traffic on Peri's CAN bus.
+These appear in the iESC 2026 qualifying capture, but are in no DBC file, so the receiver stores them as `ERROR/ID UNRECOGNISED`. Together they are most of the traffic on Ortus-T's CAN bus.
 
 | ID as received | Data bytes | Period | Notes |
 |---|---|---|---|
@@ -139,7 +139,7 @@ These appear in the iESC 2026 qualifying capture, but are in no DBC file, so the
 
 0xF380 and 0xFF80 are larger than the largest standard (11-bit) CAN ID, 0x7FF. They are almost certainly 29-bit extended IDs: the telemetry board only sends the lowest 16 bits of the ID (see `SendMessage.cpp`), so the rest of the ID is lost. Both end in `80`, which in J1939-style addressing is the sender's address, so they probably come from one device.
 
-TODO: identify the device that sends these (possibly Peri's MPPTs, since the MPPT status messages 0x771 and 0x772 are not in the capture). Decoding extended IDs reliably needs the firmware to send the full 29-bit ID, which changes the radio frame format for the receiver too.
+TODO: identify the device that sends these (possibly MPPTs, since the MPPT status messages 0x771 and 0x772 are not in the capture). Decoding extended IDs reliably needs the firmware to send the full 29-bit ID, which changes the radio frame format for the receiver too.
 
 ## Glossary
 
