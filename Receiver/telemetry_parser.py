@@ -12,6 +12,11 @@ from Receiver.can_dbc_decoder import DbcDecoder
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
+# GPS dates are accepted only for two-digit years in this range (2020 to 2079),
+# see TelemetryParser.update_last_gps_time
+GPS_YEAR_MIN = 20
+GPS_YEAR_MAX = 79
+
 
 class TelemetryParser:
     def __init__(self):
@@ -23,6 +28,8 @@ class TelemetryParser:
         # #round(time.time() * 1000). Using numpy to force unsigned and integer
         # overflows are needed.
         self.time_fetched: uint32 = uint32(0)
+        # True while implausible GPS dates are being ignored (logged once per run)
+        self._gps_date_rejected = False
 
     def __get_time(self, received_millis: uint32) -> datetime:
         # uint32 subtraction already wraps around correctly (e.g. 100 - (2**32 - 1000)
@@ -109,6 +116,19 @@ class TelemetryParser:
 
     def update_last_gps_time(self, gps_message, received_millis_time):
         logger.debug("Updating GPS time...")
+        # Before it has the date from the satellites, the GPS module can report
+        # a default date in 2080 (e.g. 2080-01-06), without a position fix.
+        # Only accept plausible years. A fix is not required: the module often
+        # has the correct time before it has a position.
+        if not GPS_YEAR_MIN <= gps_message["GpsYear"] <= GPS_YEAR_MAX:
+            if not self._gps_date_rejected:
+                logger.warning(
+                    "Ignoring implausible GPS date (year %i) until a valid one arrives: %s",
+                    2000 + gps_message["GpsYear"], str(gps_message),
+                )
+                self._gps_date_rejected = True
+            return
+        self._gps_date_rejected = False
         try:
             self.last_gps_time = datetime(
                 hour=gps_message["GpsHour"],

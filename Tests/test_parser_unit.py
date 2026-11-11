@@ -290,3 +290,64 @@ def test_hex2influx_skips_messages_without_fields():
     from tools.hex2influx import to_point
 
     assert to_point("MpptPollJaved", "Telemetry", {}, datetime(2026, 1, 1, tzinfo=timezone.utc), True) == ""
+
+
+class TestTelemetryParserGpsDate:
+    """GPS time messages (0x0F6) set the clock only when their date is plausible.
+
+    Frames from /run/media/toby/TOBYKEY/DUSC/data/BIN/Test12092006.BIN (12 September 2026).
+    """
+
+    # GPS module's default date before it has the date from the satellites: 2080-01-06, no fix
+    DEFAULT_2080 = "9f 24 01 00 00 f6 08 0f 0b 06 0c 01 50 00 00 64 d0"
+    # correct date and time (2026-09-12 15:12:18) before a position fix
+    NO_FIX_2026 = "04 3e 02 00 00 f6 08 0f 0c 12 0c 09 1a 00 00 74 43"
+    # correct date and time (2026-09-12 15:15:00) with a position fix
+    FIX_2026 = "40 b7 04 00 00 f6 08 0f 0f 00 0c 09 1a 01 01 ea 76"
+
+    @staticmethod
+    def frame(hex_string):
+        return bytearray.fromhex(hex_string)
+
+    def test_default_2080_date_does_not_set_the_clock(self, run_in_receiver, patch_receiver_config):
+        from Receiver.telemetry_parser import TelemetryParser
+
+        parser = TelemetryParser()
+        before = parser.last_gps_time
+
+        name, _, body, _, _ = parser.translate_msg(self.frame(self.DEFAULT_2080))
+
+        assert name == "TimeAndFix" and body["GpsYear"] == 80 and body["GpsFix"] == 0
+        assert parser.last_gps_time == before
+        assert parser.time_fetched == 0
+
+    def test_date_without_a_position_fix_sets_the_clock(self, run_in_receiver, patch_receiver_config):
+        from Receiver.telemetry_parser import TelemetryParser
+
+        parser = TelemetryParser()
+        parser.translate_msg(self.frame(self.NO_FIX_2026))
+
+        assert parser.last_gps_time == datetime(2026, 9, 12, 15, 12, 18, tzinfo=timezone.utc)
+
+    def test_default_date_after_a_valid_one_keeps_the_valid_clock(self, run_in_receiver, patch_receiver_config):
+        from Receiver.telemetry_parser import TelemetryParser
+
+        parser = TelemetryParser()
+        parser.translate_msg(self.frame(self.FIX_2026))      # board millis 0x04b740
+        parser.translate_msg(self.frame(self.DEFAULT_2080))
+
+        assert parser.last_gps_time == datetime(2026, 9, 12, 15, 15, 0, tzinfo=timezone.utc)
+        # a later message (board status, 1 s after the valid date) is timestamped from it, not from 2080
+        _, _, _, msg_time, _ = parser.translate_msg(
+            make_frame(0x111, [1, 255, 255, 103, 0, 0, 0, 0], millis=0x04B740 + 1000)
+        )
+        assert msg_time == datetime(2026, 9, 12, 15, 15, 1, tzinfo=timezone.utc)
+
+    def test_rejected_dates_are_logged_once_per_run(self, run_in_receiver, patch_receiver_config, caplog):
+        from Receiver.telemetry_parser import TelemetryParser
+
+        parser = TelemetryParser()
+        for hex_string in (self.DEFAULT_2080, self.DEFAULT_2080, self.FIX_2026, self.DEFAULT_2080):
+            parser.translate_msg(self.frame(hex_string))
+
+        assert caplog.text.count("Ignoring implausible GPS date") == 2
