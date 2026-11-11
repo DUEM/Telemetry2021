@@ -11,7 +11,7 @@ from tools import dbc_to_markdown
 # in, lower this number to match, so it can only go down. Run
 #     python3 tools/dbc_to_markdown.py
 # and see "Still to be documented" at the end of dbc/SIGNALS.md for the list.
-MAX_TODOS = 52
+MAX_TODOS = 36
 
 
 @pytest.fixture(scope="module")
@@ -65,3 +65,29 @@ def test_value_tables_do_not_change_decoded_values():
     assert (source, name) == ("Telemetry", "SystemStatusMessages")
     assert values["Power"] == 255
     assert type(values["Power"]) is int
+
+
+def test_dbc_comments_about_the_nrt_capture_are_true():
+    """Several dbc comments state what Tests/data/NRT.BIN (iESC 2026 qualifying) contains: keep them honest."""
+    from crccheck.crc import Crc16Modbus
+    from Receiver.frame_reader import read_frames
+
+    frames = [
+        f for f in read_frames(str(dbc_to_markdown.REPO_ROOT / "Tests/data/NRT.BIN"))
+        if len(f) >= 9 and Crc16Modbus.calc(f[:-2]) == int.from_bytes(f[-2:], "big")
+    ]
+    ids = {f[4] << 8 | f[5] for f in frames}
+
+    # seen: controller base 0x300, its reserved message 0x30D, driver controls, current dial
+    assert {0x300, 0x30D, 0x101, 0x102, 0x500} <= ids
+    # not seen: reserved fan message 0x30A, MPPT status replies
+    assert not ids & {0x30A, 0x771, 0x772}
+    # controller identification: device identifier 0x4003 (WaveSculptor22), serial number 3315
+    ident = next(f for f in frames if (f[4] << 8 | f[5]) == 0x300)
+    assert int.from_bytes(ident[7:11], "little") == 0x4003
+    assert int.from_bytes(ident[11:15], "little") == 3315
+    # Orion checksum: (sum of bytes 0 to 6 + offset) & 0xFF, offsets as in dbc/Orion.dbc
+    for can_id, offset in ((0x700, 184), (0x701, 185), (0x702, 0)):
+        orion = [f for f in frames if (f[4] << 8 | f[5]) == can_id]
+        assert orion
+        assert all((sum(f[7:14]) + offset) & 0xFF == f[14] for f in orion)

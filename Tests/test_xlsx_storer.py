@@ -36,7 +36,7 @@ def test_data_written_to_xlsx(nrt_bytes, mock_xlsx_workbook):
     )
 
     # Act
-    storer.store_data(nrt_bytes[20])
+    storer.store_data(nrt_bytes[39])
 
     # Assert
     assert mock_worksheet.cell.call_args_list == [
@@ -46,18 +46,20 @@ def test_data_written_to_xlsx(nrt_bytes, mock_xlsx_workbook):
         call(column=4, row=1, value='Item'),
         call(column=5, row=1, value='Data...'),
         call(column=21, row=1, value='CRC check'),
-        call(column=1, row=2, value=datetime(1970, 1, 1, 3, 0, 1, 880000)),
-        call(column=2, row=2, value=datetime(1970, 1, 1, 3, 0, 1, 880000)),
+        call(column=1, row=2, value=datetime(1970, 1, 1, 3, 22, 23, 552000)),
+        call(column=2, row=2, value=datetime(1970, 1, 1, 3, 22, 23, 552000)),
         call(column=3, row=2, value="Orion"),
         call(column=4, row=2, value="PackParameters"),
         call(column=5, row=2, value="PackCurrent"),
         call(column=6, row=2, value=0),
         call(column=7, row=2, value="PackInstVoltage"),
-        call(column=8, row=2, value=1305),
+        call(column=8, row=2, value=1179),
         call(column=9, row=2, value="PackSoc"),
-        call(column=10, row=2, value=159),
+        call(column=10, row=2, value=148),
         call(column=11, row=2, value="RelayState"),
-        call(column=12, row=2, value=32843),
+        call(column=12, row=2, value=75),
+        call(column=13, row=2, value="Checksum"),
+        call(column=14, row=2, value=54),
         call(column=21, row=2, value=True),
     ]
     mock_workbook.save.assert_called_once_with("mock.xlsx")

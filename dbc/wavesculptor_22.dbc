@@ -33,423 +33,224 @@ NS_ :
 
 BS_:
 
-BU_: Tritium Tritium_Right DriverControls DriverControls_Right
+BU_: Tritium DriverControls
 
 
 BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
  SG_ Reserved2 : 32|32@1- (1,0) [0|0] "C" Vector__XXX
 
-BO_ 1536 IdentificationInfo: 8 Tritium
+BO_ 768 IdentificationInfo: 8 Tritium
  SG_ TritiumId : 0|32@1+ (1,0) [0|0] "" Vector__XXX
  SG_ SerialNumber : 32|32@1+ (1,0) [0|0] "" Vector__XXX
 
-BO_ 1537 StatusInformation: 8 Tritium
+BO_ 769 StatusInformation: 8 Tritium
  SG_ ActiveMotor : 32|8@1+ (1,0) [0|0] "" Vector__XXX
  SG_ ErrorFlags : 16|8@1+ (1,0) [0|0] "" Vector__XXX
  SG_ LimitFlags : 0|8@1+ (1,0) [0|0] "" Vector__XXX
  SG_ TransmitErrorCount : 48|4@1+ (1,0) [0|0] "" Vector__XXX
  SG_ ReceiveErrorCount : 56|4@1+ (1,0) [0|0] "" Vector__XXX
 
-BO_ 257 Left_Status: 8 Tritium
- SG_ ActiveMotor : 32|16@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagHWOvercurrent : 16|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagSWOvercurrent : 17|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagDCBusOvervoltage : 18|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagMotorPositionHallSequence : 19|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagWatchdog : 20|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagConfigRead : 21|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlag15VUndervoltage : 22|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagBridgePWM : 0|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagMotorCurrent : 1|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagVelocity : 2|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagBusCurrent : 3|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagBusVoltageUpperLimit : 4|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagBusVoltageLowerLimit : 5|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagHeatsinkTemperature : 6|1@1+ (1,0) [0|0] "" Vector__XXX
 
-BO_ 1538 BusMeasurement: 8 Tritium
+BO_ 770 BusMeasurement: 8 Tritium
  SG_ BusVoltage : 0|32@1- (1,0) [0|0] "V" Vector__XXX
  SG_ BusCurrent : 32|32@1- (1,0) [0|0] "A" Vector__XXX
 
-BO_ 1539 Velocity: 8 Tritium
+BO_ 771 Velocity: 8 Tritium
  SG_ MotorVelocity : 0|32@1- (1,0) [0|0] "rpm" Vector__XXX
  SG_ VehicleVelocity : 32|32@1- (1,0) [0|0] "m/s" Vector__XXX
 
-BO_ 1540 PhaseCurrent: 8 Tritium
+BO_ 772 PhaseCurrent: 8 Tritium
  SG_ PhaseBCurrent : 0|32@1- (1,0) [0|0] "A_rms" Vector__XXX
  SG_ PhaseCCurrent : 32|32@1- (1,0) [0|0] "A_rms" Vector__XXX
 
-BO_ 1541 MotorVoltageVector: 8 Tritium
+BO_ 773 MotorVoltageVector: 8 Tritium
  SG_ VectVoltImag : 0|32@1- (1,0) [0|0] "V" Vector__XXX
  SG_ VectVoltReal : 32|32@1- (1,0) [0|0] "V" Vector__XXX
 
-BO_ 1542 MotorCurrentVector: 8 Tritium
+BO_ 774 MotorCurrentVector: 8 Tritium
  SG_ VectCurrImag : 0|32@1- (1,0) [0|0] "A" Vector__XXX
  SG_ VectCurrReal : 32|32@1- (1,0) [0|0] "A" Vector__XXX
 
-BO_ 1543 MotorBackemfVector: 8 Tritium
+BO_ 775 MotorBackemfVector: 8 Tritium
  SG_ PeakBackEmfPhaseToNeutral : 0|32@1- (1,0) [0|0] "V" Vector__XXX
  SG_ BackEmfD : 32|32@1- (1,0) [0|0] "V" Vector__XXX
 
-BO_ 1544 Rail_15V: 8 Tritium
+BO_ 776 Rail_15V: 8 Tritium
  SG_ Reserved : 0|32@1- (1,0) [0|0] "V" Vector__XXX
  SG_ FifteenVSupply : 32|32@1- (1,0) [0|0] "V" Vector__XXX
 
-BO_ 1545 Rail_3_3VAnd1_9V: 8 Tritium
+BO_ 777 Rail_3_3VAnd1_9V: 8 Tritium
  SG_ ThreeThreeVSupply : 32|32@1- (1,0) [0|0] "V" Vector__XXX
  SG_ OneNineVSupply : 0|32@1- (1,0) [0|0] "V" Vector__XXX
 
-BO_ 1546 Reserved1: 8 Tritium
+BO_ 778 Reserved1: 8 Tritium
  SG_ VoltagePercentage : 0|32@1- (1,0) [0|0] "%" Vector__XXX
  SG_ FanSpeed : 32|32@1- (1,0) [0|0] "rpm" Vector__XXX
 
-BO_ 1547 SinkMotorTemperature: 8 Tritium
+BO_ 779 SinkMotorTemperature: 8 Tritium
  SG_ MotorTemp : 0|32@1- (1,0) [0|0] "C" Vector__XXX
  SG_ HeatSinkTemp : 32|32@1- (1,0) [0|0] "C" Vector__XXX
 
-BO_ 1548 DspBoardTemperature: 8 Tritium
+BO_ 780 DspBoardTemperature: 8 Tritium
  SG_ DspBoardTemp : 0|32@1- (1,0) [0|0] "C" Vector__XXX
  SG_ Reserved : 32|32@1- (1,0) [0|0] "C" Vector__XXX
 
-BO_ 1549 Reserved: 8 Tritium
+BO_ 781 Reserved: 8 Tritium
  SG_ Reserved : 32|32@1- (1,0) [0|0] "C" Vector__XXX
 
-BO_ 1550 OdoBusAmphours: 8 Tritium
+BO_ 782 OdoBusAmphours: 8 Tritium
  SG_ Odometer : 0|32@1- (1,0) [0|0] "m" Vector__XXX
  SG_ DcBusAmpHours : 32|32@1- (1,0) [0|0] "Ah" Vector__XXX
 
-BO_ 128 Right_IDInfo: 8 Tritium_Right
- SG_ TritiumID : 0|32@1+ (1,0) [0|0] "" Vector__XXX
- SG_ SerialNumber : 32|32@1+ (1,0) [0|0] "" Vector__XXX
 
-BO_ 1559 SlipSpeedMeasurement: 8 Tritium
+BO_ 791 SlipSpeedMeasurement: 8 Tritium
  SG_ Reserved : 0|32@1- (1,0) [0|0] "C" Vector__XXX
  SG_ SlipSpeed : 32|32@1- (1,0) [0|0] "Hz" Vector__XXX
 
-BO_ 129 Right_Status: 8 Tritium_Right
- SG_ ActiveMotor : 32|16@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagHWOvercurrent : 16|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagSWOvercurrent : 17|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagDCBusOvervoltage : 18|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagMotorPositionHallSequence : 19|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagWatchdog : 20|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlagConfigRead : 21|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlag15VUndervoltage : 22|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagBridgePWM : 0|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagMotorCurrent : 1|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagVelocity : 2|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagBusCurrent : 3|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagBusVoltageUpperLimit : 4|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagBusVoltageLowerLimit : 5|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlagHeatsinkTemperature : 6|1@1+ (1,0) [0|0] "" Vector__XXX
 
-BO_ 130 Right_BusMeasurement: 8 Tritium_Right
- SG_ BusVoltage : 0|32@1- (1,0) [0|0] "V" Vector__XXX
- SG_ BusCurrent : 32|32@1- (1,0) [0|0] "A" Vector__XXX
 
-BO_ 131 Right_VelocityMeasurement: 8 Tritium_Right
- SG_ MotorVelocity : 0|32@1- (1,0) [0|0] "rpm" Vector__XXX
- SG_ VehicleVelocity : 32|32@1- (1,0) [0|0] "m/s" Vector__XXX
 
-BO_ 132 Right_PhaseCurrentMeasurement: 8 Tritium_Right
- SG_ PhaseCurrentB : 0|32@1- (1,0) [0|0] "A_rms" Vector__XXX
- SG_ PhaseCurrentA : 32|32@1- (1,0) [0|0] "A_rms" Vector__XXX
 
-BO_ 133 Right_MotorVoltageVectorMeasurement: 8 Tritium_Right
- SG_ Vq : 0|32@1- (1,0) [0|0] "V" Vector__XXX
- SG_ Vd : 32|32@1- (1,0) [0|0] "V" Vector__XXX
 
-BO_ 134 Right_MotorCurrentVectorMeasurement: 8 Tritium_Right
- SG_ Iq : 0|32@1- (1,0) [0|0] "A" Vector__XXX
- SG_ Id : 32|32@1- (1,0) [0|0] "A" Vector__XXX
 
-BO_ 135 Right_MotorBackEmfMeasurementPrediction: 8 Tritium_Right
- SG_ BEMFq : 0|32@1- (1,0) [0|0] "V" Vector__XXX
- SG_ BEMFd : 32|32@1- (1,0) [0|0] "V" Vector__XXX
 
-BO_ 136 Right_VoltageRail15V1V65Measurement: 8 Tritium_Right
- SG_ Reference1V65 : 0|32@1- (1,0) [0|0] "V" Vector__XXX
- SG_ Supply15V : 32|32@1- (1,0) [0|0] "V" Vector__XXX
 
-BO_ 137 Right_VoltageRail2V51V2Measurement: 8 Tritium_Right
- SG_ Supply2V5 : 32|32@1- (1,0) [0|0] "V" Vector__XXX
- SG_ Supply1V2 : 0|32@1- (1,0) [0|0] "V" Vector__XXX
 
-BO_ 138 Right_FanSpeedMeasurement: 8 Tritium_Right
- SG_ VoltagePercentage : 0|32@1- (1,0) [0|0] "%" Vector__XXX
- SG_ FanSpeed : 32|32@1- (1,0) [0|0] "rpm" Vector__XXX
 
-BO_ 139 Right_SinkMotorTempMeasurement: 8 Tritium_Right
- SG_ MotorTemp : 0|32@1- (1,0) [0|0] "C" Vector__XXX
- SG_ HeatsinkTemp : 32|32@1- (1,0) [0|0] "C" Vector__XXX
 
-BO_ 140 Right_AirInCpuTempMeasurement: 8 Tritium_Right
- SG_ ProcessorTemp : 0|32@1- (1,0) [0|0] "C" Vector__XXX
- SG_ AirInletTemp : 32|32@1- (1,0) [0|0] "C" Vector__XXX
 
-BO_ 141 Right_AirOutCapTempMeasurement: 8 Tritium_Right
- SG_ CapacitorTemp : 0|32@1- (1,0) [0|0] "C" Vector__XXX
- SG_ AirOutTemp : 32|32@1- (1,0) [0|0] "C" Vector__XXX
 
-BO_ 142 Right_OdometerBusAhMeasurement: 8 Tritium_Right
- SG_ Odometer : 0|32@1- (1,0) [0|0] "m" Vector__XXX
- SG_ DCBus : 32|32@1- (1,0) [0|0] "Ah" Vector__XXX
 
-BO_ 1281 SpeedValCurrVal: 8 DriverControls
+BO_ 257 SpeedValCurrVal: 8 DriverControls
  SG_ DriverSetSpeed : 0|32@1- (1,0) [0|0] "m/s" Vector__XXX
  SG_ DriverSetCurrent : 32|32@1- (1,0) [0|0] "%" Vector__XXX
 
-BO_ 1282 Maxbuscurrent: 8 DriverControls
+BO_ 258 Maxbuscurrent: 8 DriverControls
  SG_ MaxBusCurrent : 32|32@1- (1,0) [0|0] "%" Vector__XXX
  SG_ Zero : 0|32@1- (1,0) [0|0] "" Vector__XXX
 
-BO_ 35 Left_ResetCommand: 8 DriverControls
-
-BO_ 65 Right_DriveCommand: 8 DriverControls_Right
- SG_ MotorCurrent : 32|32@1- (1,0) [0|0] "%" Vector__XXX
- SG_ MotorVelocity : 0|32@1- (1,0) [0|0] "m/s" Vector__XXX
-
-BO_ 66 Right_MotorPowerCommand: 8 DriverControls_Right
- SG_ BusCurrent : 32|32@1- (1,0) [0|0] "%" Vector__XXX
-
-BO_ 67 Right_ResetCommand: 8 DriverControls_Right
 
 
-CM_ BU_ Tritium "Tritium WaveSculptor motor controller: drives the motor and reports its speed, currents, voltages and temperatures. Its messages in this file use base address 0x600 (0x600 to 0x617), as seen in Tests/data/NRT.BIN. TODO: add the controller model and firmware version fitted to Peri.";
-CM_ BU_ Tritium_Right "Second (right) motor controller, from an earlier two-motor set-up. TODO: add whether Peri has a second motor controller; if not, remove its messages (0x80 to 0x8E) from this file.";
-CM_ BU_ DriverControls "Driver controls: send the driver's drive and power commands to the motor controller (base address 0x500).";
-CM_ BU_ DriverControls_Right "Driver controls for the second (right) motor controller, from an earlier two-motor set-up. TODO: add whether Peri uses these; if not, remove their messages (0x41 to 0x43) from this file.";
+
+BO_ 1280 DialCurrent: 8 DriverControls
+ SG_ DriverSetDialCurrent : 0|32@1- (1,0) [0|0] "" Vector__XXX
+ SG_ TotalAcMotorCurrent : 32|32@1- (1,0) [0|0] "" Vector__XXX
+
+
+
+CM_ BU_ Tritium "Tritium WaveSculptor22 motor controller: drives the motor and reports its speed, currents, voltages and temperatures. Base address 0x300 (messages 0x300 to 0x317), as in Tests/data/NRT.BIN (iESC 2026 qualifying), where it reports device identifier 0x4003 (WaveSculptor22) and serial number 3315. The 2024 car's controller used base address 0x600. TODO: add the controller firmware version.";
+CM_ BU_ DriverControls "Driver controls: send the driver's drive and power commands to the motor controller (base address 0x100), and the current dial setting (0x500).";
 CM_ BO_ 3221225472 "Placeholder created by the Vector DBC editor to hold signals that are not in any message. Never sent on the bus.";
 CM_ SG_ 3221225472 Reserved2 "Not used.";
-CM_ BO_ 1536 "Motor controller identification. Sent once a second.";
-CM_ SG_ 1536 TritiumId "Device identifier, fixed for the model (sent as the characters TRIa on some models).";
-CM_ SG_ 1536 SerialNumber "Device serial number, allocated at manufacture.";
-CM_ BO_ 1537 "Motor controller status: which limits are active, errors, and CAN error counts.";
-CM_ SG_ 1537 ActiveMotor "Index of the motor profile currently in use.";
-CM_ SG_ 1537 ErrorFlags "Error flags, one bit each (bit 0 hardware over current, bit 1 software over current, bit 2 DC bus over voltage, bit 3 bad motor position hall sequence, bit 4 watchdog caused the last reset, bit 5 config read error, bit 6 15 V rail under voltage lock out). 0 = no errors. TODO: add the remaining bits from the WaveSculptor22 user manual.";
-CM_ SG_ 1537 LimitFlags "Which limit is currently restricting the controller's output, one bit each (bit 0 bridge PWM, bit 1 motor current, bit 2 velocity, bit 3 bus current, bit 4 bus voltage upper limit, bit 5 bus voltage lower limit, bit 6 heatsink temperature).";
-CM_ SG_ 1537 TransmitErrorCount "Number of CAN transmit errors counted by the controller.";
-CM_ SG_ 1537 ReceiveErrorCount "Number of CAN receive errors counted by the controller.";
-CM_ BO_ 257 "Left motor controller status. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 257 ActiveMotor "Index of the motor profile currently in use.";
-CM_ SG_ 257 ErrorFlagHWOvercurrent "1 = hardware over current error.";
-CM_ SG_ 257 ErrorFlagSWOvercurrent "1 = software over current error.";
-CM_ SG_ 257 ErrorFlagDCBusOvervoltage "1 = DC bus over voltage error.";
-CM_ SG_ 257 ErrorFlagMotorPositionHallSequence "1 = bad motor position hall sequence error.";
-CM_ SG_ 257 ErrorFlagWatchdog "1 = the watchdog caused the last reset.";
-CM_ SG_ 257 ErrorFlagConfigRead "1 = config read error (some settings may have been reset to defaults).";
-CM_ SG_ 257 ErrorFlag15VUndervoltage "1 = a 15 V rail under voltage lock out occurred.";
-CM_ SG_ 257 LimitFlagBridgePWM "1 = output is being limited by the bridge PWM.";
-CM_ SG_ 257 LimitFlagMotorCurrent "1 = output is being limited by the motor current limit.";
-CM_ SG_ 257 LimitFlagVelocity "1 = output is being limited by the velocity limit.";
-CM_ SG_ 257 LimitFlagBusCurrent "1 = output is being limited by the bus current limit.";
-CM_ SG_ 257 LimitFlagBusVoltageUpperLimit "1 = output is being limited by the bus voltage upper limit.";
-CM_ SG_ 257 LimitFlagBusVoltageLowerLimit "1 = output is being limited by the bus voltage lower limit.";
-CM_ SG_ 257 LimitFlagHeatsinkTemperature "1 = output is being limited by the heatsink temperature.";
-CM_ BO_ 1538 "Battery-side (DC bus) voltage and current at the motor controller.";
-CM_ SG_ 1538 BusVoltage "DC bus (battery) voltage at the controller.";
-CM_ SG_ 1538 BusCurrent "Current drawn from the DC bus (battery) by the controller.";
-CM_ BO_ 1539 "Motor speed and vehicle speed.";
-CM_ SG_ 1539 MotorVelocity "Motor speed in revolutions per minute.";
-CM_ SG_ 1539 VehicleVelocity "Vehicle speed in metres per second, calculated by the controller from the motor speed and the wheel size set in its configuration.";
-CM_ BO_ 1540 "Current in two of the motor's three phases.";
-CM_ SG_ 1540 PhaseBCurrent "RMS current in motor phase B.";
-CM_ SG_ 1540 PhaseCCurrent "RMS current in motor phase C.";
-CM_ BO_ 1541 "Voltage applied to the motor, as a vector (mainly for motor tuning).";
-CM_ SG_ 1541 VectVoltImag "Imaginary component of the voltage vector applied to the motor.";
-CM_ SG_ 1541 VectVoltReal "Real component of the voltage vector applied to the motor.";
-CM_ BO_ 1542 "Current in the motor, as a vector (mainly for motor tuning).";
-CM_ SG_ 1542 VectCurrImag "Imaginary component of the motor current vector. This is the current that produces torque.";
-CM_ SG_ 1542 VectCurrReal "Real component of the motor current vector: the field current of the motor.";
-CM_ BO_ 1543 "Back-EMF (the voltage generated by the spinning motor), as a vector.";
-CM_ SG_ 1543 PeakBackEmfPhaseToNeutral "Peak phase to neutral back-EMF voltage of the motor.";
-CM_ SG_ 1543 BackEmfD "By definition always 0 V.";
-CM_ BO_ 1544 "Voltage of the controller's internal 15 V supply rail.";
-CM_ SG_ 1544 Reserved "Reserved, not used.";
-CM_ SG_ 1544 FifteenVSupply "Actual voltage of the internal 15 V supply rail.";
-CM_ BO_ 1545 "Voltages of the controller's internal 3.3 V and 1.9 V supply rails.";
-CM_ SG_ 1545 ThreeThreeVSupply "Actual voltage of the internal 3.3 V supply rail.";
-CM_ SG_ 1545 OneNineVSupply "Actual voltage of the internal 1.9 V (processor) supply rail.";
-CM_ BO_ 1546 "Cooling fan drive and speed (WaveSculptor20 layout). Marked reserved and not active in Tests/data/CANBusConfig.xlsm, and not seen in Tests/data/NRT.BIN. TODO: add whether Peri's motor controller sends this message; if not, remove it.";
-CM_ SG_ 1546 VoltagePercentage "Drive voltage to the cooling fan, in percent. Above 0 % the fan should be spinning.";
-CM_ SG_ 1546 FanSpeed "Cooling fan speed in revolutions per minute.";
-CM_ BO_ 1547 "Motor and controller heatsink temperatures.";
-CM_ SG_ 1547 MotorTemp "Internal temperature of the motor.";
-CM_ SG_ 1547 HeatSinkTemp "Surface temperature of the controller's heatsink.";
-CM_ BO_ 1548 "Temperature of the controller's processor board.";
-CM_ SG_ 1548 DspBoardTemp "Temperature of the controller's processor (DSP) board.";
-CM_ SG_ 1548 Reserved "Reserved, not used.";
-CM_ BO_ 1549 "Reserved message: marked reserved and not active in Tests/data/CANBusConfig.xlsm, but it does appear in Tests/data/NRT.BIN. TODO: add what Peri's motor controller sends in this message (base address + 0x0D), from the WaveSculptor22 user manual.";
-CM_ SG_ 1549 Reserved "Reserved. TODO: add its meaning, see the message comment.";
-CM_ BO_ 1550 "Distance travelled and charge used since the controller was reset.";
-CM_ SG_ 1550 Odometer "Distance the vehicle has travelled since the controller was reset.";
-CM_ SG_ 1550 DcBusAmpHours "Charge drawn from the DC bus (battery) since the controller was reset.";
-CM_ BO_ 128 "Right motor controller identification. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 128 TritiumID "Device identifier, fixed for the model (sent as the characters TRIa on some models).";
-CM_ SG_ 128 SerialNumber "Device serial number, allocated at manufacture.";
-CM_ BO_ 1559 "Slip speed (only meaningful with an induction motor).";
-CM_ SG_ 1559 Reserved "Reserved, not used.";
-CM_ SG_ 1559 SlipSpeed "Slip speed when driving an induction motor.";
-CM_ BO_ 129 "Right motor controller status. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 129 ActiveMotor "Index of the motor profile currently in use.";
-CM_ SG_ 129 ErrorFlagHWOvercurrent "1 = hardware over current error.";
-CM_ SG_ 129 ErrorFlagSWOvercurrent "1 = software over current error.";
-CM_ SG_ 129 ErrorFlagDCBusOvervoltage "1 = DC bus over voltage error.";
-CM_ SG_ 129 ErrorFlagMotorPositionHallSequence "1 = bad motor position hall sequence error.";
-CM_ SG_ 129 ErrorFlagWatchdog "1 = the watchdog caused the last reset.";
-CM_ SG_ 129 ErrorFlagConfigRead "1 = config read error (some settings may have been reset to defaults).";
-CM_ SG_ 129 ErrorFlag15VUndervoltage "1 = a 15 V rail under voltage lock out occurred.";
-CM_ SG_ 129 LimitFlagBridgePWM "1 = output is being limited by the bridge PWM.";
-CM_ SG_ 129 LimitFlagMotorCurrent "1 = output is being limited by the motor current limit.";
-CM_ SG_ 129 LimitFlagVelocity "1 = output is being limited by the velocity limit.";
-CM_ SG_ 129 LimitFlagBusCurrent "1 = output is being limited by the bus current limit.";
-CM_ SG_ 129 LimitFlagBusVoltageUpperLimit "1 = output is being limited by the bus voltage upper limit.";
-CM_ SG_ 129 LimitFlagBusVoltageLowerLimit "1 = output is being limited by the bus voltage lower limit.";
-CM_ SG_ 129 LimitFlagHeatsinkTemperature "1 = output is being limited by the heatsink temperature.";
-CM_ BO_ 130 "Right motor controller DC bus voltage and current. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 130 BusVoltage "DC bus (battery) voltage at the controller.";
-CM_ SG_ 130 BusCurrent "Current drawn from the DC bus (battery) by the controller.";
-CM_ BO_ 131 "Right motor controller motor and vehicle speed. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 131 MotorVelocity "Motor speed in revolutions per minute.";
-CM_ SG_ 131 VehicleVelocity "Vehicle speed in metres per second.";
-CM_ BO_ 132 "Right motor controller phase currents. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 132 PhaseCurrentB "RMS current in motor phase B.";
-CM_ SG_ 132 PhaseCurrentA "RMS current in motor phase A.";
-CM_ BO_ 133 "Right motor controller motor voltage vector. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 133 Vq "Imaginary component of the voltage vector applied to the motor.";
-CM_ SG_ 133 Vd "Real component of the voltage vector applied to the motor.";
-CM_ BO_ 134 "Right motor controller motor current vector. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 134 Iq "Imaginary component of the motor current vector. This is the current that produces torque.";
-CM_ SG_ 134 Id "Real component of the motor current vector: the field current of the motor.";
-CM_ BO_ 135 "Right motor controller back-EMF vector. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 135 BEMFq "Peak phase to neutral back-EMF voltage of the motor.";
-CM_ SG_ 135 BEMFd "By definition always 0 V.";
-CM_ BO_ 136 "Right motor controller 15 V rail and 1.65 V reference. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 136 Reference1V65 "Actual voltage of the 1.65 V analogue reference.";
-CM_ SG_ 136 Supply15V "Actual voltage of the internal 15 V supply rail.";
-CM_ BO_ 137 "Right motor controller 2.5 V and 1.2 V rails. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 137 Supply2V5 "Actual voltage of the 2.5 V (FPGA) supply rail.";
-CM_ SG_ 137 Supply1V2 "Actual voltage of the 1.2 V (processor) supply rail.";
-CM_ BO_ 138 "Right motor controller cooling fan. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 138 VoltagePercentage "Drive voltage to the cooling fan, in percent. Above 0 % the fan should be spinning.";
-CM_ SG_ 138 FanSpeed "Cooling fan speed in revolutions per minute.";
-CM_ BO_ 139 "Right motor controller motor and heatsink temperatures. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 139 MotorTemp "Internal temperature of the motor.";
-CM_ SG_ 139 HeatsinkTemp "Surface temperature of the controller's heatsink.";
-CM_ BO_ 140 "Right motor controller processor and air inlet temperatures. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 140 ProcessorTemp "Temperature of the controller's processor.";
-CM_ SG_ 140 AirInletTemp "Air temperature at the controller's ventilation inlet.";
-CM_ BO_ 141 "Right motor controller capacitor and air outlet temperatures. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 141 CapacitorTemp "Temperature of the internal bus capacitors. Not used on the 20 kW WaveSculptor.";
-CM_ SG_ 141 AirOutTemp "Air temperature at the controller's ventilation outlet. Not used on the 20 kW WaveSculptor.";
-CM_ BO_ 142 "Right motor controller odometer and charge used. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 142 Odometer "Distance the vehicle has travelled since the controller was reset.";
-CM_ SG_ 142 DCBus "Charge drawn from the DC bus (battery) since the controller was reset.";
-CM_ BO_ 1281 "Drive command from the driver controls to the motor controller: target speed and motor current.";
-CM_ SG_ 1281 DriverSetSpeed "Target motor speed requested by the driver controls, in metres per second.";
-CM_ SG_ 1281 DriverSetCurrent "Motor current requested by the driver controls, as a percentage of the controller's maximum current setting. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual.";
-CM_ BO_ 1282 "Power command from the driver controls: limit on the current drawn from the battery.";
-CM_ SG_ 1282 MaxBusCurrent "Limit on current drawn from the DC bus (battery), as a percentage of the controller's absolute bus current limit. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual.";
-CM_ SG_ 1282 Zero "Reserved, always 0.";
-CM_ BO_ 35 "Reset command for the left motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ BO_ 65 "Drive command for the right motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 65 MotorCurrent "Motor current requested, as a percentage of the controller's maximum current setting. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual.";
-CM_ SG_ 65 MotorVelocity "Target motor speed requested, in metres per second.";
-CM_ BO_ 66 "Power command for the right motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
-CM_ SG_ 66 BusCurrent "Limit on current drawn from the DC bus (battery), as a percentage of the controller's absolute bus current limit.";
-CM_ BO_ 67 "Reset command for the right motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.";
+CM_ BO_ 768 "Motor controller identification. Sent once a second.";
+CM_ SG_ 768 TritiumId "Device identifier, fixed for the model (sent as the characters TRIa on some models).";
+CM_ SG_ 768 SerialNumber "Device serial number, allocated at manufacture.";
+CM_ BO_ 769 "Motor controller status: which limits are active, errors, and CAN error counts.";
+CM_ SG_ 769 ActiveMotor "Index of the motor profile currently in use.";
+CM_ SG_ 769 ErrorFlags "Error flags, one bit each (bit 0 hardware over current, bit 1 software over current, bit 2 DC bus over voltage, bit 3 bad motor position hall sequence, bit 4 watchdog caused the last reset, bit 5 config read error, bit 6 15 V rail under voltage lock out). 0 = no errors. TODO: add the remaining bits from the WaveSculptor22 user manual.";
+CM_ SG_ 769 LimitFlags "Which limit is currently restricting the controller's output, one bit each (bit 0 bridge PWM, bit 1 motor current, bit 2 velocity, bit 3 bus current, bit 4 bus voltage upper limit, bit 5 bus voltage lower limit, bit 6 heatsink temperature).";
+CM_ SG_ 769 TransmitErrorCount "Number of CAN transmit errors counted by the controller.";
+CM_ SG_ 769 ReceiveErrorCount "Number of CAN receive errors counted by the controller.";
+CM_ BO_ 770 "Battery-side (DC bus) voltage and current at the motor controller.";
+CM_ SG_ 770 BusVoltage "DC bus (battery) voltage at the controller.";
+CM_ SG_ 770 BusCurrent "Current drawn from the DC bus (battery) by the controller.";
+CM_ BO_ 771 "Motor speed and vehicle speed.";
+CM_ SG_ 771 MotorVelocity "Motor speed in revolutions per minute.";
+CM_ SG_ 771 VehicleVelocity "Vehicle speed in metres per second, calculated by the controller from the motor speed and the wheel size set in its configuration.";
+CM_ BO_ 772 "Current in two of the motor's three phases.";
+CM_ SG_ 772 PhaseBCurrent "RMS current in motor phase B.";
+CM_ SG_ 772 PhaseCCurrent "RMS current in motor phase C.";
+CM_ BO_ 773 "Voltage applied to the motor, as a vector (mainly for motor tuning).";
+CM_ SG_ 773 VectVoltImag "Imaginary component of the voltage vector applied to the motor.";
+CM_ SG_ 773 VectVoltReal "Real component of the voltage vector applied to the motor.";
+CM_ BO_ 774 "Current in the motor, as a vector (mainly for motor tuning).";
+CM_ SG_ 774 VectCurrImag "Imaginary component of the motor current vector. This is the current that produces torque.";
+CM_ SG_ 774 VectCurrReal "Real component of the motor current vector: the field current of the motor.";
+CM_ BO_ 775 "Back-EMF (the voltage generated by the spinning motor), as a vector.";
+CM_ SG_ 775 PeakBackEmfPhaseToNeutral "Peak phase to neutral back-EMF voltage of the motor.";
+CM_ SG_ 775 BackEmfD "By definition always 0 V.";
+CM_ BO_ 776 "Voltage of the controller's internal 15 V supply rail.";
+CM_ SG_ 776 Reserved "Reserved, not used.";
+CM_ SG_ 776 FifteenVSupply "Actual voltage of the internal 15 V supply rail.";
+CM_ BO_ 777 "Voltages of the controller's internal 3.3 V and 1.9 V supply rails.";
+CM_ SG_ 777 ThreeThreeVSupply "Actual voltage of the internal 3.3 V supply rail.";
+CM_ SG_ 777 OneNineVSupply "Actual voltage of the internal 1.9 V (processor) supply rail.";
+CM_ BO_ 778 "Cooling fan drive and speed (WaveSculptor20 layout). Marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), and not seen in Tests/data/NRT.BIN. TODO: add whether Peri's motor controller sends this message; if not, remove it.";
+CM_ SG_ 778 VoltagePercentage "Drive voltage to the cooling fan, in percent. Above 0 % the fan should be spinning.";
+CM_ SG_ 778 FanSpeed "Cooling fan speed in revolutions per minute.";
+CM_ BO_ 779 "Motor and controller heatsink temperatures.";
+CM_ SG_ 779 MotorTemp "Internal temperature of the motor.";
+CM_ SG_ 779 HeatSinkTemp "Surface temperature of the controller's heatsink.";
+CM_ BO_ 780 "Temperature of the controller's processor board.";
+CM_ SG_ 780 DspBoardTemp "Temperature of the controller's processor (DSP) board.";
+CM_ SG_ 780 Reserved "Reserved, not used.";
+CM_ BO_ 781 "Reserved message: marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), but it does appear in Tests/data/NRT.BIN. TODO: add what Peri's motor controller sends in this message (base address + 0x0D), from the WaveSculptor22 user manual.";
+CM_ SG_ 781 Reserved "Reserved. TODO: add its meaning, see the message comment.";
+CM_ BO_ 782 "Distance travelled and charge used since the controller was reset.";
+CM_ SG_ 782 Odometer "Distance the vehicle has travelled since the controller was reset.";
+CM_ SG_ 782 DcBusAmpHours "Charge drawn from the DC bus (battery) since the controller was reset.";
+CM_ BO_ 791 "Slip speed (only meaningful with an induction motor).";
+CM_ SG_ 791 Reserved "Reserved, not used.";
+CM_ SG_ 791 SlipSpeed "Slip speed when driving an induction motor.";
+CM_ BO_ 257 "Drive command from the driver controls to the motor controller: target speed and motor current.";
+CM_ SG_ 257 DriverSetSpeed "Target motor speed requested by the driver controls, in metres per second.";
+CM_ SG_ 257 DriverSetCurrent "Motor current requested by the driver controls, as a percentage of the controller's maximum current setting. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual.";
+CM_ BO_ 258 "Power command from the driver controls: limit on the current drawn from the battery.";
+CM_ SG_ 258 MaxBusCurrent "Limit on current drawn from the DC bus (battery), as a percentage of the controller's absolute bus current limit. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual.";
+CM_ SG_ 258 Zero "Reserved, always 0.";
+CM_ BO_ 1280 "Current dial setting from the driver controls (DriverSetCurrent in the ESC-CODE decode sheet). Seen in Tests/data/NRT.BIN.";
+CM_ SG_ 1280 DriverSetDialCurrent "Setting of the driver's current dial (e.g. 0.51 in Tests/data/NRT.BIN). TODO: add its range and meaning (the Grafana dashboards treat it as 0 to 1, shown as a percentage), from the driver controls firmware.";
+CM_ SG_ 1280 TotalAcMotorCurrent "Total AC motor current, as named in the ESC-CODE decode sheet. TODO: add its unit and meaning, from the driver controls firmware.";
 BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
 BA_DEF_DEF_  "GenMsgCycleTime" 0;
-BA_ "GenMsgCycleTime" BO_ 1536 1000;
-BA_ "GenMsgCycleTime" BO_ 1537 200;
-BA_ "GenMsgCycleTime" BO_ 1538 200;
-BA_ "GenMsgCycleTime" BO_ 1539 200;
-BA_ "GenMsgCycleTime" BO_ 1540 200;
-BA_ "GenMsgCycleTime" BO_ 1541 200;
-BA_ "GenMsgCycleTime" BO_ 1542 200;
-BA_ "GenMsgCycleTime" BO_ 1543 200;
-BA_ "GenMsgCycleTime" BO_ 1544 1000;
-BA_ "GenMsgCycleTime" BO_ 1545 1000;
-BA_ "GenMsgCycleTime" BO_ 1546 1000;
-BA_ "GenMsgCycleTime" BO_ 1547 1000;
-BA_ "GenMsgCycleTime" BO_ 1548 5000;
-BA_ "GenMsgCycleTime" BO_ 1549 5000;
-BA_ "GenMsgCycleTime" BO_ 1550 1000;
-BA_ "GenMsgCycleTime" BO_ 128 1000;
-BA_ "GenMsgCycleTime" BO_ 129 200;
-BA_ "GenMsgCycleTime" BO_ 130 200;
-BA_ "GenMsgCycleTime" BO_ 131 200;
-BA_ "GenMsgCycleTime" BO_ 132 200;
-BA_ "GenMsgCycleTime" BO_ 133 200;
-BA_ "GenMsgCycleTime" BO_ 134 200;
-BA_ "GenMsgCycleTime" BO_ 135 200;
-BA_ "GenMsgCycleTime" BO_ 136 1000;
-BA_ "GenMsgCycleTime" BO_ 137 1000;
-BA_ "GenMsgCycleTime" BO_ 138 1000;
-BA_ "GenMsgCycleTime" BO_ 139 1000;
-BA_ "GenMsgCycleTime" BO_ 140 5000;
-BA_ "GenMsgCycleTime" BO_ 141 5000;
-BA_ "GenMsgCycleTime" BO_ 142 1000;
-BA_ "GenMsgCycleTime" BO_ 1559 200;
-BA_ "GenMsgCycleTime" BO_ 1281 100;
-BA_ "GenMsgCycleTime" BO_ 1282 500;
-SIG_VALTYPE_ 1538 BusVoltage : 1;
-SIG_VALTYPE_ 1538 BusCurrent : 1;
-SIG_VALTYPE_ 1539 MotorVelocity : 1;
-SIG_VALTYPE_ 1539 VehicleVelocity : 1;
-SIG_VALTYPE_ 1540 PhaseBCurrent : 1;
-SIG_VALTYPE_ 1540 PhaseCCurrent : 1;
-SIG_VALTYPE_ 1541 VectVoltImag : 1;
-SIG_VALTYPE_ 1541 VectVoltReal : 1;
-SIG_VALTYPE_ 1542 VectCurrImag : 1;
-SIG_VALTYPE_ 1542 VectCurrReal : 1;
-SIG_VALTYPE_ 1543 PeakBackEmfPhaseToNeutral : 1;
-SIG_VALTYPE_ 1543 BackEmfD : 1;
-SIG_VALTYPE_ 1544 Reserved : 1;
-SIG_VALTYPE_ 1544 FifteenVSupply : 1;
-SIG_VALTYPE_ 1545 ThreeThreeVSupply : 1;
-SIG_VALTYPE_ 1545 OneNineVSupply : 1;
-SIG_VALTYPE_ 1546 VoltagePercentage : 1;
-SIG_VALTYPE_ 1546 FanSpeed : 1;
-SIG_VALTYPE_ 1547 MotorTemp : 1;
-SIG_VALTYPE_ 1547 HeatSinkTemp : 1;
-SIG_VALTYPE_ 1548 DspBoardTemp : 1;
-SIG_VALTYPE_ 1548 Reserved : 1;
-SIG_VALTYPE_ 1549 Reserved : 1;
-SIG_VALTYPE_ 1550 Odometer : 1;
-SIG_VALTYPE_ 1550 DcBusAmpHours : 1;
-SIG_VALTYPE_ 1559 Reserved : 1;
-SIG_VALTYPE_ 1559 SlipSpeed : 1;
-SIG_VALTYPE_ 130 BusVoltage : 1;
-SIG_VALTYPE_ 130 BusCurrent : 1;
-SIG_VALTYPE_ 131 MotorVelocity : 1;
-SIG_VALTYPE_ 131 VehicleVelocity : 1;
-SIG_VALTYPE_ 132 PhaseCurrentB : 1;
-SIG_VALTYPE_ 132 PhaseCurrentA : 1;
-SIG_VALTYPE_ 133 Vq : 1;
-SIG_VALTYPE_ 133 Vd : 1;
-SIG_VALTYPE_ 134 Iq : 1;
-SIG_VALTYPE_ 134 Id : 1;
-SIG_VALTYPE_ 135 BEMFq : 1;
-SIG_VALTYPE_ 135 BEMFd : 1;
-SIG_VALTYPE_ 136 Reference1V65 : 1;
-SIG_VALTYPE_ 136 Supply15V : 1;
-SIG_VALTYPE_ 137 Supply2V5 : 1;
-SIG_VALTYPE_ 137 Supply1V2 : 1;
-SIG_VALTYPE_ 138 VoltagePercentage : 1;
-SIG_VALTYPE_ 138 FanSpeed : 1;
-SIG_VALTYPE_ 139 MotorTemp : 1;
-SIG_VALTYPE_ 139 HeatsinkTemp : 1;
-SIG_VALTYPE_ 140 ProcessorTemp : 1;
-SIG_VALTYPE_ 140 AirInletTemp : 1;
-SIG_VALTYPE_ 141 CapacitorTemp : 1;
-SIG_VALTYPE_ 141 AirOutTemp : 1;
-SIG_VALTYPE_ 142 Odometer : 1;
-SIG_VALTYPE_ 142 DCBus : 1;
-SIG_VALTYPE_ 1281 DriverSetSpeed : 1;
-SIG_VALTYPE_ 1281 DriverSetCurrent : 1;
-SIG_VALTYPE_ 1282 MaxBusCurrent : 1;
-SIG_VALTYPE_ 1282 Zero : 1;
-SIG_VALTYPE_ 65 MotorCurrent : 1;
-SIG_VALTYPE_ 65 MotorVelocity : 1;
-SIG_VALTYPE_ 66 BusCurrent : 1;
+BA_ "GenMsgCycleTime" BO_ 768 1000;
+BA_ "GenMsgCycleTime" BO_ 769 200;
+BA_ "GenMsgCycleTime" BO_ 770 200;
+BA_ "GenMsgCycleTime" BO_ 771 200;
+BA_ "GenMsgCycleTime" BO_ 772 200;
+BA_ "GenMsgCycleTime" BO_ 773 200;
+BA_ "GenMsgCycleTime" BO_ 774 200;
+BA_ "GenMsgCycleTime" BO_ 775 200;
+BA_ "GenMsgCycleTime" BO_ 776 1000;
+BA_ "GenMsgCycleTime" BO_ 777 1000;
+BA_ "GenMsgCycleTime" BO_ 778 1000;
+BA_ "GenMsgCycleTime" BO_ 779 1000;
+BA_ "GenMsgCycleTime" BO_ 780 5000;
+BA_ "GenMsgCycleTime" BO_ 781 5000;
+BA_ "GenMsgCycleTime" BO_ 782 1000;
+BA_ "GenMsgCycleTime" BO_ 791 200;
+BA_ "GenMsgCycleTime" BO_ 257 100;
+BA_ "GenMsgCycleTime" BO_ 258 500;
+SIG_VALTYPE_ 770 BusVoltage : 1;
+SIG_VALTYPE_ 770 BusCurrent : 1;
+SIG_VALTYPE_ 771 MotorVelocity : 1;
+SIG_VALTYPE_ 771 VehicleVelocity : 1;
+SIG_VALTYPE_ 772 PhaseBCurrent : 1;
+SIG_VALTYPE_ 772 PhaseCCurrent : 1;
+SIG_VALTYPE_ 773 VectVoltImag : 1;
+SIG_VALTYPE_ 773 VectVoltReal : 1;
+SIG_VALTYPE_ 774 VectCurrImag : 1;
+SIG_VALTYPE_ 774 VectCurrReal : 1;
+SIG_VALTYPE_ 775 PeakBackEmfPhaseToNeutral : 1;
+SIG_VALTYPE_ 775 BackEmfD : 1;
+SIG_VALTYPE_ 776 Reserved : 1;
+SIG_VALTYPE_ 776 FifteenVSupply : 1;
+SIG_VALTYPE_ 777 ThreeThreeVSupply : 1;
+SIG_VALTYPE_ 777 OneNineVSupply : 1;
+SIG_VALTYPE_ 778 VoltagePercentage : 1;
+SIG_VALTYPE_ 778 FanSpeed : 1;
+SIG_VALTYPE_ 779 MotorTemp : 1;
+SIG_VALTYPE_ 779 HeatSinkTemp : 1;
+SIG_VALTYPE_ 780 DspBoardTemp : 1;
+SIG_VALTYPE_ 780 Reserved : 1;
+SIG_VALTYPE_ 781 Reserved : 1;
+SIG_VALTYPE_ 782 Odometer : 1;
+SIG_VALTYPE_ 782 DcBusAmpHours : 1;
+SIG_VALTYPE_ 791 Reserved : 1;
+SIG_VALTYPE_ 791 SlipSpeed : 1;
+SIG_VALTYPE_ 257 DriverSetSpeed : 1;
+SIG_VALTYPE_ 257 DriverSetCurrent : 1;
+SIG_VALTYPE_ 258 MaxBusCurrent : 1;
+SIG_VALTYPE_ 258 Zero : 1;
+SIG_VALTYPE_ 1280 DriverSetDialCurrent : 1;
+SIG_VALTYPE_ 1280 TotalAcMotorCurrent : 1;

@@ -57,6 +57,7 @@ Each frame from the vehicle is:
 
 * `millis` is the board's uptime in ms when the frame was sent. It is used for the timestamp (see [Timestamps](#timestamps)).
 * The CRC is CRC-16/MODBUS (reflected polynomial `0xA001`, initial value `0xFFFF`), the same as AVR `_crc16_update` on the board. It is calculated over the millis, CAN ID, DLC and data bytes. The receiver **does** check it: frames that fail are dropped from InfluxDB and flagged `False` in the Excel/CSV output.
+* Only the `DLC` data bytes are decoded. Any extra bytes before the CRC are ignored (with a warning). A frame with fewer data bytes than its DLC, or fewer than its message's length in the DBC file, is not decoded (see below).
 * `0x7E` marks the end of a frame and is **not** escaped inside the frame (see Known limitations in the top-level [README](../README.md#known-limitations)). Splitting a capture into frames is done in [frame_reader.py](frame_reader.py).
 
 ## CAN decoding (DBC files)
@@ -86,11 +87,13 @@ The tests decode with the same `dbc/` files, so `pytest` catches a DBC change th
 
 ### Adding a new CAN message
 
-Follow the steps in [dbc/README.md](../dbc/README.md#changing-or-adding-a-message-or-signal): edit the `.dbc` file (including a plain-English comment), regenerate `dbc/SIGNALS.md`, and run `pytest`. If you add a new `.dbc` file, also list it in `dbc_files` in [receiver_config.py](receiver_config.py). Then replay a capture that contains the message (see [Testing without hardware](#testing-without-hardware)) and check the decoded values.
+Follow the steps in [dbc/README.md](../dbc/README.md#changing-or-adding-a-message-or-signal): edit the `.dbc` file (including a plain-English comment), regenerate `dbc/SIGNALS.md`, and run `pytest`. If you add a new `.dbc` file, also list it in `dbc_files` in [receiver_config.py](receiver_config.py). Then replay a capture that contains the message (see [Testing without hardware](#testing-without-hardware-software-in-the-loop-sil)) and check the decoded values.
 
 Renaming a message, sender or signal, or changing its scaling, changes what is stored in InfluxDB; see the warning in [dbc/README.md](../dbc/README.md#changing-or-adding-a-message-or-signal).
 
-Frames with a CAN ID that is not in any DBC file are logged as a warning and stored as Item `ID UNRECOGNISED`, Source `ERROR`, with the CAN ID as the only field.
+Frames with a CAN ID that is not in any DBC file are logged as a warning and stored as Item `ID UNRECOGNISED`, Source `ERROR`, with the CAN ID as the only field. Frames that are too short are stored the same way, as Item `DLC MISMATCH` (fewer data bytes than the frame's DLC) or `DECODE ERROR` (fewer data bytes than the message's length in the DBC file).
+
+Messages with no data (the MPPT poll requests) have no fields, so they are not written to InfluxDB.
 
 ## InfluxDB schema
 
@@ -100,6 +103,8 @@ You need to know this schema when building Grafana panels:
 |---|---|---|
 | `<Source>/<Item>` | One field per DBC signal, named as in the DBC | `Orion/PackParameters`: `PackCurrent`, `PackInstVoltage`, `PackSoc`, `RelayState` |
 | `ERROR/ID UNRECOGNISED` | `ID` (the unknown CAN ID) | |
+| `ERROR/DLC MISMATCH` | `ID`, `DLC`, `Bytes` (data bytes actually received) | |
+| `ERROR/DECODE ERROR` | `ID`, `DLC` | |
 
 Measurement names contain `/` (and sometimes spaces), so they must be double-quoted in InfluxQL:
 
@@ -155,7 +160,10 @@ pip install -r Tests/requirements-test.txt
 pytest
 ```
 
-The tests replay the sample captures in [../Tests/data/](../Tests/data/) (`NRT.BIN`, `MPPT.BIN`) and compare the decoded output with the matching `.csv` files. They do not need InfluxDB.
+The tests replay the sample captures in [../Tests/data/](../Tests/data/) and compare the decoded output with the matching `.csv` files. They do not need InfluxDB.
+
+* `NRT.BIN`: Peri at iESC 2026 (qualifying, 18 September 2026): two sections of the recording, joined. The first (GPS with a position fix) is about 1 minute long; the second (out on track, with the motor controller, driver controls and current dial) is about 8 minutes long, with radio reception getting worse towards the end. Recorded with the ESC-CODE receiver, whose own decoded output was used to check this branch's decoding.
+* `MPPT.BIN`: an earlier (July 2023) recording with MPPT status messages, which are not in the iESC 2026 recording.
 
 **Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off in `receiver_config.py`.
 

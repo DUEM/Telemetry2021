@@ -49,7 +49,7 @@ def test_data_written_to_influx(
     )
 
     # Act
-    store_data(nrt_bytes[20])
+    store_data(nrt_bytes[39])
 
     # Assert
     mock_client_class, mock_client_instance = mock_influxdb_client
@@ -65,12 +65,13 @@ def test_data_written_to_influx(
         [
             {
                 "measurement": "Orion/PackParameters",
-                "time": "1970-01-01T03:00:01.880000Z",
+                "time": "1970-01-01T03:22:23.552000Z",
                 "fields": {
                     "PackCurrent": 0,
-                    "PackInstVoltage": 1305,
-                    "PackSoc": 159,
-                    "RelayState": 32843,
+                    "PackInstVoltage": 1179,
+                    "PackSoc": 148,
+                    "RelayState": 75,
+                    "Checksum": 54,
                 },
             }
         ],
@@ -131,3 +132,23 @@ def test_influx_client_error_logged_not_raised(mock_influxdb_client, caplog):
     mock_client_instance.write_points.assert_called_once()
     assert "Influx rejected write for Orion/PackParameters" in caplog.text
     assert "database not found" in caplog.text
+
+
+def test_message_without_fields_not_written(mock_influxdb_client):
+    # e.g. the MPPT poll requests carry no data; influx rejects a point with no fields
+    from Receiver.storer_extension import Influx1Storer
+
+    class influxCredentials(NamedTuple):
+        username: str = "mock"
+        password: str = "mock"
+        db: str = "mockDB"
+        host: str = "localhost"
+        port: int = 8086
+        enabled: bool = True
+
+    _, client = mock_influxdb_client
+    storer = Influx1Storer(influxCredentials())
+
+    storer.store_data("MpptPollJaved", "Telemetry", {}, datetime(2026, 1, 1, tzinfo=timezone.utc), True)
+
+    client.write_points.assert_not_called()

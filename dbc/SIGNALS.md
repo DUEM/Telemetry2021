@@ -26,44 +26,25 @@ Every CAN message the receiver can decode, what each signal means, and where to 
   * [AltitudeAndSatellites](#altitudeandsatellites-0x0fa) (0x0FA, from Telemetry)
   * [SystemStatusMessages](#systemstatusmessages-0x111) (0x111, from Telemetry)
 * [wavesculptor_22.dbc](#wavesculptor22)
-  * [Left_ResetCommand](#left_resetcommand-0x023) (0x023, from DriverControls)
-  * [Right_DriveCommand](#right_drivecommand-0x041) (0x041, from DriverControls_Right)
-  * [Right_MotorPowerCommand](#right_motorpowercommand-0x042) (0x042, from DriverControls_Right)
-  * [Right_ResetCommand](#right_resetcommand-0x043) (0x043, from DriverControls_Right)
-  * [Right_IDInfo](#right_idinfo-0x080) (0x080, from Tritium_Right)
-  * [Right_Status](#right_status-0x081) (0x081, from Tritium_Right)
-  * [Right_BusMeasurement](#right_busmeasurement-0x082) (0x082, from Tritium_Right)
-  * [Right_VelocityMeasurement](#right_velocitymeasurement-0x083) (0x083, from Tritium_Right)
-  * [Right_PhaseCurrentMeasurement](#right_phasecurrentmeasurement-0x084) (0x084, from Tritium_Right)
-  * [Right_MotorVoltageVectorMeasurement](#right_motorvoltagevectormeasurement-0x085) (0x085, from Tritium_Right)
-  * [Right_MotorCurrentVectorMeasurement](#right_motorcurrentvectormeasurement-0x086) (0x086, from Tritium_Right)
-  * [Right_MotorBackEmfMeasurementPrediction](#right_motorbackemfmeasurementprediction-0x087) (0x087, from Tritium_Right)
-  * [Right_VoltageRail15V1V65Measurement](#right_voltagerail15v1v65measurement-0x088) (0x088, from Tritium_Right)
-  * [Right_VoltageRail2V51V2Measurement](#right_voltagerail2v51v2measurement-0x089) (0x089, from Tritium_Right)
-  * [Right_FanSpeedMeasurement](#right_fanspeedmeasurement-0x08a) (0x08A, from Tritium_Right)
-  * [Right_SinkMotorTempMeasurement](#right_sinkmotortempmeasurement-0x08b) (0x08B, from Tritium_Right)
-  * [Right_AirInCpuTempMeasurement](#right_airincputempmeasurement-0x08c) (0x08C, from Tritium_Right)
-  * [Right_AirOutCapTempMeasurement](#right_airoutcaptempmeasurement-0x08d) (0x08D, from Tritium_Right)
-  * [Right_OdometerBusAhMeasurement](#right_odometerbusahmeasurement-0x08e) (0x08E, from Tritium_Right)
-  * [Left_Status](#left_status-0x101) (0x101, from Tritium)
-  * [SpeedValCurrVal](#speedvalcurrval-0x501) (0x501, from DriverControls)
-  * [Maxbuscurrent](#maxbuscurrent-0x502) (0x502, from DriverControls)
-  * [IdentificationInfo](#identificationinfo-0x600) (0x600, from Tritium)
-  * [StatusInformation](#statusinformation-0x601) (0x601, from Tritium)
-  * [BusMeasurement](#busmeasurement-0x602) (0x602, from Tritium)
-  * [Velocity](#velocity-0x603) (0x603, from Tritium)
-  * [PhaseCurrent](#phasecurrent-0x604) (0x604, from Tritium)
-  * [MotorVoltageVector](#motorvoltagevector-0x605) (0x605, from Tritium)
-  * [MotorCurrentVector](#motorcurrentvector-0x606) (0x606, from Tritium)
-  * [MotorBackemfVector](#motorbackemfvector-0x607) (0x607, from Tritium)
-  * [Rail_15V](#rail_15v-0x608) (0x608, from Tritium)
-  * [Rail_3_3VAnd1_9V](#rail_3_3vand1_9v-0x609) (0x609, from Tritium)
-  * [Reserved1](#reserved1-0x60a) (0x60A, from Tritium)
-  * [SinkMotorTemperature](#sinkmotortemperature-0x60b) (0x60B, from Tritium)
-  * [DspBoardTemperature](#dspboardtemperature-0x60c) (0x60C, from Tritium)
-  * [Reserved](#reserved-0x60d) (0x60D, from Tritium)
-  * [OdoBusAmphours](#odobusamphours-0x60e) (0x60E, from Tritium)
-  * [SlipSpeedMeasurement](#slipspeedmeasurement-0x617) (0x617, from Tritium)
+  * [SpeedValCurrVal](#speedvalcurrval-0x101) (0x101, from DriverControls)
+  * [Maxbuscurrent](#maxbuscurrent-0x102) (0x102, from DriverControls)
+  * [IdentificationInfo](#identificationinfo-0x300) (0x300, from Tritium)
+  * [StatusInformation](#statusinformation-0x301) (0x301, from Tritium)
+  * [BusMeasurement](#busmeasurement-0x302) (0x302, from Tritium)
+  * [Velocity](#velocity-0x303) (0x303, from Tritium)
+  * [PhaseCurrent](#phasecurrent-0x304) (0x304, from Tritium)
+  * [MotorVoltageVector](#motorvoltagevector-0x305) (0x305, from Tritium)
+  * [MotorCurrentVector](#motorcurrentvector-0x306) (0x306, from Tritium)
+  * [MotorBackemfVector](#motorbackemfvector-0x307) (0x307, from Tritium)
+  * [Rail_15V](#rail_15v-0x308) (0x308, from Tritium)
+  * [Rail_3_3VAnd1_9V](#rail_3_3vand1_9v-0x309) (0x309, from Tritium)
+  * [Reserved1](#reserved1-0x30a) (0x30A, from Tritium)
+  * [SinkMotorTemperature](#sinkmotortemperature-0x30b) (0x30B, from Tritium)
+  * [DspBoardTemperature](#dspboardtemperature-0x30c) (0x30C, from Tritium)
+  * [Reserved](#reserved-0x30d) (0x30D, from Tritium)
+  * [OdoBusAmphours](#odobusamphours-0x30e) (0x30E, from Tritium)
+  * [SlipSpeedMeasurement](#slipspeedmeasurement-0x317) (0x317, from Tritium)
+  * [DialCurrent](#dialcurrent-0x500) (0x500, from DriverControls)
 * [Still to be documented](#still-to-be-documented)
 
 <a id="mppt"></a>
@@ -79,85 +60,39 @@ Every CAN message the receiver can decode, what each signal means, and where to 
 
 ### MpptPollJaved (0x711)
 
-Request from the telemetry board asking the Javed MPPT to send its status (message Javed). Sent every mppt_update ms (Telemetry/config.txt).
+Request from the telemetry board asking the Javed MPPT to send its status (message Javed). Sent every mppt_update ms (Telemetry/config.txt). The request carries no data.
 
 | | |
 |---|---|
 | From | `Telemetry` |
 | CAN ID | 0x711 (1809) |
-| Length | 1 bytes |
+| Length | 0 bytes |
 | Sent every | 1000 ms |
 | InfluxDB measurement | `"Telemetry/MpptPollJaved"` |
 
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `Blank` | Not used: the request carries no data. |  | none |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "Blank" FROM "Telemetry/MpptPollJaved" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
- B   0 |<-----------------------------x|
- y     +---+---+---+---+---+---+---+---+
- t       +-- Blank
- e
-```
-
-</details>
+This message carries no data.
 
 <a id="mpptpollwoof-0x712"></a>
 
 ### MpptPollWoof (0x712)
 
-Request from the telemetry board asking the Woof MPPT to send its status (message Woof). Sent every mppt_update ms (Telemetry/config.txt).
+Request from the telemetry board asking the Woof MPPT to send its status (message Woof). Sent every mppt_update ms (Telemetry/config.txt). The request carries no data.
 
 | | |
 |---|---|
 | From | `Telemetry` |
 | CAN ID | 0x712 (1810) |
-| Length | 1 bytes |
+| Length | 0 bytes |
 | Sent every | 1000 ms |
 | InfluxDB measurement | `"Telemetry/MpptPollWoof"` |
 
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `Blank` | Not used: the request carries no data. |  | none |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "Blank" FROM "Telemetry/MpptPollWoof" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
- B   0 |<-----------------------------x|
- y     +---+---+---+---+---+---+---+---+
- t       +-- Blank
- e
-```
-
-</details>
+This message carries no data.
 
 <a id="javed-0x771"></a>
 
 ### Javed (0x771)
 
-Status of the MPPT named Javed, sent in reply to each MpptPollJaved request from the telemetry board (every mppt_update ms, Telemetry/config.txt).
+Status of the MPPT named Javed, sent in reply to each MpptPollJaved request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in Tests/data/NRT.BIN (iESC 2026 qualifying), although the telemetry board polls both MPPTs every second. TODO: add whether Peri still has these MPPTs; if not, remove this message.
 
 | | |
 |---|---|
@@ -225,7 +160,7 @@ SELECT "OverTemperature" FROM "Mppt/Javed" WHERE time > now() - 1h
 
 ### Woof (0x772)
 
-Status of the MPPT named Woof, sent in reply to each MpptPollWoof request from the telemetry board (every mppt_update ms, Telemetry/config.txt).
+Status of the MPPT named Woof, sent in reply to each MpptPollWoof request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in Tests/data/NRT.BIN (iESC 2026 qualifying), although the telemetry board polls both MPPTs every second. TODO: add whether Peri still has these MPPTs; if not, remove this message.
 
 | | |
 |---|---|
@@ -307,8 +242,8 @@ Battery pack summary: current, voltage, state of charge and relay states.
 |---|---|
 | From | `Orion` |
 | CAN ID | 0x700 (1792) |
-| Length | 7 bytes |
-| Sent every | 104 ms |
+| Length | 8 bytes |
+| Sent every | 500 ms |
 | InfluxDB measurement | `"Orion/PackParameters"` |
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
@@ -317,6 +252,7 @@ Battery pack summary: current, voltage, state of charge and relay states.
 | `PackInstVoltage` | Total battery pack voltage, measured right now (instantaneous). TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 V per bit (the test capture shows 1305, which would be 130.5 V). |  | none |  |  |
 | `PackSoc` | Battery state of charge: how full the battery is. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.5 % per bit (the test capture shows 159, which would be 79.5 %). |  | none |  |  |
 | `RelayState` | Which of the BMS's relay and contactor outputs are on, one bit each. TODO: add the meaning of each bit, from the Orion BMS profile loaded on Peri. |  | none |  |  |
+| `Checksum` | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 184) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |  | none |  |  |
 
 Example InfluxDB query:
 
@@ -339,12 +275,12 @@ SELECT "PackCurrent" FROM "Orion/PackParameters" WHERE time > now() - 1h
        +---+---+---+---+---+---+---+---+
      2 |<------------------------------|
        +---+---+---+---+---+---+---+---+
- B   3 |------------------------------x|
- y     +---+---+---+---+---+---+---+---+
- t                                   +-- PackInstVoltage
- e     +---+---+---+---+---+---+---+---+
-     4 |<-----------------------------x|
+     3 |------------------------------x|
        +---+---+---+---+---+---+---+---+
+ B                                   +-- PackInstVoltage
+ y     +---+---+---+---+---+---+---+---+
+ t   4 |<-----------------------------x|
+ e     +---+---+---+---+---+---+---+---+
                                      +-- PackSoc
        +---+---+---+---+---+---+---+---+
      5 |<------------------------------|
@@ -352,6 +288,10 @@ SELECT "PackCurrent" FROM "Orion/PackParameters" WHERE time > now() - 1h
      6 |------------------------------x|
        +---+---+---+---+---+---+---+---+
                                      +-- RelayState
+       +---+---+---+---+---+---+---+---+
+     7 |<-----------------------------x|
+       +---+---+---+---+---+---+---+---+
+                                     +-- Checksum
 ```
 
 </details>
@@ -366,17 +306,18 @@ Discharge current limit and pack temperatures.
 |---|---|
 | From | `Orion` |
 | CAN ID | 0x701 (1793) |
-| Length | 7 bytes |
-| Sent every | 104 ms |
+| Length | 8 bytes |
+| Sent every | 500 ms |
 | InfluxDB measurement | `"Orion/CellTempsDCL"` |
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
 |---|---|---|---|---|---|
 | `PackDcl` | Discharge current limit: the most current the BMS currently allows to be drawn from the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 A per bit. |  | none |  |  |
-| `Unknown` | Not known. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message (CANBusConfig.xlsm also lists it as unknown). |  | none |  |  |
+| `Unknown` | Not known. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message (the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e) also lists it as unknown). |  | none |  |  |
 | `HighTemperatureSensor` | Highest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed. |  | none |  |  |
 | `LowTemperatureSensors` | Lowest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed. |  | none |  |  |
 | `Blank` | Not used. |  | none |  |  |
+| `Checksum` | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 185) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |  | none |  |  |
 
 Example InfluxDB query:
 
@@ -400,12 +341,12 @@ SELECT "PackDcl" FROM "Orion/CellTempsDCL" WHERE time > now() - 1h
      2 |<------------------------------|
        +---+---+---+---+---+---+---+---+
      3 |------------------------------x|
- B     +---+---+---+---+---+---+---+---+
- y                                   +-- Unknown
- t     +---+---+---+---+---+---+---+---+
- e   4 |<-----------------------------x|
        +---+---+---+---+---+---+---+---+
-                                     +-- HighTemperatureSensor
+                                     +-- Unknown
+ B     +---+---+---+---+---+---+---+---+
+ y   4 |<-----------------------------x|
+ t     +---+---+---+---+---+---+---+---+
+ e                                   +-- HighTemperatureSensor
        +---+---+---+---+---+---+---+---+
      5 |<-----------------------------x|
        +---+---+---+---+---+---+---+---+
@@ -414,6 +355,10 @@ SELECT "PackDcl" FROM "Orion/CellTempsDCL" WHERE time > now() - 1h
      6 |<-----------------------------x|
        +---+---+---+---+---+---+---+---+
                                      +-- Blank
+       +---+---+---+---+---+---+---+---+
+     7 |<-----------------------------x|
+       +---+---+---+---+---+---+---+---+
+                                     +-- Checksum
 ```
 
 </details>
@@ -428,8 +373,8 @@ Lowest and highest cell voltages in the pack, and the temperature inside the BMS
 |---|---|
 | From | `Orion` |
 | CAN ID | 0x702 (1794) |
-| Length | 7 bytes |
-| Sent every | 104 ms |
+| Length | 8 bytes |
+| Sent every | 500 ms |
 | InfluxDB measurement | `"Orion/CellVoltages"` |
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
@@ -438,6 +383,7 @@ Lowest and highest cell voltages in the pack, and the temperature inside the BMS
 | `HighCellVoltage` | Voltage of the highest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit. |  | none |  |  |
 | `InternalTemperature` | Temperature inside the BMS unit. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit. |  | none |  |  |
 | `Blank` | Not used. |  | none |  |  |
+| `Checksum` | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 0) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |  | none |  |  |
 
 Example InfluxDB query:
 
@@ -460,12 +406,12 @@ SELECT "LowCellVoltage" FROM "Orion/CellVoltages" WHERE time > now() - 1h
        +---+---+---+---+---+---+---+---+
      2 |<------------------------------|
        +---+---+---+---+---+---+---+---+
- B   3 |------------------------------x|
- y     +---+---+---+---+---+---+---+---+
- t                                   +-- HighCellVoltage
- e     +---+---+---+---+---+---+---+---+
-     4 |<-----------------------------x|
+     3 |------------------------------x|
        +---+---+---+---+---+---+---+---+
+ B                                   +-- HighCellVoltage
+ y     +---+---+---+---+---+---+---+---+
+ t   4 |<-----------------------------x|
+ e     +---+---+---+---+---+---+---+---+
                                      +-- InternalTemperature
        +---+---+---+---+---+---+---+---+
      5 |   |   |   |   |   |   |   |   |
@@ -473,6 +419,10 @@ SELECT "LowCellVoltage" FROM "Orion/CellVoltages" WHERE time > now() - 1h
      6 |<-----------------------------x|
        +---+---+---+---+---+---+---+---+
                                      +-- Blank
+       +---+---+---+---+---+---+---+---+
+     7 |<-----------------------------x|
+       +---+---+---+---+---+---+---+---+
+                                     +-- Checksum
 ```
 
 </details>
@@ -764,14 +714,14 @@ SELECT "GpsAltitude" FROM "Telemetry/AltitudeAndSatellites" WHERE time > now() -
 
 ### SystemStatusMessages (0x111)
 
-Telemetry board health. Sent every status_update ms (Telemetry/config.txt). Most bytes use the codes 0xFF good, 0xAA bad, 0xBB using defaults, 0x00 unknown (see Telemetry/README.md).
+Telemetry board health. Sent every status_update ms (Telemetry/config.txt; 500 ms in Tests/data/NRT.BIN). Most bytes use the codes 0xFF good, 0xAA bad, 0xBB using defaults, 0x00 unknown (see Telemetry/README.md).
 
 | | |
 |---|---|
 | From | `Telemetry` |
 | CAN ID | 0x111 (273) |
 | Length | 8 bytes |
-| Sent every | 1000 ms |
+| Sent every | 500 ms |
 | InfluxDB measurement | `"Telemetry/SystemStatusMessages"` |
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
@@ -839,1096 +789,19 @@ SELECT "Power" FROM "Telemetry/SystemStatusMessages" WHERE time > now() - 1h
 
 | Device (Source) | Description |
 |---|---|
-| `Tritium` | Tritium WaveSculptor motor controller: drives the motor and reports its speed, currents, voltages and temperatures. Its messages in this file use base address 0x600 (0x600 to 0x617), as seen in Tests/data/NRT.BIN. TODO: add the controller model and firmware version fitted to Peri. |
-| `Tritium_Right` | Second (right) motor controller, from an earlier two-motor set-up. TODO: add whether Peri has a second motor controller; if not, remove its messages (0x80 to 0x8E) from this file. |
-| `DriverControls` | Driver controls: send the driver's drive and power commands to the motor controller (base address 0x500). |
-| `DriverControls_Right` | Driver controls for the second (right) motor controller, from an earlier two-motor set-up. TODO: add whether Peri uses these; if not, remove their messages (0x41 to 0x43) from this file. |
+| `Tritium` | Tritium WaveSculptor22 motor controller: drives the motor and reports its speed, currents, voltages and temperatures. Base address 0x300 (messages 0x300 to 0x317), as in Tests/data/NRT.BIN (iESC 2026 qualifying), where it reports device identifier 0x4003 (WaveSculptor22) and serial number 3315. The 2024 car's controller used base address 0x600. TODO: add the controller firmware version. |
+| `DriverControls` | Driver controls: send the driver's drive and power commands to the motor controller (base address 0x100), and the current dial setting (0x500). |
 
-<a id="left_resetcommand-0x023"></a>
+<a id="speedvalcurrval-0x101"></a>
 
-### Left_ResetCommand (0x023)
-
-Reset command for the left motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `DriverControls` |
-| CAN ID | 0x023 (35) |
-| Length | 8 bytes |
-| Sent every | not known |
-| InfluxDB measurement | `"DriverControls/Left_ResetCommand"` |
-
-This message carries no data.
-
-<a id="right_drivecommand-0x041"></a>
-
-### Right_DriveCommand (0x041)
-
-Drive command for the right motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `DriverControls_Right` |
-| CAN ID | 0x041 (65) |
-| Length | 8 bytes |
-| Sent every | not known |
-| InfluxDB measurement | `"DriverControls_Right/Right_DriveCommand"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `MotorVelocity` | Target motor speed requested, in metres per second. | m/s | none (sent as a decimal number) |  |  |
-| `MotorCurrent` | Motor current requested, as a percentage of the controller's maximum current setting. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual. | % | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "MotorVelocity" FROM "DriverControls_Right/Right_DriveCommand" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- MotorVelocity
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- MotorCurrent
-```
-
-</details>
-
-<a id="right_motorpowercommand-0x042"></a>
-
-### Right_MotorPowerCommand (0x042)
-
-Power command for the right motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `DriverControls_Right` |
-| CAN ID | 0x042 (66) |
-| Length | 8 bytes |
-| Sent every | not known |
-| InfluxDB measurement | `"DriverControls_Right/Right_MotorPowerCommand"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `BusCurrent` | Limit on current drawn from the DC bus (battery), as a percentage of the controller's absolute bus current limit. | % | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "BusCurrent" FROM "DriverControls_Right/Right_MotorPowerCommand" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-     1 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-     2 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
- B   3 |   |   |   |   |   |   |   |   |
- y     +---+---+---+---+---+---+---+---+
- t   4 |------------------------------x|
- e     +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- BusCurrent
-```
-
-</details>
-
-<a id="right_resetcommand-0x043"></a>
-
-### Right_ResetCommand (0x043)
-
-Reset command for the right motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `DriverControls_Right` |
-| CAN ID | 0x043 (67) |
-| Length | 8 bytes |
-| Sent every | not known |
-| InfluxDB measurement | `"DriverControls_Right/Right_ResetCommand"` |
-
-This message carries no data.
-
-<a id="right_idinfo-0x080"></a>
-
-### Right_IDInfo (0x080)
-
-Right motor controller identification. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x080 (128) |
-| Length | 8 bytes |
-| Sent every | 1000 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_IDInfo"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `TritiumID` | Device identifier, fixed for the model (sent as the characters TRIa on some models). |  | none |  |  |
-| `SerialNumber` | Device serial number, allocated at manufacture. |  | none |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "TritiumID" FROM "Tritium_Right/Right_IDInfo" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- TritiumID
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- SerialNumber
-```
-
-</details>
-
-<a id="right_status-0x081"></a>
-
-### Right_Status (0x081)
-
-Right motor controller status. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x081 (129) |
-| Length | 8 bytes |
-| Sent every | 200 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_Status"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `LimitFlagBridgePWM` | 1 = output is being limited by the bridge PWM. |  | none |  |  |
-| `LimitFlagMotorCurrent` | 1 = output is being limited by the motor current limit. |  | none |  |  |
-| `LimitFlagVelocity` | 1 = output is being limited by the velocity limit. |  | none |  |  |
-| `LimitFlagBusCurrent` | 1 = output is being limited by the bus current limit. |  | none |  |  |
-| `LimitFlagBusVoltageUpperLimit` | 1 = output is being limited by the bus voltage upper limit. |  | none |  |  |
-| `LimitFlagBusVoltageLowerLimit` | 1 = output is being limited by the bus voltage lower limit. |  | none |  |  |
-| `LimitFlagHeatsinkTemperature` | 1 = output is being limited by the heatsink temperature. |  | none |  |  |
-| `ErrorFlagHWOvercurrent` | 1 = hardware over current error. |  | none |  |  |
-| `ErrorFlagSWOvercurrent` | 1 = software over current error. |  | none |  |  |
-| `ErrorFlagDCBusOvervoltage` | 1 = DC bus over voltage error. |  | none |  |  |
-| `ErrorFlagMotorPositionHallSequence` | 1 = bad motor position hall sequence error. |  | none |  |  |
-| `ErrorFlagWatchdog` | 1 = the watchdog caused the last reset. |  | none |  |  |
-| `ErrorFlagConfigRead` | 1 = config read error (some settings may have been reset to defaults). |  | none |  |  |
-| `ErrorFlag15VUndervoltage` | 1 = a 15 V rail under voltage lock out occurred. |  | none |  |  |
-| `ActiveMotor` | Index of the motor profile currently in use. |  | none |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "LimitFlagBridgePWM" FROM "Tritium_Right/Right_Status" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |   |<-x|<-x|<-x|<-x|<-x|<-x|<-x|
-       +---+---+---+---+---+---+---+---+
-             |   |   |   |   |   |   +-- LimitFlagBridgePWM
-             |   |   |   |   |   +-- LimitFlagMotorCurrent
-             |   |   |   |   +-- LimitFlagVelocity
-             |   |   |   +-- LimitFlagBusCurrent
-             |   |   +-- LimitFlagBusVoltageUpperLimit
-             |   +-- LimitFlagBusVoltageLowerLimit
-             +-- LimitFlagHeatsinkTemperature
-       +---+---+---+---+---+---+---+---+
-     1 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-     2 |   |<-x|<-x|<-x|<-x|<-x|<-x|<-x|
-       +---+---+---+---+---+---+---+---+
- B           |   |   |   |   |   |   +-- ErrorFlagHWOvercurrent
- y           |   |   |   |   |   +-- ErrorFlagSWOvercurrent
- t           |   |   |   |   +-- ErrorFlagDCBusOvervoltage
- e           |   |   |   +-- ErrorFlagMotorPositionHallSequence
-             |   |   +-- ErrorFlagWatchdog
-             |   +-- ErrorFlagConfigRead
-             +-- ErrorFlag15VUndervoltage
-       +---+---+---+---+---+---+---+---+
-     3 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-     4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- ActiveMotor
-       +---+---+---+---+---+---+---+---+
-     6 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-     7 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-```
-
-</details>
-
-<a id="right_busmeasurement-0x082"></a>
-
-### Right_BusMeasurement (0x082)
-
-Right motor controller DC bus voltage and current. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x082 (130) |
-| Length | 8 bytes |
-| Sent every | 200 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_BusMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `BusVoltage` | DC bus (battery) voltage at the controller. | V | none (sent as a decimal number) |  |  |
-| `BusCurrent` | Current drawn from the DC bus (battery) by the controller. | A | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "BusVoltage" FROM "Tritium_Right/Right_BusMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- BusVoltage
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- BusCurrent
-```
-
-</details>
-
-<a id="right_velocitymeasurement-0x083"></a>
-
-### Right_VelocityMeasurement (0x083)
-
-Right motor controller motor and vehicle speed. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x083 (131) |
-| Length | 8 bytes |
-| Sent every | 200 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_VelocityMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `MotorVelocity` | Motor speed in revolutions per minute. | rpm | none (sent as a decimal number) |  |  |
-| `VehicleVelocity` | Vehicle speed in metres per second. | m/s | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "MotorVelocity" FROM "Tritium_Right/Right_VelocityMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- MotorVelocity
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- VehicleVelocity
-```
-
-</details>
-
-<a id="right_phasecurrentmeasurement-0x084"></a>
-
-### Right_PhaseCurrentMeasurement (0x084)
-
-Right motor controller phase currents. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x084 (132) |
-| Length | 8 bytes |
-| Sent every | 200 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_PhaseCurrentMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `PhaseCurrentB` | RMS current in motor phase B. | A_rms | none (sent as a decimal number) |  |  |
-| `PhaseCurrentA` | RMS current in motor phase A. | A_rms | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "PhaseCurrentB" FROM "Tritium_Right/Right_PhaseCurrentMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- PhaseCurrentB
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- PhaseCurrentA
-```
-
-</details>
-
-<a id="right_motorvoltagevectormeasurement-0x085"></a>
-
-### Right_MotorVoltageVectorMeasurement (0x085)
-
-Right motor controller motor voltage vector. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x085 (133) |
-| Length | 8 bytes |
-| Sent every | 200 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_MotorVoltageVectorMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `Vq` | Imaginary component of the voltage vector applied to the motor. | V | none (sent as a decimal number) |  |  |
-| `Vd` | Real component of the voltage vector applied to the motor. | V | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "Vq" FROM "Tritium_Right/Right_MotorVoltageVectorMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- Vq
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- Vd
-```
-
-</details>
-
-<a id="right_motorcurrentvectormeasurement-0x086"></a>
-
-### Right_MotorCurrentVectorMeasurement (0x086)
-
-Right motor controller motor current vector. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x086 (134) |
-| Length | 8 bytes |
-| Sent every | 200 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_MotorCurrentVectorMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `Iq` | Imaginary component of the motor current vector. This is the current that produces torque. | A | none (sent as a decimal number) |  |  |
-| `Id` | Real component of the motor current vector: the field current of the motor. | A | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "Iq" FROM "Tritium_Right/Right_MotorCurrentVectorMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- Iq
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- Id
-```
-
-</details>
-
-<a id="right_motorbackemfmeasurementprediction-0x087"></a>
-
-### Right_MotorBackEmfMeasurementPrediction (0x087)
-
-Right motor controller back-EMF vector. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x087 (135) |
-| Length | 8 bytes |
-| Sent every | 200 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_MotorBackEmfMeasurementPrediction"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `BEMFq` | Peak phase to neutral back-EMF voltage of the motor. | V | none (sent as a decimal number) |  |  |
-| `BEMFd` | By definition always 0 V. | V | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "BEMFq" FROM "Tritium_Right/Right_MotorBackEmfMeasurementPrediction" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- BEMFq
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- BEMFd
-```
-
-</details>
-
-<a id="right_voltagerail15v1v65measurement-0x088"></a>
-
-### Right_VoltageRail15V1V65Measurement (0x088)
-
-Right motor controller 15 V rail and 1.65 V reference. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x088 (136) |
-| Length | 8 bytes |
-| Sent every | 1000 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_VoltageRail15V1V65Measurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `Reference1V65` | Actual voltage of the 1.65 V analogue reference. | V | none (sent as a decimal number) |  |  |
-| `Supply15V` | Actual voltage of the internal 15 V supply rail. | V | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "Reference1V65" FROM "Tritium_Right/Right_VoltageRail15V1V65Measurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- Reference1V65
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- Supply15V
-```
-
-</details>
-
-<a id="right_voltagerail2v51v2measurement-0x089"></a>
-
-### Right_VoltageRail2V51V2Measurement (0x089)
-
-Right motor controller 2.5 V and 1.2 V rails. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x089 (137) |
-| Length | 8 bytes |
-| Sent every | 1000 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_VoltageRail2V51V2Measurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `Supply1V2` | Actual voltage of the 1.2 V (processor) supply rail. | V | none (sent as a decimal number) |  |  |
-| `Supply2V5` | Actual voltage of the 2.5 V (FPGA) supply rail. | V | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "Supply1V2" FROM "Tritium_Right/Right_VoltageRail2V51V2Measurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- Supply1V2
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- Supply2V5
-```
-
-</details>
-
-<a id="right_fanspeedmeasurement-0x08a"></a>
-
-### Right_FanSpeedMeasurement (0x08A)
-
-Right motor controller cooling fan. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x08A (138) |
-| Length | 8 bytes |
-| Sent every | 1000 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_FanSpeedMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `VoltagePercentage` | Drive voltage to the cooling fan, in percent. Above 0 % the fan should be spinning. | % | none (sent as a decimal number) |  |  |
-| `FanSpeed` | Cooling fan speed in revolutions per minute. | rpm | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "VoltagePercentage" FROM "Tritium_Right/Right_FanSpeedMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- VoltagePercentage
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- FanSpeed
-```
-
-</details>
-
-<a id="right_sinkmotortempmeasurement-0x08b"></a>
-
-### Right_SinkMotorTempMeasurement (0x08B)
-
-Right motor controller motor and heatsink temperatures. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x08B (139) |
-| Length | 8 bytes |
-| Sent every | 1000 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_SinkMotorTempMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `MotorTemp` | Internal temperature of the motor. | C | none (sent as a decimal number) |  |  |
-| `HeatsinkTemp` | Surface temperature of the controller's heatsink. | C | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "MotorTemp" FROM "Tritium_Right/Right_SinkMotorTempMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- MotorTemp
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- HeatsinkTemp
-```
-
-</details>
-
-<a id="right_airincputempmeasurement-0x08c"></a>
-
-### Right_AirInCpuTempMeasurement (0x08C)
-
-Right motor controller processor and air inlet temperatures. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x08C (140) |
-| Length | 8 bytes |
-| Sent every | 5000 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_AirInCpuTempMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `ProcessorTemp` | Temperature of the controller's processor. | C | none (sent as a decimal number) |  |  |
-| `AirInletTemp` | Air temperature at the controller's ventilation inlet. | C | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "ProcessorTemp" FROM "Tritium_Right/Right_AirInCpuTempMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- ProcessorTemp
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- AirInletTemp
-```
-
-</details>
-
-<a id="right_airoutcaptempmeasurement-0x08d"></a>
-
-### Right_AirOutCapTempMeasurement (0x08D)
-
-Right motor controller capacitor and air outlet temperatures. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x08D (141) |
-| Length | 8 bytes |
-| Sent every | 5000 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_AirOutCapTempMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `CapacitorTemp` | Temperature of the internal bus capacitors. Not used on the 20 kW WaveSculptor. | C | none (sent as a decimal number) |  |  |
-| `AirOutTemp` | Air temperature at the controller's ventilation outlet. Not used on the 20 kW WaveSculptor. | C | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "CapacitorTemp" FROM "Tritium_Right/Right_AirOutCapTempMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- CapacitorTemp
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- AirOutTemp
-```
-
-</details>
-
-<a id="right_odometerbusahmeasurement-0x08e"></a>
-
-### Right_OdometerBusAhMeasurement (0x08E)
-
-Right motor controller odometer and charge used. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium_Right` |
-| CAN ID | 0x08E (142) |
-| Length | 8 bytes |
-| Sent every | 1000 ms |
-| InfluxDB measurement | `"Tritium_Right/Right_OdometerBusAhMeasurement"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `Odometer` | Distance the vehicle has travelled since the controller was reset. | m | none (sent as a decimal number) |  |  |
-| `DCBus` | Charge drawn from the DC bus (battery) since the controller was reset. | Ah | none (sent as a decimal number) |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "Odometer" FROM "Tritium_Right/Right_OdometerBusAhMeasurement" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     1 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     2 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     3 |<------------------------------|
- B     +---+---+---+---+---+---+---+---+
- y       +-- Odometer
- t     +---+---+---+---+---+---+---+---+
- e   4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     6 |-------------------------------|
-       +---+---+---+---+---+---+---+---+
-     7 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- DCBus
-```
-
-</details>
-
-<a id="left_status-0x101"></a>
-
-### Left_Status (0x101)
-
-Left motor controller status. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file.
-
-| | |
-|---|---|
-| From | `Tritium` |
-| CAN ID | 0x101 (257) |
-| Length | 8 bytes |
-| Sent every | not known |
-| InfluxDB measurement | `"Tritium/Left_Status"` |
-
-| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
-|---|---|---|---|---|---|
-| `LimitFlagBridgePWM` | 1 = output is being limited by the bridge PWM. |  | none |  |  |
-| `LimitFlagMotorCurrent` | 1 = output is being limited by the motor current limit. |  | none |  |  |
-| `LimitFlagVelocity` | 1 = output is being limited by the velocity limit. |  | none |  |  |
-| `LimitFlagBusCurrent` | 1 = output is being limited by the bus current limit. |  | none |  |  |
-| `LimitFlagBusVoltageUpperLimit` | 1 = output is being limited by the bus voltage upper limit. |  | none |  |  |
-| `LimitFlagBusVoltageLowerLimit` | 1 = output is being limited by the bus voltage lower limit. |  | none |  |  |
-| `LimitFlagHeatsinkTemperature` | 1 = output is being limited by the heatsink temperature. |  | none |  |  |
-| `ErrorFlagHWOvercurrent` | 1 = hardware over current error. |  | none |  |  |
-| `ErrorFlagSWOvercurrent` | 1 = software over current error. |  | none |  |  |
-| `ErrorFlagDCBusOvervoltage` | 1 = DC bus over voltage error. |  | none |  |  |
-| `ErrorFlagMotorPositionHallSequence` | 1 = bad motor position hall sequence error. |  | none |  |  |
-| `ErrorFlagWatchdog` | 1 = the watchdog caused the last reset. |  | none |  |  |
-| `ErrorFlagConfigRead` | 1 = config read error (some settings may have been reset to defaults). |  | none |  |  |
-| `ErrorFlag15VUndervoltage` | 1 = a 15 V rail under voltage lock out occurred. |  | none |  |  |
-| `ActiveMotor` | Index of the motor profile currently in use. |  | none |  |  |
-
-Example InfluxDB query:
-
-```
-SELECT "LimitFlagBridgePWM" FROM "Tritium/Left_Status" WHERE time > now() - 1h
-```
-
-<details><summary>Bit layout</summary>
-
-```
-                      Bit
-
-         7   6   5   4   3   2   1   0
-       +---+---+---+---+---+---+---+---+
-     0 |   |<-x|<-x|<-x|<-x|<-x|<-x|<-x|
-       +---+---+---+---+---+---+---+---+
-             |   |   |   |   |   |   +-- LimitFlagBridgePWM
-             |   |   |   |   |   +-- LimitFlagMotorCurrent
-             |   |   |   |   +-- LimitFlagVelocity
-             |   |   |   +-- LimitFlagBusCurrent
-             |   |   +-- LimitFlagBusVoltageUpperLimit
-             |   +-- LimitFlagBusVoltageLowerLimit
-             +-- LimitFlagHeatsinkTemperature
-       +---+---+---+---+---+---+---+---+
-     1 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-     2 |   |<-x|<-x|<-x|<-x|<-x|<-x|<-x|
-       +---+---+---+---+---+---+---+---+
- B           |   |   |   |   |   |   +-- ErrorFlagHWOvercurrent
- y           |   |   |   |   |   +-- ErrorFlagSWOvercurrent
- t           |   |   |   |   +-- ErrorFlagDCBusOvervoltage
- e           |   |   |   +-- ErrorFlagMotorPositionHallSequence
-             |   |   +-- ErrorFlagWatchdog
-             |   +-- ErrorFlagConfigRead
-             +-- ErrorFlag15VUndervoltage
-       +---+---+---+---+---+---+---+---+
-     3 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-     4 |------------------------------x|
-       +---+---+---+---+---+---+---+---+
-     5 |<------------------------------|
-       +---+---+---+---+---+---+---+---+
-         +-- ActiveMotor
-       +---+---+---+---+---+---+---+---+
-     6 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-     7 |   |   |   |   |   |   |   |   |
-       +---+---+---+---+---+---+---+---+
-```
-
-</details>
-
-<a id="speedvalcurrval-0x501"></a>
-
-### SpeedValCurrVal (0x501)
+### SpeedValCurrVal (0x101)
 
 Drive command from the driver controls to the motor controller: target speed and motor current.
 
 | | |
 |---|---|
 | From | `DriverControls` |
-| CAN ID | 0x501 (1281) |
+| CAN ID | 0x101 (257) |
 | Length | 8 bytes |
 | Sent every | 100 ms |
 | InfluxDB measurement | `"DriverControls/SpeedValCurrVal"` |
@@ -1974,16 +847,16 @@ SELECT "DriverSetSpeed" FROM "DriverControls/SpeedValCurrVal" WHERE time > now()
 
 </details>
 
-<a id="maxbuscurrent-0x502"></a>
+<a id="maxbuscurrent-0x102"></a>
 
-### Maxbuscurrent (0x502)
+### Maxbuscurrent (0x102)
 
 Power command from the driver controls: limit on the current drawn from the battery.
 
 | | |
 |---|---|
 | From | `DriverControls` |
-| CAN ID | 0x502 (1282) |
+| CAN ID | 0x102 (258) |
 | Length | 8 bytes |
 | Sent every | 500 ms |
 | InfluxDB measurement | `"DriverControls/Maxbuscurrent"` |
@@ -2029,16 +902,16 @@ SELECT "Zero" FROM "DriverControls/Maxbuscurrent" WHERE time > now() - 1h
 
 </details>
 
-<a id="identificationinfo-0x600"></a>
+<a id="identificationinfo-0x300"></a>
 
-### IdentificationInfo (0x600)
+### IdentificationInfo (0x300)
 
 Motor controller identification. Sent once a second.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x600 (1536) |
+| CAN ID | 0x300 (768) |
 | Length | 8 bytes |
 | Sent every | 1000 ms |
 | InfluxDB measurement | `"Tritium/IdentificationInfo"` |
@@ -2084,16 +957,16 @@ SELECT "TritiumId" FROM "Tritium/IdentificationInfo" WHERE time > now() - 1h
 
 </details>
 
-<a id="statusinformation-0x601"></a>
+<a id="statusinformation-0x301"></a>
 
-### StatusInformation (0x601)
+### StatusInformation (0x301)
 
 Motor controller status: which limits are active, errors, and CAN error counts.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x601 (1537) |
+| CAN ID | 0x301 (769) |
 | Length | 8 bytes |
 | Sent every | 200 ms |
 | InfluxDB measurement | `"Tritium/StatusInformation"` |
@@ -2148,16 +1021,16 @@ SELECT "LimitFlags" FROM "Tritium/StatusInformation" WHERE time > now() - 1h
 
 </details>
 
-<a id="busmeasurement-0x602"></a>
+<a id="busmeasurement-0x302"></a>
 
-### BusMeasurement (0x602)
+### BusMeasurement (0x302)
 
 Battery-side (DC bus) voltage and current at the motor controller.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x602 (1538) |
+| CAN ID | 0x302 (770) |
 | Length | 8 bytes |
 | Sent every | 200 ms |
 | InfluxDB measurement | `"Tritium/BusMeasurement"` |
@@ -2203,16 +1076,16 @@ SELECT "BusVoltage" FROM "Tritium/BusMeasurement" WHERE time > now() - 1h
 
 </details>
 
-<a id="velocity-0x603"></a>
+<a id="velocity-0x303"></a>
 
-### Velocity (0x603)
+### Velocity (0x303)
 
 Motor speed and vehicle speed.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x603 (1539) |
+| CAN ID | 0x303 (771) |
 | Length | 8 bytes |
 | Sent every | 200 ms |
 | InfluxDB measurement | `"Tritium/Velocity"` |
@@ -2258,16 +1131,16 @@ SELECT "MotorVelocity" FROM "Tritium/Velocity" WHERE time > now() - 1h
 
 </details>
 
-<a id="phasecurrent-0x604"></a>
+<a id="phasecurrent-0x304"></a>
 
-### PhaseCurrent (0x604)
+### PhaseCurrent (0x304)
 
 Current in two of the motor's three phases.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x604 (1540) |
+| CAN ID | 0x304 (772) |
 | Length | 8 bytes |
 | Sent every | 200 ms |
 | InfluxDB measurement | `"Tritium/PhaseCurrent"` |
@@ -2313,16 +1186,16 @@ SELECT "PhaseBCurrent" FROM "Tritium/PhaseCurrent" WHERE time > now() - 1h
 
 </details>
 
-<a id="motorvoltagevector-0x605"></a>
+<a id="motorvoltagevector-0x305"></a>
 
-### MotorVoltageVector (0x605)
+### MotorVoltageVector (0x305)
 
 Voltage applied to the motor, as a vector (mainly for motor tuning).
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x605 (1541) |
+| CAN ID | 0x305 (773) |
 | Length | 8 bytes |
 | Sent every | 200 ms |
 | InfluxDB measurement | `"Tritium/MotorVoltageVector"` |
@@ -2368,16 +1241,16 @@ SELECT "VectVoltImag" FROM "Tritium/MotorVoltageVector" WHERE time > now() - 1h
 
 </details>
 
-<a id="motorcurrentvector-0x606"></a>
+<a id="motorcurrentvector-0x306"></a>
 
-### MotorCurrentVector (0x606)
+### MotorCurrentVector (0x306)
 
 Current in the motor, as a vector (mainly for motor tuning).
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x606 (1542) |
+| CAN ID | 0x306 (774) |
 | Length | 8 bytes |
 | Sent every | 200 ms |
 | InfluxDB measurement | `"Tritium/MotorCurrentVector"` |
@@ -2423,16 +1296,16 @@ SELECT "VectCurrImag" FROM "Tritium/MotorCurrentVector" WHERE time > now() - 1h
 
 </details>
 
-<a id="motorbackemfvector-0x607"></a>
+<a id="motorbackemfvector-0x307"></a>
 
-### MotorBackemfVector (0x607)
+### MotorBackemfVector (0x307)
 
 Back-EMF (the voltage generated by the spinning motor), as a vector.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x607 (1543) |
+| CAN ID | 0x307 (775) |
 | Length | 8 bytes |
 | Sent every | 200 ms |
 | InfluxDB measurement | `"Tritium/MotorBackemfVector"` |
@@ -2478,16 +1351,16 @@ SELECT "PeakBackEmfPhaseToNeutral" FROM "Tritium/MotorBackemfVector" WHERE time 
 
 </details>
 
-<a id="rail_15v-0x608"></a>
+<a id="rail_15v-0x308"></a>
 
-### Rail_15V (0x608)
+### Rail_15V (0x308)
 
 Voltage of the controller's internal 15 V supply rail.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x608 (1544) |
+| CAN ID | 0x308 (776) |
 | Length | 8 bytes |
 | Sent every | 1000 ms |
 | InfluxDB measurement | `"Tritium/Rail_15V"` |
@@ -2533,16 +1406,16 @@ SELECT "Reserved" FROM "Tritium/Rail_15V" WHERE time > now() - 1h
 
 </details>
 
-<a id="rail_3_3vand1_9v-0x609"></a>
+<a id="rail_3_3vand1_9v-0x309"></a>
 
-### Rail_3_3VAnd1_9V (0x609)
+### Rail_3_3VAnd1_9V (0x309)
 
 Voltages of the controller's internal 3.3 V and 1.9 V supply rails.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x609 (1545) |
+| CAN ID | 0x309 (777) |
 | Length | 8 bytes |
 | Sent every | 1000 ms |
 | InfluxDB measurement | `"Tritium/Rail_3_3VAnd1_9V"` |
@@ -2588,16 +1461,16 @@ SELECT "OneNineVSupply" FROM "Tritium/Rail_3_3VAnd1_9V" WHERE time > now() - 1h
 
 </details>
 
-<a id="reserved1-0x60a"></a>
+<a id="reserved1-0x30a"></a>
 
-### Reserved1 (0x60A)
+### Reserved1 (0x30A)
 
-Cooling fan drive and speed (WaveSculptor20 layout). Marked reserved and not active in Tests/data/CANBusConfig.xlsm, and not seen in Tests/data/NRT.BIN. TODO: add whether Peri's motor controller sends this message; if not, remove it.
+Cooling fan drive and speed (WaveSculptor20 layout). Marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), and not seen in Tests/data/NRT.BIN. TODO: add whether Peri's motor controller sends this message; if not, remove it.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x60A (1546) |
+| CAN ID | 0x30A (778) |
 | Length | 8 bytes |
 | Sent every | 1000 ms |
 | InfluxDB measurement | `"Tritium/Reserved1"` |
@@ -2643,16 +1516,16 @@ SELECT "VoltagePercentage" FROM "Tritium/Reserved1" WHERE time > now() - 1h
 
 </details>
 
-<a id="sinkmotortemperature-0x60b"></a>
+<a id="sinkmotortemperature-0x30b"></a>
 
-### SinkMotorTemperature (0x60B)
+### SinkMotorTemperature (0x30B)
 
 Motor and controller heatsink temperatures.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x60B (1547) |
+| CAN ID | 0x30B (779) |
 | Length | 8 bytes |
 | Sent every | 1000 ms |
 | InfluxDB measurement | `"Tritium/SinkMotorTemperature"` |
@@ -2698,16 +1571,16 @@ SELECT "MotorTemp" FROM "Tritium/SinkMotorTemperature" WHERE time > now() - 1h
 
 </details>
 
-<a id="dspboardtemperature-0x60c"></a>
+<a id="dspboardtemperature-0x30c"></a>
 
-### DspBoardTemperature (0x60C)
+### DspBoardTemperature (0x30C)
 
 Temperature of the controller's processor board.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x60C (1548) |
+| CAN ID | 0x30C (780) |
 | Length | 8 bytes |
 | Sent every | 5000 ms |
 | InfluxDB measurement | `"Tritium/DspBoardTemperature"` |
@@ -2753,16 +1626,16 @@ SELECT "DspBoardTemp" FROM "Tritium/DspBoardTemperature" WHERE time > now() - 1h
 
 </details>
 
-<a id="reserved-0x60d"></a>
+<a id="reserved-0x30d"></a>
 
-### Reserved (0x60D)
+### Reserved (0x30D)
 
-Reserved message: marked reserved and not active in Tests/data/CANBusConfig.xlsm, but it does appear in Tests/data/NRT.BIN. TODO: add what Peri's motor controller sends in this message (base address + 0x0D), from the WaveSculptor22 user manual.
+Reserved message: marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), but it does appear in Tests/data/NRT.BIN. TODO: add what Peri's motor controller sends in this message (base address + 0x0D), from the WaveSculptor22 user manual.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x60D (1549) |
+| CAN ID | 0x30D (781) |
 | Length | 8 bytes |
 | Sent every | 5000 ms |
 | InfluxDB measurement | `"Tritium/Reserved"` |
@@ -2805,16 +1678,16 @@ SELECT "Reserved" FROM "Tritium/Reserved" WHERE time > now() - 1h
 
 </details>
 
-<a id="odobusamphours-0x60e"></a>
+<a id="odobusamphours-0x30e"></a>
 
-### OdoBusAmphours (0x60E)
+### OdoBusAmphours (0x30E)
 
 Distance travelled and charge used since the controller was reset.
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x60E (1550) |
+| CAN ID | 0x30E (782) |
 | Length | 8 bytes |
 | Sent every | 1000 ms |
 | InfluxDB measurement | `"Tritium/OdoBusAmphours"` |
@@ -2860,16 +1733,16 @@ SELECT "Odometer" FROM "Tritium/OdoBusAmphours" WHERE time > now() - 1h
 
 </details>
 
-<a id="slipspeedmeasurement-0x617"></a>
+<a id="slipspeedmeasurement-0x317"></a>
 
-### SlipSpeedMeasurement (0x617)
+### SlipSpeedMeasurement (0x317)
 
 Slip speed (only meaningful with an induction motor).
 
 | | |
 |---|---|
 | From | `Tritium` |
-| CAN ID | 0x617 (1559) |
+| CAN ID | 0x317 (791) |
 | Length | 8 bytes |
 | Sent every | 200 ms |
 | InfluxDB measurement | `"Tritium/SlipSpeedMeasurement"` |
@@ -2915,17 +1788,74 @@ SELECT "Reserved" FROM "Tritium/SlipSpeedMeasurement" WHERE time > now() - 1h
 
 </details>
 
+<a id="dialcurrent-0x500"></a>
+
+### DialCurrent (0x500)
+
+Current dial setting from the driver controls (DriverSetCurrent in the ESC-CODE decode sheet). Seen in Tests/data/NRT.BIN.
+
+| | |
+|---|---|
+| From | `DriverControls` |
+| CAN ID | 0x500 (1280) |
+| Length | 8 bytes |
+| Sent every | not known |
+| InfluxDB measurement | `"DriverControls/DialCurrent"` |
+
+| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
+|---|---|---|---|---|---|
+| `DriverSetDialCurrent` | Setting of the driver's current dial (e.g. 0.51 in Tests/data/NRT.BIN). TODO: add its range and meaning (the Grafana dashboards treat it as 0 to 1, shown as a percentage), from the driver controls firmware. |  | none (sent as a decimal number) |  |  |
+| `TotalAcMotorCurrent` | Total AC motor current, as named in the ESC-CODE decode sheet. TODO: add its unit and meaning, from the driver controls firmware. |  | none (sent as a decimal number) |  |  |
+
+Example InfluxDB query:
+
+```
+SELECT "DriverSetDialCurrent" FROM "DriverControls/DialCurrent" WHERE time > now() - 1h
+```
+
+<details><summary>Bit layout</summary>
+
+```
+                      Bit
+
+         7   6   5   4   3   2   1   0
+       +---+---+---+---+---+---+---+---+
+     0 |------------------------------x|
+       +---+---+---+---+---+---+---+---+
+     1 |-------------------------------|
+       +---+---+---+---+---+---+---+---+
+     2 |-------------------------------|
+       +---+---+---+---+---+---+---+---+
+     3 |<------------------------------|
+ B     +---+---+---+---+---+---+---+---+
+ y       +-- DriverSetDialCurrent
+ t     +---+---+---+---+---+---+---+---+
+ e   4 |------------------------------x|
+       +---+---+---+---+---+---+---+---+
+     5 |-------------------------------|
+       +---+---+---+---+---+---+---+---+
+     6 |-------------------------------|
+       +---+---+---+---+---+---+---+---+
+     7 |<------------------------------|
+       +---+---+---+---+---+---+---+---+
+         +-- TotalAcMotorCurrent
+```
+
+</details>
+
 ## Still to be documented
 
-52 comments in the dbc files still contain a TODO:
+36 comments in the dbc files still contain a TODO:
 
 | File | Where | Comment |
 |---|---|---|
 | MPPT.dbc | device Mppt | The two MPPTs (maximum power point trackers), named Javed and Woof. Each takes power from part of the solar array and converts it to charge the battery. TODO: add the MPPT make and model, and which part of Peri's solar array each MPPT (Javed, Woof) is connected to. |
+| MPPT.dbc | message Javed | Status of the MPPT named Javed, sent in reply to each MpptPollJaved request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in Tests/data/NRT.BIN (iESC 2026 qualifying), although the telemetry board polls both MPPTs every second. TODO: add whether Peri still has these MPPTs; if not, remove this message. |
 | MPPT.dbc | signal Javed.NoCharge | 1 if the MPPT reports that it is not charging. TODO: add the conditions that set this flag, from the MPPT datasheet. |
 | MPPT.dbc | signal Javed.UnderVoltage | 1 if the MPPT reports an undervoltage. TODO: add whether this is the solar array (input) or battery (output) side, from the MPPT datasheet. |
 | MPPT.dbc | signal Javed.VoltageOut | Output voltage of this MPPT (battery side). TODO: add scaling and unit from the MPPT datasheet (still the raw value; check whether it is 208.79 mV per bit, as on similar MPPTs). |
 | MPPT.dbc | signal Javed.AmbientTemperature | Temperature inside this MPPT. TODO: add scaling and unit from the MPPT datasheet (still the raw value). |
+| MPPT.dbc | message Woof | Status of the MPPT named Woof, sent in reply to each MpptPollWoof request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in Tests/data/NRT.BIN (iESC 2026 qualifying), although the telemetry board polls both MPPTs every second. TODO: add whether Peri still has these MPPTs; if not, remove this message. |
 | MPPT.dbc | signal Woof.NoCharge | 1 if the MPPT reports that it is not charging. TODO: add the conditions that set this flag, from the MPPT datasheet. |
 | MPPT.dbc | signal Woof.UnderVoltage | 1 if the MPPT reports an undervoltage. TODO: add whether this is the solar array (input) or battery (output) side, from the MPPT datasheet. |
 | MPPT.dbc | signal Woof.VoltageOut | Output voltage of this MPPT (battery side). TODO: add scaling and unit from the MPPT datasheet (still the raw value; check whether it is 208.79 mV per bit, as on similar MPPTs). |
@@ -2934,42 +1864,24 @@ SELECT "Reserved" FROM "Tritium/SlipSpeedMeasurement" WHERE time > now() - 1h
 | Orion.dbc | signal PackParameters.PackInstVoltage | Total battery pack voltage, measured right now (instantaneous). TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 V per bit (the test capture shows 1305, which would be 130.5 V). |
 | Orion.dbc | signal PackParameters.PackSoc | Battery state of charge: how full the battery is. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.5 % per bit (the test capture shows 159, which would be 79.5 %). |
 | Orion.dbc | signal PackParameters.RelayState | Which of the BMS's relay and contactor outputs are on, one bit each. TODO: add the meaning of each bit, from the Orion BMS profile loaded on Peri. |
+| Orion.dbc | signal PackParameters.Checksum | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 184) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |
 | Orion.dbc | signal CellTempsDCL.PackDcl | Discharge current limit: the most current the BMS currently allows to be drawn from the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 A per bit. |
-| Orion.dbc | signal CellTempsDCL.Unknown | Not known. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message (CANBusConfig.xlsm also lists it as unknown). |
+| Orion.dbc | signal CellTempsDCL.Unknown | Not known. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message (the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e) also lists it as unknown). |
 | Orion.dbc | signal CellTempsDCL.HighTemperatureSensor | Highest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed. |
 | Orion.dbc | signal CellTempsDCL.LowTemperatureSensors | Lowest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed. |
+| Orion.dbc | signal CellTempsDCL.Checksum | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 185) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |
 | Orion.dbc | signal CellVoltages.LowCellVoltage | Voltage of the lowest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit. |
 | Orion.dbc | signal CellVoltages.HighCellVoltage | Voltage of the highest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit. |
 | Orion.dbc | signal CellVoltages.InternalTemperature | Temperature inside the BMS unit. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit. |
+| Orion.dbc | signal CellVoltages.Checksum | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 0) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |
 | Telemetry.dbc | signal SystemStatusMessages.Power | 0xFF while the board is starting up. After that, the state of the sleep input (pin 33): 1 = car on, 0 = car off. TODO: add what the sleep input (pin 33) is wired to on Peri. |
 | Telemetry.dbc | signal SystemStatusMessages.Flag | State of the marker flag input (pin 22), 0 or 1, for marking a moment in the data. TODO: add what the marker flag input (pin 22) is wired to on Peri, and which state means marked. |
-| wavesculptor_22.dbc | device Tritium | Tritium WaveSculptor motor controller: drives the motor and reports its speed, currents, voltages and temperatures. Its messages in this file use base address 0x600 (0x600 to 0x617), as seen in Tests/data/NRT.BIN. TODO: add the controller model and firmware version fitted to Peri. |
-| wavesculptor_22.dbc | device Tritium_Right | Second (right) motor controller, from an earlier two-motor set-up. TODO: add whether Peri has a second motor controller; if not, remove its messages (0x80 to 0x8E) from this file. |
-| wavesculptor_22.dbc | device DriverControls_Right | Driver controls for the second (right) motor controller, from an earlier two-motor set-up. TODO: add whether Peri uses these; if not, remove their messages (0x41 to 0x43) from this file. |
-| wavesculptor_22.dbc | message Left_ResetCommand | Reset command for the left motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_DriveCommand | Drive command for the right motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | signal Right_DriveCommand.MotorCurrent | Motor current requested, as a percentage of the controller's maximum current setting. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual. |
-| wavesculptor_22.dbc | message Right_MotorPowerCommand | Power command for the right motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_ResetCommand | Reset command for the right motor controller. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_IDInfo | Right motor controller identification. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_Status | Right motor controller status. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_BusMeasurement | Right motor controller DC bus voltage and current. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_VelocityMeasurement | Right motor controller motor and vehicle speed. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_PhaseCurrentMeasurement | Right motor controller phase currents. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_MotorVoltageVectorMeasurement | Right motor controller motor voltage vector. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_MotorCurrentVectorMeasurement | Right motor controller motor current vector. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_MotorBackEmfMeasurementPrediction | Right motor controller back-EMF vector. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_VoltageRail15V1V65Measurement | Right motor controller 15 V rail and 1.65 V reference. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_VoltageRail2V51V2Measurement | Right motor controller 2.5 V and 1.2 V rails. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_FanSpeedMeasurement | Right motor controller cooling fan. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_SinkMotorTempMeasurement | Right motor controller motor and heatsink temperatures. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_AirInCpuTempMeasurement | Right motor controller processor and air inlet temperatures. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_AirOutCapTempMeasurement | Right motor controller capacitor and air outlet temperatures. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Right_OdometerBusAhMeasurement | Right motor controller odometer and charge used. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
-| wavesculptor_22.dbc | message Left_Status | Left motor controller status. From an earlier two-motor set-up (separate left and right controllers). Not seen in Tests/data/NRT.BIN. TODO: add whether Peri uses this message; if not, remove it from this file. |
+| wavesculptor_22.dbc | device Tritium | Tritium WaveSculptor22 motor controller: drives the motor and reports its speed, currents, voltages and temperatures. Base address 0x300 (messages 0x300 to 0x317), as in Tests/data/NRT.BIN (iESC 2026 qualifying), where it reports device identifier 0x4003 (WaveSculptor22) and serial number 3315. The 2024 car's controller used base address 0x600. TODO: add the controller firmware version. |
 | wavesculptor_22.dbc | signal SpeedValCurrVal.DriverSetCurrent | Motor current requested by the driver controls, as a percentage of the controller's maximum current setting. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual. |
 | wavesculptor_22.dbc | signal Maxbuscurrent.MaxBusCurrent | Limit on current drawn from the DC bus (battery), as a percentage of the controller's absolute bus current limit. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual. |
 | wavesculptor_22.dbc | signal StatusInformation.ErrorFlags | Error flags, one bit each (bit 0 hardware over current, bit 1 software over current, bit 2 DC bus over voltage, bit 3 bad motor position hall sequence, bit 4 watchdog caused the last reset, bit 5 config read error, bit 6 15 V rail under voltage lock out). 0 = no errors. TODO: add the remaining bits from the WaveSculptor22 user manual. |
-| wavesculptor_22.dbc | message Reserved1 | Cooling fan drive and speed (WaveSculptor20 layout). Marked reserved and not active in Tests/data/CANBusConfig.xlsm, and not seen in Tests/data/NRT.BIN. TODO: add whether Peri's motor controller sends this message; if not, remove it. |
-| wavesculptor_22.dbc | message Reserved | Reserved message: marked reserved and not active in Tests/data/CANBusConfig.xlsm, but it does appear in Tests/data/NRT.BIN. TODO: add what Peri's motor controller sends in this message (base address + 0x0D), from the WaveSculptor22 user manual. |
+| wavesculptor_22.dbc | message Reserved1 | Cooling fan drive and speed (WaveSculptor20 layout). Marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), and not seen in Tests/data/NRT.BIN. TODO: add whether Peri's motor controller sends this message; if not, remove it. |
+| wavesculptor_22.dbc | message Reserved | Reserved message: marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), but it does appear in Tests/data/NRT.BIN. TODO: add what Peri's motor controller sends in this message (base address + 0x0D), from the WaveSculptor22 user manual. |
 | wavesculptor_22.dbc | signal Reserved.Reserved | Reserved. TODO: add its meaning, see the message comment. |
+| wavesculptor_22.dbc | signal DialCurrent.DriverSetDialCurrent | Setting of the driver's current dial (e.g. 0.51 in Tests/data/NRT.BIN). TODO: add its range and meaning (the Grafana dashboards treat it as 0 to 1, shown as a percentage), from the driver controls firmware. |
+| wavesculptor_22.dbc | signal DialCurrent.TotalAcMotorCurrent | Total AC motor current, as named in the ESC-CODE decode sheet. TODO: add its unit and meaning, from the driver controls firmware. |

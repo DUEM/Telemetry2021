@@ -188,7 +188,8 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   └── live_calculations          (route distance, incline and power, see its README.md)
 ├── Client                         (SolarSim strategy upload to InfluxDB, see Client/README.md)
 ├── Tests                          (pytest suite)
-│   └── data                       (sample captures NRT.BIN, MPPT.BIN and their expected decoded .csv)
+│   └── data                       (sample captures and their expected decoded .csv: NRT.BIN from
+│                                    Peri at iESC 2026 qualifying, MPPT.BIN with MPPT messages)
 ├── Telemetry                      (on-vehicle Arduino firmware, see Telemetry/README.md;
 │   │                                same as the ESC-CODE branch)
 │   ├── Telemetry.ino              (setup / main loop)
@@ -213,6 +214,8 @@ Update the code as above (the `git submodule update --init` step is required, be
 
 **Decoding**
 * Only CAN IDs in the `dbc/` files are decoded. Others are written to InfluxDB as `ERROR/ID UNRECOGNISED`. Check the DBC files cover any new hardware on the vehicle.
+* Most of the traffic on Peri's CAN bus (IDs 0x080, 0xF380 and 0xFF80 as received) comes from a device that is not yet identified, so it is not decoded (see [dbc/README.md](dbc/README.md#can-ids-seen-but-not-decoded)). The telemetry board only sends the lowest 16 bits of each CAN ID, so 29-bit extended IDs, as these appear to be, cannot be decoded reliably until the firmware sends the full ID.
+* The MPPT status messages (0x771, 0x772) are not in the iESC 2026 recording, although the board polls for them, so there is no MPPT data and the live power calculation cannot run.
 * The Orion BMS signals, and the MPPT `VoltageOut` and `AmbientTemperature`, are still stored as raw values: their scaling has to come from the Orion BMS profile loaded on Peri and the MPPT datasheet. These and the other gaps are marked `TODO: add ...` in the DBC files and listed at the end of [dbc/SIGNALS.md](dbc/SIGNALS.md#still-to-be-documented).
 * GPS latitude and longitude are stored as sent (NMEA `ddmm.mmmm` with a separate N/S, E/W character), not as decimal degrees, so they cannot be used directly by a Grafana map panel. [road_lookup.py](Receiver/live_calculations/road_lookup.py) does the conversion.
 * Latitude and longitude are sent as separate CAN messages, which can lead to mismatched positions.

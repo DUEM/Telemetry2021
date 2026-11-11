@@ -22,39 +22,40 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
 
     msgs = nrt_bytes
     # act
-    storeData(msgs[20])  # Orion
+    storeData(msgs[39])  # Orion
     mock_store_function.assert_called_with(
         "PackParameters",
         "Orion",
         {
             "PackCurrent": 0,
-            "PackInstVoltage": 1305,
-            "PackSoc": 159,
-            "RelayState": 32843,
+            "PackInstVoltage": 1179,
+            "PackSoc": 148,
+            "RelayState": 75,
+            "Checksum": 54,
         },
-        datetime(1970, 1, 1, 3, 0, 1, 880000, tzinfo=timezone.utc),
+        datetime(1970, 1, 1, 3, 22, 23, 552000, tzinfo=timezone.utc),
         True,
     )
 
-    storeData(msgs[128])  # tritium
+    storeData(msgs[1281])  # tritium, while driving
     mock_store_function.assert_called_with(
-        "SlipSpeedMeasurement",
+        "Velocity",
         "Tritium",
-        {"Reserved": 99.99999237060547, "SlipSpeed": 0.0},
-        datetime(1970, 1, 1, 3, 0, 3, 579000, tzinfo=timezone.utc),
+        {"MotorVelocity": 153.98561096191406, "VehicleVelocity": 4.498969078063965},
+        datetime(1970, 1, 1, 4, 13, 34, 327000, tzinfo=timezone.utc),
         True,
     )
 
-    storeData(msgs[153])  # crc fail
+    storeData(msgs[7])  # crc fail
     mock_store_function.assert_called_with(
         "CRCFail",
         "",
-        {"Data": b"0f00000602085e7a0243000000004872"},
+        {"Data": b"140007010800780078200d00d600af"},
         datetime(1970, 1, 1, 3, 0, tzinfo=timezone.utc),
         False,
     )
 
-    storeData(msgs[166])  # status msg
+    storeData(msgs[45])  # status msg
     mock_store_function.assert_called_with(
         "SystemStatusMessages",
         "Telemetry",
@@ -62,22 +63,22 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
             "Power": 1,
             "WritingToSd": 255,
             "GpsTimeObtained": 0,
-            "LoadedConfig": 102,
+            "LoadedConfig": 125,
             "Flag": 1,
             "Spare1": 0,
             "Spare2": 0,
             "Spare3": 0,
         },
-        datetime(1970, 1, 1, 3, 0, 4, 152000, tzinfo=timezone.utc),
+        datetime(1970, 1, 1, 3, 22, 23, 575000, tzinfo=timezone.utc),
         True,
     )
 
-    storeData(msgs[173])  # drv control
+    storeData(msgs[718])  # drv control
     mock_store_function.assert_called_with(
         "Maxbuscurrent",
         "DriverControls",
-        {"Zero": 0.0, "MaxBusCurrent": 0.23999999463558197},
-        datetime(1970, 1, 1, 3, 0, 4, 207000, tzinfo=timezone.utc),
+        {"Zero": 0.0, "MaxBusCurrent": 1.0},
+        datetime(1970, 1, 1, 4, 11, 27, 85000, tzinfo=timezone.utc),
         True,
     )
 
@@ -164,11 +165,11 @@ def test_store_data_logs_message_at_info(nrt_bytes, caplog):
 
     # Act
     with caplog.at_level(logging.INFO, logger="Receiver.telemetry_storer"):
-        storer.store_data(nrt_bytes[20])
+        storer.store_data(nrt_bytes[39])
 
     # Assert
     assert "0x700 Orion/PackParameters" in caplog.text
-    assert "'PackInstVoltage': 1305" in caplog.text
+    assert "'PackInstVoltage': 1179" in caplog.text
     assert "CRC OK" in caplog.text
 
 

@@ -410,12 +410,12 @@ You can send a recorded capture through a pair of virtual serial ports, and watc
    ```shell
    sudo apt install -y socat pv
    ```
-2. Follow the **Live replay** steps in [Receiver/README.md](Receiver/README.md#testing-without-hardware). You need two terminals: one for `socat` and one for the telemetry receiver.
+2. Follow the **Live replay** steps in [Receiver/README.md](Receiver/README.md#testing-without-hardware-software-in-the-loop-sil). You need two terminals: one for `socat` and one for the telemetry receiver.
 3. Check the data arrived:
    ```shell
    influx -database DUSCiESC -execute 'SHOW MEASUREMENTS'
    ```
-4. In Grafana, look at a panel. Set the **time range** (top right) to include **22 March 2024**: the sample capture's timestamps come from the GPS in the recording, not from today's date.
+4. In Grafana, look at a panel. Set the **time range** (top right) to include **18 September 2026, 10:30 to 11:30 UTC**: the sample capture (iESC 2026 qualifying) takes its timestamps from the GPS in the recording, not from today's date.
 
 If you want an empty database again afterwards, delete and recreate it:
 

@@ -204,6 +204,11 @@ class Influx1Storer(StorerExtension):
                 msg_time.strftime("%Y-%m-%d %H:%M:%S"),
             )
             return
+        if not msg_body:
+            # e.g. the MPPT poll requests, which carry no data: influx
+            # rejects a point with no fields
+            logger.debug("No fields to store for %s/%s", msg_source, msg_item)
+            return
 
         # Write data and check if successful
         body = [

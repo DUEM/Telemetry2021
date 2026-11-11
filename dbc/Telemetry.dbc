@@ -95,7 +95,7 @@ CM_ SG_ 249 GpsLon "Hemisphere of the longitude: the character E (east) or W (we
 CM_ BO_ 250 "GPS altitude and the number of satellites in use. Sent every gps_update ms.";
 CM_ SG_ 250 GpsAltitude "Altitude above mean sea level, from the GPS.";
 CM_ SG_ 250 GpsSatellites "Number of satellites the GPS is using. More satellites usually means a more accurate position.";
-CM_ BO_ 273 "Telemetry board health. Sent every status_update ms (Telemetry/config.txt). Most bytes use the codes 0xFF good, 0xAA bad, 0xBB using defaults, 0x00 unknown (see Telemetry/README.md).";
+CM_ BO_ 273 "Telemetry board health. Sent every status_update ms (Telemetry/config.txt; 500 ms in Tests/data/NRT.BIN). Most bytes use the codes 0xFF good, 0xAA bad, 0xBB using defaults, 0x00 unknown (see Telemetry/README.md).";
 CM_ SG_ 273 Power "0xFF while the board is starting up. After that, the state of the sleep input (pin 33): 1 = car on, 0 = car off. TODO: add what the sleep input (pin 33) is wired to on Peri.";
 CM_ SG_ 273 WritingToSd "Whether the board is logging every message to its SD card.";
 CM_ SG_ 273 GpsTimeObtained "Whether the GPS time was obtained at start-up, within time_fix ms (Telemetry/config.txt).";
@@ -111,7 +111,7 @@ BA_ "GenMsgCycleTime" BO_ 247 2000;
 BA_ "GenMsgCycleTime" BO_ 248 2000;
 BA_ "GenMsgCycleTime" BO_ 249 2000;
 BA_ "GenMsgCycleTime" BO_ 250 2000;
-BA_ "GenMsgCycleTime" BO_ 273 1000;
+BA_ "GenMsgCycleTime" BO_ 273 500;
 VAL_ 246 GpsFix 0 "No fix" 1 "Fix" ;
 VAL_ 246 GpsFixquality 0 "Invalid" 1 "GPS" 2 "Differential GPS" ;
 VAL_ 273 Power 255 "Starting up" 1 "Car on" 0 "Car off" ;

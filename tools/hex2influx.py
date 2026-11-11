@@ -72,7 +72,7 @@ def hex2influx(hex_file, telemetry_parser=None) -> None:
             msg_time,
             msg_crc_status,
         ) = telemetry_parser.translate_msg(msg)
-        if msg_item == "ID UNRECOGNISED":
+        if msg_source == "ERROR":  # unrecognised ID, DLC mismatch or decode error
             continue
         data.append(
             to_point(msg_item, msg_source, msg_body, msg_time, msg_crc_status))
@@ -102,6 +102,8 @@ def to_point(msgItem: str, msgSource: str, msgBody: dict, msgTime: datetime,
     """
     if not msgCRCStatus:  # CRC failed, message was corrupted. Do not add to database
         # print("CRC FAILED for " + msgSource + "/" + msgItem + " at " + msgTime.strftime("%Y-%m-%d %H:%M:%S"))
+        return ''
+    if not msgBody:  # e.g. the MPPT poll requests carry no data; influx needs at least one field
         return ''
     point = f'{msgSource}/{msgItem} '
     for key, value in msgBody.items():

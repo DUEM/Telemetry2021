@@ -215,3 +215,79 @@ class TestDbcDecoderAsciiSignals:
         assert decoded[signal] == char
         assert isinstance(decoded[signal], str)
 
+
+
+def make_frame(can_id, data, dlc=None, extra=b"", millis=1000):
+    """A frame as the board sends it (without the end of frame marker), with a valid CRC.
+
+    Format: millis (4 bytes, little-endian), CAN ID (2, big-endian), DLC (1),
+    data, then `extra` bytes the DLC does not cover, then CRC16 (2, big-endian).
+    """
+    from crccheck.crc import Crc16Modbus
+
+    body = (
+        millis.to_bytes(4, "little")
+        + can_id.to_bytes(2, "big")
+        + bytes([len(data) if dlc is None else dlc])
+        + bytes(data)
+        + extra
+    )
+    return bytearray(body + Crc16Modbus.calc(body).to_bytes(2, "big"))
+
+
+class TestTelemetryParserFrameLength:
+    """The decoder gets exactly the DLC's data bytes: never the CRC after them."""
+
+    def test_zero_length_message_does_not_decode_the_crc(self, run_in_receiver, patch_receiver_config):
+        # MPPT poll requests (0x711) carry no data. The CRC bytes used to be
+        # passed to the decoder and stored as a 'Blank' signal.
+        from Receiver.telemetry_parser import TelemetryParser
+
+        name, source, body, _, crc_ok = TelemetryParser().translate_msg(make_frame(0x711, b""))
+
+        assert (name, source, body, crc_ok) == ("MpptPollJaved", "Telemetry", {}, True)
+
+    def test_data_bytes_are_decoded_exactly(self, run_in_receiver, patch_receiver_config):
+        from Receiver.telemetry_parser import TelemetryParser
+
+        data = [0xFF, 0xFF, 0x00, 0x66, 0x01, 0x00, 0x00, 0x00]
+        _, _, body, _, _ = TelemetryParser().translate_msg(make_frame(0x111, data))
+
+        assert list(body.values()) == data
+
+    def test_bytes_beyond_the_dlc_are_ignored(self, run_in_receiver, patch_receiver_config, caplog):
+        # As in the first frame of Tests/data/MPPT.BIN: one stray byte between
+        # the data and the CRC. The CRC is valid, so the declared data is used.
+        from Receiver.telemetry_parser import TelemetryParser
+
+        data = [14, 5, 36, 18, 7, 23, 1, 1]
+        frame = make_frame(0x0F6, data, extra=b"\xe8")
+        name, _, body, _, _ = TelemetryParser().translate_msg(frame)
+
+        assert name == "TimeAndFix"
+        assert list(body.values()) == data
+        assert "ignoring the extra bytes" in caplog.text
+
+    def test_fewer_bytes_than_the_dlc_is_an_error(self, run_in_receiver, patch_receiver_config):
+        from Receiver.telemetry_parser import TelemetryParser
+
+        frame = make_frame(0x111, [1, 2, 3, 4, 5], dlc=8)
+        name, source, body, _, crc_ok = TelemetryParser().translate_msg(frame)
+
+        assert (name, source, crc_ok) == ("DLC MISMATCH", "ERROR", True)
+        assert body == {"ID": 0x111, "DLC": 8, "Bytes": 5}
+
+    def test_fewer_bytes_than_the_dbc_message_is_a_decode_error(self, run_in_receiver, patch_receiver_config):
+        # MPPT status (0x771) is 7 bytes in the dbc; a consistent 2 byte frame
+        # used to be padded out with the CRC bytes and decoded as garbage.
+        from Receiver.telemetry_parser import TelemetryParser
+
+        name, source, body, _, _ = TelemetryParser().translate_msg(make_frame(0x771, [1, 2]))
+
+        assert (name, source, body) == ("DECODE ERROR", "ERROR", {"ID": 0x771, "DLC": 2})
+
+
+def test_hex2influx_skips_messages_without_fields():
+    from tools.hex2influx import to_point
+
+    assert to_point("MpptPollJaved", "Telemetry", {}, datetime(2026, 1, 1, tzinfo=timezone.utc), True) == ""

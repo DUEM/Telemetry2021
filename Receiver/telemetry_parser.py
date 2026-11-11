@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Optional
 from crccheck.crc import Crc16Modbus
 from binascii import hexlify
+from cantools.database import DecodeError
 
 import numpy as np
 from numpy import uint32
@@ -69,14 +70,41 @@ class TelemetryParser:
         # do a lookup in spreadsheet using can id to work out can message type
         can_id = self.get_can_id(msg_bytes_and_time)
 
+        # Data bytes: exactly the DLC declares, never the CRC that follows them
+        # (Format: TI0..TI3 ID0 ID1 DLC B0..B(DLC-1) CRC0 CRC1)
+        dlc = can_msg_bytes[2] if len(can_msg_bytes) > 2 else 0
+        frame_data = can_msg_bytes[3:-2]
+        if len(frame_data) < dlc:
+            logger.warning(
+                "CAN ID %x: DLC is %i but the frame has %i data bytes",
+                can_id, dlc, len(frame_data),
+            )
+            return (
+                "DLC MISMATCH",
+                "ERROR",
+                {"ID": can_id, "DLC": dlc, "Bytes": len(frame_data)},
+                msg_time,
+                msg_crc_status,
+            )
+        if len(frame_data) > dlc:
+            logger.warning(
+                "CAN ID %x: DLC is %i but the frame has %i data bytes, ignoring the extra bytes",
+                can_id, dlc, len(frame_data),
+            )
+        frame_data = frame_data[:dlc]
+
         # Translate
         try:
             message_name, message_source, decoded_message = self.decoder.decode_can_msg(
-                can_id, can_msg_bytes[3:]
+                can_id, frame_data
             )
         except KeyError:
             logger.warning("No entry in dbc for CAN ID %x", can_id)
             return "ID UNRECOGNISED", "ERROR", {"ID": can_id}, msg_time, msg_crc_status
+        except DecodeError as error:
+            # e.g. fewer data bytes than the message's length in the dbc file
+            logger.warning("CAN ID %x could not be decoded: %s", can_id, error)
+            return "DECODE ERROR", "ERROR", {"ID": can_id, "DLC": dlc}, msg_time, msg_crc_status
 
         if can_id == 0x0F6 and decoded_message["GpsDay"] != 0:
             self.update_last_gps_time(decoded_message, received_millis_time)
