@@ -12,7 +12,7 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",
 )
 
-SERIALPORT = '/dev/ttyUSB0' # Raspberry Pi
+SERIALPORT = '/tmp/ttyV0' # Raspberry Pi
 #SERIALPORT = '/dev/cu.usbmodem14101' # macOS
 #SERIALPORT = 'COM8' #Windows
 BAUD = 115200

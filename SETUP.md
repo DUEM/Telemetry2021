@@ -397,11 +397,11 @@ VS Code's **Source Control** panel (the branching icon on the left) shows your c
 
 You can send a recorded capture through a pair of virtual serial ports, and watch it arrive in InfluxDB and Grafana. This writes the sample data into the `DUSCiESC` database.
 
-1. Install `socat`, a tool that creates virtual serial ports:
+1. Install `socat`, a tool that creates virtual serial ports and `pv` a tool that replays data at a given rate:
    ```shell
-   sudo apt install -y socat
+   sudo apt install -y socat pv
    ```
-2. Follow the **Live replay** steps in [Receiver/README.md](Receiver/README.md#testing-without-hardware). You need three terminals: one for `socat`, one for the receiver, and one to send the capture.
+2. Follow the **Live replay** steps in [Receiver/README.md](Receiver/README.md#testing-without-hardware). You need two terminals: one for `socat` and one for the telemetry receiver.
 3. Check the data arrived:
    ```shell
    influx -database DUSCiESC -execute 'SHOW MEASUREMENTS'

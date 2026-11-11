@@ -146,7 +146,7 @@ Add `-h` to any of these scripts to see all its options.
 
 [batch_Read_Hex.py](../tools/batch_Read_Hex.py) runs `hex2influx.py` on each file in the directory given with `-d`, in name order. By default it picks the board's log files, named `YYMMDDNN.BIN` (in upper or lower case). To choose other files, give a regular expression that the whole file name must match with `-p`; for example, `-p "231018[0-9]{2}\.BIN"` picks only the files from 18 October 2023. At the end it reports how many files were imported, and lists any that failed.
 
-## Testing without hardware
+## Testing without hardware (sofware in the loop, SIL)
 
 **Unit tests.** From the top of the repository:
 
@@ -157,17 +157,16 @@ pytest
 
 The tests replay the sample captures in [../Tests/data/](../Tests/data/) (`NRT.BIN`, `MPPT.BIN`) and compare the decoded output with the matching `.csv` files. They do not need InfluxDB.
 
-**Live replay.** You can replay a capture through a virtual serial port pair. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off in `receiver_config.py`.
+**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off in `receiver_config.py`.
 
 ```shell
-# terminal 1: create a linked pair of virtual serial ports; note the two /dev/pts/N names it prints
-socat -d -d pty,raw,echo=0 pty,raw,echo=0
+# terminal 1: create a one way virtual serial port, and then replay the sample capture through it at a given rate (2500 bytes per second ~= 20 Kbps)
 
-# terminal 2: set SERIALPORT in Receiver/LiveTelemetry.py to the FIRST /dev/pts/N name, then
+pv -L 2500 Tests/data/NRT.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0
+
+# terminal 2: set SERIALPORT in Receiver/LiveTelemetry.py to the FIRST /tmp/ttyV0 name, then
 python3 -m Receiver.LiveTelemetry
 
-# terminal 3: feed the sample capture into the SECOND port
-cat Tests/data/NRT.BIN > /dev/pts/M
 ```
 
 Stop the receiver with Ctrl-C when the output stops. Remember to set `SERIALPORT` back afterwards.
