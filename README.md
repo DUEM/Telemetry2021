@@ -216,6 +216,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 * The Orion BMS signals, and the MPPT `VoltageOut` and `AmbientTemperature`, are still stored as raw values: their scaling has to come from the Orion BMS profile loaded on Peri and the MPPT datasheet. These and the other gaps are marked `TODO: add ...` in the DBC files and listed at the end of [dbc/SIGNALS.md](dbc/SIGNALS.md#still-to-be-documented).
 * GPS latitude and longitude are stored as sent (NMEA `ddmm.mmmm` with a separate N/S, E/W character), not as decimal degrees, so they cannot be used directly by a Grafana map panel. [road_lookup.py](Receiver/live_calculations/road_lookup.py) does the conversion.
 * Latitude and longitude are sent as separate CAN messages, which can lead to mismatched positions.
+* The decoder does not handle end-of-stream or break in the serial port availability on the system (e.g. USB being unplugged) cleanly and fails with an internal code error.
 
 **Timestamps**
 * Until the first valid GPS time message arrives, timestamps are based on the laptop's clock when the receiver started plus the board's uptime, so they are only approximate.
