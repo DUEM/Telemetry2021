@@ -74,7 +74,10 @@ class TelemetryParser:
         # (Format: TI0..TI3 ID0 ID1 DLC B0..B(DLC-1) CRC0 CRC1)
         dlc = can_msg_bytes[2] if len(can_msg_bytes) > 2 else 0
         frame_data = can_msg_bytes[3:-2]
-        if len(frame_data) < dlc:
+        # A frame whose data length differs from its DLC is malformed, even if
+        # the CRC passes: e.g. two frames run together after a lost end of
+        # frame marker can pass the 16-bit CRC by chance (about 1 in 65536).
+        if len(frame_data) != dlc:
             logger.warning(
                 "CAN ID %x: DLC is %i but the frame has %i data bytes",
                 can_id, dlc, len(frame_data),
@@ -86,12 +89,6 @@ class TelemetryParser:
                 msg_time,
                 msg_crc_status,
             )
-        if len(frame_data) > dlc:
-            logger.warning(
-                "CAN ID %x: DLC is %i but the frame has %i data bytes, ignoring the extra bytes",
-                can_id, dlc, len(frame_data),
-            )
-        frame_data = frame_data[:dlc]
 
         # Translate
         try:
