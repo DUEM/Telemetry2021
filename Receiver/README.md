@@ -162,7 +162,7 @@ pytest
 
 The tests replay the sample captures in [../Tests/data/](../Tests/data/) and compare the decoded output with the matching `.csv` files. They do not need InfluxDB.
 
-* `NRT.BIN`: Peri at iESC 2026 (qualifying, 18 September 2026): two sections of the recording, joined. The first (GPS with a position fix) is about 1 minute long; the second (out on track, with the motor controller, driver controls and current dial) is about 8 minutes long, with radio reception getting worse towards the end. Recorded with the ESC-CODE receiver, whose own decoded output was used to check this branch's decoding.
+* `NRT.BIN`: Ortus-T at iESC 2026 (qualifying, 18 September 2026): two sections of the recording, joined. The first (GPS with a position fix) is about 1 minute long; the second (out on track, with the motor controller, driver controls and current dial) is about 8 minutes long, with radio reception getting worse towards the end. Recorded with the ESC-CODE receiver, whose own decoded output was used to check this branch's decoding.
 * `MPPT.BIN`: an earlier (July 2023) recording with MPPT status messages, which are not in the iESC 2026 recording.
 
 **Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off in `receiver_config.py`.
