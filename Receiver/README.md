@@ -164,7 +164,7 @@ The tests replay the sample captures in [../Tests/data/](../Tests/data/) (`NRT.B
 
 pv -L 2500 Tests/data/NRT.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0
 
-# terminal 2: set SERIALPORT in Receiver/LiveTelemetry.py to the FIRST /tmp/ttyV0 name, then
+# terminal 2: set SERIALPORT in Receiver/LiveTelemetry.py to the /tmp/ttyV0 name, then
 python3 -m Receiver.LiveTelemetry
 
 ```
