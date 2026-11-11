@@ -37,7 +37,7 @@
 01/01/1970 03:22:23.468000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1343468
 01/01/1970 03:22:23.471000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1343471
 01/01/1970 03:22:23.474000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1343474
-01/01/1970 03:22:23.552000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1343552
+01/01/1970 03:22:23.552000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1343552
 01/01/1970 03:22:23.555000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1343555
 01/01/1970 03:22:23.558000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1343558
 01/01/1970 03:22:23.565000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1343565
@@ -58,7 +58,7 @@
 01/01/1970 03:22:23.966000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1343966
 01/01/1970 03:22:23.968000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1343968
 01/01/1970 03:22:23.971000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1343971
-01/01/1970 03:22:24.057000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1344057
+01/01/1970 03:22:24.057000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1344057
 01/01/1970 03:22:24.063000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,151,,,,,True,1344063
 01/01/1970 03:22:24.066000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1344066
 01/01/1970 03:22:24.073000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344073
@@ -85,7 +85,7 @@
 18/09/2026 10:37:20.357000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344468
 18/09/2026 10:37:20.361000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344472
 18/09/2026 10:37:20.363000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1344474
-18/09/2026 10:37:20.450000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1344561
+18/09/2026 10:37:20.450000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1344561
 18/09/2026 10:37:20.453000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1344564
 18/09/2026 10:37:20.456000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1344567
 18/09/2026 10:37:20.458000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344569
@@ -104,7 +104,7 @@
 18/09/2026 10:37:20.855000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1344966
 18/09/2026 10:37:20.857000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344968
 18/09/2026 10:37:20.860000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344971
-18/09/2026 10:37:20.953000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1345064
+18/09/2026 10:37:20.953000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1345064
 18/09/2026 10:37:20.957000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1345068
 18/09/2026 10:37:20.960000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1345071
 18/09/2026 10:37:20.962000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1345073
@@ -128,7 +128,7 @@
 18/09/2026 10:37:21.455000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1345566
 18/09/2026 10:37:21.457000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1345568
 18/09/2026 10:37:21.460000,CellVoltages,Orion,LowCellVoltage,39001,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,148,,,,,True,1345571
-18/09/2026 10:37:21.463000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1345574
+18/09/2026 10:37:21.463000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1345574
 18/09/2026 10:37:21.478000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1345589
 18/09/2026 10:37:21.855000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1345966
 18/09/2026 10:37:21.858000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1345969
@@ -136,7 +136,7 @@
 18/09/2026 10:37:20.000000,CRCFail,,Data,b'128a1400008004050d009635',,,,,,,,,,,,,,,False,-1
 18/09/2026 10:37:20.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
 18/09/2026 10:37:21.961000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1346072
-18/09/2026 10:37:21.964000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1346075
+18/09/2026 10:37:21.964000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1346075
 18/09/2026 10:37:21.967000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1346078
 18/09/2026 10:37:21.981000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1346092
 18/09/2026 10:37:22.001000,TimeAndFix,Telemetry,GpsHour,10,GpsMinute,37,GpsSeconds,22,GpsDay,18,GpsMonth,9,GpsYear,26,GpsFix,1,GpsFixquality,1,True,1346112
@@ -163,7 +163,7 @@
 18/09/2026 10:37:22.454000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1346566
 18/09/2026 10:37:22.457000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1346569
 18/09/2026 10:37:22.459000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1346571
-18/09/2026 10:37:22.465000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1346577
+18/09/2026 10:37:22.465000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1346577
 18/09/2026 10:37:22.467000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1346579
 18/09/2026 10:37:22.470000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1346582
 18/09/2026 10:37:22.483000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1346595
@@ -184,7 +184,7 @@
 18/09/2026 10:37:22.956000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1347068
 18/09/2026 10:37:22.960000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1347072
 18/09/2026 10:37:22.963000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1347075
-18/09/2026 10:37:22.969000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1347081
+18/09/2026 10:37:22.969000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1347081
 18/09/2026 10:37:22.972000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1347084
 18/09/2026 10:37:22.975000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1347087
 18/09/2026 10:37:22.986000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1347098
@@ -208,7 +208,7 @@
 18/09/2026 10:37:23.454000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1347566
 18/09/2026 10:37:23.456000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1347568
 18/09/2026 10:37:23.463000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1347575
-18/09/2026 10:37:23.473000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1347585
+18/09/2026 10:37:23.473000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1347585
 18/09/2026 10:37:23.476000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,151,,,,,True,1347588
 18/09/2026 10:37:23.479000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1347591
 18/09/2026 10:37:23.489000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1347601
@@ -230,7 +230,7 @@
 18/09/2026 10:37:23.954000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1348066
 18/09/2026 10:37:23.960000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1348072
 18/09/2026 10:37:23.963000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1348075
-18/09/2026 10:37:23.976000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1348088
+18/09/2026 10:37:23.976000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1348088
 18/09/2026 10:37:23.979000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1348091
 18/09/2026 10:37:23.982000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1348094
 18/09/2026 10:37:23.992000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1348104
@@ -258,7 +258,7 @@
 18/09/2026 10:37:24.454000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1348567
 18/09/2026 10:37:24.456000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1348569
 18/09/2026 10:37:24.459000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1348572
-18/09/2026 10:37:24.480000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1348593
+18/09/2026 10:37:24.480000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1348593
 18/09/2026 10:37:24.482000,CellVoltages,Orion,LowCellVoltage,39004,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,152,,,,,True,1348595
 18/09/2026 10:37:24.485000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1348598
 18/09/2026 10:37:24.495000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1348608
@@ -280,7 +280,7 @@
 18/09/2026 10:37:24.955000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1349068
 18/09/2026 10:37:24.958000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1349071
 18/09/2026 10:37:24.961000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1349074
-18/09/2026 10:37:24.984000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1349097
+18/09/2026 10:37:24.984000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1349097
 18/09/2026 10:37:24.987000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1349100
 18/09/2026 10:37:24.990000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1349103
 18/09/2026 10:37:24.998000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1349111
@@ -303,7 +303,7 @@
 18/09/2026 10:37:25.453000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1349566
 18/09/2026 10:37:25.455000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1349568
 18/09/2026 10:37:25.458000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1349571
-18/09/2026 10:37:25.488000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1349601
+18/09/2026 10:37:25.488000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1349601
 18/09/2026 10:37:25.491000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1349604
 18/09/2026 10:37:25.494000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1349607
 18/09/2026 10:37:25.501000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1349614
@@ -323,7 +323,7 @@
 18/09/2026 10:37:47.653000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1371767
 18/09/2026 10:37:47.656000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1371770
 18/09/2026 10:37:47.659000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1371773
-18/09/2026 10:37:47.665000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1371779
+18/09/2026 10:37:47.665000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1371779
 18/09/2026 10:37:47.667000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39411,InternalTemperature,25,Blank5,0,Blank,0,Checksum,152,,,,,True,1371781
 18/09/2026 10:37:47.670000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1371784
 18/09/2026 10:37:47.673000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1371787
@@ -349,7 +349,7 @@
 18/09/2026 10:37:47.144000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1372270
 18/09/2026 10:37:47.150000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1372276
 18/09/2026 10:37:47.154000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1372280
-18/09/2026 10:37:47.157000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1372283
+18/09/2026 10:37:47.157000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1372283
 18/09/2026 10:37:47.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
 18/09/2026 10:37:47.000000,CRCFail,,Data,b'f0140007010800780078200d00d69a11',,,,,,,,,,,,,,,False,-1
 18/09/2026 10:37:47.164000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1372290
@@ -372,7 +372,7 @@
 18/09/2026 10:37:47.642000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1372768
 18/09/2026 10:37:47.644000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1372770
 18/09/2026 10:37:47.647000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1372773
-18/09/2026 10:37:47.660000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1372786
+18/09/2026 10:37:47.660000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1372786
 18/09/2026 10:37:47.663000,CellVoltages,Orion,LowCellVoltage,39004,HighCellVoltage,39408,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1372789
 18/09/2026 10:37:47.666000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1372792
 18/09/2026 10:37:47.668000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1372794
@@ -402,7 +402,7 @@
 18/09/2026 10:37:48.642000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1373768
 18/09/2026 10:37:48.644000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1373770
 18/09/2026 10:37:48.647000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1373773
-18/09/2026 10:37:48.668000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1373794
+18/09/2026 10:37:48.668000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1373794
 18/09/2026 10:37:48.671000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,151,,,,,True,1373797
 18/09/2026 10:37:48.674000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1373800
 18/09/2026 10:37:48.677000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1373803
@@ -428,7 +428,7 @@
 18/09/2026 10:37:49.143000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1374270
 18/09/2026 10:37:49.146000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1374273
 18/09/2026 10:37:49.149000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1374276
-18/09/2026 10:37:49.172000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1374299
+18/09/2026 10:37:49.172000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1374299
 18/09/2026 10:37:49.174000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1374301
 18/09/2026 10:37:49.177000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1374304
 18/09/2026 10:37:49.180000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1374307
@@ -451,7 +451,7 @@
 18/09/2026 10:37:49.641000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1374768
 18/09/2026 10:37:49.650000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1374777
 18/09/2026 10:37:49.652000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1374779
-18/09/2026 10:37:49.675000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1374802
+18/09/2026 10:37:49.675000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1374802
 18/09/2026 10:37:49.679000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1374806
 18/09/2026 10:37:49.682000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1374809
 18/09/2026 10:37:49.684000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1374811
@@ -474,7 +474,7 @@
 18/09/2026 10:37:50.143000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1375270
 18/09/2026 10:37:50.146000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1375273
 18/09/2026 10:37:50.150000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1375277
-18/09/2026 10:37:50.179000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1375306
+18/09/2026 10:37:50.179000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1375306
 18/09/2026 10:37:50.182000,CellVoltages,Orion,LowCellVoltage,39001,HighCellVoltage,39408,InternalTemperature,25,Blank5,0,Blank,0,Checksum,147,,,,,True,1375309
 18/09/2026 10:37:50.185000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1375312
 18/09/2026 10:37:50.188000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1375315
@@ -496,7 +496,7 @@
 18/09/2026 10:37:50.641000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1375768
 18/09/2026 10:37:50.643000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1375770
 18/09/2026 10:37:50.646000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1375773
-18/09/2026 10:37:50.683000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1375810
+18/09/2026 10:37:50.683000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1375810
 18/09/2026 10:37:50.686000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39411,InternalTemperature,25,Blank5,0,Blank,0,Checksum,152,,,,,True,1375813
 18/09/2026 10:37:50.689000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1375816
 18/09/2026 10:37:50.692000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1375819
@@ -523,7 +523,7 @@
 18/09/2026 10:37:51.143000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1376271
 18/09/2026 10:37:51.145000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1376273
 18/09/2026 10:37:51.148000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1376276
-18/09/2026 10:37:51.187000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1376315
+18/09/2026 10:37:51.187000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1376315
 18/09/2026 10:37:51.189000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1376317
 18/09/2026 10:37:51.192000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1376320
 18/09/2026 10:37:51.195000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1376323
@@ -546,7 +546,7 @@
 18/09/2026 10:37:51.641000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1376769
 18/09/2026 10:37:51.643000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1376771
 18/09/2026 10:37:51.646000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1376774
-18/09/2026 10:37:51.691000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1376819
+18/09/2026 10:37:51.691000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1376819
 18/09/2026 10:37:51.694000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1376822
 18/09/2026 10:37:51.696000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1376824
 18/09/2026 10:37:51.699000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1376827
@@ -568,7 +568,7 @@
 18/09/2026 10:37:52.142000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1377270
 18/09/2026 10:37:52.145000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1377273
 18/09/2026 10:37:52.148000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1377276
-18/09/2026 10:37:52.195000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1377323
+18/09/2026 10:37:52.195000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1377323
 18/09/2026 10:37:52.198000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1377326
 18/09/2026 10:37:52.201000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1377329
 18/09/2026 10:37:52.207000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1377335
@@ -591,7 +591,7 @@
 18/09/2026 10:37:52.640000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1377768
 18/09/2026 10:37:52.643000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1377771
 18/09/2026 10:37:52.645000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1377773
-18/09/2026 10:37:52.698000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1377826
+18/09/2026 10:37:52.698000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1377826
 18/09/2026 10:37:51.000000,CRCFail,,Data,b'25065107150000f6080a253512091a0101ddcc',,,,,,,,,,,,,,,False,-1
 18/09/2026 10:37:53.003000,SpeedAndAngle,Telemetry,GpsSpeed,0.6299999952316284,GpsAngle,87.00999450683594,,,,,,,,,,,,,True,1378131
 18/09/2026 10:37:53.007000,Latitude,Telemetry,GpsLatitude,5059.32080078125,GpsLat,N,,,,,,,,,,,,,True,1378135
@@ -604,14 +604,14 @@
 18/09/2026 10:37:53.143000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1378271
 18/09/2026 10:37:53.146000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1378274
 18/09/2026 10:37:53.149000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1378277
-18/09/2026 10:37:53.202000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1378330
+18/09/2026 10:37:53.202000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1378330
 18/09/2026 10:37:53.205000,CellVoltages,Orion,LowCellVoltage,39001,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,148,,,,,True,1378333
 18/09/2026 10:37:53.208000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1378336
 18/09/2026 10:37:51.000000,CRCFail,,Data,b'2608150001110801ff007d01000000',,,,,,,,,,,,,,,False,-1
 18/09/2026 10:38:17.842000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1402970
 18/09/2026 10:38:17.845000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1402973
 18/09/2026 10:38:17.848000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1402976
-18/09/2026 10:38:17.900000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1403028
+18/09/2026 10:38:17.900000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1403028
 18/09/2026 10:38:17.903000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1403031
 18/09/2026 10:38:17.906000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1403034
 18/09/2026 10:38:17.914000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1403042
@@ -635,7 +635,7 @@
 18/09/2026 10:38:18.351000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1403479
 18/09/2026 10:38:18.374000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,1403502
 18/09/2026 10:38:18.375000,MpptPollWoof,Telemetry,,,,,,,,,,,,,,,,,True,1403503
-18/09/2026 10:38:18.404000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1403532
+18/09/2026 10:38:18.404000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1403532
 18/09/2026 10:38:18.407000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,151,,,,,True,1403535
 18/09/2026 10:38:18.410000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1403538
 18/09/2026 10:38:18.417000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1403545
@@ -656,7 +656,7 @@
 18/09/2026 10:38:18.842000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1403970
 18/09/2026 10:38:18.844000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1403972
 18/09/2026 10:38:18.847000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1403975
-18/09/2026 10:38:18.908000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1404036
+18/09/2026 10:38:18.908000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1404036
 18/09/2026 10:38:18.917000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1404045
 18/09/2026 10:38:18.920000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1404048
 18/09/2026 10:38:18.922000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1404050
@@ -684,7 +684,7 @@
 18/09/2026 10:38:19.336000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1404479
 18/09/2026 10:38:19.363000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,1404506
 18/09/2026 10:38:19.364000,MpptPollWoof,Telemetry,,,,,,,,,,,,,,,,,True,1404507
-18/09/2026 10:38:19.397000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1404540
+18/09/2026 10:38:19.397000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,1404540
 18/09/2026 10:38:19.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
 18/09/2026 10:38:19.000000,CRCFail,,Data,b'6e1500070208985a99f2190000963b6e',,,,,,,,,,,,,,,False,-1
 18/09/2026 10:38:19.403000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1404546
@@ -702,7 +702,7 @@
 18/09/2026 10:38:19.000000,CRCFail,,Data,b'0c6841000101080000000000666841000303080000000000000000f7ab',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:26:21.437000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4286580
 18/09/2026 11:26:21.439000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4286582
-18/09/2026 11:26:21.442000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,52,,,,,,,True,4286585
+18/09/2026 11:26:21.442000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,52,,,,,,,True,4286585
 18/09/2026 11:26:21.445000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4286588
 18/09/2026 11:26:21.451000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4286594
 18/09/2026 11:26:21.463000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4286606
@@ -816,7 +816,7 @@
 18/09/2026 11:27:13.592000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4338495
 18/09/2026 11:27:13.594000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4338497
 18/09/2026 11:27:13.597000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4338500
-18/09/2026 11:27:13.600000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,52,,,,,,,True,4338503
+18/09/2026 11:27:13.600000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,52,,,,,,,True,4338503
 18/09/2026 11:27:13.607000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4338510
 18/09/2026 11:27:13.624000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4338527
 18/09/2026 11:27:13.000000,CRCFail,,Data,b'873342000303080000000000cb3342000101080000000000000000a033',,,,,,,,,,,,,,,False,-1
@@ -874,7 +874,7 @@
 18/09/2026 11:27:14.588000,MotorCurrentVector,Tritium,VectCurrImag,0.0,VectCurrReal,0.0,,,,,,,,,,,,,True,4339491
 18/09/2026 11:27:14.596000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4339499
 18/09/2026 11:27:14.598000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4339501
-18/09/2026 11:27:14.604000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,52,,,,,,,True,4339507
+18/09/2026 11:27:14.604000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,52,,,,,,,True,4339507
 18/09/2026 11:27:14.607000,CellVoltages,Orion,LowCellVoltage,38985,HighCellVoltage,39388,InternalTemperature,25,Blank5,0,Blank,0,Checksum,111,,,,,True,4339510
 18/09/2026 11:27:14.609000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4339512
 18/09/2026 11:27:13.000000,CRCFail,,Data,b'3d37420001110801ff007d01e4374200008004050d0096f022',,,,,,,,,,,,,,,False,-1
@@ -897,7 +897,7 @@
 18/09/2026 11:27:15.083000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4339986
 18/09/2026 11:27:15.086000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4339989
 18/09/2026 11:27:15.103000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4340006
-18/09/2026 11:27:15.108000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,4340011
+18/09/2026 11:27:15.108000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.9,PackSoc,74.0,RelayState,75,Checksum,54,,,,,,,True,4340011
 18/09/2026 11:27:15.111000,CellVoltages,Orion,LowCellVoltage,38985,HighCellVoltage,39389,InternalTemperature,25,Blank5,0,Blank,0,Checksum,112,,,,,True,4340014
 18/09/2026 11:27:15.114000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4340017
 18/09/2026 11:27:15.117000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4340020
@@ -1031,7 +1031,7 @@
 18/09/2026 11:28:00.884000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4385793
 18/09/2026 11:28:00.898000,Velocity,Tritium,MotorVelocity,23.710102081298828,VehicleVelocity,0.692733645439148,,,,,,,,,,,,,True,4385807
 18/09/2026 11:28:00.940000,Velocity,Tritium,MotorVelocity,24.221330642700195,VehicleVelocity,0.7076701521873474,,,,,,,,,,,,,True,4385849
-18/09/2026 11:28:00.969000,PackParameters,Orion,PackCurrent,65520,PackInstVoltage,1177,PackSoc,148,RelayState,75,Checksum,35,,,,,,,True,4385878
+18/09/2026 11:28:00.969000,PackParameters,Orion,PackCurrent,65520,PackInstVoltage,117.7,PackSoc,74.0,RelayState,75,Checksum,35,,,,,,,True,4385878
 18/09/2026 11:28:00.971000,CellVoltages,Orion,LowCellVoltage,38988,HighCellVoltage,39423,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,4385880
 18/09/2026 11:28:00.978000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4385887
 18/09/2026 11:28:00.981000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4385890
@@ -1155,7 +1155,7 @@
 18/09/2026 11:28:03.478000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4388387
 18/09/2026 11:28:03.480000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4388389
 18/09/2026 11:28:03.483000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4388392
-18/09/2026 11:28:03.489000,PackParameters,Orion,PackCurrent,65504,PackInstVoltage,1177,PackSoc,148,RelayState,75,Checksum,19,,,,,,,True,4388398
+18/09/2026 11:28:03.489000,PackParameters,Orion,PackCurrent,65504,PackInstVoltage,117.7,PackSoc,74.0,RelayState,75,Checksum,19,,,,,,,True,4388398
 18/09/2026 11:28:03.491000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,4388400
 18/09/2026 11:27:17.000000,CRCFail,,Data,b'32f642ea4253f20c4038f6',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:28:03.582000,PhaseCurrent,Tritium,PhaseBCurrent,21.42693328857422,PhaseCCurrent,21.343034744262695,,,,,,,,,,,,,True,4388491
@@ -1210,7 +1210,7 @@
 18/09/2026 11:28:04.484000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4389393
 18/09/2026 11:28:04.496000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,4389405
 18/09/2026 11:28:04.497000,MpptPollWoof,Telemetry,,,,,,,,,,,,,,,,,True,4389406
-18/09/2026 11:28:04.499000,PackParameters,Orion,PackCurrent,65508,PackInstVoltage,1177,PackSoc,148,RelayState,75,Checksum,23,,,,,,,True,4389408
+18/09/2026 11:28:04.499000,PackParameters,Orion,PackCurrent,65508,PackInstVoltage,117.7,PackSoc,74.0,RelayState,75,Checksum,23,,,,,,,True,4389408
 18/09/2026 11:28:04.516000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4389425
 18/09/2026 11:28:04.538000,Velocity,Tritium,MotorVelocity,71.85199737548828,VehicleVelocity,2.0992865562438965,,,,,,,,,,,,,True,4389447
 18/09/2026 11:28:04.576000,StatusInformation,Tritium,LimitFlags,2,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4389485
@@ -1273,7 +1273,7 @@
 18/09/2026 11:28:29.188000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4414097
 18/09/2026 11:28:29.190000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4414099
 18/09/2026 11:28:29.193000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4414102
-18/09/2026 11:28:29.196000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4414105
+18/09/2026 11:28:29.196000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4414105
 18/09/2026 11:28:29.198000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4414107
 18/09/2026 11:27:17.000000,CRCFail,,Data,b'ab5a430001110801ff007d01030708d7dd2941000000000694',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:28:29.394000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4414303
@@ -1295,7 +1295,7 @@
 18/09/2026 11:28:29.683000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4414592
 18/09/2026 11:28:29.686000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4414595
 18/09/2026 11:28:29.691000,DialCurrent,DriverControls,DriverSetDialCurrent,0.5074999928474426,TotalAcMotorCurrent,0.0,,,,,,,,,,,,,True,4414600
-18/09/2026 11:28:29.698000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,52,,,,,,,True,4414607
+18/09/2026 11:28:29.698000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,52,,,,,,,True,4414607
 18/09/2026 11:28:29.701000,Velocity,Tritium,MotorVelocity,150.43624877929688,VehicleVelocity,4.395267963409424,,,,,,,,,,,,,True,4414610
 18/09/2026 11:28:29.704000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4414613
 18/09/2026 11:28:29.717000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4414626
@@ -1363,7 +1363,7 @@
 18/09/2026 11:28:41.789000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4426698
 18/09/2026 11:28:41.791000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4426700
 18/09/2026 11:28:41.794000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4426703
-18/09/2026 11:28:41.797000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4426706
+18/09/2026 11:28:41.797000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4426706
 18/09/2026 11:28:41.806000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4426715
 18/09/2026 11:28:41.822000,SpeedValCurrVal,DriverControls,DriverSetSpeed,292.6483459472656,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4426731
 18/09/2026 11:27:17.000000,CRCFail,,Data,b'108c430003030800858c430003000803400000f30c000081e9',,,,,,,,,,,,,,,False,-1
@@ -1414,7 +1414,7 @@
 18/09/2026 11:28:43.283000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4428192
 18/09/2026 11:28:43.286000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4428195
 18/09/2026 11:28:43.299000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4428208
-18/09/2026 11:28:43.307000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4428216
+18/09/2026 11:28:43.307000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4428216
 18/09/2026 11:27:17.000000,CRCFail,,Data,b'be914300070108000d1613281207b8cde2',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:28:43.669000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,4428578
 18/09/2026 11:28:43.670000,MpptPollWoof,Telemetry,,,,,,,,,,,,,,,,,True,4428579
@@ -1426,7 +1426,7 @@
 18/09/2026 11:28:43.785000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,0.0,BackEmfD,0.0,,,,,,,,,,,,,True,4428694
 18/09/2026 11:28:43.798000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4428707
 18/09/2026 11:27:17.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:28:43.811000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4428720
+18/09/2026 11:28:43.811000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4428720
 18/09/2026 11:28:43.819000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4428728
 18/09/2026 11:28:43.859000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4428768
 18/09/2026 11:28:44.177000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4429086
@@ -1483,7 +1483,7 @@
 18/09/2026 11:28:45.737000,MotorCurrentVector,Tritium,VectCurrImag,0.0,VectCurrReal,0.0,,,,,,,,,,,,,True,4430694
 18/09/2026 11:28:45.740000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4430697
 18/09/2026 11:28:45.742000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4430699
-18/09/2026 11:28:45.779000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4430736
+18/09/2026 11:28:45.779000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4430736
 18/09/2026 11:28:45.788000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4430745
 18/09/2026 11:28:45.791000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4430748
 18/09/2026 11:28:45.948000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4430905
@@ -1499,7 +1499,7 @@
 18/09/2026 11:28:46.239000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4431196
 18/09/2026 11:28:46.242000,SpeedValCurrVal,DriverControls,DriverSetSpeed,292.6483459472656,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4431199
 18/09/2026 11:28:46.245000,Maxbuscurrent,DriverControls,Zero,0.0,MaxBusCurrent,1.0,,,,,,,,,,,,,True,4431202
-18/09/2026 11:28:46.283000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4431240
+18/09/2026 11:28:46.283000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4431240
 18/09/2026 11:29:00.329000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4445286
 18/09/2026 11:29:00.337000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,0.0,BackEmfD,0.0,,,,,,,,,,,,,True,4445294
 18/09/2026 11:29:00.340000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4445297
@@ -1534,7 +1534,7 @@
 18/09/2026 11:28:45.000000,CRCFail,,Data,b'b1d7430003030800000000004ed843000301080000000002000000a995',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:01.334000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4446291
 18/09/2026 11:29:01.346000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4446303
-18/09/2026 11:29:01.404000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4446361
+18/09/2026 11:29:01.404000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4446361
 18/09/2026 11:29:01.409000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4446366
 18/09/2026 11:29:01.415000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4446372
 18/09/2026 11:29:01.435000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4446392
@@ -1628,7 +1628,7 @@
 18/09/2026 11:29:04.340000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4449297
 18/09/2026 11:29:04.342000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4449299
 18/09/2026 11:28:45.000000,CRCFail,,Data,b'16e44300031708ffffc7420000000059e443000303080000000000000000e95e',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:29:04.428000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,52,,,,,,,True,4449385
+18/09/2026 11:29:04.428000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,52,,,,,,,True,4449385
 18/09/2026 11:29:04.434000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4449391
 18/09/2026 11:29:04.454000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4449411
 18/09/2026 11:29:04.489000,SpeedValCurrVal,DriverControls,DriverSetSpeed,292.6483459472656,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4449446
@@ -1695,7 +1695,7 @@
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'00006642',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:29.547000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4474528
 18/09/2026 11:29:29.587000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4474568
-18/09/2026 11:29:29.606000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4474587
+18/09/2026 11:29:29.606000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4474587
 18/09/2026 11:29:29.612000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4474593
 18/09/2026 11:29:29.714000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,0.0,BackEmfD,0.0,,,,,,,,,,,,,True,4474695
 18/09/2026 11:29:29.722000,SpeedValCurrVal,DriverControls,DriverSetSpeed,292.6483459472656,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4474703
@@ -1725,7 +1725,7 @@
 18/09/2026 11:29:30.516000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4475497
 18/09/2026 11:29:30.519000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4475500
 18/09/2026 11:29:30.588000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4475569
-18/09/2026 11:29:30.621000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4475602
+18/09/2026 11:29:30.621000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4475602
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'd94a44000303080080f300401e9001cc',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:30.747000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4475728
 18/09/2026 11:29:30.787000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4475768
@@ -1752,7 +1752,7 @@
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'f8464e44000301080000000002b24e4400008004061600a08834',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:31.615000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4476596
 18/09/2026 11:29:31.618000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4476599
-18/09/2026 11:29:31.622000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,52,,,,,,,True,4476603
+18/09/2026 11:29:31.622000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,52,,,,,,,True,4476603
 18/09/2026 11:29:31.627000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4476608
 18/09/2026 11:29:31.642000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4476623
 18/09/2026 11:29:31.708000,BusMeasurement,Tritium,BusVoltage,117.7605972290039,BusCurrent,0.0,,,,,,,,,,,,,True,4476689
@@ -2069,7 +2069,7 @@
 18/09/2026 11:30:25.507000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4530488
 18/09/2026 11:30:25.515000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,0.0,BackEmfD,0.0,,,,,,,,,,,,,True,4530496
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:30:25.553000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,51,,,,,,,True,4530534
+18/09/2026 11:30:25.553000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,51,,,,,,,True,4530534
 18/09/2026 11:30:25.559000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4530540
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'8a21450003030800002245000301080000000002000000a1a8',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:30:25.712000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4530693
@@ -2090,7 +2090,7 @@
 18/09/2026 11:30:41.524000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4546505
 18/09/2026 11:30:41.527000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4546508
 18/09/2026 11:30:41.549000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4546530
-18/09/2026 11:30:41.682000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,52,,,,,,,True,4546663
+18/09/2026 11:30:41.682000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,52,,,,,,,True,4546663
 18/09/2026 11:30:41.688000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4546669
 18/09/2026 11:30:41.707000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4546688
 18/09/2026 11:30:41.715000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,0.0,BackEmfD,0.0,,,,,,,,,,,,,True,4546696
@@ -2397,7 +2397,7 @@
 18/09/2026 11:31:05.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:05.000000,CRCFail,,Data,b'cc450007120065e4',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:09.330000,Velocity,Tritium,MotorVelocity,66.07067108154297,VehicleVelocity,1.9303747415542603,,,,,,,,,,,,,True,4574370
-18/09/2026 11:31:09.345000,PackParameters,Orion,PackCurrent,65510,PackInstVoltage,1176,PackSoc,149,RelayState,75,Checksum,25,,,,,,,True,4574385
+18/09/2026 11:31:09.345000,PackParameters,Orion,PackCurrent,65510,PackInstVoltage,117.60000000000001,PackSoc,74.5,RelayState,75,Checksum,25,,,,,,,True,4574385
 18/09/2026 11:31:09.457000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,4.255473613739014,BackEmfD,0.0,,,,,,,,,,,,,True,4574497
 18/09/2026 11:31:09.461000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4574501
 18/09/2026 11:31:09.463000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4574503
@@ -2667,7 +2667,7 @@
 18/09/2026 11:31:40.065000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4605105
 18/09/2026 11:31:40.067000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4605107
 18/09/2026 11:31:40.070000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4605110
-18/09/2026 11:31:40.090000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,52,,,,,,,True,4605130
+18/09/2026 11:31:40.090000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,52,,,,,,,True,4605130
 18/09/2026 11:31:40.104000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4605144
 18/09/2026 11:31:40.174000,SpeedValCurrVal,DriverControls,DriverSetSpeed,485.1801452636719,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4605214
 18/09/2026 11:31:40.363000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4605403
@@ -2750,7 +2750,7 @@
 18/09/2026 11:31:43.543000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4608604
 18/09/2026 11:31:43.549000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4608610
 18/09/2026 11:31:43.552000,Velocity,Tritium,MotorVelocity,301.6485595703125,VehicleVelocity,8.813209533691406,,,,,,,,,,,,,True,4608613
-18/09/2026 11:31:43.597000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,54,,,,,,,True,4608658
+18/09/2026 11:31:43.597000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,54,,,,,,,True,4608658
 18/09/2026 11:31:43.000000,CRCFail,,Data,b'98524600070108007803534600030308594e974337760d411426',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:43.726000,Maxbuscurrent,DriverControls,Zero,0.0,MaxBusCurrent,1.0,,,,,,,,,,,,,True,4608787
 18/09/2026 11:31:43.789000,Velocity,Tritium,MotorVelocity,302.8638610839844,VehicleVelocity,8.848716735839844,,,,,,,,,,,,,True,4608850
@@ -2761,7 +2761,7 @@
 18/09/2026 11:31:44.033000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4609094
 18/09/2026 11:31:44.040000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4609101
 18/09/2026 11:31:44.049000,SpeedValCurrVal,DriverControls,DriverSetSpeed,485.1801452636719,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4609110
-18/09/2026 11:31:44.102000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,52,,,,,,,True,4609163
+18/09/2026 11:31:44.102000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,52,,,,,,,True,4609163
 18/09/2026 11:31:43.000000,CRCFail,,Data,b'91544600070108000955460003010800000000020000001313',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:44.233000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4609294
 18/09/2026 11:31:44.241000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4609302
@@ -2776,7 +2776,7 @@
 18/09/2026 11:31:44.790000,Velocity,Tritium,MotorVelocity,308.7028503417969,VehicleVelocity,9.01931381225586,,,,,,,,,,,,,True,4609851
 18/09/2026 11:31:43.000000,CRCFail,,Data,b'6757460000030708681bab4100000000304f',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:45.041000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4610102
-18/09/2026 11:31:45.109000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,52,,,,,,,True,4610170
+18/09/2026 11:31:45.109000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,52,,,,,,,True,4610170
 18/09/2026 11:31:45.343000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4610404
 18/09/2026 11:31:45.345000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4610406
 18/09/2026 11:31:45.348000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4610409
@@ -2785,7 +2785,7 @@
 18/09/2026 11:31:45.436000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,21.547107696533203,BackEmfD,0.0,,,,,,,,,,,,,True,4610497
 18/09/2026 11:31:45.440000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,4610501
 18/09/2026 11:31:45.443000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4610504
-18/09/2026 11:31:45.613000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1178,PackSoc,149,RelayState,75,Checksum,52,,,,,,,True,4610674
+18/09/2026 11:31:45.613000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.80000000000001,PackSoc,74.5,RelayState,75,Checksum,52,,,,,,,True,4610674
 18/09/2026 11:31:45.619000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4610680
 18/09/2026 11:31:45.628000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4610689
 18/09/2026 11:31:45.641000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4610702
@@ -2818,7 +2818,7 @@
 18/09/2026 11:31:59.146000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4624207
 18/09/2026 11:31:59.148000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4624209
 18/09/2026 11:31:59.151000,Velocity,Tritium,MotorVelocity,481.4059143066406,VehicleVelocity,14.065147399902344,,,,,,,,,,,,,True,4624212
-18/09/2026 11:31:59.222000,PackParameters,Orion,PackCurrent,65504,PackInstVoltage,1174,PackSoc,149,RelayState,75,Checksum,17,,,,,,,True,4624283
+18/09/2026 11:31:59.222000,PackParameters,Orion,PackCurrent,65504,PackInstVoltage,117.4,PackSoc,74.5,RelayState,75,Checksum,17,,,,,,,True,4624283
 18/09/2026 11:31:43.000000,CRCFail,,Data,b'a18f460007010889',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:59.949000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4625010
 18/09/2026 11:32:00.028000,StatusInformation,Tritium,LimitFlags,4,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4625089
@@ -2893,7 +2893,7 @@
 18/09/2026 11:32:16.348000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4641409
 18/09/2026 11:32:16.351000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4641412
 18/09/2026 11:32:16.354000,Velocity,Tritium,MotorVelocity,480.8933410644531,VehicleVelocity,14.050171852111816,,,,,,,,,,,,,True,4641415
-18/09/2026 11:32:16.360000,PackParameters,Orion,PackCurrent,65481,PackInstVoltage,1172,PackSoc,149,RelayState,75,Checksum,248,,,,,,,True,4641421
+18/09/2026 11:32:16.360000,PackParameters,Orion,PackCurrent,65481,PackInstVoltage,117.2,PackSoc,74.5,RelayState,75,Checksum,248,,,,,,,True,4641421
 18/09/2026 11:31:43.000000,CRCFail,,Data,b'92d24600070108',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:18.446000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4643507
 18/09/2026 11:31:43.000000,CRCFail,,Data,b'1578',,,,,,,,,,,,,,,False,-1
@@ -3004,7 +3004,7 @@
 18/09/2026 11:32:26.790000,Velocity,Tritium,MotorVelocity,344.33770751953125,VehicleVelocity,10.060450553894043,,,,,,,,,,,,,True,4651851
 18/09/2026 11:32:26.830000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4651891
 18/09/2026 11:31:43.000000,CRCFail,,Data,b'85fb460000800405c3fb460003030858d8a84316dc1d413a5a',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:32:26.944000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1177,PackSoc,149,RelayState,75,Checksum,50,,,,,,,True,4652005
+18/09/2026 11:32:26.944000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.7,PackSoc,74.5,RelayState,75,Checksum,50,,,,,,,True,4652005
 18/09/2026 11:32:26.950000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4652011
 18/09/2026 11:32:26.952000,Velocity,Tritium,MotorVelocity,335.278076171875,VehicleVelocity,9.795757293701172,,,,,,,,,,,,,True,4652013
 18/09/2026 11:32:26.990000,Velocity,Tritium,MotorVelocity,332.8355712890625,VehicleVelocity,9.724395751953125,,,,,,,,,,,,,True,4652051
@@ -3020,7 +3020,7 @@
 18/09/2026 11:32:27.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:27.000000,CRCFail,,Data,b'6eff4600f38008000d161328ceff4600008004061600a0abee',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:27.000000,CRCFail,,Data,b'08000d281207b867c5',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:32:27.932000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1177,PackSoc,149,RelayState,75,Checksum,50,,,,,,,True,4653015
+18/09/2026 11:32:27.932000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.7,PackSoc,74.5,RelayState,75,Checksum,50,,,,,,,True,4653015
 18/09/2026 11:32:27.938000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4653021
 18/09/2026 11:32:27.962000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4653045
 18/09/2026 11:32:28.334000,Velocity,Tritium,MotorVelocity,306.7212219238281,VehicleVelocity,8.961417198181152,,,,,,,,,,,,,True,4653417
@@ -3068,7 +3068,7 @@
 18/09/2026 11:32:34.414000,BusMeasurement,Tritium,BusVoltage,117.52745056152344,BusCurrent,0.0,,,,,,,,,,,,,True,4659497
 18/09/2026 11:32:34.421000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4659504
 18/09/2026 11:32:27.000000,CRCFail,,Data,b'000303080f35b243dd9c26411165',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:32:34.482000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1176,PackSoc,149,RelayState,75,Checksum,50,,,,,,,True,4659565
+18/09/2026 11:32:34.482000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.60000000000001,PackSoc,74.5,RelayState,75,Checksum,50,,,,,,,True,4659565
 18/09/2026 11:32:34.491000,Velocity,Tritium,MotorVelocity,356.24090576171875,VehicleVelocity,10.408224105834961,,,,,,,,,,,,,True,4659574
 18/09/2026 11:32:34.504000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4659587
 18/09/2026 11:32:34.624000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4659707
@@ -3085,7 +3085,7 @@
 18/09/2026 11:32:35.429000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4660512
 18/09/2026 11:32:35.432000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4660515
 18/09/2026 11:32:35.449000,Velocity,Tritium,MotorVelocity,353.49761962890625,VehicleVelocity,10.32807445526123,,,,,,,,,,,,,True,4660532
-18/09/2026 11:32:35.492000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1176,PackSoc,149,RelayState,75,Checksum,50,,,,,,,True,4660575
+18/09/2026 11:32:35.492000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.60000000000001,PackSoc,74.5,RelayState,75,Checksum,50,,,,,,,True,4660575
 18/09/2026 11:32:35.511000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4660594
 18/09/2026 11:32:35.732000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4660815
 18/09/2026 11:32:27.000000,CRCFail,,Data,b'731e47000397ff998d190000d5335e',,,,,,,,,,,,,,,False,-1
@@ -3111,7 +3111,7 @@
 18/09/2026 11:32:36.888000,Velocity,Tritium,MotorVelocity,348.2210998535156,VehicleVelocity,10.173911094665527,,,,,,,,,,,,,True,4661971
 18/09/2026 11:32:36.933000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4662016
 18/09/2026 11:32:36.968000,Velocity,Tritium,MotorVelocity,347.90618896484375,VehicleVelocity,10.164710998535156,,,,,,,,,,,,,True,4662051
-18/09/2026 11:32:37.002000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1176,PackSoc,149,RelayState,75,Checksum,50,,,,,,,True,4662085
+18/09/2026 11:32:37.002000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.60000000000001,PackSoc,74.5,RelayState,75,Checksum,50,,,,,,,True,4662085
 18/09/2026 11:32:37.008000,TimeAndFix,Telemetry,GpsHour,11,GpsMinute,32,GpsSeconds,37,GpsDay,18,GpsMonth,9,GpsYear,26,GpsFix,0,GpsFixquality,0,True,4662091
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'060800000000000000007c4f',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
@@ -3162,7 +3162,7 @@
 18/09/2026 11:32:40.016000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4665107
 18/09/2026 11:32:40.019000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4665110
 18/09/2026 11:32:40.022000,CellVoltages,Orion,LowCellVoltage,38923,HighCellVoltage,39320,InternalTemperature,25,Blank5,0,Blank,0,Checksum,237,,,,,True,4665113
-18/09/2026 11:32:40.025000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1177,PackSoc,149,RelayState,75,Checksum,53,,,,,,,True,4665116
+18/09/2026 11:32:40.025000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,117.7,PackSoc,74.5,RelayState,75,Checksum,53,,,,,,,True,4665116
 18/09/2026 11:32:40.116000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4665207
 18/09/2026 11:32:40.118000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4665209
 18/09/2026 11:32:40.121000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4665212
@@ -3224,7 +3224,7 @@
 18/09/2026 11:32:56.619000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4681710
 18/09/2026 11:32:56.621000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4681712
 18/09/2026 11:32:56.624000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4681715
-18/09/2026 11:32:56.652000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1176,PackSoc,149,RelayState,75,Checksum,50,,,,,,,True,4681743
+18/09/2026 11:32:56.652000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.60000000000001,PackSoc,74.5,RelayState,75,Checksum,50,,,,,,,True,4681743
 18/09/2026 11:32:56.658000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4681749
 18/09/2026 11:32:56.667000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4681758
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'2d41f1e9',,,,,,,,,,,,,,,False,-1
@@ -3284,7 +3284,7 @@
 18/09/2026 11:32:59.124000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4684215
 18/09/2026 11:32:59.134000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4684225
 18/09/2026 11:32:59.142000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,24.440229415893555,BackEmfD,0.0,,,,,,,,,,,,,True,4684233
-18/09/2026 11:32:59.172000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1176,PackSoc,149,RelayState,75,Checksum,50,,,,,,,True,4684263
+18/09/2026 11:32:59.172000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.60000000000001,PackSoc,74.5,RelayState,75,Checksum,50,,,,,,,True,4684263
 18/09/2026 11:32:59.178000,Velocity,Tritium,MotorVelocity,355.35711669921875,VehicleVelocity,10.382402420043945,,,,,,,,,,,,,True,4684269
 18/09/2026 11:32:59.183000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4684274
 18/09/2026 11:32:59.416000,Velocity,Tritium,MotorVelocity,353.7239074707031,VehicleVelocity,10.334685325622559,,,,,,,,,,,,,True,4684507
@@ -3300,7 +3300,7 @@
 18/09/2026 11:32:59.616000,Velocity,Tritium,MotorVelocity,352.1585693359375,VehicleVelocity,10.288951873779297,,,,,,,,,,,,,True,4684707
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'cf',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'bb7b4700020000000000cb7b4700030308cae7af43ef7524411065',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:32:59.676000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1176,PackSoc,149,RelayState,75,Checksum,50,,,,,,,True,4684767
+18/09/2026 11:32:59.676000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.60000000000001,PackSoc,74.5,RelayState,75,Checksum,50,,,,,,,True,4684767
 18/09/2026 11:32:59.682000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4684773
 18/09/2026 11:32:59.696000,Velocity,Tritium,MotorVelocity,351.9040222167969,VehicleVelocity,10.281515121459961,,,,,,,,,,,,,True,4684787
 18/09/2026 11:32:59.718000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4684809
@@ -3344,7 +3344,7 @@
 18/09/2026 11:33:01.096000,Velocity,Tritium,MotorVelocity,345.1258239746094,VehicleVelocity,10.083477020263672,,,,,,,,,,,,,True,4686187
 18/09/2026 11:33:01.118000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4686209
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'84814700f38008000d1613281207b8bb81470003030850acac434c702141ffac',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:33:01.188000,PackParameters,Orion,PackCurrent,65405,PackInstVoltage,1168,PackSoc,149,RelayState,75,Checksum,168,,,,,,,True,4686279
+18/09/2026 11:33:01.188000,PackParameters,Orion,PackCurrent,65405,PackInstVoltage,116.80000000000001,PackSoc,74.5,RelayState,75,Checksum,168,,,,,,,True,4686279
 18/09/2026 11:33:01.199000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4686290
 18/09/2026 11:33:01.216000,Velocity,Tritium,MotorVelocity,345.681396484375,VehicleVelocity,10.099709510803223,,,,,,,,,,,,,True,4686307
 18/09/2026 11:33:01.219000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4686310
@@ -3448,7 +3448,7 @@
 18/09/2026 11:33:20.322000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4705413
 18/09/2026 11:33:20.325000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4705416
 18/09/2026 11:33:20.334000,StatusInformation,Tritium,LimitFlags,2,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4705425
-18/09/2026 11:33:20.346000,PackParameters,Orion,PackCurrent,65330,PackInstVoltage,1159,PackSoc,150,RelayState,75,Checksum,85,,,,,,,True,4705437
+18/09/2026 11:33:20.346000,PackParameters,Orion,PackCurrent,65330,PackInstVoltage,115.9,PackSoc,75.0,RelayState,75,Checksum,85,,,,,,,True,4705437
 18/09/2026 11:33:20.363000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4705454
 18/09/2026 11:33:20.417000,Velocity,Tritium,MotorVelocity,521.9454345703125,VehicleVelocity,15.24958324432373,,,,,,,,,,,,,True,4705508
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'e7cc470000800405accd470003030806fc0244bbec74412a02',,,,,,,,,,,,,,,False,-1
@@ -3510,7 +3510,7 @@
 18/09/2026 11:33:23.334000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4708425
 18/09/2026 11:33:23.340000,SpeedValCurrVal,DriverControls,DriverSetSpeed,686.69677734375,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4708431
 18/09/2026 11:33:23.345000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4708436
-18/09/2026 11:33:23.365000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1174,PackSoc,150,RelayState,75,Checksum,48,,,,,,,True,4708456
+18/09/2026 11:33:23.365000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.4,PackSoc,75.0,RelayState,75,Checksum,48,,,,,,,True,4708456
 18/09/2026 11:33:23.371000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4708462
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'16d947000304080000000000000000',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'd2',,,,,,,,,,,,,,,False,-1
@@ -3528,7 +3528,7 @@
 18/09/2026 11:33:24.147000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4709238
 18/09/2026 11:33:24.217000,Velocity,Tritium,MotorVelocity,453.2906494140625,VehicleVelocity,13.243708610534668,,,,,,,,,,,,,True,4709308
 18/09/2026 11:33:24.346000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,30.616491317749023,BackEmfD,0.0,,,,,,,,,,,,,True,4709437
-18/09/2026 11:33:24.374000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,1174,PackSoc,150,RelayState,75,Checksum,48,,,,,,,True,4709465
+18/09/2026 11:33:24.374000,PackParameters,Orion,PackCurrent,65534,PackInstVoltage,117.4,PackSoc,75.0,RelayState,75,Checksum,48,,,,,,,True,4709465
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'5fdc470003f31b4800030308520cd243ca6144418c13',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:33:40.696000,Velocity,Tritium,MotorVelocity,420.198974609375,VehicleVelocity,12.276875495910645,,,,,,,,,,,,,True,4725787
 18/09/2026 11:33:40.721000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4725812
@@ -3633,7 +3633,7 @@
 18/09/2026 11:33:45.024000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4730115
 18/09/2026 11:33:45.026000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4730117
 18/09/2026 11:33:45.029000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4730120
-18/09/2026 11:33:45.039000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1175,PackSoc,150,RelayState,75,Checksum,50,,,,,,,True,4730130
+18/09/2026 11:33:45.039000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.5,PackSoc,75.0,RelayState,75,Checksum,50,,,,,,,True,4730130
 18/09/2026 11:33:45.044000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4730135
 18/09/2026 11:33:45.051000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4730142
 18/09/2026 11:33:45.340000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4730431
@@ -3667,7 +3667,7 @@
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'f13248000306080000000000000000001a2b',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:33:46.544000,Rail_3_3VAnd1_9V,Tritium,OneNineVSupply,1.8575584888458252,ThreeThreeVSupply,3.3199238777160645,,,,,,,,,,,,,True,4731635
 18/09/2026 11:33:46.550000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4731641
-18/09/2026 11:33:46.560000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1175,PackSoc,150,RelayState,75,Checksum,50,,,,,,,True,4731651
+18/09/2026 11:33:46.560000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.5,PackSoc,75.0,RelayState,75,Checksum,50,,,,,,,True,4731651
 18/09/2026 11:33:46.567000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4731658
 18/09/2026 11:33:46.738000,BusMeasurement,Tritium,BusVoltage,117.43083190917969,BusCurrent,0.0,,,,,,,,,,,,,True,4731829
 18/09/2026 11:33:46.740000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4731831
@@ -3678,10 +3678,10 @@
 18/09/2026 11:33:46.830000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4731921
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'2c344800030308b173b743249e344800071100223d',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:33:47.016000,Velocity,Tritium,MotorVelocity,366.7388000488281,VehicleVelocity,10.71493911743164,,,,,,,,,,,,,True,4732107
-18/09/2026 11:33:47.055000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1175,PackSoc,150,RelayState,75,Checksum,50,,,,,,,True,4732146
+18/09/2026 11:33:47.055000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.5,PackSoc,75.0,RelayState,75,Checksum,50,,,,,,,True,4732146
 18/09/2026 11:33:52.311000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4737402
 18/09/2026 11:33:52.325000,OdoBusAmphours,Tritium,Odometer,10.584466934204102,DcBusAmpHours,0.0,,,,,,,,,,,,,True,4737416
-18/09/2026 11:33:52.599000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1175,PackSoc,150,RelayState,75,Checksum,50,,,,,,,True,4737690
+18/09/2026 11:33:52.599000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,117.5,PackSoc,75.0,RelayState,75,Checksum,50,,,,,,,True,4737690
 18/09/2026 11:33:52.605000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4737696
 18/09/2026 11:33:52.622000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4737713
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'b34a4800f380087d64b143ded92541ae15',,,,,,,,,,,,,,,False,-1
@@ -3778,7 +3778,7 @@
 18/09/2026 11:33:56.624000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4741715
 18/09/2026 11:33:56.628000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4741719
 18/09/2026 11:33:56.631000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4741722
-18/09/2026 11:33:56.640000,PackParameters,Orion,PackCurrent,65405,PackInstVoltage,1166,PackSoc,150,RelayState,75,Checksum,167,,,,,,,True,4741731
+18/09/2026 11:33:56.640000,PackParameters,Orion,PackCurrent,65405,PackInstVoltage,116.60000000000001,PackSoc,75.0,RelayState,75,Checksum,167,,,,,,,True,4741731
 18/09/2026 11:33:56.645000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4741736
 18/09/2026 11:33:56.952000,Velocity,Tritium,MotorVelocity,315.5044860839844,VehicleVelocity,9.218035697937012,,,,,,,,,,,,,True,4742043
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'416968',,,,,,,,,,,,,,,False,-1
@@ -3942,7 +3942,7 @@
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'a7854800030408a5a4f9413f',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'f241ee05',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:34:07.720000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,26.149629592895508,BackEmfD,0.0,,,,,,,,,,,,,True,4752811
-18/09/2026 11:34:07.722000,PackParameters,Orion,PackCurrent,65376,PackInstVoltage,1163,PackSoc,150,RelayState,75,Checksum,135,,,,,,,True,4752813
+18/09/2026 11:34:07.722000,PackParameters,Orion,PackCurrent,65376,PackInstVoltage,116.30000000000001,PackSoc,75.0,RelayState,75,Checksum,135,,,,,,,True,4752813
 18/09/2026 11:34:07.731000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4752822
 18/09/2026 11:34:07.738000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4752829
 18/09/2026 11:34:07.748000,SpeedValCurrVal,DriverControls,DriverSetSpeed,762.4259643554688,DriverSetCurrent,0.5074999928474426,,,,,,,,,,,,,True,4752839

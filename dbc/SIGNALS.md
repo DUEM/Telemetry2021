@@ -249,8 +249,8 @@ Battery pack summary: current, voltage, state of charge and relay states.
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
 |---|---|---|---|---|---|
 | `PackCurrent` | Battery pack current. TODO: add the unit, scaling and sign from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 A per bit, signed, positive = discharging, but this file decodes it as unsigned. |  | none |  |  |
-| `PackInstVoltage` | Total battery pack voltage, measured right now (instantaneous). TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 V per bit (the test capture shows 1305, which would be 130.5 V). |  | none |  |  |
-| `PackSoc` | Battery state of charge: how full the battery is. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.5 % per bit (the test capture shows 159, which would be 79.5 %). |  | none |  |  |
+| `PackInstVoltage` | Total battery pack voltage, measured right now (instantaneous), 0.1 V per bit. Evidence: in the iESC 2026 recording ESC_2026_0638AM.BIN the raw value ranges from 1103 to 1301 while the motor controller's DC bus voltage ranges from 109.4 to 130.1 V, the usual Orion setting. | V | raw x 0.1 | 0 to 6553.5 |  |
+| `PackSoc` | Battery state of charge: how full the battery is, 0.5 % per bit. Evidence: in the iESC 2026 recording ESC_2026_0638AM.BIN the raw value ranges from 11 to 200, i.e. at most 100 %, the usual Orion setting. | % | raw x 0.5 | 0 to 100 |  |
 | `RelayState` | Which of the BMS's relay and contactor outputs are on, one bit each. TODO: add the meaning of each bit, from the Orion BMS profile loaded on Peri. |  | none |  |  |
 | `Checksum` | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 184) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |  | none |  |  |
 
@@ -1851,7 +1851,7 @@ SELECT "DriverSetDialCurrent" FROM "DriverControls/DialCurrent" WHERE time > now
 
 ## Still to be documented
 
-36 comments in the dbc files still contain a TODO:
+34 comments in the dbc files still contain a TODO:
 
 | File | Where | Comment |
 |---|---|---|
@@ -1867,8 +1867,6 @@ SELECT "DriverSetDialCurrent" FROM "DriverControls/DialCurrent" WHERE time > now
 | MPPT.dbc | signal Woof.VoltageOut | Output voltage of this MPPT (battery side). TODO: add scaling and unit from the MPPT datasheet (still the raw value; check whether it is 208.79 mV per bit, as on similar MPPTs). |
 | MPPT.dbc | signal Woof.AmbientTemperature | Temperature inside this MPPT. TODO: add scaling and unit from the MPPT datasheet (still the raw value). |
 | Orion.dbc | signal PackParameters.PackCurrent | Battery pack current. TODO: add the unit, scaling and sign from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 A per bit, signed, positive = discharging, but this file decodes it as unsigned. |
-| Orion.dbc | signal PackParameters.PackInstVoltage | Total battery pack voltage, measured right now (instantaneous). TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 V per bit (the test capture shows 1305, which would be 130.5 V). |
-| Orion.dbc | signal PackParameters.PackSoc | Battery state of charge: how full the battery is. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.5 % per bit (the test capture shows 159, which would be 79.5 %). |
 | Orion.dbc | signal PackParameters.RelayState | Which of the BMS's relay and contactor outputs are on, one bit each. TODO: add the meaning of each bit, from the Orion BMS profile loaded on Peri. |
 | Orion.dbc | signal PackParameters.Checksum | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 184) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |
 | Orion.dbc | signal CellTempsDCL.PackDcl | Discharge current limit: the most current the BMS currently allows to be drawn from the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 A per bit. |
