@@ -57,7 +57,7 @@ Each frame from the vehicle is:
 
 * `millis` is the board's uptime in ms when the frame was sent. It is used for the timestamp (see [Timestamps](#timestamps)).
 * The CRC is CRC-16/MODBUS (reflected polynomial `0xA001`, initial value `0xFFFF`), the same as AVR `_crc16_update` on the board. It is calculated over the millis, CAN ID, DLC and data bytes. The receiver **does** check it: frames that fail are dropped from InfluxDB and flagged `False` in the Excel/CSV output.
-* Only the `DLC` data bytes are decoded. Any extra bytes before the CRC are ignored (with a warning). A frame with fewer data bytes than its DLC, or fewer than its message's length in the DBC file, is not decoded (see below).
+* Only the `DLC` data bytes are decoded. A frame with more or fewer data bytes than its DLC is rejected even if its CRC passes: frames run together after a lost end of frame marker can pass the 16-bit CRC by chance. A frame with fewer data bytes than its message's length in the DBC file is not decoded either (see below).
 * `0x7E` marks the end of a frame and is **not** escaped inside the frame (see Known limitations in the top-level [README](../README.md#known-limitations)). Splitting a capture into frames is done in [frame_reader.py](frame_reader.py).
 
 ## CAN decoding (DBC files)
@@ -91,7 +91,7 @@ Follow the steps in [dbc/README.md](../dbc/README.md#changing-or-adding-a-messag
 
 Renaming a message, sender or signal, or changing its scaling, changes what is stored in InfluxDB; see the warning in [dbc/README.md](../dbc/README.md#changing-or-adding-a-message-or-signal).
 
-Frames with a CAN ID that is not in any DBC file are logged as a warning and stored as Item `ID UNRECOGNISED`, Source `ERROR`, with the CAN ID as the only field. Frames that are too short are stored the same way, as Item `DLC MISMATCH` (fewer data bytes than the frame's DLC) or `DECODE ERROR` (fewer data bytes than the message's length in the DBC file).
+Frames with a CAN ID that is not in any DBC file are logged as a warning and stored as Item `ID UNRECOGNISED`, Source `ERROR`, with the CAN ID as the only field. Frames of the wrong length are stored the same way, as Item `DLC MISMATCH` (a different number of data bytes from the frame's DLC) or `DECODE ERROR` (fewer data bytes than the message's length in the DBC file).
 
 Messages with no data (the MPPT poll requests) have no fields, so they are not written to InfluxDB.
 

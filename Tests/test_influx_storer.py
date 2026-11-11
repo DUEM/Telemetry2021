@@ -68,8 +68,8 @@ def test_data_written_to_influx(
                 "time": "1970-01-01T03:22:23.552000Z",
                 "fields": {
                     "PackCurrent": 0,
-                    "PackInstVoltage": 1179,
-                    "PackSoc": 148,
+                    "PackInstVoltage": 1179 * 0.1,  # raw x scale in dbc/Orion.dbc
+                    "PackSoc": 148 * 0.5,
                     "RelayState": 75,
                     "Checksum": 54,
                 },

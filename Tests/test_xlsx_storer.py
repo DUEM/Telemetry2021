@@ -53,9 +53,9 @@ def test_data_written_to_xlsx(nrt_bytes, mock_xlsx_workbook):
         call(column=5, row=2, value="PackCurrent"),
         call(column=6, row=2, value=0),
         call(column=7, row=2, value="PackInstVoltage"),
-        call(column=8, row=2, value=1179),
+        call(column=8, row=2, value=1179 * 0.1),  # raw x scale in dbc/Orion.dbc
         call(column=9, row=2, value="PackSoc"),
-        call(column=10, row=2, value=148),
+        call(column=10, row=2, value=148 * 0.5),
         call(column=11, row=2, value="RelayState"),
         call(column=12, row=2, value=75),
         call(column=13, row=2, value="Checksum"),

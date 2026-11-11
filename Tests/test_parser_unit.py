@@ -255,18 +255,17 @@ class TestTelemetryParserFrameLength:
 
         assert list(body.values()) == data
 
-    def test_bytes_beyond_the_dlc_are_ignored(self, run_in_receiver, patch_receiver_config, caplog):
-        # As in the first frame of Tests/data/MPPT.BIN: one stray byte between
-        # the data and the CRC. The CRC is valid, so the declared data is used.
+    def test_more_bytes_than_the_dlc_is_an_error(self, run_in_receiver, patch_receiver_config):
+        # e.g. in ESC_2026_0638AM.BIN: a velocity frame that lost its end, run
+        # together with a whole 0x300 frame, passed the CRC by chance. Decoding
+        # its first DLC bytes would store a nonsense velocity.
         from Receiver.telemetry_parser import TelemetryParser
 
-        data = [14, 5, 36, 18, 7, 23, 1, 1]
-        frame = make_frame(0x0F6, data, extra=b"\xe8")
-        name, _, body, _, _ = TelemetryParser().translate_msg(frame)
+        frame = make_frame(0x303, [0x00, 0x7C, 0xAC, 0x86, 0x00, 0x03, 0x00, 0x08], extra=b"\x03\x40\x00\x00")
+        name, source, body, _, crc_ok = TelemetryParser().translate_msg(frame)
 
-        assert name == "TimeAndFix"
-        assert list(body.values()) == data
-        assert "ignoring the extra bytes" in caplog.text
+        assert (name, source, crc_ok) == ("DLC MISMATCH", "ERROR", True)
+        assert body == {"ID": 0x303, "DLC": 8, "Bytes": 12}
 
     def test_fewer_bytes_than_the_dlc_is_an_error(self, run_in_receiver, patch_receiver_config):
         from Receiver.telemetry_parser import TelemetryParser

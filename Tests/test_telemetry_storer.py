@@ -28,8 +28,8 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
         "Orion",
         {
             "PackCurrent": 0,
-            "PackInstVoltage": 1179,
-            "PackSoc": 148,
+            "PackInstVoltage": 1179 * 0.1,  # raw x scale in dbc/Orion.dbc
+            "PackSoc": 148 * 0.5,
             "RelayState": 75,
             "Checksum": 54,
         },
@@ -169,7 +169,7 @@ def test_store_data_logs_message_at_info(nrt_bytes, caplog):
 
     # Assert
     assert "0x700 Orion/PackParameters" in caplog.text
-    assert "'PackInstVoltage': 1179" in caplog.text
+    assert f"'PackInstVoltage': {1179 * 0.1}" in caplog.text
     assert "CRC OK" in caplog.text
 
 
