@@ -121,6 +121,9 @@ So that you can match older data:
 | Current dial message added | | `"DriverControls/DialCurrent"` (0x500) |
 | Old two-motor set-up removed (`Left_*`, `Right_*`, senders `WaveSculptor20_Right` / `Tritium_Right`, `DriverControls_Right`) | 0x23, 0x41 to 0x43, 0x80 to 0x8E, 0x101 | removed: not on Peri, and 0x080 and 0x101 are used by other devices |
 | Orion messages: 8 bytes, with the checksum in byte 7 | 7 bytes | 8 bytes, new `Checksum` field |
+| Orion `CellVoltages` (0x702): byte 5 defined | not decoded | new `Blank5` field (unused) |
+| Motor controller `StatusInformation` (0x301) widened to the WaveSculptor22 layout | `LimitFlags`, `ErrorFlags`, `ActiveMotor` 8 bits; error counts 4 bits | 16 bits; error counts 8 bits (same field names; values only differ when they were too large for the old fields) |
+| Motor controller `Reserved` (0x30D): bits 0 to 31 defined | not decoded | new `Reserved0` field |
 | Comments, units, ranges, value tables and message periods added | | see [SIGNALS.md](SIGNALS.md) |
 
 The CAN IDs now match Ortus-T as recorded at iESC 2026 (the qualifying capture, a section of which is [Tests/data/NRT.BIN](../Tests/data/NRT.BIN)). Data recorded from the 2024 car, with its controller at 0x600, no longer decodes with these files: use the DBC files from git history (before these changes) for it.

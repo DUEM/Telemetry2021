@@ -38,7 +38,7 @@
 01/01/1970 03:22:23.471000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1343471
 01/01/1970 03:22:23.474000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1343474
 01/01/1970 03:22:23.552000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1343552
-01/01/1970 03:22:23.555000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,150,,,,,,,True,1343555
+01/01/1970 03:22:23.555000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1343555
 01/01/1970 03:22:23.558000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1343558
 01/01/1970 03:22:23.565000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1343565
 01/01/1970 03:22:23.568000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1343568
@@ -59,7 +59,7 @@
 01/01/1970 03:22:23.968000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1343968
 01/01/1970 03:22:23.971000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1343971
 01/01/1970 03:22:24.057000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1344057
-01/01/1970 03:22:24.063000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank,0,Checksum,151,,,,,,,True,1344063
+01/01/1970 03:22:24.063000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,151,,,,,True,1344063
 01/01/1970 03:22:24.066000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1344066
 01/01/1970 03:22:24.073000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344073
 01/01/1970 03:22:24.076000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1344076
@@ -86,7 +86,7 @@
 18/09/2026 10:37:20.361000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344472
 18/09/2026 10:37:20.363000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1344474
 18/09/2026 10:37:20.450000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1344561
-18/09/2026 10:37:20.453000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,149,,,,,,,True,1344564
+18/09/2026 10:37:20.453000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1344564
 18/09/2026 10:37:20.456000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1344567
 18/09/2026 10:37:20.458000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344569
 18/09/2026 10:37:20.461000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344572
@@ -105,7 +105,7 @@
 18/09/2026 10:37:20.857000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344968
 18/09/2026 10:37:20.860000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1344971
 18/09/2026 10:37:20.953000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1345064
-18/09/2026 10:37:20.957000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,149,,,,,,,True,1345068
+18/09/2026 10:37:20.957000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1345068
 18/09/2026 10:37:20.960000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1345071
 18/09/2026 10:37:20.962000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1345073
 18/09/2026 10:37:20.965000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1345076
@@ -127,7 +127,7 @@
 18/09/2026 10:37:21.364000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1345475
 18/09/2026 10:37:21.455000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1345566
 18/09/2026 10:37:21.457000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1345568
-18/09/2026 10:37:21.460000,CellVoltages,Orion,LowCellVoltage,39001,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,148,,,,,,,True,1345571
+18/09/2026 10:37:21.460000,CellVoltages,Orion,LowCellVoltage,39001,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,148,,,,,True,1345571
 18/09/2026 10:37:21.463000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1345574
 18/09/2026 10:37:21.478000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1345589
 18/09/2026 10:37:21.855000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1345966
@@ -164,7 +164,7 @@
 18/09/2026 10:37:22.457000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1346569
 18/09/2026 10:37:22.459000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1346571
 18/09/2026 10:37:22.465000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1346577
-18/09/2026 10:37:22.467000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,149,,,,,,,True,1346579
+18/09/2026 10:37:22.467000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1346579
 18/09/2026 10:37:22.470000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1346582
 18/09/2026 10:37:22.483000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1346595
 18/09/2026 10:37:22.554000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1346666
@@ -185,7 +185,7 @@
 18/09/2026 10:37:22.960000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1347072
 18/09/2026 10:37:22.963000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1347075
 18/09/2026 10:37:22.969000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1347081
-18/09/2026 10:37:22.972000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,150,,,,,,,True,1347084
+18/09/2026 10:37:22.972000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1347084
 18/09/2026 10:37:22.975000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1347087
 18/09/2026 10:37:22.986000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1347098
 18/09/2026 10:37:23.054000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1347166
@@ -209,7 +209,7 @@
 18/09/2026 10:37:23.456000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1347568
 18/09/2026 10:37:23.463000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1347575
 18/09/2026 10:37:23.473000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1347585
-18/09/2026 10:37:23.476000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank,0,Checksum,151,,,,,,,True,1347588
+18/09/2026 10:37:23.476000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,151,,,,,True,1347588
 18/09/2026 10:37:23.479000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1347591
 18/09/2026 10:37:23.489000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1347601
 18/09/2026 10:37:23.554000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1347666
@@ -231,7 +231,7 @@
 18/09/2026 10:37:23.960000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1348072
 18/09/2026 10:37:23.963000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1348075
 18/09/2026 10:37:23.976000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1348088
-18/09/2026 10:37:23.979000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,150,,,,,,,True,1348091
+18/09/2026 10:37:23.979000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1348091
 18/09/2026 10:37:23.982000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1348094
 18/09/2026 10:37:23.992000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1348104
 18/09/2026 10:37:24.001000,TimeAndFix,Telemetry,GpsHour,10,GpsMinute,37,GpsSeconds,24,GpsDay,18,GpsMonth,9,GpsYear,26,GpsFix,1,GpsFixquality,1,True,1348113
@@ -259,7 +259,7 @@
 18/09/2026 10:37:24.456000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1348569
 18/09/2026 10:37:24.459000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1348572
 18/09/2026 10:37:24.480000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1348593
-18/09/2026 10:37:24.482000,CellVoltages,Orion,LowCellVoltage,39004,HighCellVoltage,39410,InternalTemperature,25,Blank,0,Checksum,152,,,,,,,True,1348595
+18/09/2026 10:37:24.482000,CellVoltages,Orion,LowCellVoltage,39004,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,152,,,,,True,1348595
 18/09/2026 10:37:24.485000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1348598
 18/09/2026 10:37:24.495000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1348608
 18/09/2026 10:37:24.553000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1348666
@@ -281,7 +281,7 @@
 18/09/2026 10:37:24.958000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1349071
 18/09/2026 10:37:24.961000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1349074
 18/09/2026 10:37:24.984000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1349097
-18/09/2026 10:37:24.987000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,149,,,,,,,True,1349100
+18/09/2026 10:37:24.987000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1349100
 18/09/2026 10:37:24.990000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1349103
 18/09/2026 10:37:24.998000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1349111
 18/09/2026 10:37:25.054000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1349167
@@ -304,7 +304,7 @@
 18/09/2026 10:37:25.455000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1349568
 18/09/2026 10:37:25.458000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1349571
 18/09/2026 10:37:25.488000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1349601
-18/09/2026 10:37:25.491000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,150,,,,,,,True,1349604
+18/09/2026 10:37:25.491000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1349604
 18/09/2026 10:37:25.494000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1349607
 18/09/2026 10:37:25.501000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1349614
 18/09/2026 10:37:25.553000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1349666
@@ -324,7 +324,7 @@
 18/09/2026 10:37:47.656000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1371770
 18/09/2026 10:37:47.659000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1371773
 18/09/2026 10:37:47.665000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1371779
-18/09/2026 10:37:47.667000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39411,InternalTemperature,25,Blank,0,Checksum,152,,,,,,,True,1371781
+18/09/2026 10:37:47.667000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39411,InternalTemperature,25,Blank5,0,Blank,0,Checksum,152,,,,,True,1371781
 18/09/2026 10:37:47.670000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1371784
 18/09/2026 10:37:47.673000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1371787
 18/09/2026 10:37:47.754000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1371868
@@ -373,7 +373,7 @@
 18/09/2026 10:37:47.644000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1372770
 18/09/2026 10:37:47.647000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1372773
 18/09/2026 10:37:47.660000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1372786
-18/09/2026 10:37:47.663000,CellVoltages,Orion,LowCellVoltage,39004,HighCellVoltage,39408,InternalTemperature,25,Blank,0,Checksum,150,,,,,,,True,1372789
+18/09/2026 10:37:47.663000,CellVoltages,Orion,LowCellVoltage,39004,HighCellVoltage,39408,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1372789
 18/09/2026 10:37:47.666000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1372792
 18/09/2026 10:37:47.668000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1372794
 18/09/2026 10:37:47.742000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1372868
@@ -403,7 +403,7 @@
 18/09/2026 10:37:48.644000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1373770
 18/09/2026 10:37:48.647000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1373773
 18/09/2026 10:37:48.668000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1373794
-18/09/2026 10:37:48.671000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank,0,Checksum,151,,,,,,,True,1373797
+18/09/2026 10:37:48.671000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,151,,,,,True,1373797
 18/09/2026 10:37:48.674000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1373800
 18/09/2026 10:37:48.677000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1373803
 18/09/2026 10:37:48.742000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1373868
@@ -429,7 +429,7 @@
 18/09/2026 10:37:49.146000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1374273
 18/09/2026 10:37:49.149000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1374276
 18/09/2026 10:37:49.172000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1374299
-18/09/2026 10:37:49.174000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,149,,,,,,,True,1374301
+18/09/2026 10:37:49.174000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1374301
 18/09/2026 10:37:49.177000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1374304
 18/09/2026 10:37:49.180000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1374307
 18/09/2026 10:37:49.205000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,1374332
@@ -452,7 +452,7 @@
 18/09/2026 10:37:49.650000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1374777
 18/09/2026 10:37:49.652000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1374779
 18/09/2026 10:37:49.675000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1374802
-18/09/2026 10:37:49.679000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,149,,,,,,,True,1374806
+18/09/2026 10:37:49.679000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1374806
 18/09/2026 10:37:49.682000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1374809
 18/09/2026 10:37:49.684000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1374811
 18/09/2026 10:37:49.741000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1374868
@@ -475,7 +475,7 @@
 18/09/2026 10:37:50.146000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1375273
 18/09/2026 10:37:50.150000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1375277
 18/09/2026 10:37:50.179000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1375306
-18/09/2026 10:37:50.182000,CellVoltages,Orion,LowCellVoltage,39001,HighCellVoltage,39408,InternalTemperature,25,Blank,0,Checksum,147,,,,,,,True,1375309
+18/09/2026 10:37:50.182000,CellVoltages,Orion,LowCellVoltage,39001,HighCellVoltage,39408,InternalTemperature,25,Blank5,0,Blank,0,Checksum,147,,,,,True,1375309
 18/09/2026 10:37:50.185000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1375312
 18/09/2026 10:37:50.188000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1375315
 18/09/2026 10:37:50.210000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,1375337
@@ -497,7 +497,7 @@
 18/09/2026 10:37:50.643000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1375770
 18/09/2026 10:37:50.646000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1375773
 18/09/2026 10:37:50.683000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1375810
-18/09/2026 10:37:50.686000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39411,InternalTemperature,25,Blank,0,Checksum,152,,,,,,,True,1375813
+18/09/2026 10:37:50.686000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39411,InternalTemperature,25,Blank5,0,Blank,0,Checksum,152,,,,,True,1375813
 18/09/2026 10:37:50.689000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1375816
 18/09/2026 10:37:50.692000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1375819
 18/09/2026 10:37:50.741000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1375868
@@ -524,7 +524,7 @@
 18/09/2026 10:37:51.145000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1376273
 18/09/2026 10:37:51.148000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1376276
 18/09/2026 10:37:51.187000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1376315
-18/09/2026 10:37:51.189000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,149,,,,,,,True,1376317
+18/09/2026 10:37:51.189000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1376317
 18/09/2026 10:37:51.192000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1376320
 18/09/2026 10:37:51.195000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1376323
 18/09/2026 10:37:51.217000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,1376345
@@ -547,7 +547,7 @@
 18/09/2026 10:37:51.643000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1376771
 18/09/2026 10:37:51.646000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1376774
 18/09/2026 10:37:51.691000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1376819
-18/09/2026 10:37:51.694000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39410,InternalTemperature,25,Blank,0,Checksum,150,,,,,,,True,1376822
+18/09/2026 10:37:51.694000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1376822
 18/09/2026 10:37:51.696000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1376824
 18/09/2026 10:37:51.699000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1376827
 18/09/2026 10:37:51.740000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1376868
@@ -569,7 +569,7 @@
 18/09/2026 10:37:52.145000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1377273
 18/09/2026 10:37:52.148000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1377276
 18/09/2026 10:37:52.195000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1377323
-18/09/2026 10:37:52.198000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,150,,,,,,,True,1377326
+18/09/2026 10:37:52.198000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1377326
 18/09/2026 10:37:52.201000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1377329
 18/09/2026 10:37:52.207000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1377335
 18/09/2026 10:37:52.221000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,1377349
@@ -605,14 +605,14 @@
 18/09/2026 10:37:53.146000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1378274
 18/09/2026 10:37:53.149000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,1378277
 18/09/2026 10:37:53.202000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1378330
-18/09/2026 10:37:53.205000,CellVoltages,Orion,LowCellVoltage,39001,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,148,,,,,,,True,1378333
+18/09/2026 10:37:53.205000,CellVoltages,Orion,LowCellVoltage,39001,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,148,,,,,True,1378333
 18/09/2026 10:37:53.208000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1378336
 18/09/2026 10:37:51.000000,CRCFail,,Data,b'2608150001110801ff007d01000000',,,,,,,,,,,,,,,False,-1
 18/09/2026 10:38:17.842000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1402970
 18/09/2026 10:38:17.845000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1402973
 18/09/2026 10:38:17.848000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1402976
 18/09/2026 10:38:17.900000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1403028
-18/09/2026 10:38:17.903000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank,0,Checksum,149,,,,,,,True,1403031
+18/09/2026 10:38:17.903000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39409,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,1403031
 18/09/2026 10:38:17.906000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1403034
 18/09/2026 10:38:17.914000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1403042
 18/09/2026 10:38:17.942000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1403070
@@ -636,7 +636,7 @@
 18/09/2026 10:38:18.374000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,1403502
 18/09/2026 10:38:18.375000,MpptPollWoof,Telemetry,,,,,,,,,,,,,,,,,True,1403503
 18/09/2026 10:38:18.404000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1403532
-18/09/2026 10:38:18.407000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank,0,Checksum,151,,,,,,,True,1403535
+18/09/2026 10:38:18.407000,CellVoltages,Orion,LowCellVoltage,39003,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,151,,,,,True,1403535
 18/09/2026 10:38:18.410000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1403538
 18/09/2026 10:38:18.417000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1403545
 18/09/2026 10:38:18.442000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1403570
@@ -657,7 +657,7 @@
 18/09/2026 10:38:18.844000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1403972
 18/09/2026 10:38:18.847000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,1403975
 18/09/2026 10:38:18.908000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,1404036
-18/09/2026 10:38:18.917000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39410,InternalTemperature,25,Blank,0,Checksum,150,,,,,,,True,1404045
+18/09/2026 10:38:18.917000,CellVoltages,Orion,LowCellVoltage,39002,HighCellVoltage,39410,InternalTemperature,25,Blank5,0,Blank,0,Checksum,150,,,,,True,1404045
 18/09/2026 10:38:18.920000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,1404048
 18/09/2026 10:38:18.922000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,32,LowTemperatureSensors,13,Blank,0,Checksum,214,,,,,True,1404050
 18/09/2026 10:38:18.952000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,1404080
@@ -875,7 +875,7 @@
 18/09/2026 11:27:14.596000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4339499
 18/09/2026 11:27:14.598000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4339501
 18/09/2026 11:27:14.604000,PackParameters,Orion,PackCurrent,65535,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,52,,,,,,,True,4339507
-18/09/2026 11:27:14.607000,CellVoltages,Orion,LowCellVoltage,38985,HighCellVoltage,39388,InternalTemperature,25,Blank,0,Checksum,111,,,,,,,True,4339510
+18/09/2026 11:27:14.607000,CellVoltages,Orion,LowCellVoltage,38985,HighCellVoltage,39388,InternalTemperature,25,Blank5,0,Blank,0,Checksum,111,,,,,True,4339510
 18/09/2026 11:27:14.609000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4339512
 18/09/2026 11:27:13.000000,CRCFail,,Data,b'3d37420001110801ff007d01e4374200008004050d0096f022',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:27:14.783000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4339686
@@ -898,7 +898,7 @@
 18/09/2026 11:27:15.086000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4339989
 18/09/2026 11:27:15.103000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4340006
 18/09/2026 11:27:15.108000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1179,PackSoc,148,RelayState,75,Checksum,54,,,,,,,True,4340011
-18/09/2026 11:27:15.111000,CellVoltages,Orion,LowCellVoltage,38985,HighCellVoltage,39389,InternalTemperature,25,Blank,0,Checksum,112,,,,,,,True,4340014
+18/09/2026 11:27:15.111000,CellVoltages,Orion,LowCellVoltage,38985,HighCellVoltage,39389,InternalTemperature,25,Blank5,0,Blank,0,Checksum,112,,,,,True,4340014
 18/09/2026 11:27:15.114000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4340017
 18/09/2026 11:27:15.117000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4340020
 18/09/2026 11:27:15.143000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4340046
@@ -934,7 +934,7 @@
 18/09/2026 11:27:15.991000,Rail_15V,Tritium,Reserved,0.04027605056762695,FifteenVSupply,14.91653823852539,,,,,,,,,,,,,True,4340894
 18/09/2026 11:27:15.994000,DspBoardTemperature,Tritium,DspBoardTemp,24.247909545898438,Reserved,0.0,,,,,,,,,,,,,True,4340897
 18/09/2026 11:27:13.000000,CRCFail,,Data,b'a43c4200031708ff33390c',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:27:16.118000,CellVoltages,Orion,LowCellVoltage,38983,HighCellVoltage,39386,InternalTemperature,25,Blank,0,Checksum,107,,,,,,,True,4341021
+18/09/2026 11:27:16.118000,CellVoltages,Orion,LowCellVoltage,38983,HighCellVoltage,39386,InternalTemperature,25,Blank5,0,Blank,0,Checksum,107,,,,,True,4341021
 18/09/2026 11:27:16.121000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4341024
 18/09/2026 11:27:16.124000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4341027
 18/09/2026 11:27:16.144000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4341047
@@ -1032,12 +1032,12 @@
 18/09/2026 11:28:00.898000,Velocity,Tritium,MotorVelocity,23.710102081298828,VehicleVelocity,0.692733645439148,,,,,,,,,,,,,True,4385807
 18/09/2026 11:28:00.940000,Velocity,Tritium,MotorVelocity,24.221330642700195,VehicleVelocity,0.7076701521873474,,,,,,,,,,,,,True,4385849
 18/09/2026 11:28:00.969000,PackParameters,Orion,PackCurrent,65520,PackInstVoltage,1177,PackSoc,148,RelayState,75,Checksum,35,,,,,,,True,4385878
-18/09/2026 11:28:00.971000,CellVoltages,Orion,LowCellVoltage,38988,HighCellVoltage,39423,InternalTemperature,25,Blank,0,Checksum,149,,,,,,,True,4385880
+18/09/2026 11:28:00.971000,CellVoltages,Orion,LowCellVoltage,38988,HighCellVoltage,39423,InternalTemperature,25,Blank5,0,Blank,0,Checksum,149,,,,,True,4385880
 18/09/2026 11:28:00.978000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4385887
 18/09/2026 11:28:00.981000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4385890
 18/09/2026 11:28:00.984000,MotorCurrentVector,Tritium,VectCurrImag,29.31411361694336,VectCurrReal,0.0,,,,,,,,,,,,,True,4385893
 18/09/2026 11:28:00.987000,Rail_3_3VAnd1_9V,Tritium,OneNineVSupply,1.8581503629684448,ThreeThreeVSupply,3.321963310241699,,,,,,,,,,,,,True,4385896
-18/09/2026 11:28:00.989000,Reserved,Tritium,Reserved,0.0,,,,,,,,,,,,,,,True,4385898
+18/09/2026 11:28:00.989000,Reserved,Tritium,Reserved0,1464.1859130859375,Reserved,0.0,,,,,,,,,,,,,True,4385898
 18/09/2026 11:27:17.000000,CRCFail,,Data,b'6dec420000800405d6ec420005000885eb013f85eb013f',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:27:17.000000,CRCFail,,Data,b'ea',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:28:01.100000,Velocity,Tritium,MotorVelocity,26.275545120239258,VehicleVelocity,0.7676877379417419,,,,,,,,,,,,,True,4386009
@@ -1341,7 +1341,7 @@
 18/09/2026 11:28:40.739000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4425648
 18/09/2026 11:28:40.777000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4425686
 18/09/2026 11:28:40.788000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4425697
-18/09/2026 11:28:40.790000,CellVoltages,Orion,LowCellVoltage,38972,HighCellVoltage,39374,InternalTemperature,25,Blank,0,Checksum,84,,,,,,,True,4425699
+18/09/2026 11:28:40.790000,CellVoltages,Orion,LowCellVoltage,38972,HighCellVoltage,39374,InternalTemperature,25,Blank5,0,Blank,0,Checksum,84,,,,,True,4425699
 18/09/2026 11:27:17.000000,CRCFail,,Data,b'430003000803400000f30c00004ff4',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:28:40.982000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4425891
 18/09/2026 11:28:40.994000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4425903
@@ -1397,7 +1397,7 @@
 18/09/2026 11:28:42.783000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4427692
 18/09/2026 11:28:42.794000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4427703
 18/09/2026 11:28:42.797000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4427706
-18/09/2026 11:28:42.806000,CellVoltages,Orion,LowCellVoltage,38972,HighCellVoltage,39374,InternalTemperature,25,Blank,0,Checksum,84,,,,,,,True,4427715
+18/09/2026 11:28:42.806000,CellVoltages,Orion,LowCellVoltage,38972,HighCellVoltage,39374,InternalTemperature,25,Blank5,0,Blank,0,Checksum,84,,,,,True,4427715
 18/09/2026 11:28:42.808000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4427717
 18/09/2026 11:28:42.818000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4427727
 18/09/2026 11:28:42.859000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4427768
@@ -1466,7 +1466,7 @@
 18/09/2026 11:28:45.238000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4430195
 18/09/2026 11:28:45.000000,CRCFail,,Data,b'9943000303080000000000000000ce',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:28:45.000000,CRCFail,,Data,b'049a95004b338195',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:28:45.278000,CellVoltages,Orion,LowCellVoltage,38974,HighCellVoltage,39377,InternalTemperature,25,Blank,0,Checksum,89,,,,,,,True,4430235
+18/09/2026 11:28:45.278000,CellVoltages,Orion,LowCellVoltage,38974,HighCellVoltage,39377,InternalTemperature,25,Blank5,0,Blank,0,Checksum,89,,,,,True,4430235
 18/09/2026 11:28:45.281000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4430238
 18/09/2026 11:28:45.000000,CRCFail,,Data,b'ce9943000301000000020000',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:28:45.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
@@ -1555,7 +1555,7 @@
 18/09/2026 11:29:01.840000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4446797
 18/09/2026 11:29:01.852000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4446809
 18/09/2026 11:29:01.892000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4446849
-18/09/2026 11:29:01.911000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank,0,Checksum,91,,,,,,,True,4446868
+18/09/2026 11:29:01.911000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank5,0,Blank,0,Checksum,91,,,,,True,4446868
 18/09/2026 11:29:01.914000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4446871
 18/09/2026 11:29:01.924000,SpeedValCurrVal,DriverControls,DriverSetSpeed,292.6483459472656,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4446881
 18/09/2026 11:29:01.927000,Maxbuscurrent,DriverControls,Zero,0.0,MaxBusCurrent,1.0,,,,,,,,,,,,,True,4446884
@@ -1591,7 +1591,7 @@
 18/09/2026 11:29:03.172000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4448129
 18/09/2026 11:29:03.210000,Maxbuscurrent,DriverControls,Zero,0.0,MaxBusCurrent,1.0,,,,,,,,,,,,,True,4448167
 18/09/2026 11:29:03.214000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4448171
-18/09/2026 11:29:03.429000,CellVoltages,Orion,LowCellVoltage,38974,HighCellVoltage,39377,InternalTemperature,25,Blank,0,Checksum,89,,,,,,,True,4448386
+18/09/2026 11:29:03.429000,CellVoltages,Orion,LowCellVoltage,38974,HighCellVoltage,39377,InternalTemperature,25,Blank5,0,Blank,0,Checksum,89,,,,,True,4448386
 18/09/2026 11:29:03.435000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4448392
 18/09/2026 11:29:03.437000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4448394
 18/09/2026 11:29:03.440000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4448397
@@ -1607,7 +1607,7 @@
 18/09/2026 11:29:03.740000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4448697
 18/09/2026 11:29:03.746000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4448703
 18/09/2026 11:29:03.812000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4448769
-18/09/2026 11:29:03.927000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank,0,Checksum,91,,,,,,,True,4448884
+18/09/2026 11:29:03.927000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank5,0,Blank,0,Checksum,91,,,,,True,4448884
 18/09/2026 11:29:03.932000,BusMeasurement,Tritium,BusVoltage,117.75562286376953,BusCurrent,0.0,,,,,,,,,,,,,True,4448889
 18/09/2026 11:28:45.000000,CRCFail,,Data,b'0305089f40ddbd00e8fd3a226b',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:28:45.000000,CRCFail,,Data,b'000308086059203dfeaa6e414068',,,,,,,,,,,,,,,False,-1
@@ -1640,7 +1640,7 @@
 18/09/2026 11:29:04.771000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4449728
 18/09/2026 11:28:45.000000,CRCFail,,Data,b'eae54338e64300030308000000000000000003fc',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:04.939000,IdentificationInfo,Tritium,TritiumId,16387,SerialNumber,3315,,,,,,,,,,,,,True,4449896
-18/09/2026 11:29:04.949000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39379,InternalTemperature,25,Blank,0,Checksum,92,,,,,,,True,4449906
+18/09/2026 11:29:04.949000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39379,InternalTemperature,25,Blank5,0,Blank,0,Checksum,92,,,,,True,4449906
 18/09/2026 11:29:04.972000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4449929
 18/09/2026 11:29:05.010000,TimeAndFix,Telemetry,GpsHour,11,GpsMinute,29,GpsSeconds,5,GpsDay,18,GpsMonth,9,GpsYear,26,GpsFix,0,GpsFixquality,0,True,4449967
 18/09/2026 11:29:05.201000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4450168
@@ -1649,7 +1649,7 @@
 18/09/2026 11:29:05.325000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4450292
 18/09/2026 11:29:05.330000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4450297
 18/09/2026 11:29:05.332000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4450299
-18/09/2026 11:29:05.431000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39377,InternalTemperature,25,Blank,0,Checksum,90,,,,,,,True,4450398
+18/09/2026 11:29:05.431000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39377,InternalTemperature,25,Blank5,0,Blank,0,Checksum,90,,,,,True,4450398
 18/09/2026 11:29:05.440000,SpeedValCurrVal,DriverControls,DriverSetSpeed,292.6483459472656,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4450407
 18/09/2026 11:29:05.446000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4450413
 18/09/2026 11:29:05.000000,CRCFail,,Data,b'90e84300030308000000000000000000b35b',,,,,,,,,,,,,,,False,-1
@@ -1670,7 +1670,7 @@
 18/09/2026 11:29:28.482000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4473449
 18/09/2026 11:29:28.520000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4473487
 18/09/2026 11:29:28.602000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4473569
-18/09/2026 11:29:28.614000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank,0,Checksum,91,,,,,,,True,4473581
+18/09/2026 11:29:28.614000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank5,0,Blank,0,Checksum,91,,,,,True,4473581
 18/09/2026 11:29:28.626000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4473593
 18/09/2026 11:29:28.628000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4473595
 18/09/2026 11:29:28.631000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4473598
@@ -1801,7 +1801,7 @@
 18/09/2026 11:29:54.712000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4499693
 18/09/2026 11:29:54.717000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4499698
 18/09/2026 11:29:54.725000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4499706
-18/09/2026 11:29:54.809000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39377,InternalTemperature,25,Blank,0,Checksum,91,,,,,,,True,4499790
+18/09/2026 11:29:54.809000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39377,InternalTemperature,25,Blank5,0,Blank,0,Checksum,91,,,,,True,4499790
 18/09/2026 11:29:54.812000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4499793
 18/09/2026 11:29:54.868000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4499849
 18/09/2026 11:29:54.906000,IdentificationInfo,Tritium,TritiumId,16387,SerialNumber,3315,,,,,,,,,,,,,True,4499887
@@ -1832,7 +1832,7 @@
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'daac44000080050d00',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'a0',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'ad008000162807b8fb3e',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:29:55.820000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39378,InternalTemperature,25,Blank,0,Checksum,92,,,,,,,True,4500801
+18/09/2026 11:29:55.820000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39378,InternalTemperature,25,Blank5,0,Blank,0,Checksum,92,,,,,True,4500801
 18/09/2026 11:29:55.868000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4500849
 18/09/2026 11:29:55.905000,IdentificationInfo,Tritium,TritiumId,16387,SerialNumber,3315,,,,,,,,,,,,,True,4500886
 18/09/2026 11:29:55.910000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4500891
@@ -1861,7 +1861,7 @@
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'50',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:56.814000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4501795
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'4b339902',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:29:56.826000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39378,InternalTemperature,25,Blank,0,Checksum,92,,,,,,,True,4501807
+18/09/2026 11:29:56.826000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39378,InternalTemperature,25,Blank5,0,Blank,0,Checksum,92,,,,,True,4501807
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'32b144000701080078007821b4b1440003030800c9b144000711007314',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:57.016000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4501997
 18/09/2026 11:29:57.019000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4502000
@@ -1879,7 +1879,7 @@
 18/09/2026 11:29:57.317000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4502298
 18/09/2026 11:29:57.319000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4502300
 18/09/2026 11:29:57.322000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4502303
-18/09/2026 11:29:57.331000,CellVoltages,Orion,LowCellVoltage,38977,HighCellVoltage,39378,InternalTemperature,25,Blank,0,Checksum,93,,,,,,,True,4502312
+18/09/2026 11:29:57.331000,CellVoltages,Orion,LowCellVoltage,38977,HighCellVoltage,39378,InternalTemperature,25,Blank5,0,Blank,0,Checksum,93,,,,,True,4502312
 18/09/2026 11:29:29.000000,CRCFail,,Data,b'2cb3440007010800feb34400010108fd5292430000000054aa',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:29:57.551000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4502532
 18/09/2026 11:29:57.615000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4502596
@@ -1894,7 +1894,7 @@
 18/09/2026 11:29:57.817000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4502798
 18/09/2026 11:29:57.820000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4502801
 18/09/2026 11:29:57.829000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4502810
-18/09/2026 11:29:57.834000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39377,InternalTemperature,25,Blank,0,Checksum,91,,,,,,,True,4502815
+18/09/2026 11:29:57.834000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39377,InternalTemperature,25,Blank5,0,Blank,0,Checksum,91,,,,,True,4502815
 18/09/2026 11:29:57.866000,SpeedValCurrVal,DriverControls,DriverSetSpeed,292.6483459472656,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4502847
 18/09/2026 11:29:57.868000,Maxbuscurrent,DriverControls,Zero,0.0,MaxBusCurrent,1.0,,,,,,,,,,,,,True,4502849
 18/09/2026 11:29:57.905000,IdentificationInfo,Tritium,TritiumId,16387,SerialNumber,3315,,,,,,,,,,,,,True,4502886
@@ -2083,7 +2083,7 @@
 18/09/2026 11:30:41.123000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4546104
 18/09/2026 11:30:41.126000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4546107
 18/09/2026 11:30:41.148000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4546129
-18/09/2026 11:30:41.186000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39377,InternalTemperature,25,Blank,0,Checksum,91,,,,,,,True,4546167
+18/09/2026 11:30:41.186000,CellVoltages,Orion,LowCellVoltage,38976,HighCellVoltage,39377,InternalTemperature,25,Blank5,0,Blank,0,Checksum,91,,,,,True,4546167
 18/09/2026 11:30:41.192000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4546173
 18/09/2026 11:30:41.507000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4546488
 18/09/2026 11:30:41.521000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4546502
@@ -2130,7 +2130,7 @@
 18/09/2026 11:30:43.464000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4548493
 18/09/2026 11:30:43.470000,BusMeasurement,Tritium,BusVoltage,117.7566909790039,BusCurrent,0.0,,,,,,,,,,,,,True,4548499
 18/09/2026 11:30:43.620000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4548649
-18/09/2026 11:30:43.652000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39377,InternalTemperature,25,Blank,0,Checksum,90,,,,,,,True,4548681
+18/09/2026 11:30:43.652000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39377,InternalTemperature,25,Blank5,0,Blank,0,Checksum,90,,,,,True,4548681
 18/09/2026 11:30:43.655000,CellTempsDCL,Orion,PackDcl,120,Unknown,120,HighTemperatureSensor,33,LowTemperatureSensors,13,Blank,0,Checksum,215,,,,,True,4548684
 18/09/2026 11:30:43.661000,BusMeasurement,Tritium,BusVoltage,117.75508117675781,BusCurrent,0.0,,,,,,,,,,,,,True,4548690
 18/09/2026 11:30:43.667000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4548696
@@ -2175,7 +2175,7 @@
 18/09/2026 11:30:45.000000,CRCFail,,Data,b'a16d450003080000000024',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:30:45.063000,SpeedValCurrVal,DriverControls,DriverSetSpeed,292.6483459472656,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4550093
 18/09/2026 11:30:45.075000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4550105
-18/09/2026 11:30:45.164000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank,0,Checksum,91,,,,,,,True,4550194
+18/09/2026 11:30:45.164000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank5,0,Blank,0,Checksum,91,,,,,True,4550194
 18/09/2026 11:30:45.170000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,4550200
 18/09/2026 11:30:45.171000,MpptPollWoof,Telemetry,,,,,,,,,,,,,,,,,True,4550201
 18/09/2026 11:30:45.173000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4550203
@@ -2217,7 +2217,7 @@
 18/09/2026 11:31:02.271000,MpptPollWoof,Telemetry,,,,,,,,,,,,,,,,,True,4567301
 18/09/2026 11:30:45.000000,CRCFail,,Data,b'07b14500030408000000000000000098',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:02.290000,Maxbuscurrent,DriverControls,Zero,0.0,MaxBusCurrent,1.0,,,,,,,,,,,,,True,4567320
-18/09/2026 11:31:02.300000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank,0,Checksum,91,,,,,,,True,4567330
+18/09/2026 11:31:02.300000,CellVoltages,Orion,LowCellVoltage,38975,HighCellVoltage,39378,InternalTemperature,25,Blank5,0,Blank,0,Checksum,91,,,,,True,4567330
 18/09/2026 11:31:02.340000,Velocity,Tritium,MotorVelocity,0.0,VehicleVelocity,0.0,,,,,,,,,,,,,True,4567370
 18/09/2026 11:31:02.370000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4567400
 18/09/2026 11:31:02.373000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4567403
@@ -2290,7 +2290,7 @@
 18/09/2026 11:31:05.276000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,4570316
 18/09/2026 11:31:05.277000,MpptPollWoof,Telemetry,,,,,,,,,,,,,,,,,True,4570317
 18/09/2026 11:31:05.290000,Velocity,Tritium,MotorVelocity,21.182477951049805,VehicleVelocity,0.6188845038414001,,,,,,,,,,,,,True,4570330
-18/09/2026 11:31:05.315000,CellVoltages,Orion,LowCellVoltage,38977,HighCellVoltage,39461,InternalTemperature,25,Blank,0,Checksum,177,,,,,,,True,4570355
+18/09/2026 11:31:05.315000,CellVoltages,Orion,LowCellVoltage,38977,HighCellVoltage,39461,InternalTemperature,25,Blank5,0,Blank,0,Checksum,177,,,,,True,4570355
 18/09/2026 11:31:05.321000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4570361
 18/09/2026 11:31:05.470000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4570510
 18/09/2026 11:31:05.472000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4570512
@@ -2318,7 +2318,7 @@
 18/09/2026 11:31:05.000000,CRCFail,,Data,b'43c04500f380000d161328e844070000000ec1a4c04500008004050d009618e5',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:06.262000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4571302
 18/09/2026 11:31:06.290000,Velocity,Tritium,MotorVelocity,34.11859130859375,VehicleVelocity,0.9968366026878357,,,,,,,,,,,,,True,4571330
-18/09/2026 11:31:06.323000,CellVoltages,Orion,LowCellVoltage,38933,HighCellVoltage,39337,InternalTemperature,25,Blank,0,Checksum,8,,,,,,,True,4571363
+18/09/2026 11:31:06.323000,CellVoltages,Orion,LowCellVoltage,38933,HighCellVoltage,39337,InternalTemperature,25,Blank5,0,Blank,0,Checksum,8,,,,,True,4571363
 18/09/2026 11:31:06.329000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4571369
 18/09/2026 11:31:06.361000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4571401
 18/09/2026 11:31:06.363000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4571403
@@ -2332,7 +2332,7 @@
 18/09/2026 11:31:06.666000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4571706
 18/09/2026 11:31:06.669000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4571709
 18/09/2026 11:31:05.000000,CRCFail,,Data,b'52c245000303088a951c427f00010208000000000000803f203a',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:31:06.827000,CellVoltages,Orion,LowCellVoltage,38935,HighCellVoltage,39340,InternalTemperature,25,Blank,0,Checksum,13,,,,,,,True,4571867
+18/09/2026 11:31:06.827000,CellVoltages,Orion,LowCellVoltage,38935,HighCellVoltage,39340,InternalTemperature,25,Blank5,0,Blank,0,Checksum,13,,,,,True,4571867
 18/09/2026 11:31:06.833000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4571873
 18/09/2026 11:31:06.847000,IdentificationInfo,Tritium,TritiumId,16387,SerialNumber,3315,,,,,,,,,,,,,True,4571887
 18/09/2026 11:31:06.853000,Velocity,Tritium,MotorVelocity,40.686336517333984,VehicleVelocity,1.188725233078003,,,,,,,,,,,,,True,4571893
@@ -2369,7 +2369,7 @@
 18/09/2026 11:31:07.848000,IdentificationInfo,Tritium,TritiumId,16387,SerialNumber,3315,,,,,,,,,,,,,True,4572888
 18/09/2026 11:31:07.853000,PhaseCurrent,Tritium,PhaseBCurrent,21.008634567260742,PhaseCCurrent,21.307056427001953,,,,,,,,,,,,,True,4572893
 18/09/2026 11:31:07.856000,MotorCurrentVector,Tritium,VectCurrImag,29.325897216796875,VectCurrReal,0.0,,,,,,,,,,,,,True,4572896
-18/09/2026 11:31:07.862000,Reserved,Tritium,Reserved,0.0,,,,,,,,,,,,,,,True,4572902
+18/09/2026 11:31:07.862000,Reserved,Tritium,Reserved0,1464.1859130859375,Reserved,0.0,,,,,,,,,,,,,True,4572902
 18/09/2026 11:31:07.868000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4572908
 18/09/2026 11:31:07.871000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4572911
 18/09/2026 11:31:05.000000,CRCFail,,Data,b'03c7450000f38008000d1613281207b8779d',,,,,,,,,,,,,,,False,-1
@@ -2421,7 +2421,7 @@
 18/09/2026 11:31:18.253000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4583293
 18/09/2026 11:31:18.262000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4583302
 18/09/2026 11:31:18.410000,Velocity,Tritium,MotorVelocity,164.5258026123047,VehicleVelocity,4.806920051574707,,,,,,,,,,,,,True,4583450
-18/09/2026 11:31:18.419000,CellVoltages,Orion,LowCellVoltage,38957,HighCellVoltage,39359,InternalTemperature,25,Blank,0,Checksum,54,,,,,,,True,4583459
+18/09/2026 11:31:18.419000,CellVoltages,Orion,LowCellVoltage,38957,HighCellVoltage,39359,InternalTemperature,25,Blank5,0,Blank,0,Checksum,54,,,,,True,4583459
 18/09/2026 11:31:18.425000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4583465
 18/09/2026 11:31:18.448000,StatusInformation,Tritium,LimitFlags,48,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4583488
 18/09/2026 11:31:18.664000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4583704
@@ -2455,7 +2455,7 @@
 18/09/2026 11:31:05.000000,CRCFail,,Data,b'f5030390ae384387aaac409e46',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:05.000000,CRCFail,,Data,b'95f54500030308ac383943a72bad403f4500bbf545000301080200000002000000dc05',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:19.856000,MotorCurrentVector,Tritium,VectCurrImag,43.15517044067383,VectCurrReal,0.001341104507446289,,,,,,,,,,,,,True,4584896
-18/09/2026 11:31:19.862000,Reserved,Tritium,Reserved,0.0,,,,,,,,,,,,,,,True,4584902
+18/09/2026 11:31:19.862000,Reserved,Tritium,Reserved0,1464.1859130859375,Reserved,0.0,,,,,,,,,,,,,True,4584902
 18/09/2026 11:31:20.091000,Velocity,Tritium,MotorVelocity,189.63735961914062,VehicleVelocity,5.540599822998047,,,,,,,,,,,,,True,4585131
 18/09/2026 11:31:20.161000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4585201
 18/09/2026 11:31:20.164000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4585204
@@ -2465,7 +2465,7 @@
 18/09/2026 11:31:20.262000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4585302
 18/09/2026 11:31:20.379000,SpeedValCurrVal,DriverControls,DriverSetSpeed,480.04595947265625,DriverSetCurrent,0.5087500214576721,,,,,,,,,,,,,True,4585419
 18/09/2026 11:31:20.410000,Velocity,Tritium,MotorVelocity,194.04673767089844,VehicleVelocity,5.669427394866943,,,,,,,,,,,,,True,4585450
-18/09/2026 11:31:20.436000,CellVoltages,Orion,LowCellVoltage,38762,HighCellVoltage,39156,InternalTemperature,25,Blank,0,Checksum,166,,,,,,,True,4585476
+18/09/2026 11:31:20.436000,CellVoltages,Orion,LowCellVoltage,38762,HighCellVoltage,39156,InternalTemperature,25,Blank5,0,Blank,0,Checksum,166,,,,,True,4585476
 18/09/2026 11:31:20.443000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4585483
 18/09/2026 11:31:20.451000,BusMeasurement,Tritium,BusVoltage,116.41377258300781,BusCurrent,9.421384811401367,,,,,,,,,,,,,True,4585491
 18/09/2026 11:31:20.454000,PhaseCurrent,Tritium,PhaseBCurrent,30.789344787597656,PhaseCCurrent,29.807228088378906,,,,,,,,,,,,,True,4585494
@@ -2571,7 +2571,7 @@
 18/09/2026 11:31:23.848000,IdentificationInfo,Tritium,TritiumId,16387,SerialNumber,3315,,,,,,,,,,,,,True,4588888
 18/09/2026 11:31:23.853000,PhaseCurrent,Tritium,PhaseBCurrent,29.666250228881836,PhaseCCurrent,29.199493408203125,,,,,,,,,,,,,True,4588893
 18/09/2026 11:31:23.856000,MotorCurrentVector,Tritium,VectCurrImag,40.94485092163086,VectCurrReal,-0.037354227155447006,,,,,,,,,,,,,True,4588896
-18/09/2026 11:31:23.862000,Reserved,Tritium,Reserved,0.0,,,,,,,,,,,,,,,True,4588902
+18/09/2026 11:31:23.862000,Reserved,Tritium,Reserved0,1464.1859130859375,Reserved,0.0,,,,,,,,,,,,,True,4588902
 18/09/2026 11:31:23.923000,SpeedValCurrVal,DriverControls,DriverSetSpeed,480.04595947265625,DriverSetCurrent,0.5062500238418579,,,,,,,,,,,,,True,4588963
 18/09/2026 11:31:23.931000,Velocity,Tritium,MotorVelocity,227.55325317382812,VehicleVelocity,6.648381233215332,,,,,,,,,,,,,True,4588971
 18/09/2026 11:31:24.051000,BusMeasurement,Tritium,BusVoltage,116.25507354736328,BusCurrent,10.77868938446045,,,,,,,,,,,,,True,4589091
@@ -2661,7 +2661,7 @@
 18/09/2026 11:31:39.848000,Maxbuscurrent,DriverControls,Zero,0.0,MaxBusCurrent,1.0,,,,,,,,,,,,,True,4604888
 18/09/2026 11:31:39.854000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4604894
 18/09/2026 11:31:39.856000,MotorCurrentVector,Tritium,VectCurrImag,0.0,VectCurrReal,0.0,,,,,,,,,,,,,True,4604896
-18/09/2026 11:31:39.862000,Reserved,Tritium,Reserved,0.0,,,,,,,,,,,,,,,True,4604902
+18/09/2026 11:31:39.862000,Reserved,Tritium,Reserved0,1464.1859130859375,Reserved,0.0,,,,,,,,,,,,,True,4604902
 18/09/2026 11:31:39.868000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4604908
 18/09/2026 11:31:05.000000,CRCFail,,Data,b'ee434600ff8008f3ae444600031708ffffc74200000000f92d',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:40.065000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4605105
@@ -2756,7 +2756,7 @@
 18/09/2026 11:31:43.789000,Velocity,Tritium,MotorVelocity,302.8638610839844,VehicleVelocity,8.848716735839844,,,,,,,,,,,,,True,4608850
 18/09/2026 11:31:43.829000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4608890
 18/09/2026 11:31:43.838000,Rail_3_3VAnd1_9V,Tritium,OneNineVSupply,1.8574225902557373,ThreeThreeVSupply,3.3200347423553467,,,,,,,,,,,,,True,4608899
-18/09/2026 11:31:43.847000,Reserved,Tritium,Reserved,0.0,,,,,,,,,,,,,,,True,4608908
+18/09/2026 11:31:43.847000,Reserved,Tritium,Reserved0,1464.1859130859375,Reserved,0.0,,,,,,,,,,,,,True,4608908
 18/09/2026 11:31:44.030000,BusMeasurement,Tritium,BusVoltage,117.70352172851562,BusCurrent,0.0,,,,,,,,,,,,,True,4609091
 18/09/2026 11:31:44.033000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4609094
 18/09/2026 11:31:44.040000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4609101
@@ -2804,7 +2804,7 @@
 18/09/2026 11:31:43.000000,CRCFail,,Data,b'b8438fa043011d16414203',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:31:46.827000,IdentificationInfo,Tritium,TritiumId,16387,SerialNumber,3315,,,,,,,,,,,,,True,4611888
 18/09/2026 11:31:46.838000,Velocity,Tritium,MotorVelocity,321.5158386230469,VehicleVelocity,9.393669128417969,,,,,,,,,,,,,True,4611899
-18/09/2026 11:31:46.841000,Reserved,Tritium,Reserved,0.0,,,,,,,,,,,,,,,True,4611902
+18/09/2026 11:31:46.841000,Reserved,Tritium,Reserved0,1464.1859130859375,Reserved,0.0,,,,,,,,,,,,,True,4611902
 18/09/2026 11:31:46.844000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4611905
 18/09/2026 11:31:46.955000,SpeedValCurrVal,DriverControls,DriverSetSpeed,485.1801452636719,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4612016
 18/09/2026 11:31:46.989000,Velocity,Tritium,MotorVelocity,322.30047607421875,VehicleVelocity,9.416593551635742,,,,,,,,,,,,,True,4612050
@@ -2856,7 +2856,7 @@
 18/09/2026 11:31:43.000000,CRCFail,,Data,b'21c046e25de9429df2e7405d17',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:12.835000,MotorVoltageVector,Tritium,VectVoltImag,33.90019989013672,VectVoltReal,-1.4121829271316528,,,,,,,,,,,,,True,4637896
 18/09/2026 11:32:12.841000,DspBoardTemperature,Tritium,DspBoardTemp,26.157485961914062,Reserved,0.0,,,,,,,,,,,,,True,4637902
-18/09/2026 11:32:12.846000,CellVoltages,Orion,LowCellVoltage,38764,HighCellVoltage,39166,InternalTemperature,25,Blank,0,Checksum,178,,,,,,,True,4637907
+18/09/2026 11:32:12.846000,CellVoltages,Orion,LowCellVoltage,38764,HighCellVoltage,39166,InternalTemperature,25,Blank5,0,Blank,0,Checksum,178,,,,,True,4637907
 18/09/2026 11:32:13.029000,StatusInformation,Tritium,LimitFlags,4,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4638090
 18/09/2026 11:32:13.031000,BusMeasurement,Tritium,BusVoltage,116.77709197998047,BusCurrent,6.524974346160889,,,,,,,,,,,,,True,4638092
 18/09/2026 11:32:13.041000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,31.7469539642334,BackEmfD,0.0,,,,,,,,,,,,,True,4638102
@@ -3059,7 +3059,7 @@
 18/09/2026 11:32:33.426000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4658509
 18/09/2026 11:32:33.429000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4658512
 18/09/2026 11:32:27.000000,CRCFail,,Data,b'53154700ff8008f30080f3007d154700070008ff6f048e95004b9877c2',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:32:33.478000,CellVoltages,Orion,LowCellVoltage,38576,HighCellVoltage,38981,InternalTemperature,25,Blank,0,Checksum,60,,,,,,,True,4658561
+18/09/2026 11:32:33.478000,CellVoltages,Orion,LowCellVoltage,38576,HighCellVoltage,38981,InternalTemperature,25,Blank5,0,Blank,0,Checksum,60,,,,,True,4658561
 18/09/2026 11:32:33.498000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4658581
 18/09/2026 11:32:34.229000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4659312
 18/09/2026 11:32:34.232000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4659315
@@ -3142,7 +3142,7 @@
 18/09/2026 11:32:39.023000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4664114
 18/09/2026 11:32:39.031000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4664122
 18/09/2026 11:32:39.035000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4664126
-18/09/2026 11:32:39.517000,CellVoltages,Orion,LowCellVoltage,38922,HighCellVoltage,39320,InternalTemperature,25,Blank,0,Checksum,236,,,,,,,True,4664608
+18/09/2026 11:32:39.517000,CellVoltages,Orion,LowCellVoltage,38922,HighCellVoltage,39320,InternalTemperature,25,Blank5,0,Blank,0,Checksum,236,,,,,True,4664608
 18/09/2026 11:32:39.617000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4664708
 18/09/2026 11:32:39.619000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4664710
 18/09/2026 11:32:39.622000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4664713
@@ -3161,7 +3161,7 @@
 18/09/2026 11:32:39.922000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4665013
 18/09/2026 11:32:40.016000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4665107
 18/09/2026 11:32:40.019000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4665110
-18/09/2026 11:32:40.022000,CellVoltages,Orion,LowCellVoltage,38923,HighCellVoltage,39320,InternalTemperature,25,Blank,0,Checksum,237,,,,,,,True,4665113
+18/09/2026 11:32:40.022000,CellVoltages,Orion,LowCellVoltage,38923,HighCellVoltage,39320,InternalTemperature,25,Blank5,0,Blank,0,Checksum,237,,,,,True,4665113
 18/09/2026 11:32:40.025000,PackParameters,Orion,PackCurrent,0,PackInstVoltage,1177,PackSoc,149,RelayState,75,Checksum,53,,,,,,,True,4665116
 18/09/2026 11:32:40.116000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4665207
 18/09/2026 11:32:40.118000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4665209
@@ -3207,7 +3207,7 @@
 18/09/2026 11:32:42.255000,Velocity,Tritium,MotorVelocity,330.6166687011719,VehicleVelocity,9.659565925598145,,,,,,,,,,,,,True,4667346
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'008004061600a0f6cb',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'12384700f380080000000000001ff4',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:32:42.543000,CellVoltages,Orion,LowCellVoltage,38926,HighCellVoltage,39322,InternalTemperature,25,Blank,0,Checksum,242,,,,,,,True,4667634
+18/09/2026 11:32:42.543000,CellVoltages,Orion,LowCellVoltage,38926,HighCellVoltage,39322,InternalTemperature,25,Blank5,0,Blank,0,Checksum,242,,,,,True,4667634
 18/09/2026 11:32:42.557000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4667648
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'73394700071100305547000712000023',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'00030308aa47a44371971941755f',,,,,,,,,,,,,,,False,-1
@@ -3219,7 +3219,7 @@
 18/09/2026 11:32:56.375000,Velocity,Tritium,MotorVelocity,373.3815612792969,VehicleVelocity,10.909019470214844,,,,,,,,,,,,,True,4681466
 18/09/2026 11:32:56.381000,SpeedValCurrVal,DriverControls,DriverSetSpeed,480.04595947265625,DriverSetCurrent,0.0,,,,,,,,,,,,,True,4681472
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'256f470000800405c0ed3f587854401660',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:32:56.547000,Reserved,Tritium,Reserved,0.0,,,,,,,,,,,,,,,True,4681638
+18/09/2026 11:32:56.547000,Reserved,Tritium,Reserved0,1464.1859130859375,Reserved,0.0,,,,,,,,,,,,,True,4681638
 18/09/2026 11:32:56.576000,Velocity,Tritium,MotorVelocity,372.3760681152344,VehicleVelocity,10.879642486572266,,,,,,,,,,,,,True,4681667
 18/09/2026 11:32:56.619000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4681710
 18/09/2026 11:32:56.621000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4681712
@@ -3235,7 +3235,7 @@
 18/09/2026 11:32:56.856000,Velocity,Tritium,MotorVelocity,370.06134033203125,VehicleVelocity,10.812013626098633,,,,,,,,,,,,,True,4681947
 18/09/2026 11:32:56.896000,Velocity,Tritium,MotorVelocity,369.9237365722656,VehicleVelocity,10.807992935180664,,,,,,,,,,,,,True,4681987
 18/09/2026 11:32:57.146000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4682237
-18/09/2026 11:32:57.159000,CellVoltages,Orion,LowCellVoltage,38908,HighCellVoltage,39306,InternalTemperature,25,Blank,0,Checksum,207,,,,,,,True,4682250
+18/09/2026 11:32:57.159000,CellVoltages,Orion,LowCellVoltage,38908,HighCellVoltage,39306,InternalTemperature,25,Blank5,0,Blank,0,Checksum,207,,,,,True,4682250
 18/09/2026 11:32:57.170000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4682261
 18/09/2026 11:32:57.419000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4682510
 18/09/2026 11:32:57.427000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4682518
@@ -3247,7 +3247,7 @@
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'8b73470003090816bfed4700f38008000d1613281207b8ac42',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:57.625000,ID UNRECOGNISED,ERROR,ID,65408,,,,,,,,,,,,,,,True,4682716
 18/09/2026 11:32:57.655000,Velocity,Tritium,MotorVelocity,365.0797424316406,VehicleVelocity,10.666467666625977,,,,,,,,,,,,,True,4682746
-18/09/2026 11:32:57.663000,CellVoltages,Orion,LowCellVoltage,38911,HighCellVoltage,39307,InternalTemperature,25,Blank,0,Checksum,211,,,,,,,True,4682754
+18/09/2026 11:32:57.663000,CellVoltages,Orion,LowCellVoltage,38911,HighCellVoltage,39307,InternalTemperature,25,Blank5,0,Blank,0,Checksum,211,,,,,True,4682754
 18/09/2026 11:32:57.673000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4682764
 18/09/2026 11:32:57.678000,Maxbuscurrent,DriverControls,Zero,0.0,MaxBusCurrent,1.0,,,,,,,,,,,,,True,4682769
 18/09/2026 11:32:57.696000,Velocity,Tritium,MotorVelocity,365.0069885253906,VehicleVelocity,10.66434097290039,,,,,,,,,,,,,True,4682787
@@ -3308,7 +3308,7 @@
 18/09/2026 11:32:59.896000,Velocity,Tritium,MotorVelocity,350.384033203125,VehicleVelocity,10.237105369567871,,,,,,,,,,,,,True,4684987
 18/09/2026 11:32:59.941000,BusMeasurement,Tritium,BusVoltage,117.56071472167969,BusCurrent,0.0,,,,,,,,,,,,,True,4685032
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'eb7c4700030708049895004b341c18',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:33:00.183000,CellVoltages,Orion,LowCellVoltage,38915,HighCellVoltage,39312,InternalTemperature,25,Blank,0,Checksum,221,,,,,,,True,4685274
+18/09/2026 11:33:00.183000,CellVoltages,Orion,LowCellVoltage,38915,HighCellVoltage,39312,InternalTemperature,25,Blank5,0,Blank,0,Checksum,221,,,,,True,4685274
 18/09/2026 11:33:00.189000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4685280
 18/09/2026 11:33:00.219000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4685310
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'01',,,,,,,,,,,,,,,False,-1
@@ -3434,10 +3434,10 @@
 18/09/2026 11:33:19.257000,Velocity,Tritium,MotorVelocity,508.6610107421875,VehicleVelocity,14.861454010009766,,,,,,,,,,,,,True,4704348
 18/09/2026 11:33:19.297000,Velocity,Tritium,MotorVelocity,509.00567626953125,VehicleVelocity,14.8715238571167,,,,,,,,,,,,,True,4704388
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'a8c84700070008ff35048796004b2c',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:33:19.337000,CellVoltages,Orion,LowCellVoltage,38200,HighCellVoltage,38786,InternalTemperature,25,Blank,0,Checksum,255,,,,,,,True,4704428
+18/09/2026 11:33:19.337000,CellVoltages,Orion,LowCellVoltage,38200,HighCellVoltage,38786,InternalTemperature,25,Blank5,0,Blank,0,Checksum,255,,,,,True,4704428
 18/09/2026 11:33:19.496000,Velocity,Tritium,MotorVelocity,510.7493591308594,VehicleVelocity,14.922470092773438,,,,,,,,,,,,,True,4704587
 18/09/2026 11:33:19.536000,StatusInformation,Tritium,LimitFlags,2,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4704627
-18/09/2026 11:33:19.549000,Reserved,Tritium,Reserved,0.0,,,,,,,,,,,,,,,True,4704640
+18/09/2026 11:33:19.549000,Reserved,Tritium,Reserved0,1464.1859130859375,Reserved,0.0,,,,,,,,,,,,,True,4704640
 18/09/2026 11:33:19.737000,BusMeasurement,Tritium,BusVoltage,114.74588012695312,BusCurrent,21.84591293334961,,,,,,,,,,,,,True,4704828
 18/09/2026 11:33:19.740000,PhaseCurrent,Tritium,PhaseBCurrent,30.948955535888672,PhaseCCurrent,30.43828010559082,,,,,,,,,,,,,True,4704831
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'42ca47000307088a9709420000000000000000803f7b4b',,,,,,,,,,,,,,,False,-1
@@ -3554,7 +3554,7 @@
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'341e4800ff8008f30080f300401e909d84c31e480003030807d5d043c03e43414b9b',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:33:41.417000,Velocity,Tritium,MotorVelocity,417.8273620605469,VehicleVelocity,12.207584381103516,,,,,,,,,,,,,True,4726508
 18/09/2026 11:33:41.497000,Velocity,Tritium,MotorVelocity,417.3597717285156,VehicleVelocity,12.193922996520996,,,,,,,,,,,,,True,4726588
-18/09/2026 11:33:41.513000,CellVoltages,Orion,LowCellVoltage,38857,HighCellVoltage,39253,InternalTemperature,25,Blank,0,Checksum,103,,,,,,,True,4726604
+18/09/2026 11:33:41.513000,CellVoltages,Orion,LowCellVoltage,38857,HighCellVoltage,39253,InternalTemperature,25,Blank5,0,Blank,0,Checksum,103,,,,,True,4726604
 18/09/2026 11:33:41.520000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4726611
 18/09/2026 11:33:41.524000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4726615
 18/09/2026 11:33:41.738000,BusMeasurement,Tritium,BusVoltage,117.38761901855469,BusCurrent,0.0,,,,,,,,,,,,,True,4726829
@@ -3569,7 +3569,7 @@
 18/09/2026 11:33:42.340000,PhaseCurrent,Tritium,PhaseBCurrent,0.0,PhaseCCurrent,0.0,,,,,,,,,,,,,True,4727431
 18/09/2026 11:33:42.343000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,27.757465362548828,BackEmfD,0.0,,,,,,,,,,,,,True,4727434
 18/09/2026 11:33:42.348000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4727439
-18/09/2026 11:33:42.521000,CellVoltages,Orion,LowCellVoltage,38860,HighCellVoltage,39257,InternalTemperature,25,Blank,0,Checksum,110,,,,,,,True,4727612
+18/09/2026 11:33:42.521000,CellVoltages,Orion,LowCellVoltage,38860,HighCellVoltage,39257,InternalTemperature,25,Blank5,0,Blank,0,Checksum,110,,,,,True,4727612
 18/09/2026 11:33:42.534000,IdentificationInfo,Tritium,TritiumId,16387,SerialNumber,3315,,,,,,,,,,,,,True,4727625
 18/09/2026 11:33:42.537000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4727628
 18/09/2026 11:33:42.576000,Velocity,Tritium,MotorVelocity,397.1346740722656,VehicleVelocity,11.603010177612305,,,,,,,,,,,,,True,4727667
@@ -3701,7 +3701,7 @@
 18/09/2026 11:33:53.331000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4738422
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'8b4d4800030308d2ebafb4794118b34d48d14d4800008004050d00969790',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:33:53.592000,Velocity,Tritium,MotorVelocity,349.7946472167969,VehicleVelocity,10.21988582611084,,,,,,,,,,,,,True,4738683
-18/09/2026 11:33:53.610000,CellVoltages,Orion,LowCellVoltage,38888,HighCellVoltage,39284,InternalTemperature,25,Blank,0,Checksum,165,,,,,,,True,4738701
+18/09/2026 11:33:53.610000,CellVoltages,Orion,LowCellVoltage,38888,HighCellVoltage,39284,InternalTemperature,25,Blank5,0,Blank,0,Checksum,165,,,,,True,4738701
 18/09/2026 11:33:53.616000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4738707
 18/09/2026 11:33:53.622000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4738713
 18/09/2026 11:33:53.624000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4738715
@@ -3823,7 +3823,7 @@
 18/09/2026 11:33:58.118000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,20.069419860839844,BackEmfD,0.0,,,,,,,,,,,,,True,4743209
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'6048f3080d1312b82e3660008000160d12d3',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'048e96004ba88cdc',,,,,,,,,,,,,,,False,-1
-18/09/2026 11:33:58.150000,CellVoltages,Orion,LowCellVoltage,38554,HighCellVoltage,38982,InternalTemperature,25,Blank,0,Checksum,39,,,,,,,True,4743241
+18/09/2026 11:33:58.150000,CellVoltages,Orion,LowCellVoltage,38554,HighCellVoltage,38982,InternalTemperature,25,Blank5,0,Blank,0,Checksum,39,,,,,True,4743241
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'4c6048000700010800780078210d00d7bf22',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:33:58.156000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4743247
 18/09/2026 11:33:58.513000,BusMeasurement,Tritium,BusVoltage,115.71776580810547,BusCurrent,13.38658332824707,,,,,,,,,,,,,True,4743604
@@ -3895,7 +3895,7 @@
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'48ff0880007d0003f5a72a1c69797d4800008004050d00960a',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'12b83c807d4800f38008000a140a1607af8248ff0800f34090d1857d480003030858b3a74325ca1c41e938',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:34:05.673000,Velocity,Tritium,MotorVelocity,336.124755859375,VehicleVelocity,9.820494651794434,,,,,,,,,,,,,True,4750764
-18/09/2026 11:34:05.706000,CellVoltages,Orion,LowCellVoltage,38473,HighCellVoltage,38940,InternalTemperature,25,Blank,0,Checksum,172,,,,,,,True,4750797
+18/09/2026 11:34:05.706000,CellVoltages,Orion,LowCellVoltage,38473,HighCellVoltage,38940,InternalTemperature,25,Blank5,0,Blank,0,Checksum,172,,,,,True,4750797
 18/09/2026 11:34:05.712000,StatusInformation,Tritium,LimitFlags,2,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4750803
 18/09/2026 11:34:05.718000,PhaseCurrent,Tritium,PhaseBCurrent,31.08551597595215,PhaseCCurrent,30.059301376342773,,,,,,,,,,,,,True,4750809
 18/09/2026 11:34:05.721000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,22.575706481933594,BackEmfD,0.0,,,,,,,,,,,,,True,4750812
@@ -3927,7 +3927,7 @@
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'48f7824800f380001e55',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'411c1683480000f6080b220712090038',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:34:07.118000,Maxbuscurrent,DriverControls,Zero,0.0,MaxBusCurrent,1.0,,,,,,,,,,,,,True,4752209
-18/09/2026 11:34:07.219000,CellVoltages,Orion,LowCellVoltage,38412,HighCellVoltage,38893,InternalTemperature,25,Blank,0,Checksum,63,,,,,,,True,4752310
+18/09/2026 11:34:07.219000,CellVoltages,Orion,LowCellVoltage,38412,HighCellVoltage,38893,InternalTemperature,25,Blank5,0,Blank,0,Checksum,63,,,,,True,4752310
 18/09/2026 11:34:07.225000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4752316
 18/09/2026 11:34:07.312000,StatusInformation,Tritium,LimitFlags,2,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4752403
 18/09/2026 11:34:07.321000,Rail_3_3VAnd1_9V,Tritium,OneNineVSupply,1.8575432300567627,ThreeThreeVSupply,3.3206257820129395,,,,,,,,,,,,,True,4752412
@@ -3980,7 +3980,7 @@
 18/09/2026 11:34:09.523000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4754614
 18/09/2026 11:34:09.526000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4754617
 18/09/2026 11:34:09.710000,StatusInformation,Tritium,LimitFlags,2,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4754801
-18/09/2026 11:34:09.739000,CellVoltages,Orion,LowCellVoltage,38215,HighCellVoltage,38827,InternalTemperature,25,Blank,0,Checksum,55,,,,,,,True,4754830
+18/09/2026 11:34:09.739000,CellVoltages,Orion,LowCellVoltage,38215,HighCellVoltage,38827,InternalTemperature,25,Blank5,0,Blank,0,Checksum,55,,,,,True,4754830
 18/09/2026 11:34:09.745000,SystemStatusMessages,Telemetry,Power,1,WritingToSd,255,GpsTimeObtained,0,LoadedConfig,125,Flag,1,Spare1,0,Spare2,0,Spare3,0,True,4754836
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'0017ffff420000ff',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'4148008006006c0844a04800f38008000d132812b8d9',,,,,,,,,,,,,,,False,-1
@@ -4050,7 +4050,7 @@
 18/09/2026 11:34:18.072000,Velocity,Tritium,MotorVelocity,642.2339477539062,VehicleVelocity,18.764028549194336,,,,,,,,,,,,,True,4763163
 18/09/2026 11:34:18.116000,PhaseCurrent,Tritium,PhaseBCurrent,23.002248764038086,PhaseCCurrent,23.79491424560547,,,,,,,,,,,,,True,4763207
 18/09/2026 11:34:18.123000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4763214
-18/09/2026 11:34:18.308000,CellVoltages,Orion,LowCellVoltage,38364,HighCellVoltage,38911,InternalTemperature,25,Blank,0,Checksum,32,,,,,,,True,4763399
+18/09/2026 11:34:18.308000,CellVoltages,Orion,LowCellVoltage,38364,HighCellVoltage,38911,InternalTemperature,25,Blank5,0,Blank,0,Checksum,32,,,,,True,4763399
 18/09/2026 11:34:18.316000,StatusInformation,Tritium,LimitFlags,32,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4763407
 18/09/2026 11:34:18.327000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4763418
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'13078e34af480003030822172144099c44af48000102080000000000803f8da9',,,,,,,,,,,,,,,False,-1
@@ -4097,7 +4097,7 @@
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'79b8480000800406bbb8480003030820fe1e44f7a59441b618',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:34:20.824000,ID UNRECOGNISED,ERROR,ID,128,,,,,,,,,,,,,,,True,4765915
 18/09/2026 11:34:20.826000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4765917
-18/09/2026 11:34:20.829000,CellVoltages,Orion,LowCellVoltage,38812,HighCellVoltage,39206,InternalTemperature,25,Blank,0,Checksum,11,,,,,,,True,4765920
+18/09/2026 11:34:20.829000,CellVoltages,Orion,LowCellVoltage,38812,HighCellVoltage,39206,InternalTemperature,25,Blank5,0,Blank,0,Checksum,11,,,,,True,4765920
 18/09/2026 11:34:20.911000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4766002
 18/09/2026 11:34:20.925000,SlipSpeedMeasurement,Tritium,Reserved,99.99999237060547,SlipSpeed,0.0,,,,,,,,,,,,,True,4766016
 18/09/2026 11:34:21.119000,MotorBackemfVector,Tritium,PeakBackEmfPhaseToNeutral,43.50453567504883,BackEmfD,0.0,,,,,,,,,,,,,True,4766210
@@ -4126,7 +4126,7 @@
 18/09/2026 11:34:23.156000,MpptPollJaved,Telemetry,,,,,,,,,,,,,,,,,True,4768247
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'fcc191c2480003000803400000f30c00004ba9',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:34:23.313000,StatusInformation,Tritium,LimitFlags,0,ErrorFlags,0,ActiveMotor,2,TransmitErrorCount,0,ReceiveErrorCount,0,,,,,,,True,4768404
-18/09/2026 11:34:23.348000,CellVoltages,Orion,LowCellVoltage,38825,HighCellVoltage,39218,InternalTemperature,25,Blank,0,Checksum,36,,,,,,,True,4768439
+18/09/2026 11:34:23.348000,CellVoltages,Orion,LowCellVoltage,38825,HighCellVoltage,39218,InternalTemperature,25,Blank5,0,Blank,0,Checksum,36,,,,,True,4768439
 18/09/2026 11:34:23.393000,Velocity,Tritium,MotorVelocity,533.654541015625,VehicleVelocity,15.591686248779297,,,,,,,,,,,,,True,4768484
 18/09/2026 11:32:37.000000,CRCFail,,Data,b'03c3480000800405cbc34800008004050d00969283',,,,,,,,,,,,,,,False,-1
 18/09/2026 11:34:23.626000,ID UNRECOGNISED,ERROR,ID,62336,,,,,,,,,,,,,,,True,4768717

@@ -44,11 +44,11 @@ BO_ 768 IdentificationInfo: 8 Tritium
  SG_ SerialNumber : 32|32@1+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 769 StatusInformation: 8 Tritium
- SG_ ActiveMotor : 32|8@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ErrorFlags : 16|8@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LimitFlags : 0|8@1+ (1,0) [0|0] "" Vector__XXX
- SG_ TransmitErrorCount : 48|4@1+ (1,0) [0|0] "" Vector__XXX
- SG_ ReceiveErrorCount : 56|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ LimitFlags : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ErrorFlags : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ActiveMotor : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ TransmitErrorCount : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ReceiveErrorCount : 56|8@1+ (1,0) [0|0] "" Vector__XXX
 
 
 BO_ 770 BusMeasurement: 8 Tritium
@@ -96,6 +96,7 @@ BO_ 780 DspBoardTemperature: 8 Tritium
  SG_ Reserved : 32|32@1- (1,0) [0|0] "C" Vector__XXX
 
 BO_ 781 Reserved: 8 Tritium
+ SG_ Reserved0 : 0|32@1- (1,0) [0|0] "" Vector__XXX
  SG_ Reserved : 32|32@1- (1,0) [0|0] "C" Vector__XXX
 
 BO_ 782 OdoBusAmphours: 8 Tritium
@@ -185,7 +186,8 @@ CM_ BO_ 780 "Temperature of the controller's processor board.";
 CM_ SG_ 780 DspBoardTemp "Temperature of the controller's processor (DSP) board.";
 CM_ SG_ 780 Reserved "Reserved, not used.";
 CM_ BO_ 781 "Reserved message: marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), but it does appear in Tests/data/NRT.BIN. TODO: add what Peri's motor controller sends in this message (base address + 0x0D), from the WaveSculptor22 user manual.";
-CM_ SG_ 781 Reserved "Reserved. TODO: add its meaning, see the message comment.";
+CM_ SG_ 781 Reserved0 "Reserved, first half of the message (bits 0 to 31): see the message comment.";
+CM_ SG_ 781 Reserved "Reserved, second half of the message (bits 32 to 63). TODO: add its meaning, see the message comment.";
 CM_ BO_ 782 "Distance travelled and charge used since the controller was reset.";
 CM_ SG_ 782 Odometer "Distance the vehicle has travelled since the controller was reset.";
 CM_ SG_ 782 DcBusAmpHours "Charge drawn from the DC bus (battery) since the controller was reset.";
@@ -243,6 +245,7 @@ SIG_VALTYPE_ 779 MotorTemp : 1;
 SIG_VALTYPE_ 779 HeatSinkTemp : 1;
 SIG_VALTYPE_ 780 DspBoardTemp : 1;
 SIG_VALTYPE_ 780 Reserved : 1;
+SIG_VALTYPE_ 781 Reserved0 : 1;
 SIG_VALTYPE_ 781 Reserved : 1;
 SIG_VALTYPE_ 782 Odometer : 1;
 SIG_VALTYPE_ 782 DcBusAmpHours : 1;

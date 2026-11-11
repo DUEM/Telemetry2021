@@ -382,7 +382,8 @@ Lowest and highest cell voltages in the pack, and the temperature inside the BMS
 | `LowCellVoltage` | Voltage of the lowest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit. |  | none |  |  |
 | `HighCellVoltage` | Voltage of the highest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit. |  | none |  |  |
 | `InternalTemperature` | Temperature inside the BMS unit. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit. |  | none |  |  |
-| `Blank` | Not used. |  | none |  |  |
+| `Blank5` | Not used (byte 5). |  | none |  |  |
+| `Blank` | Not used (byte 6). |  | none |  |  |
 | `Checksum` | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 0) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |  | none |  |  |
 
 Example InfluxDB query:
@@ -408,13 +409,15 @@ SELECT "LowCellVoltage" FROM "Orion/CellVoltages" WHERE time > now() - 1h
        +---+---+---+---+---+---+---+---+
      3 |------------------------------x|
        +---+---+---+---+---+---+---+---+
- B                                   +-- HighCellVoltage
- y     +---+---+---+---+---+---+---+---+
- t   4 |<-----------------------------x|
- e     +---+---+---+---+---+---+---+---+
-                                     +-- InternalTemperature
+                                     +-- HighCellVoltage
+ B     +---+---+---+---+---+---+---+---+
+ y   4 |<-----------------------------x|
+ t     +---+---+---+---+---+---+---+---+
+ e                                   +-- InternalTemperature
        +---+---+---+---+---+---+---+---+
-     5 |   |   |   |   |   |   |   |   |
+     5 |<-----------------------------x|
+       +---+---+---+---+---+---+---+---+
+                                     +-- Blank5
        +---+---+---+---+---+---+---+---+
      6 |<-----------------------------x|
        +---+---+---+---+---+---+---+---+
@@ -992,31 +995,31 @@ SELECT "LimitFlags" FROM "Tritium/StatusInformation" WHERE time > now() - 1h
 
          7   6   5   4   3   2   1   0
        +---+---+---+---+---+---+---+---+
-     0 |<-----------------------------x|
+     0 |------------------------------x|
+       +---+---+---+---+---+---+---+---+
+     1 |<------------------------------|
        +---+---+---+---+---+---+---+---+
          +-- LimitFlags
        +---+---+---+---+---+---+---+---+
-     1 |   |   |   |   |   |   |   |   |
+     2 |------------------------------x|
        +---+---+---+---+---+---+---+---+
-     2 |<-----------------------------x|
+     3 |<------------------------------|
        +---+---+---+---+---+---+---+---+
-         +-- ErrorFlags
-       +---+---+---+---+---+---+---+---+
- B   3 |   |   |   |   |   |   |   |   |
+ B       +-- ErrorFlags
  y     +---+---+---+---+---+---+---+---+
- t   4 |<-----------------------------x|
+ t   4 |------------------------------x|
  e     +---+---+---+---+---+---+---+---+
+     5 |<------------------------------|
+       +---+---+---+---+---+---+---+---+
          +-- ActiveMotor
        +---+---+---+---+---+---+---+---+
-     5 |   |   |   |   |   |   |   |   |
+     6 |<-----------------------------x|
        +---+---+---+---+---+---+---+---+
-     6 |   |   |   |   |<-------------x|
+         +-- TransmitErrorCount
        +---+---+---+---+---+---+---+---+
-                         +-- TransmitErrorCount
+     7 |<-----------------------------x|
        +---+---+---+---+---+---+---+---+
-     7 |   |   |   |   |<-------------x|
-       +---+---+---+---+---+---+---+---+
-                         +-- ReceiveErrorCount
+         +-- ReceiveErrorCount
 ```
 
 </details>
@@ -1642,12 +1645,13 @@ Reserved message: marked reserved and not active in the 2023 CAN bus config spre
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
 |---|---|---|---|---|---|
-| `Reserved` | Reserved. TODO: add its meaning, see the message comment. | C | none (sent as a decimal number) |  |  |
+| `Reserved0` | Reserved, first half of the message (bits 0 to 31): see the message comment. |  | none (sent as a decimal number) |  |  |
+| `Reserved` | Reserved, second half of the message (bits 32 to 63). TODO: add its meaning, see the message comment. | C | none (sent as a decimal number) |  |  |
 
 Example InfluxDB query:
 
 ```
-SELECT "Reserved" FROM "Tritium/Reserved" WHERE time > now() - 1h
+SELECT "Reserved0" FROM "Tritium/Reserved" WHERE time > now() - 1h
 ```
 
 <details><summary>Bit layout</summary>
@@ -1657,16 +1661,18 @@ SELECT "Reserved" FROM "Tritium/Reserved" WHERE time > now() - 1h
 
          7   6   5   4   3   2   1   0
        +---+---+---+---+---+---+---+---+
-     0 |   |   |   |   |   |   |   |   |
+     0 |------------------------------x|
        +---+---+---+---+---+---+---+---+
-     1 |   |   |   |   |   |   |   |   |
+     1 |-------------------------------|
        +---+---+---+---+---+---+---+---+
-     2 |   |   |   |   |   |   |   |   |
+     2 |-------------------------------|
        +---+---+---+---+---+---+---+---+
- B   3 |   |   |   |   |   |   |   |   |
- y     +---+---+---+---+---+---+---+---+
- t   4 |------------------------------x|
- e     +---+---+---+---+---+---+---+---+
+     3 |<------------------------------|
+ B     +---+---+---+---+---+---+---+---+
+ y       +-- Reserved0
+ t     +---+---+---+---+---+---+---+---+
+ e   4 |------------------------------x|
+       +---+---+---+---+---+---+---+---+
      5 |-------------------------------|
        +---+---+---+---+---+---+---+---+
      6 |-------------------------------|
@@ -1882,6 +1888,6 @@ SELECT "DriverSetDialCurrent" FROM "DriverControls/DialCurrent" WHERE time > now
 | wavesculptor_22.dbc | signal StatusInformation.ErrorFlags | Error flags, one bit each (bit 0 hardware over current, bit 1 software over current, bit 2 DC bus over voltage, bit 3 bad motor position hall sequence, bit 4 watchdog caused the last reset, bit 5 config read error, bit 6 15 V rail under voltage lock out). 0 = no errors. TODO: add the remaining bits from the WaveSculptor22 user manual. |
 | wavesculptor_22.dbc | message Reserved1 | Cooling fan drive and speed (WaveSculptor20 layout). Marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), and not seen in Tests/data/NRT.BIN. TODO: add whether Peri's motor controller sends this message; if not, remove it. |
 | wavesculptor_22.dbc | message Reserved | Reserved message: marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), but it does appear in Tests/data/NRT.BIN. TODO: add what Peri's motor controller sends in this message (base address + 0x0D), from the WaveSculptor22 user manual. |
-| wavesculptor_22.dbc | signal Reserved.Reserved | Reserved. TODO: add its meaning, see the message comment. |
+| wavesculptor_22.dbc | signal Reserved.Reserved | Reserved, second half of the message (bits 32 to 63). TODO: add its meaning, see the message comment. |
 | wavesculptor_22.dbc | signal DialCurrent.DriverSetDialCurrent | Setting of the driver's current dial (e.g. 0.51 in Tests/data/NRT.BIN). TODO: add its range and meaning (the Grafana dashboards treat it as 0 to 1, shown as a percentage), from the driver controls firmware. |
 | wavesculptor_22.dbc | signal DialCurrent.TotalAcMotorCurrent | Total AC motor current, as named in the ESC-CODE decode sheet. TODO: add its unit and meaning, from the driver controls firmware. |

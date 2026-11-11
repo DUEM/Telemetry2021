@@ -55,6 +55,7 @@ BO_ 1794 CellVoltages: 8 Orion
  SG_ LowCellVoltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
  SG_ HighCellVoltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
  SG_ InternalTemperature : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ Blank5 : 47|8@0+ (1,0) [0|0] "" Vector__XXX
  SG_ Blank : 55|8@0+ (1,0) [0|0] "" Vector__XXX
  SG_ Checksum : 63|8@0+ (1,0) [0|0] "" Vector__XXX
 
@@ -77,7 +78,8 @@ CM_ BO_ 1794 "Lowest and highest cell voltages in the pack, and the temperature 
 CM_ SG_ 1794 LowCellVoltage "Voltage of the lowest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit.";
 CM_ SG_ 1794 HighCellVoltage "Voltage of the highest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit.";
 CM_ SG_ 1794 InternalTemperature "Temperature inside the BMS unit. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit.";
-CM_ SG_ 1794 Blank "Not used.";
+CM_ SG_ 1794 Blank5 "Not used (byte 5).";
+CM_ SG_ 1794 Blank "Not used (byte 6).";
 CM_ SG_ 1794 Checksum "Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 0) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri.";
 BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
 BA_DEF_DEF_  "GenMsgCycleTime" 0;
