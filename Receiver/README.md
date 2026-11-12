@@ -147,7 +147,7 @@ python3 tools/batch_Read_Hex.py -d /media/$USER/SDCARD
 
 Add `-h` to any of these scripts to see all its options.
 
-[hex2influx.py](../tools/hex2influx.py) has its **own** InfluxDB credentials at the top of the script (database `Test22DB`), not the ones in `receiver_config.py`. Edit them before use. Unlike the live receiver, it skips frames with unrecognised CAN IDs.
+[hex2influx.py](../tools/hex2influx.py) uses the receiver's InfluxDB settings in [receiver_config.py](receiver_config.py) (database `DUSCiESC`). To import into a different database, e.g. to keep an old session apart from live data, add `-d <database>`. Unlike the live receiver, it skips frames with unrecognised CAN IDs.
 
 [batch_Read_Hex.py](../tools/batch_Read_Hex.py) runs `hex2influx.py` on each file in the directory given with `-d`, in name order. By default it picks the board's log files, named `YYMMDDNN.BIN` (in upper or lower case). To choose other files, give a regular expression that the whole file name must match with `-p`; for example, `-p "231018[0-9]{2}\.BIN"` picks only the files from 18 October 2023. At the end it reports how many files were imported, and lists any that failed.
 
