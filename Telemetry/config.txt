@@ -5,6 +5,6 @@
     "speedtype":"kmh",
     "mode":1,
     "mppt_update":1000,
-    "status_update":1000,
+    "status_update":500,
     "somevalues":[1.1,1.23456]
 }
