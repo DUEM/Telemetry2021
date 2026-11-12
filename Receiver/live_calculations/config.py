@@ -1,10 +1,11 @@
 from typing import NamedTuple
 
-# used by all live_calculation scripts
+# used by all live_calculation scripts: the same database the receiver writes to
+# (Receiver/receiver_config.py)
 class influxCredentials(NamedTuple):
     username: str = "admin"
     password: str = "password"
-    db: str = "Test22DB"
+    db: str = "DUSCiESC"
     host: str = "localhost"
     port: int = 8086
     enabled: bool = True
