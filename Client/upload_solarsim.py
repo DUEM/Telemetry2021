@@ -22,7 +22,7 @@ class InfluxCredentials(NamedTuple):  # pylint: disable=missing-class-docstring
     # influx configuration - edit these
     username: str = "admin"
     password: str = "password"
-    db: str = "test"
+    db: str = "DUSCiESC"  # the receiver's database, so Grafana can show both
     host: str = "localhost"
     port: int = 8086
     enabled: bool = True

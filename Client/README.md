@@ -15,7 +15,7 @@ pip install -r Client/requirements.txt     # S5 (pinned commit), pandas, influxd
 ## Running
 
 1. Edit the settings at the top of the script:
-   * `InfluxCredentials`: host, port, user, password and database. **The default database is `test`**, not `DUSCiESC` (the database the receiver writes to).
+   * `InfluxCredentials`: host, port, user, password and database. The default database is `DUSCiESC`, the one the receiver writes to, so Grafana can show the plan next to the live data.
 2. Edit the settings under `if __name__ == "__main__":` at the bottom of the script:
    * `path_to_SSHistory`: path to the SolarSim `History.dat` file
    * `start_date`: the date of Day 1 of the history file, e.g. `20231022`
