@@ -11,7 +11,7 @@ from tools import dbc_to_markdown
 # in, lower this number to match, so it can only go down. Run
 #     python3 tools/dbc_to_markdown.py
 # and see "Still to be documented" at the end of dbc/SIGNALS.md for the list.
-MAX_TODOS = 34
+MAX_TODOS = 23
 
 
 @pytest.fixture(scope="module")

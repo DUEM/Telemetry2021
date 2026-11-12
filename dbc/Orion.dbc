@@ -37,24 +37,24 @@ BU_: Orion
 
 
 BO_ 1792 PackParameters: 8 Orion
- SG_ PackCurrent : 7|16@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ PackCurrent : 7|16@0- (0.1,0) [-3276.8|3276.7] "A" Vector__XXX
  SG_ PackInstVoltage : 23|16@0+ (0.1,0) [0|6553.5] "V" Vector__XXX
  SG_ PackSoc : 39|8@0+ (0.5,0) [0|100] "%" Vector__XXX
  SG_ RelayState : 47|16@0+ (1,0) [0|0] "" Vector__XXX
  SG_ Checksum : 63|8@0+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 1793 CellTempsDCL: 8 Orion
- SG_ PackDcl : 7|16@0- (1,0) [0|0] "" Vector__XXX
+ SG_ PackDcl : 7|16@0- (1,0) [0|0] "A" Vector__XXX
  SG_ Unknown : 23|16@0- (1,0) [0|0] "" Vector__XXX
- SG_ HighTemperatureSensor : 39|8@0- (1,0) [0|0] "" Vector__XXX
- SG_ LowTemperatureSensors : 47|8@0- (1,0) [0|0] "" Vector__XXX
+ SG_ HighTemperatureSensor : 39|8@0- (1,0) [-128|127] "C" Vector__XXX
+ SG_ LowTemperatureSensors : 47|8@0- (1,0) [-128|127] "C" Vector__XXX
  SG_ Blank : 55|8@0- (1,0) [0|0] "" Vector__XXX
  SG_ Checksum : 63|8@0+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 1794 CellVoltages: 8 Orion
- SG_ LowCellVoltage : 7|16@0+ (1,0) [0|0] "" Vector__XXX
- SG_ HighCellVoltage : 23|16@0+ (1,0) [0|0] "" Vector__XXX
- SG_ InternalTemperature : 39|8@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ LowCellVoltage : 7|16@0+ (0.0001,0) [0|6.5535] "V" Vector__XXX
+ SG_ HighCellVoltage : 23|16@0+ (0.0001,0) [0|6.5535] "V" Vector__XXX
+ SG_ InternalTemperature : 39|8@0+ (1,0) [0|255] "C" Vector__XXX
  SG_ Blank5 : 47|8@0+ (1,0) [0|0] "" Vector__XXX
  SG_ Blank : 55|8@0+ (1,0) [0|0] "" Vector__XXX
  SG_ Checksum : 63|8@0+ (1,0) [0|0] "" Vector__XXX
@@ -62,22 +62,22 @@ BO_ 1794 CellVoltages: 8 Orion
 
 CM_ BU_ Orion "Orion BMS (battery management system). It monitors every cell's voltage, the pack temperatures and the pack current, and switches the pack contactors. Its CAN messages are set up in the Orion BMS utility, so the scaling of every signal depends on the profile loaded on Peri's BMS.";
 CM_ BO_ 1792 "Battery pack summary: current, voltage, state of charge and relay states.";
-CM_ SG_ 1792 PackCurrent "Battery pack current. TODO: add the unit, scaling and sign from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 A per bit, signed, positive = discharging, but this file decodes it as unsigned.";
+CM_ SG_ 1792 PackCurrent "Battery pack current, signed, 0.1 A per bit. NEGATIVE while the battery is supplying current (discharging), positive while it is charging: the opposite of the usual Orion setting. Evidence: the 16 BIN captures in  (Aug to Nov 2026): 53 % of raw values are above 32767, i.e. negative as a signed value; in iESC2026_raceday1.BIN, while the motor controller draws more than 5 A from the DC bus, the pack current is negative in 4068 of 4083 cases and about 0.95 times the bus current (the rest supplied by the solar array).";
 CM_ SG_ 1792 PackInstVoltage "Total battery pack voltage, measured right now (instantaneous), 0.1 V per bit. Evidence: in the iESC 2026 recording ESC_2026_0638AM.BIN the raw value ranges from 1103 to 1301 while the motor controller's DC bus voltage ranges from 109.4 to 130.1 V, the usual Orion setting.";
 CM_ SG_ 1792 PackSoc "Battery state of charge: how full the battery is, 0.5 % per bit. Evidence: in the iESC 2026 recording ESC_2026_0638AM.BIN the raw value ranges from 11 to 200, i.e. at most 100 %, the usual Orion setting.";
 CM_ SG_ 1792 RelayState "Which of the BMS's relay and contactor outputs are on, one bit each. TODO: add the meaning of each bit, from the Orion BMS profile loaded on Peri.";
 CM_ SG_ 1792 Checksum "Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 184) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri.";
 CM_ BO_ 1793 "Discharge current limit and pack temperatures.";
-CM_ SG_ 1793 PackDcl "Discharge current limit: the most current the BMS currently allows to be drawn from the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 A per bit.";
-CM_ SG_ 1793 Unknown "Not known. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message (the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e) also lists it as unknown).";
-CM_ SG_ 1793 HighTemperatureSensor "Highest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed.";
-CM_ SG_ 1793 LowTemperatureSensors "Lowest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed.";
+CM_ SG_ 1793 PackDcl "Discharge current limit: the most current the BMS currently allows to be drawn from the pack, 1 A per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): always 120.";
+CM_ SG_ 1793 Unknown "Not known. Evidence: the 16 BIN captures in  (Aug to Nov 2026): 0 to 120, usually 120 (the same as PackDcl), so it may be the charge current limit. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message.";
+CM_ SG_ 1793 HighTemperatureSensor "Highest reading of the pack's temperature sensors, signed, 1 degC per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 24 to 43 degC.";
+CM_ SG_ 1793 LowTemperatureSensors "Lowest reading of the pack's temperature sensors, signed, 1 degC per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 11 to 26 degC.";
 CM_ SG_ 1793 Blank "Not used.";
 CM_ SG_ 1793 Checksum "Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 185) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri.";
 CM_ BO_ 1794 "Lowest and highest cell voltages in the pack, and the temperature inside the BMS.";
-CM_ SG_ 1794 LowCellVoltage "Voltage of the lowest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit.";
-CM_ SG_ 1794 HighCellVoltage "Voltage of the highest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit.";
-CM_ SG_ 1794 InternalTemperature "Temperature inside the BMS unit. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit.";
+CM_ SG_ 1794 LowCellVoltage "Voltage of the lowest cell in the pack, 0.0001 V per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 3.33 to 4.39 V; the pack voltage divided by the average cell voltage gives 30 cells in series.";
+CM_ SG_ 1794 HighCellVoltage "Voltage of the highest cell in the pack, 0.0001 V per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 3.70 to 4.46 V.";
+CM_ SG_ 1794 InternalTemperature "Temperature inside the BMS unit, 1 degC per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 21 to 50 degC.";
 CM_ SG_ 1794 Blank5 "Not used (byte 5).";
 CM_ SG_ 1794 Blank "Not used (byte 6).";
 CM_ SG_ 1794 Checksum "Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 0) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri.";

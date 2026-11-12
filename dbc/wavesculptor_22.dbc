@@ -123,19 +123,19 @@ BO_ 791 SlipSpeedMeasurement: 8 Tritium
 
 
 BO_ 257 SpeedValCurrVal: 8 DriverControls
- SG_ DriverSetSpeed : 0|32@1- (1,0) [0|0] "m/s" Vector__XXX
- SG_ DriverSetCurrent : 32|32@1- (1,0) [0|0] "%" Vector__XXX
+ SG_ DriverSetSpeed : 0|32@1- (1,0) [0|0] "rpm" Vector__XXX
+ SG_ DriverSetCurrent : 32|32@1- (1,0) [0|1] "" Vector__XXX
 
 BO_ 258 Maxbuscurrent: 8 DriverControls
- SG_ MaxBusCurrent : 32|32@1- (1,0) [0|0] "%" Vector__XXX
+ SG_ MaxBusCurrent : 32|32@1- (1,0) [0|1] "" Vector__XXX
  SG_ Zero : 0|32@1- (1,0) [0|0] "" Vector__XXX
 
 
 
 
 BO_ 1280 DialCurrent: 8 DriverControls
- SG_ DriverSetDialCurrent : 0|32@1- (1,0) [0|0] "" Vector__XXX
- SG_ TotalAcMotorCurrent : 32|32@1- (1,0) [0|0] "" Vector__XXX
+ SG_ DriverSetDialCurrent : 0|32@1- (1,0) [0|1] "" Vector__XXX
+ SG_ TotalAcMotorCurrent : 32|32@1- (1,0) [0|1] "" Vector__XXX
 
 
 
@@ -195,14 +195,14 @@ CM_ BO_ 791 "Slip speed (only meaningful with an induction motor).";
 CM_ SG_ 791 Reserved "Reserved, not used.";
 CM_ SG_ 791 SlipSpeed "Slip speed when driving an induction motor.";
 CM_ BO_ 257 "Drive command from the driver controls to the motor controller: target speed and motor current.";
-CM_ SG_ 257 DriverSetSpeed "Target motor speed requested by the driver controls, in metres per second.";
-CM_ SG_ 257 DriverSetCurrent "Motor current requested by the driver controls, as a percentage of the controller's maximum current setting. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual.";
+CM_ SG_ 257 DriverSetSpeed "Target motor speed requested by the driver controls, in motor rpm (negative = reverse). Evidence: the 16 BIN captures in (Aug to Nov 2026): about 480 rpm while the motor turns at about 330 rpm, i.e. set above the actual speed so that the current request (DriverSetCurrent) controls the car.";
+CM_ SG_ 257 DriverSetCurrent "Motor current requested by the driver controls, as a fraction of the controller's maximum current setting (0 to 1, not 0 to 100). Evidence: the 16 BIN captures in (Aug to Nov 2026): 0 to 0.96.";
 CM_ BO_ 258 "Power command from the driver controls: limit on the current drawn from the battery.";
-CM_ SG_ 258 MaxBusCurrent "Limit on current drawn from the DC bus (battery), as a percentage of the controller's absolute bus current limit. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual.";
+CM_ SG_ 258 MaxBusCurrent "Limit on current drawn from the DC bus (battery), as a fraction of the controller's absolute bus current limit (0 to 1, not 0 to 100). Evidence: the 16 BIN captures in (Aug to Nov 2026): always 1.0.";
 CM_ SG_ 258 Zero "Reserved, always 0.";
 CM_ BO_ 1280 "Current dial setting from the driver controls (DriverSetCurrent in the ESC-CODE decode sheet). Seen in Tests/data/NRT.BIN.";
-CM_ SG_ 1280 DriverSetDialCurrent "Setting of the driver's current dial (e.g. 0.51 in Tests/data/NRT.BIN). TODO: add its range and meaning (the Grafana dashboards treat it as 0 to 1, shown as a percentage), from the driver controls firmware.";
-CM_ SG_ 1280 TotalAcMotorCurrent "Total AC motor current, as named in the ESC-CODE decode sheet. TODO: add its unit and meaning, from the driver controls firmware.";
+CM_ SG_ 1280 DriverSetDialCurrent "Setting of the driver's current dial, as a fraction (nominally 0 to 1). Evidence: the 16 BIN captures in (Aug to Nov 2026): 0 to 1.21. It is the upper limit for TotalAcMotorCurrent.";
+CM_ SG_ 1280 TotalAcMotorCurrent "Motor current command sent to the motor controller, as a fraction (0 to 1). Evidence: the 16 BIN captures in (Aug to Nov 2026): 0 to 0.92, never above DriverSetDialCurrent, and in iESC2026_raceday1.BIN equal to the latest DriverSetCurrent in 87 % of messages.";
 BA_DEF_ BO_  "GenMsgCycleTime" INT 0 65535;
 BA_DEF_DEF_  "GenMsgCycleTime" 0;
 BA_ "GenMsgCycleTime" BO_ 768 1000;

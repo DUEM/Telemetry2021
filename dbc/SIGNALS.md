@@ -248,7 +248,7 @@ Battery pack summary: current, voltage, state of charge and relay states.
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
 |---|---|---|---|---|---|
-| `PackCurrent` | Battery pack current. TODO: add the unit, scaling and sign from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 A per bit, signed, positive = discharging, but this file decodes it as unsigned. |  | none |  |  |
+| `PackCurrent` | Battery pack current, signed, 0.1 A per bit. NEGATIVE while the battery is supplying current (discharging), positive while it is charging: the opposite of the usual Orion setting. Evidence: the 16 BIN captures in  (Aug to Nov 2026): 53 % of raw values are above 32767, i.e. negative as a signed value; in iESC2026_raceday1.BIN, while the motor controller draws more than 5 A from the DC bus, the pack current is negative in 4068 of 4083 cases and about 0.95 times the bus current (the rest supplied by the solar array). | A | raw x 0.1 | -3276.8 to 3276.7 |  |
 | `PackInstVoltage` | Total battery pack voltage, measured right now (instantaneous), 0.1 V per bit. Evidence: in the iESC 2026 recording ESC_2026_0638AM.BIN the raw value ranges from 1103 to 1301 while the motor controller's DC bus voltage ranges from 109.4 to 130.1 V, the usual Orion setting. | V | raw x 0.1 | 0 to 6553.5 |  |
 | `PackSoc` | Battery state of charge: how full the battery is, 0.5 % per bit. Evidence: in the iESC 2026 recording ESC_2026_0638AM.BIN the raw value ranges from 11 to 200, i.e. at most 100 %, the usual Orion setting. | % | raw x 0.5 | 0 to 100 |  |
 | `RelayState` | Which of the BMS's relay and contactor outputs are on, one bit each. TODO: add the meaning of each bit, from the Orion BMS profile loaded on Peri. |  | none |  |  |
@@ -312,10 +312,10 @@ Discharge current limit and pack temperatures.
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
 |---|---|---|---|---|---|
-| `PackDcl` | Discharge current limit: the most current the BMS currently allows to be drawn from the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 A per bit. |  | none |  |  |
-| `Unknown` | Not known. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message (the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e) also lists it as unknown). |  | none |  |  |
-| `HighTemperatureSensor` | Highest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed. |  | none |  |  |
-| `LowTemperatureSensors` | Lowest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed. |  | none |  |  |
+| `PackDcl` | Discharge current limit: the most current the BMS currently allows to be drawn from the pack, 1 A per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): always 120. | A | none |  |  |
+| `Unknown` | Not known. Evidence: the 16 BIN captures in  (Aug to Nov 2026): 0 to 120, usually 120 (the same as PackDcl), so it may be the charge current limit. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message. |  | none |  |  |
+| `HighTemperatureSensor` | Highest reading of the pack's temperature sensors, signed, 1 degC per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 24 to 43 degC. | C | none | -128 to 127 |  |
+| `LowTemperatureSensors` | Lowest reading of the pack's temperature sensors, signed, 1 degC per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 11 to 26 degC. | C | none | -128 to 127 |  |
 | `Blank` | Not used. |  | none |  |  |
 | `Checksum` | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 185) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |  | none |  |  |
 
@@ -379,9 +379,9 @@ Lowest and highest cell voltages in the pack, and the temperature inside the BMS
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
 |---|---|---|---|---|---|
-| `LowCellVoltage` | Voltage of the lowest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit. |  | none |  |  |
-| `HighCellVoltage` | Voltage of the highest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit. |  | none |  |  |
-| `InternalTemperature` | Temperature inside the BMS unit. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit. |  | none |  |  |
+| `LowCellVoltage` | Voltage of the lowest cell in the pack, 0.0001 V per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 3.33 to 4.39 V; the pack voltage divided by the average cell voltage gives 30 cells in series. | V | raw x 0.0001 | 0 to 6.5535 |  |
+| `HighCellVoltage` | Voltage of the highest cell in the pack, 0.0001 V per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 3.70 to 4.46 V. | V | raw x 0.0001 | 0 to 6.5535 |  |
+| `InternalTemperature` | Temperature inside the BMS unit, 1 degC per bit (the usual Orion setting; not yet confirmed from the Orion BMS profile loaded on Peri). Evidence: the 16 BIN captures in  (Aug to Nov 2026): 21 to 50 degC. | C | none | 0 to 255 |  |
 | `Blank5` | Not used (byte 5). |  | none |  |  |
 | `Blank` | Not used (byte 6). |  | none |  |  |
 | `Checksum` | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 0) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |  | none |  |  |
@@ -717,7 +717,7 @@ SELECT "GpsAltitude" FROM "Telemetry/AltitudeAndSatellites" WHERE time > now() -
 
 ### SystemStatusMessages (0x111)
 
-Telemetry board health. Sent every status_update ms (Telemetry/config.txt; 500 ms in Tests/data/NRT.BIN). Most bytes use the codes 0xFF good, 0xAA bad, 0xBB using defaults, 0x00 unknown (see Telemetry/README.md).
+Telemetry board health. Sent every status_update ms (500 ms in Telemetry/config.txt, as seen in every capture from the car). Most bytes use the codes 0xFF good, 0xAA bad, 0xBB using defaults, 0x00 unknown (see Telemetry/README.md).
 
 | | |
 |---|---|
@@ -811,8 +811,8 @@ Drive command from the driver controls to the motor controller: target speed and
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
 |---|---|---|---|---|---|
-| `DriverSetSpeed` | Target motor speed requested by the driver controls, in metres per second. | m/s | none (sent as a decimal number) |  |  |
-| `DriverSetCurrent` | Motor current requested by the driver controls, as a percentage of the controller's maximum current setting. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual. | % | none (sent as a decimal number) |  |  |
+| `DriverSetSpeed` | Target motor speed requested by the driver controls, in motor rpm (negative = reverse). Evidence: the 16 BIN captures in (Aug to Nov 2026): about 480 rpm while the motor turns at about 330 rpm, i.e. set above the actual speed so that the current request (DriverSetCurrent) controls the car. | rpm | none (sent as a decimal number) |  |  |
+| `DriverSetCurrent` | Motor current requested by the driver controls, as a fraction of the controller's maximum current setting (0 to 1, not 0 to 100). Evidence: the 16 BIN captures in (Aug to Nov 2026): 0 to 0.96. |  | none (sent as a decimal number) | 0 to 1 |  |
 
 Example InfluxDB query:
 
@@ -867,7 +867,7 @@ Power command from the driver controls: limit on the current drawn from the batt
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
 |---|---|---|---|---|---|
 | `Zero` | Reserved, always 0. |  | none (sent as a decimal number) |  |  |
-| `MaxBusCurrent` | Limit on current drawn from the DC bus (battery), as a percentage of the controller's absolute bus current limit. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual. | % | none (sent as a decimal number) |  |  |
+| `MaxBusCurrent` | Limit on current drawn from the DC bus (battery), as a fraction of the controller's absolute bus current limit (0 to 1, not 0 to 100). Evidence: the 16 BIN captures in (Aug to Nov 2026): always 1.0. |  | none (sent as a decimal number) | 0 to 1 |  |
 
 Example InfluxDB query:
 
@@ -1810,8 +1810,8 @@ Current dial setting from the driver controls (DriverSetCurrent in the ESC-CODE 
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
 |---|---|---|---|---|---|
-| `DriverSetDialCurrent` | Setting of the driver's current dial (e.g. 0.51 in Tests/data/NRT.BIN). TODO: add its range and meaning (the Grafana dashboards treat it as 0 to 1, shown as a percentage), from the driver controls firmware. |  | none (sent as a decimal number) |  |  |
-| `TotalAcMotorCurrent` | Total AC motor current, as named in the ESC-CODE decode sheet. TODO: add its unit and meaning, from the driver controls firmware. |  | none (sent as a decimal number) |  |  |
+| `DriverSetDialCurrent` | Setting of the driver's current dial, as a fraction (nominally 0 to 1). Evidence: the 16 BIN captures in (Aug to Nov 2026): 0 to 1.21. It is the upper limit for TotalAcMotorCurrent. |  | none (sent as a decimal number) | 0 to 1 |  |
+| `TotalAcMotorCurrent` | Motor current command sent to the motor controller, as a fraction (0 to 1). Evidence: the 16 BIN captures in (Aug to Nov 2026): 0 to 0.92, never above DriverSetDialCurrent, and in iESC2026_raceday1.BIN equal to the latest DriverSetCurrent in 87 % of messages. |  | none (sent as a decimal number) | 0 to 1 |  |
 
 Example InfluxDB query:
 
@@ -1851,7 +1851,7 @@ SELECT "DriverSetDialCurrent" FROM "DriverControls/DialCurrent" WHERE time > now
 
 ## Still to be documented
 
-34 comments in the dbc files still contain a TODO:
+23 comments in the dbc files still contain a TODO:
 
 | File | Where | Comment |
 |---|---|---|
@@ -1866,26 +1866,15 @@ SELECT "DriverSetDialCurrent" FROM "DriverControls/DialCurrent" WHERE time > now
 | MPPT.dbc | signal Woof.UnderVoltage | 1 if the MPPT reports an undervoltage. TODO: add whether this is the solar array (input) or battery (output) side, from the MPPT datasheet. |
 | MPPT.dbc | signal Woof.VoltageOut | Output voltage of this MPPT (battery side). TODO: add scaling and unit from the MPPT datasheet (still the raw value; check whether it is 208.79 mV per bit, as on similar MPPTs). |
 | MPPT.dbc | signal Woof.AmbientTemperature | Temperature inside this MPPT. TODO: add scaling and unit from the MPPT datasheet (still the raw value). |
-| Orion.dbc | signal PackParameters.PackCurrent | Battery pack current. TODO: add the unit, scaling and sign from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.1 A per bit, signed, positive = discharging, but this file decodes it as unsigned. |
 | Orion.dbc | signal PackParameters.RelayState | Which of the BMS's relay and contactor outputs are on, one bit each. TODO: add the meaning of each bit, from the Orion BMS profile loaded on Peri. |
 | Orion.dbc | signal PackParameters.Checksum | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 184) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |
-| Orion.dbc | signal CellTempsDCL.PackDcl | Discharge current limit: the most current the BMS currently allows to be drawn from the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 A per bit. |
-| Orion.dbc | signal CellTempsDCL.Unknown | Not known. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message (the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e) also lists it as unknown). |
-| Orion.dbc | signal CellTempsDCL.HighTemperatureSensor | Highest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed. |
-| Orion.dbc | signal CellTempsDCL.LowTemperatureSensors | Lowest reading of the pack's temperature sensors. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit, signed. |
+| Orion.dbc | signal CellTempsDCL.Unknown | Not known. Evidence: the 16 BIN captures in  (Aug to Nov 2026): 0 to 120, usually 120 (the same as PackDcl), so it may be the charge current limit. TODO: add what the Orion BMS profile loaded on Peri sends in bytes 2 and 3 of this message. |
 | Orion.dbc | signal CellTempsDCL.Checksum | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 185) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |
-| Orion.dbc | signal CellVoltages.LowCellVoltage | Voltage of the lowest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit. |
-| Orion.dbc | signal CellVoltages.HighCellVoltage | Voltage of the highest cell in the pack. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 0.0001 V per bit. |
-| Orion.dbc | signal CellVoltages.InternalTemperature | Temperature inside the BMS unit. TODO: add the unit and scaling from the Orion BMS profile loaded on Peri (Orion BMS utility); still the raw value. Orion profiles commonly use 1 degC per bit. |
 | Orion.dbc | signal CellVoltages.Checksum | Checksum added by the Orion BMS: in every frame of Tests/data/NRT.BIN (iESC 2026 qualifying) it equals (sum of bytes 0 to 6 + 0) & 0xFF. TODO: add the checksum definition from the Orion BMS profile loaded on Peri. |
 | Telemetry.dbc | signal SystemStatusMessages.Power | 0xFF while the board is starting up. After that, the state of the sleep input (pin 33): 1 = car on, 0 = car off. TODO: add what the sleep input (pin 33) is wired to on Peri. |
 | Telemetry.dbc | signal SystemStatusMessages.Flag | State of the marker flag input (pin 22), 0 or 1, for marking a moment in the data. TODO: add what the marker flag input (pin 22) is wired to on Peri, and which state means marked. |
 | wavesculptor_22.dbc | device Tritium | Tritium WaveSculptor22 motor controller: drives the motor and reports its speed, currents, voltages and temperatures. Base address 0x300 (messages 0x300 to 0x317), as in Tests/data/NRT.BIN (iESC 2026 qualifying), where it reports device identifier 0x4003 (WaveSculptor22) and serial number 3315. The 2024 car's controller used base address 0x600. TODO: add the controller firmware version. |
-| wavesculptor_22.dbc | signal SpeedValCurrVal.DriverSetCurrent | Motor current requested by the driver controls, as a percentage of the controller's maximum current setting. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual. |
-| wavesculptor_22.dbc | signal Maxbuscurrent.MaxBusCurrent | Limit on current drawn from the DC bus (battery), as a percentage of the controller's absolute bus current limit. TODO: add whether this is sent as 0 to 1 or 0 to 100 (the unit says %), from the WaveSculptor22 user manual. |
 | wavesculptor_22.dbc | signal StatusInformation.ErrorFlags | Error flags, one bit each (bit 0 hardware over current, bit 1 software over current, bit 2 DC bus over voltage, bit 3 bad motor position hall sequence, bit 4 watchdog caused the last reset, bit 5 config read error, bit 6 15 V rail under voltage lock out). 0 = no errors. TODO: add the remaining bits from the WaveSculptor22 user manual. |
 | wavesculptor_22.dbc | message Reserved1 | Cooling fan drive and speed (WaveSculptor20 layout). Marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), and not seen in Tests/data/NRT.BIN. TODO: add whether Peri's motor controller sends this message; if not, remove it. |
 | wavesculptor_22.dbc | message Reserved | Reserved message: marked reserved and not active in the 2023 CAN bus config spreadsheet (CANBusConfig.xlsm, removed in commit 210999e), but it does appear in Tests/data/NRT.BIN. TODO: add what Peri's motor controller sends in this message (base address + 0x0D), from the WaveSculptor22 user manual. |
 | wavesculptor_22.dbc | signal Reserved.Reserved | Reserved, second half of the message (bits 32 to 63). TODO: add its meaning, see the message comment. |
-| wavesculptor_22.dbc | signal DialCurrent.DriverSetDialCurrent | Setting of the driver's current dial (e.g. 0.51 in Tests/data/NRT.BIN). TODO: add its range and meaning (the Grafana dashboards treat it as 0 to 1, shown as a percentage), from the driver controls firmware. |
-| wavesculptor_22.dbc | signal DialCurrent.TotalAcMotorCurrent | Total AC motor current, as named in the ESC-CODE decode sheet. TODO: add its unit and meaning, from the driver controls firmware. |
