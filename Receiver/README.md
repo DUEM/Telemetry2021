@@ -10,7 +10,7 @@ Every decoded message is also printed to the terminal.
 
 ## Dependencies
 
-Python 3.9 or later, and, from the top of the repository:
+Python 3.10 or later, and, from the top of the repository:
 
 ```shell
 pip install -r Receiver/requirements.txt     # pyserial, influxdb, openpyxl, crccheck, numpy, cantools, tqdm

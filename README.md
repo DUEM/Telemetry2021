@@ -201,7 +201,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   ├── UseMsgList.hpp             (which CAN messages the board handles)
 │   ├── config.txt                 (copy to the SD card root)
 │   └── src/CANApi                 (git submodule: DUEM/CANApi)
-├── .github/workflows              (GitHub Actions: runs pytest on Python 3.9 to 3.11)
+├── .github/workflows              (GitHub Actions: runs pytest on Python 3.10 to 3.14)
 ├── pytest.ini, .coveragerc        (test and coverage settings)
 └── pylintrc
 ```
