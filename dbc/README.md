@@ -136,17 +136,18 @@ The Orion pack current, cell voltage and temperature scalings come from the capt
 
 ## CAN IDs seen but not decoded
 
-These appear in the iESC 2026 qualifying capture, but are in no DBC file, so the receiver stores them as `ERROR/ID UNRECOGNISED`. Together they are most of the traffic on Ortus-T's CAN bus.
+These are in no DBC file, so the receiver stores them as `ERROR/ID UNRECOGNISED`. Together they are about a third of the traffic on Ortus-T's CAN bus (32% of the frames in the iESC 2026 race SD card logs, 41% on the day before), and they are only present while the Orion BMS is powered.
 
-| ID as received | Data bytes | Period | Notes |
-|---|---|---|---|
-| 0x080 | 4 | 100 ms | e.g. `06 16 00 a0` |
-| 0xF380 | 8 | about 90 ms | e.g. `00 0d 16 13 28 0f 07 b5` |
-| 0xFF80 | 8 | 200 ms | e.g. `f3 00 80 f3 00 40 1e 90` |
+They all come from the **Orion thermistor expansion module**, which measures extra battery temperatures and reports them to the Orion BMS. Its messages are listed in Orion's [Thermistor Expansion CANBUS Protocol](https://www.orionbms.com/downloads/misc/thermistor_module_canbus.pdf):
 
-0xF380 and 0xFF80 are larger than the largest standard (11-bit) CAN ID, 0x7FF. They are almost certainly 29-bit extended IDs: the telemetry board only sends the lowest 16 bits of the ID (see `SendMessage.cpp`), so the rest of the ID is lost. Both end in `80`, which in J1939-style addressing is the sender's address, so they probably come from one device.
+| ID as received | Orion ID | Message | Data bytes | Period | Example |
+|---|---|---|---|---|---|
+| 0x080 | 0x80 | Legacy broadcast (reserved) | 4 | 100 ms | `06 16 00 a0` |
+| 0xF380 | 0x1839F380 | Thermistor module → BMS: module number, lowest, highest and average temperature (°C), number of thermistors, highest and lowest thermistor ID, checksum (sum of bytes + 0x39 + 8) | 8 | 100 ms | `00 11 1a 17 28 00 07 b2` |
+| 0xF380 | 0x1838F380 | Thermistor general broadcast: one thermistor's temperature (°C) each time, cycling through all of them | 8 | 100 ms | `00 21 19 21 11 1a 00 07` |
+| 0xFF80 | 0x18EEFF80 | J1939 address claim (always the same) | 8 | 200 ms | `f3 00 80 f3 00 40 1e 90` |
 
-TODO: identify the device that sends these (possibly MPPTs, since the MPPT status messages 0x771 and 0x772 are not in the capture). Decoding extended IDs reliably needs the firmware to send the full 29-bit ID, which changes the radio frame format for the receiver too.
+The last three are 29-bit extended IDs, and the telemetry board only sends the lowest 16 bits of each ID (see `SendMessage.cpp`). So the two temperature messages arrive with the same ID, 0xF380, and cannot be told apart by ID alone (they can by content: only the first passes its checksum). Decoding them properly needs the firmware to send the full 29-bit ID, which changes the radio frame format for the receiver too. The Orion BMS already reports the pack's highest and lowest temperatures in `CellTempsDCL` (0x702), so the thermistor module's own messages add per-thermistor detail only. If that detail is not needed, filtering these IDs out on the board would also cut the radio traffic by about a third.
 
 ## Glossary
 

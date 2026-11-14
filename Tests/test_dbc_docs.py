@@ -91,3 +91,26 @@ def test_dbc_comments_about_the_nrt_capture_are_true():
         orion = [f for f in frames if (f[4] << 8 | f[5]) == can_id]
         assert orion
         assert all((sum(f[7:14]) + offset) & 0xFF == f[14] for f in orion)
+
+
+def test_readme_thermistor_module_identification_is_true():
+    """dbc/README.md says 0x080, 0xF380 and 0xFF80 come from the Orion thermistor
+    expansion module (Orion's Thermistor Expansion CANBUS Protocol): check NRT.BIN agrees."""
+    from Receiver.frame_reader import frame_is_complete, read_frames
+
+    frames = [
+        f for f in read_frames(str(dbc_to_markdown.REPO_ROOT / "Tests/data/NRT.BIN"))
+        if frame_is_complete(f)
+    ]
+    data = lambda can_id: [bytes(f[7:-2]) for f in frames if (f[4] << 8 | f[5]) == can_id]
+
+    # 0x18EEFF80 J1939 address claim: always the same payload
+    assert set(data(0xFF80)) == {bytes.fromhex("f30080f300401e90")}
+    # 0x1839F380 (checksum = sum of bytes + 0x39 + length) and 0x1838F380 (thermistor ID
+    # relative to all modules = ID relative to this module, for module 1) share 0xF380
+    f380 = data(0xF380)
+    to_bms = [d for d in f380 if (sum(d[:7]) + 0x39 + 8) & 0xFF == d[7]]
+    general = [d for d in f380 if d[1] == d[3] and d not in to_bms]
+    assert to_bms and general and len(to_bms) + len(general) == len(f380)
+    # 0x80 legacy broadcast: 4 bytes
+    assert data(0x080) and all(len(d) == 4 for d in data(0x080))

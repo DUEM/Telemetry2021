@@ -214,8 +214,14 @@ Update the code as above (the `git submodule update --init` step is required, be
 
 **Decoding**
 * Only CAN IDs in the `dbc/` files are decoded. Others are written to InfluxDB as `ERROR/ID UNRECOGNISED`. Check the DBC files cover any new hardware on the vehicle.
-* Most of the traffic on Peri's CAN bus (IDs 0x080, 0xF380 and 0xFF80 as received) comes from a device that is not yet identified, so it is not decoded (see [dbc/README.md](dbc/README.md#can-ids-seen-but-not-decoded)). The telemetry board only sends the lowest 16 bits of each CAN ID, so 29-bit extended IDs, as these appear to be, cannot be decoded reliably until the firmware sends the full ID.
-* The MPPT status messages (0x771, 0x772) are not in the iESC 2026 recording, although the board polls for them, so there is no MPPT data and the live power calculation cannot run.
+* About a third of the traffic on Peri's CAN bus (IDs 0x080, 0xF380 and 0xFF80 as received) comes from the Orion thermistor expansion module, and is not decoded (see [dbc/README.md](dbc/README.md#can-ids-seen-but-not-decoded)). Most of its IDs are 29-bit extended IDs, and the telemetry board only sends the lowest 16 bits of each CAN ID, so two of its messages arrive with the same ID. They cannot be decoded reliably until the firmware sends the full ID.
+* The MPPTs never reply. The board polls them every second (0x711, 0x712), but no status message (0x771, 0x772) is in any iESC 2026 recording, including the SD card logs, which do not depend on the radio. The board forwards every CAN frame it receives, so the replies never reach it. There is therefore no MPPT data, and the live power calculation cannot run. The board's polls match the MPPT's protocol (IDs, 125 kbit/s, an empty data frame is accepted as a request), so check the MPPTs and their wiring:
+  * each MPPT's CAN connector supplies power to the MPPT's CAN side: the MPPT only replies when its CAN controller has power;
+  * the address switches: Javed set to 1 and Woof to 2, with the fourth switch (A3) off. A3 on adds 8 to both IDs (e.g. 0x719 and 0x779), and an MPPT with all switches off never replies;
+  * the MPPTs are on the same CAN bus as the telemetry board;
+  * the MPPTs are powered and running (they may need voltage from the solar array to start).
+
+  To test one MPPT on the bench, power it, connect it to the telemetry board and look for 0x771 (or 0x772) in the board's SD card log. The board also ignores whether its polls were actually sent; checking that in the firmware would rule out the board's side completely.
 * The Orion scalings come from the recorded data and the usual Orion settings, and still need confirming from the Orion BMS profile loaded on Peri. Orion `PackCurrent` is **negative when the battery is discharging**. The MPPT `VoltageOut` and `AmbientTemperature` are still stored as raw values. These and the other gaps are marked `TODO: add ...` in the DBC files and listed at the end of [dbc/SIGNALS.md](dbc/SIGNALS.md#still-to-be-documented).
 * GPS latitude and longitude are stored as sent (NMEA `ddmm.mmmm` with a separate N/S, E/W character), not as decimal degrees, so they cannot be used directly by a Grafana map panel. [road_lookup.py](Receiver/live_calculations/road_lookup.py) does the conversion.
 * Latitude and longitude are sent as separate CAN messages, which can lead to mismatched positions.

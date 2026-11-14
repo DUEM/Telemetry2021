@@ -53,7 +53,7 @@ Every CAN message the receiver can decode, what each signal means, and where to 
 
 | Device (Source) | Description |
 |---|---|
-| `Mppt` | The two MPPTs (maximum power point trackers), named Javed and Woof. Each takes power from part of the solar array and converts it to charge the battery. TODO: add the MPPT make and model, and which part of Peri's solar array each MPPT (Javed, Woof) is connected to. |
+| `Mppt` | The two MPPTs (maximum power point trackers), named Javed and Woof. Each takes power from part of the solar array and converts it to charge the battery. The request and reply IDs (0x710 + address, 0x770 + address), the 125 kbit/s bit rate and the 7-byte reply match the Drivetek MPPT. TODO: add the MPPT make and model (confirm it is a Drivetek), and which part of Peri's solar array each MPPT (Javed, Woof) is connected to. |
 | `Telemetry` | The telemetry board, which polls the MPPTs (see Telemetry.dbc). |
 
 <a id="mpptpolljaved-0x711"></a>
@@ -92,7 +92,7 @@ This message carries no data.
 
 ### Javed (0x771)
 
-Status of the MPPT named Javed, sent in reply to each MpptPollJaved request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in Tests/data/NRT.BIN (iESC 2026 qualifying), although the telemetry board polls both MPPTs every second. TODO: add whether Peri still has these MPPTs; if not, remove this message.
+Status of the MPPT named Javed, sent in reply to each MpptPollJaved request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in any iESC 2026 recording, including Tests/data/NRT.BIN (qualifying) and the SD card logs, although the telemetry board polls both MPPTs every second (see Known limitations in the top-level README.md for what to check). TODO: add whether Peri still has these MPPTs; if not, remove this message.
 
 | | |
 |---|---|
@@ -160,7 +160,7 @@ SELECT "OverTemperature" FROM "Mppt/Javed" WHERE time > now() - 1h
 
 ### Woof (0x772)
 
-Status of the MPPT named Woof, sent in reply to each MpptPollWoof request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in Tests/data/NRT.BIN (iESC 2026 qualifying), although the telemetry board polls both MPPTs every second. TODO: add whether Peri still has these MPPTs; if not, remove this message.
+Status of the MPPT named Woof, sent in reply to each MpptPollWoof request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in any iESC 2026 recording, including Tests/data/NRT.BIN (qualifying) and the SD card logs, although the telemetry board polls both MPPTs every second (see Known limitations in the top-level README.md for what to check). TODO: add whether Peri still has these MPPTs; if not, remove this message.
 
 | | |
 |---|---|
@@ -1855,13 +1855,13 @@ SELECT "DriverSetDialCurrent" FROM "DriverControls/DialCurrent" WHERE time > now
 
 | File | Where | Comment |
 |---|---|---|
-| MPPT.dbc | device Mppt | The two MPPTs (maximum power point trackers), named Javed and Woof. Each takes power from part of the solar array and converts it to charge the battery. TODO: add the MPPT make and model, and which part of Peri's solar array each MPPT (Javed, Woof) is connected to. |
-| MPPT.dbc | message Javed | Status of the MPPT named Javed, sent in reply to each MpptPollJaved request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in Tests/data/NRT.BIN (iESC 2026 qualifying), although the telemetry board polls both MPPTs every second. TODO: add whether Peri still has these MPPTs; if not, remove this message. |
+| MPPT.dbc | device Mppt | The two MPPTs (maximum power point trackers), named Javed and Woof. Each takes power from part of the solar array and converts it to charge the battery. The request and reply IDs (0x710 + address, 0x770 + address), the 125 kbit/s bit rate and the 7-byte reply match the Drivetek MPPT. TODO: add the MPPT make and model (confirm it is a Drivetek), and which part of Peri's solar array each MPPT (Javed, Woof) is connected to. |
+| MPPT.dbc | message Javed | Status of the MPPT named Javed, sent in reply to each MpptPollJaved request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in any iESC 2026 recording, including Tests/data/NRT.BIN (qualifying) and the SD card logs, although the telemetry board polls both MPPTs every second (see Known limitations in the top-level README.md for what to check). TODO: add whether Peri still has these MPPTs; if not, remove this message. |
 | MPPT.dbc | signal Javed.NoCharge | 1 if the MPPT reports that it is not charging. TODO: add the conditions that set this flag, from the MPPT datasheet. |
 | MPPT.dbc | signal Javed.UnderVoltage | 1 if the MPPT reports an undervoltage. TODO: add whether this is the solar array (input) or battery (output) side, from the MPPT datasheet. |
 | MPPT.dbc | signal Javed.VoltageOut | Output voltage of this MPPT (battery side). TODO: add scaling and unit from the MPPT datasheet (still the raw value; check whether it is 208.79 mV per bit, as on similar MPPTs). |
 | MPPT.dbc | signal Javed.AmbientTemperature | Temperature inside this MPPT. TODO: add scaling and unit from the MPPT datasheet (still the raw value). |
-| MPPT.dbc | message Woof | Status of the MPPT named Woof, sent in reply to each MpptPollWoof request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in Tests/data/NRT.BIN (iESC 2026 qualifying), although the telemetry board polls both MPPTs every second. TODO: add whether Peri still has these MPPTs; if not, remove this message. |
+| MPPT.dbc | message Woof | Status of the MPPT named Woof, sent in reply to each MpptPollWoof request from the telemetry board (every mppt_update ms, Telemetry/config.txt). Not seen in any iESC 2026 recording, including Tests/data/NRT.BIN (qualifying) and the SD card logs, although the telemetry board polls both MPPTs every second (see Known limitations in the top-level README.md for what to check). TODO: add whether Peri still has these MPPTs; if not, remove this message. |
 | MPPT.dbc | signal Woof.NoCharge | 1 if the MPPT reports that it is not charging. TODO: add the conditions that set this flag, from the MPPT datasheet. |
 | MPPT.dbc | signal Woof.UnderVoltage | 1 if the MPPT reports an undervoltage. TODO: add whether this is the solar array (input) or battery (output) side, from the MPPT datasheet. |
 | MPPT.dbc | signal Woof.VoltageOut | Output voltage of this MPPT (battery side). TODO: add scaling and unit from the MPPT datasheet (still the raw value; check whether it is 208.79 mV per bit, as on similar MPPTs). |
