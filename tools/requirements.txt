@@ -1,0 +1,4 @@
+# check_xbee_settings.py only needs pyserial. The other tools (hex2csv.py,
+# hex2influx.py, batch_Read_Hex.py, dbc_to_markdown.py) use the receiver's
+# packages: install ../Receiver/requirements.txt for those.
+pyserial ~= 3.5 # NOT "serial", an unrelated package that clashes with the serial module
