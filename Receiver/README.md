@@ -168,9 +168,9 @@ The tests replay the sample captures in [../Tests/data/](../Tests/data/) and com
 **Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off in `receiver_config.py`.
 
 ```shell
-# terminal 1: create a one way virtual serial port, and then replay the sample capture through it at a given rate (2500 bytes per second ~= 20 Kbps)
+# terminal 1: create a one way virtual serial port, and then replay the sample capture through it at about the rate it was received over the radio (250 bytes per second)
 
-pv -L 2500 Tests/data/NRT.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0
+pv -L 250 Tests/data/NRT.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0,wait-slave
 
 # terminal 2: set SERIALPORT in Receiver/LiveTelemetry.py to the /tmp/ttyV0 name, then
 
@@ -179,6 +179,18 @@ python3 -m Receiver.LiveTelemetry
 ```
 
 Stop the receiver with Ctrl-C when the output stops. Remember to set `SERIALPORT` back afterwards.
+
+Start terminal 1 first, as it creates `/tmp/ttyV0`. With `wait-slave`, `socat` sends nothing until the receiver opens the port, so the start of the capture is not lost while you start terminal 2.
+
+The `-L` rate is in bytes per second. The board has no fixed rate: it sends each CAN message as it arrives, so choose the rate for what you want to imitate:
+
+| `pv -L` | Imitates |
+|---|---|
+| `250` | A radio capture such as `NRT.BIN` at roughly the rate it was received (about 220–450 bytes/s reached the receiver at iESC 2026) |
+| `1800` | An SD card log at the rate the board writes it while driving (about 100 frames/s of about 17 bytes) |
+| `11520` | The limit of the board's 115200 baud XBee serial link (10 bits per byte), as a stress test |
+
+The replay rate does not change the stored data: timestamps come from the GPS time and the board's `millis` in each frame, not from when the bytes arrive.
 
 ## Adding a storage option
 

@@ -1,7 +1,5 @@
 [run]
 omit =
-    # entry point, needs real serial hardware
-    Receiver/LiveTelemetry.py
     # standalone scripts, not importable as a package (no __init__.py)
     Receiver/live_calculations/*
     # standalone client script with its own requirements, not installed by CI
