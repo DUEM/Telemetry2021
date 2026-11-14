@@ -22,7 +22,7 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
 
     msgs = nrt_bytes
     # act
-    storeData(msgs[39])  # Orion
+    storeData(msgs[26])  # Orion
     mock_store_function.assert_called_with(
         "PackParameters",
         "Orion",
@@ -37,7 +37,7 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
         True,
     )
 
-    storeData(msgs[1281])  # tritium, while driving
+    storeData(msgs[1252])  # tritium, while driving
     mock_store_function.assert_called_with(
         "Velocity",
         "Tritium",
@@ -46,16 +46,16 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
         True,
     )
 
-    storeData(msgs[7])  # crc fail
+    storeData(msgs[273])  # crc fail: damaged in the radio link, cannot be re-joined
     mock_store_function.assert_called_with(
         "CRCFail",
         "",
-        {"Data": b"140007010800780078200d00d600af"},
+        {"Data": b"006c961400071100a227"},
         datetime(1970, 1, 1, 3, 0, tzinfo=timezone.utc),
         False,
     )
 
-    storeData(msgs[45])  # status msg
+    storeData(msgs[32])  # status msg
     mock_store_function.assert_called_with(
         "SystemStatusMessages",
         "Telemetry",
@@ -73,7 +73,7 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
         True,
     )
 
-    storeData(msgs[718])  # drv control
+    storeData(msgs[698])  # drv control
     mock_store_function.assert_called_with(
         "Maxbuscurrent",
         "DriverControls",
@@ -106,7 +106,7 @@ def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
     msgs = mppt_bytes
 
     # act
-    storeData(msgs[20])  # Javed
+    storeData(msgs[19])  # Javed
     mock_store_function.assert_called_with(
         "Javed",
         "Mppt",
@@ -124,7 +124,7 @@ def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
         True,
     )
 
-    storeData(msgs[25])  # Woof
+    storeData(msgs[24])  # Woof
     mock_store_function.assert_called_with(
         "Woof",
         "Mppt",
@@ -142,13 +142,24 @@ def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
         True,
     )
 
-    storeData(msgs[100])  # crc fail
+    # Woof, split by a 0x7E in its timestamp (d0 7e 01 00) and re-joined by
+    # read_frames; before the resync this arrived as two CRC failures
+    storeData(msgs[98])
     mock_store_function.assert_called_with(
-        "CRCFail",
-        "",
-        {"Data": b"010007720701d4006d02680f8e72"},
-        datetime(1970, 1, 1, 3, 0, tzinfo=timezone.utc),
-        False,
+        "Woof",
+        "Mppt",
+        {
+            "VoltageIn": 468 * 0.15049,
+            "CurrentIn": 109 * 0.00872,
+            "VoltageOut": 616,
+            "AmbientTemperature": 15,
+            "BatteryVoltageLevelReached": 0,
+            "OverTemperature": 0,
+            "NoCharge": 0,
+            "UnderVoltage": 0,
+        },
+        datetime(1970, 1, 1, 3, 1, 38, tzinfo=timezone.utc),
+        True,
     )
 
     # assert
@@ -165,7 +176,7 @@ def test_store_data_logs_message_at_info(nrt_bytes, caplog):
 
     # Act
     with caplog.at_level(logging.INFO, logger="Receiver.telemetry_storer"):
-        storer.store_data(nrt_bytes[39])
+        storer.store_data(nrt_bytes[26])
 
     # Assert
     assert "0x700 Orion/PackParameters" in caplog.text

@@ -49,7 +49,7 @@ def test_data_written_to_influx(
     )
 
     # Act
-    store_data(nrt_bytes[39])
+    store_data(nrt_bytes[26])
 
     # Assert
     mock_client_class, mock_client_instance = mock_influxdb_client

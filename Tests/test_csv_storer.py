@@ -113,7 +113,7 @@ def test_csv_storer_with_parser_integration(
     storer = TelemetryStorer(parser, storage_plugin_list=[csv_storer])
 
     # Act
-    storer.store_data(nrt_bytes[39])
+    storer.store_data(nrt_bytes[26])
     storer.end_session()
 
     # Assert
@@ -137,7 +137,7 @@ def test_csv_output_configured_via_receiver_config(tmp_path, nrt_bytes, monkeypa
     from Receiver.telemetry_storer import store_data, end_session
 
     # Act
-    store_data(nrt_bytes[39])
+    store_data(nrt_bytes[26])
     end_session()
 
     # Assert

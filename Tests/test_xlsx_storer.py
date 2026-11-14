@@ -36,7 +36,7 @@ def test_data_written_to_xlsx(nrt_bytes, mock_xlsx_workbook):
     )
 
     # Act
-    storer.store_data(nrt_bytes[39])
+    storer.store_data(nrt_bytes[26])
 
     # Assert
     assert mock_worksheet.cell.call_args_list == [
