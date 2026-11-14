@@ -10,8 +10,7 @@
 18/07/2023 14:05:45.000000,Javed,Mppt,OverTemperature,0,NoCharge,1,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,88.48812000000001,CurrentIn,0.0,VoltageOut,611,AmbientTemperature,20,True,9000
 18/07/2023 14:05:46.000000,Woof,Mppt,OverTemperature,0,NoCharge,1,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,76.44892,CurrentIn,0.0,VoltageOut,613,AmbientTemperature,15,True,10000
 18/07/2023 14:05:47.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,63.055310000000006,CurrentIn,1.09,VoltageOut,613,AmbientTemperature,15,True,11000
-18/07/2023 14:05:36.000000,CRCFail,,Data,b'e02e000007720701a500',,,,,,,,,,,,,,,False,-1
-18/07/2023 14:05:36.000000,CRCFail,,Data,b'02660f2875',,,,,,,,,,,,,,,False,-1
+18/07/2023 14:05:48.000000,Woof,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,63.35629000000001,CurrentIn,1.0987200000000001,VoltageOut,614,AmbientTemperature,15,True,12000
 18/07/2023 14:05:49.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,78.2548,CurrentIn,1.02896,VoltageOut,612,AmbientTemperature,20,True,13000
 18/07/2023 14:05:50.000000,Woof,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,66.21560000000001,CurrentIn,1.09,VoltageOut,613,AmbientTemperature,20,True,14000
 18/07/2023 14:05:51.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,77.65284000000001,CurrentIn,1.0464,VoltageOut,613,AmbientTemperature,20,True,15000
@@ -97,8 +96,7 @@
 18/07/2023 14:07:11.000000,Woof,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,68.17197,CurrentIn,0.9766400000000001,VoltageOut,617,AmbientTemperature,15,True,95000
 18/07/2023 14:07:12.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,81.71607,CurrentIn,0.9766400000000001,VoltageOut,614,AmbientTemperature,15,True,96000
 18/07/2023 14:07:13.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,81.56558000000001,CurrentIn,0.9592,VoltageOut,614,AmbientTemperature,15,True,97000
-18/07/2023 14:05:36.000000,CRCFail,,Data,b'd0',,,,,,,,,,,,,,,False,-1
-18/07/2023 14:05:36.000000,CRCFail,,Data,b'010007720701d4006d02680f8e72',,,,,,,,,,,,,,,False,-1
+18/07/2023 14:07:14.000000,Woof,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,70.42932,CurrentIn,0.95048,VoltageOut,616,AmbientTemperature,15,True,98000
 18/07/2023 14:07:15.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,79.30823000000001,CurrentIn,0.9766400000000001,VoltageOut,613,AmbientTemperature,15,True,99000
 18/07/2023 14:07:16.000000,Woof,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,70.12834000000001,CurrentIn,0.9766400000000001,VoltageOut,615,AmbientTemperature,20,True,100000
 18/07/2023 14:07:17.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,79.30823000000001,CurrentIn,1.01152,VoltageOut,615,AmbientTemperature,20,True,101000
@@ -148,8 +146,7 @@
 18/07/2023 14:08:01.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,80.06068,CurrentIn,0.94176,VoltageOut,612,AmbientTemperature,15,True,145000
 18/07/2023 14:08:02.000000,Woof,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,51.016110000000005,CurrentIn,1.22952,VoltageOut,613,AmbientTemperature,20,True,146000
 18/07/2023 14:08:03.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,81.2646,CurrentIn,0.92432,VoltageOut,613,AmbientTemperature,20,True,147000
-18/07/2023 14:05:36.000000,CRCFail,,Data,b'20420200077207016200890264192e',,,,,,,,,,,,,,,False,-1
-18/07/2023 14:05:36.000000,CRCFail,,Data,b'',,,,,,,,,,,,,,,False,-1
+18/07/2023 14:08:04.000000,Woof,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,53.27346000000001,CurrentIn,1.1946400000000001,VoltageOut,612,AmbientTemperature,25,True,148000
 18/07/2023 14:08:05.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,82.01705000000001,CurrentIn,0.8807200000000001,VoltageOut,613,AmbientTemperature,20,True,149000
 18/07/2023 14:08:06.000000,Woof,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,53.72493000000001,CurrentIn,1.20336,VoltageOut,612,AmbientTemperature,20,True,150000
 18/07/2023 14:08:07.000000,Javed,Mppt,OverTemperature,0,NoCharge,0,UnderVoltage,0,BatteryVoltageLevelReached,0,VoltageIn,81.11411000000001,CurrentIn,0.9156000000000001,VoltageOut,612,AmbientTemperature,25,True,151000
