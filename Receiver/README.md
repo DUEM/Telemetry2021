@@ -85,8 +85,8 @@ These directories are git-ignored apart from the sample files `Test1.BIN` and `T
 You can replay a capture through a virtual serial port (needs `sudo apt install socat pv`). Note that this **writes to the live `DUSCiESC` database**.
 
 ```shell
-# terminal 1: create a one way virtual serial port, and then replay the sample capture through it at a given rate (2500 bytes per second ~= 20 Kbps)
-pv -L 2500 Receiver/BIN/Test1.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0
+# terminal 1: create a one way virtual serial port, and then replay the sample capture through it at about the rate data is received over the radio (250 bytes per second)
+pv -L 250 Receiver/BIN/Test1.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0,wait-slave
 
 # terminal 2: run the receiver and give it /tmp/ttyV0 as the port (it is not in the list of ports shown, type it anyway)
 #             (don't use "Test1" as the output BIN name, or it will overwrite the file being replayed)
@@ -94,4 +94,14 @@ cd Receiver
 python3 ./Live-Telem-05-09-2024-WIP.py
 ```
 
-The replay starts as soon as terminal 1 runs, and data sent before the receiver opens the port is lost, so answer the receiver's prompts promptly. Stop the receiver with Ctrl-C when the output stops.
+Start terminal 1 first, as it creates `/tmp/ttyV0`. With `wait-slave`, `socat` sends nothing until the receiver opens the port, so no data is lost while you answer the receiver's prompts. Stop the receiver with Ctrl-C when the output stops.
+
+The `-L` rate is in bytes per second. The board has no fixed rate: it sends each CAN message as it arrives, so choose the rate for what you want to imitate:
+
+| `pv -L` | Imitates |
+|---|---|
+| `250` | A radio capture at roughly the rate it was received (about 220–450 bytes/s reached the receiver at iESC 2026) |
+| `1800` | An SD card log at the rate the board writes it while driving (about 100 frames/s of about 17 bytes) |
+| `11520` | The limit of the board's 115200 baud XBee serial link (10 bits per byte), as a stress test |
+
+This receiver timestamps each message with the laptop's clock when it arrives, so the replay rate sets the stored timestamps. `Test1.BIN` holds about 1.5 minutes of data, recorded at about 875 bytes/s; at 250 bytes/s it is spread over about 5.5 minutes.
