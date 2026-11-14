@@ -179,7 +179,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 ├── Receiver                       (Python receiver software, see Receiver/README.md)
 │   ├── LiveTelemetry.py           (live receiver: serial → decode → storage plugins)
 │   ├── receiver_config.py         (InfluxDB credentials, output files, DBC file list)
-│   ├── frame_reader.py            (splits a capture into frames on 0x7E)
+│   ├── frame_reader.py            (splits a capture into frames on 0x7E, re-joining split frames)
 │   ├── telemetry_parser.py        (CRC check, timestamps, decoding)
 │   ├── can_dbc_decoder.py         (DBC lookup with cantools)
 │   ├── telemetry_storer.py        (passes decoded messages to the storage plugins)
@@ -209,7 +209,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 ## Known limitations
 
 **Radio link and framing**
-* Frames are terminated by `0x7E`, but `0x7E` bytes inside the frame are not escaped. If any timestamp, data or CRC byte equals `0x7E`, the frame is split. The pieces then almost always fail the CRC check, so the message is lost but does not reach InfluxDB corrupted.
+* Frames are terminated by `0x7E`, but `0x7E` bytes inside the frame are not escaped. If any timestamp, data or CRC byte equals `0x7E`, the frame is split. The receiver and the offline tools re-join split frames ([frame_reader.py](Receiver/frame_reader.py)), recovering about 2.4% of frames in the iESC 2026 SD card logs. A frame damaged in the radio link as well cannot be re-joined; it fails the CRC check, so the message is lost but does not reach InfluxDB corrupted.
 * The live receiver does not keep a raw copy of the received bytes. The `.BIN` log on the board's SD card is the only raw record of a session.
 
 **Decoding**
