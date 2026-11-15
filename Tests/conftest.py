@@ -29,6 +29,8 @@ def patch_receiver_config(request, monkeypatch, tmp_path):
     monkeypatch.setattr("Receiver.receiver_config.csvEnabled", False)
     monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFolder", tmp_path / "session-logs" / "excel")
     monkeypatch.setattr("Receiver.receiver_config.csvOutputFolder", tmp_path / "session-logs" / "csv")
+    monkeypatch.setattr("Receiver.receiver_config.binEnabled", False)
+    monkeypatch.setattr("Receiver.receiver_config.binOutputFolder", tmp_path / "session-logs" / "BIN")
 
     class influxCredentials(NamedTuple):
         enabled: bool = False

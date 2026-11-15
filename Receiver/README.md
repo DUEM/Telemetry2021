@@ -5,6 +5,7 @@
 * InfluxDB 1.x, database `DUSCiESC` on `localhost:8086`, for the Grafana dashboard to display (on by default)
 * an Excel workbook (off by default)
 * a CSV file (off by default)
+* a raw `.BIN` file of every frame as received, in the same format as the SD card log (off by default)
 
 Every decoded message is also printed to the terminal.
 
@@ -45,10 +46,12 @@ Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are cl
 | Excel save interval | `xlsxSaveInterval` in [receiver_config.py](receiver_config.py) | **10** seconds |
 | CSV on / off | `csvEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
 | CSV folder | `csvOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/csv/` |
-| Output file name | `sessionLogName` in [receiver_config.py](receiver_config.py) | `testlog` (files are `testlog-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv`) |
+| BIN (raw) on / off | `binEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
+| BIN folder | `binOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/BIN/` |
+| Output file name | `sessionLogName` in [receiver_config.py](receiver_config.py) | `testlog` (files are `testlog-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv` / `.BIN`) |
 | CAN database files | `dbc_files` in [receiver_config.py](receiver_config.py) | the four files in [../dbc/](../dbc/) |
 
-Each output is switched on or off with its own `True`/`False` setting. Output files go in the `session-logs/` folder at the top of the repository, whichever directory the receiver is started from: Excel in `session-logs/excel/`, CSV in `session-logs/csv/`. The folders are created when first needed. Each run of the receiver writes **new** files, named after the local date and time it started, e.g. `session-logs/csv/testlog-2026-11-15-143012.csv`; the Excel and CSV files from one run have the same name. `session-logs/` is git-ignored, so session logs are not committed by accident.
+Each output is switched on or off with its own `True`/`False` setting. Output files go in the `session-logs/` folder at the top of the repository, whichever directory the receiver is started from: Excel in `session-logs/excel/`, CSV in `session-logs/csv/`, BIN in `session-logs/BIN/`. The folders are created when first needed. Each run of the receiver writes **new** files, named after the local date and time it started, e.g. `session-logs/csv/testlog-2026-11-15-143012.csv`; the files from one run have the same name. `session-logs/` is git-ignored, so session logs are not committed by accident.
 
 ## Radio frame format
 
@@ -129,6 +132,7 @@ Points are stamped with the **vehicle's GPS time**, not the laptop's receive tim
 
 * **Excel** (`xlsxEnabled`, in `session-logs/excel/`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. (If a file of the same name already exists, which only happens if the receiver is restarted within the same second, it is appended to after a three-row gap.) Saving rewrites the whole workbook, so it is saved at most every `xlsxSaveInterval` seconds (and straight away for the first row), plus once more when the receiver stops. Stop the receiver with Ctrl-C so the last rows are saved.
 * **CSV** (`csvEnabled`, in `session-logs/csv/`): one row per message: `Timestamp` (ISO 8601), `Source`, `Item`, `Message Body` (`name=value` pairs in one quoted column), `CRC`.
+* **BIN** (`binEnabled`, in `session-logs/BIN/`): the raw radio data, every frame exactly as received and followed by its `0x7E` marker, including frames that fail their CRC or have an unknown CAN ID. This is the same format as the SD card log and the ESC-CODE receiver's `BIN/` files, so it can be decoded later with [hex2csv.py or hex2influx.py](#offline-tools-sd-card-logs), or replayed through a virtual serial port (see [Testing without hardware](#testing-without-hardware-software-in-the-loop-sil)). Each frame is written as soon as its end of frame marker arrives (a frame split by an unescaped `0x7E` once all its pieces have arrived); bytes after the last marker when the receiver stops are an unfinished frame and are not written.
 
 Note that `tools/hex2csv.py` (below) writes a **different** CSV layout.
 
@@ -168,7 +172,7 @@ The tests replay the sample captures in [../Tests/data/](../Tests/data/) and com
 * `NRT.BIN`: Ortus-T at iESC 2026 (qualifying, 18 September 2026): two sections of the recording, joined. The first (GPS with a position fix) is about 1 minute long; the second (out on track, with the motor controller, driver controls and current dial) is about 8 minutes long, with radio reception getting worse towards the end. Recorded with the ESC-CODE receiver, whose own decoded output was used to check this branch's decoding.
 * `MPPT.BIN`: an earlier (July 2023) recording with MPPT status messages, which are not in the iESC 2026 recording.
 
-**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off (`enabled=False` in `InfluxCredentials` in `receiver_config.py`). To check the replay in a file instead, set `csvEnabled` or `xlsxEnabled` to `True`.
+**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off (`enabled=False` in `InfluxCredentials` in `receiver_config.py`). To check the replay in a file instead, set `csvEnabled`, `xlsxEnabled` or `binEnabled` to `True` (the BIN log of a replay should match the capture, up to its last `0x7E`).
 
 ```shell
 # terminal 1: create a one way virtual serial port, and then replay the sample capture through it at about the rate it was received over the radio (250 bytes per second)
@@ -197,4 +201,4 @@ The replay rate does not change the stored data: timestamps come from the GPS ti
 
 ## Adding a storage option
 
-Subclass `StorerExtension` in [storer_extension.py](storer_extension.py), implementing `store_data` and `close`. Then enable it in `StorerWrapper.init_storer` in [telemetry_storer.py](telemetry_storer.py), behind a setting in [receiver_config.py](receiver_config.py), following how `CSVStorer` is wired up.
+Subclass `StorerExtension` in [storer_extension.py](storer_extension.py), implementing `store_data` (called with each decoded message) and `close`. To keep the raw frames as well, also override `store_raw`, which is called with each frame exactly as received, before decoding (see `BinStorer`). Then enable it in `StorerWrapper.init_storer` in [telemetry_storer.py](telemetry_storer.py), behind a setting in [receiver_config.py](receiver_config.py), following how `CSVStorer` is wired up.

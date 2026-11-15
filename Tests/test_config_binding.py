@@ -14,6 +14,8 @@ CONFIG_NAMES = (
     "xlsxSaveInterval",
     "csvEnabled",
     "csvOutputFolder",
+    "binEnabled",
+    "binOutputFolder",
     "ifCredentials",
 )
 

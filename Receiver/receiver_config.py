@@ -28,6 +28,12 @@ xlsxSaveInterval: float = 10.0
 csvEnabled: bool = False
 csvOutputFolder = sessionLogsFolder / "csv"
 
+# Raw radio data (.BIN), every frame as received, in the same format as the SD
+# card log on the vehicle. Can be decoded later with tools/hex2csv.py or
+# tools/hex2influx.py, or replayed through a virtual serial port.
+binEnabled: bool = False
+binOutputFolder = sessionLogsFolder / "BIN"
+
 # InfluxDB output: switched on or off with `enabled` below
 class InfluxCredentials(NamedTuple):
     username: str = "admin"
