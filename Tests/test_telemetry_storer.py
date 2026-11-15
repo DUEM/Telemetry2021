@@ -1,3 +1,4 @@
+from numpy import uint32
 from datetime import timezone, datetime
 from unittest.mock import MagicMock
 
@@ -12,6 +13,7 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
     telemetry_parser.last_gps_time = datetime(
         year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc
     )
+    telemetry_parser.time_fetched = uint32(0)  # reference: millis 0 at that time
 
     mock_store_function = MagicMock()
     mock_store_class = MagicMock()
@@ -37,7 +39,7 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
         True,
     )
 
-    storeData(msgs[1252])  # tritium, while driving
+    storeData(msgs[1281])  # tritium, while driving
     mock_store_function.assert_called_with(
         "Velocity",
         "Tritium",
@@ -46,11 +48,11 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
         True,
     )
 
-    storeData(msgs[273])  # crc fail: damaged in the radio link, cannot be re-joined
+    storeData(msgs[305])  # crc fail: what is left of a frame damaged in the radio link
     mock_store_function.assert_called_with(
         "CRCFail",
         "",
-        {"Data": b"006c961400071100a227"},
+        {"Data": b"ef99140000f9053dcb004445"},
         datetime(1970, 1, 1, 3, 0, tzinfo=timezone.utc),
         False,
     )
@@ -73,7 +75,7 @@ def test_store_data_nrt(monkeypatch, tmp_path, run_in_receiver, nrt_bytes):
         True,
     )
 
-    storeData(msgs[698])  # drv control
+    storeData(msgs[703])  # drv control
     mock_store_function.assert_called_with(
         "Maxbuscurrent",
         "DriverControls",
@@ -95,6 +97,7 @@ def test_store_data_mppt(monkeypatch, tmp_path, run_in_receiver, mppt_bytes):
     telemetry_parser.last_gps_time = datetime(
         year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc
     )
+    telemetry_parser.time_fetched = uint32(0)  # reference: millis 0 at that time
 
     mock_store_function = MagicMock()
     mock_store_class = MagicMock()

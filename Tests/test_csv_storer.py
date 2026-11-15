@@ -1,3 +1,4 @@
+from numpy import uint32
 import csv
 import re
 from datetime import datetime, timezone
@@ -110,6 +111,7 @@ def test_csv_storer_with_parser_integration(
     parser.last_gps_time = datetime(
         year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc
     )
+    parser.time_fetched = uint32(0)  # reference: millis 0 at that time
     csv_storer = CSVStorer(csv_path)
     storer = TelemetryStorer(parser, storage_plugin_list=[csv_storer])
 

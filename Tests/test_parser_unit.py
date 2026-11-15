@@ -313,13 +313,15 @@ class TestTelemetryParserGpsDate:
         from Receiver.telemetry_parser import TelemetryParser
 
         parser = TelemetryParser()
-        before = parser.last_gps_time
+        before = datetime.now(timezone.utc)
 
-        name, _, body, _, _ = parser.translate_msg(self.frame(self.DEFAULT_2080))
+        name, _, body, msg_time, _ = parser.translate_msg(self.frame(self.DEFAULT_2080))
 
         assert name == "TimeAndFix" and body["GpsYear"] == 80 and body["GpsFix"] == 0
-        assert parser.last_gps_time == before
-        assert parser.time_fetched == 0
+        # the clock stays on the laptop's time, set from this first frame
+        assert parser.time_fetched == 0x0001249F
+        assert before <= parser.last_gps_time <= datetime.now(timezone.utc)
+        assert msg_time == parser.last_gps_time
 
     def test_date_without_a_position_fix_sets_the_clock(self, run_in_receiver, patch_receiver_config):
         from Receiver.telemetry_parser import TelemetryParser
@@ -351,3 +353,43 @@ class TestTelemetryParserGpsDate:
             parser.translate_msg(self.frame(hex_string))
 
         assert caplog.text.count("Ignoring implausible GPS date") == 2
+
+
+class TestTimeBeforeGps:
+    """Until the first GPS time, frames are timed from the laptop's clock when
+    the first frame arrived, not from when the board was switched on."""
+
+    # Telemetry/SystemStatusMessages, as in a receiver log of 2026-11-15
+    # where the board had been on for 100 minutes (millis 6016480)
+    @staticmethod
+    def status_frame(millis):
+        from crccheck.crc import Crc16Modbus
+
+        body = millis.to_bytes(4, "little") + bytes.fromhex("0111 08 01ff008301000000")
+        return bytearray(body + Crc16Modbus.calc(body).to_bytes(2, "big"))
+
+    def test_first_frame_is_timed_now_however_long_the_board_has_been_on(self, patch_receiver_config):
+        from Receiver.telemetry_parser import TelemetryParser
+
+        parser = TelemetryParser()
+        before = datetime.now(timezone.utc)
+
+        *_, first, ok1 = parser.translate_msg(self.status_frame(6016480))
+        *_, second, ok2 = parser.translate_msg(self.status_frame(6017480))
+
+        assert ok1 and ok2
+        assert before <= first <= datetime.now(timezone.utc)
+        assert second - first == timedelta(milliseconds=1000)
+
+    def test_gps_frame_is_timed_with_its_own_gps_time(self, patch_receiver_config):
+        from Receiver.telemetry_parser import TelemetryParser
+
+        parser = TelemetryParser()
+        parser.translate_msg(self.status_frame(0x0004B700))  # laptop time reference
+
+        name, _, _, msg_time, _ = parser.translate_msg(
+            bytearray.fromhex(TestTelemetryParserGpsDate.FIX_2026)
+        )
+
+        assert name == "TimeAndFix"
+        assert msg_time == datetime(2026, 9, 12, 15, 15, 0, tzinfo=timezone.utc)
