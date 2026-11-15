@@ -14,6 +14,13 @@ result has the length its DLC declares and a valid CRC. A piece that is itself
 a complete frame is never absorbed into a join. A piece that cannot be
 completed is passed on unchanged, so the parser still reports it as a CRC
 failure (or DLC mismatch), exactly as before.
+
+Over the radio, bytes are also lost, sometimes including a 0x7E, so what is
+left of one frame runs into the next. Before giving up on a piece, the
+assembler therefore looks for complete frames at its start and end (e.g. the
+4 millis bytes of a frame whose rest was lost, followed by a whole frame) and
+passes them on separately from the bytes around them. Those leftover bytes are
+still passed on, and reported as a CRC failure.
 """
 
 from crccheck.crc import Crc16Modbus
@@ -34,6 +41,46 @@ def frame_is_complete(frame: bytes) -> bool:
     )
 
 
+class UnterminatedPiece(bytes):
+    """Bytes split off the front of a piece by `FrameAssembler`, which were not
+    followed by an end of frame marker in the stream (see `BinStorer`, which
+    uses this to write the data back exactly as received)."""
+
+
+def split_run_together(piece: bytes) -> list[bytes]:
+    """Split a piece that is not a complete frame into the complete frames at
+    its start and end and the bytes left around them, in order.
+
+    E.g. the 4 millis bytes of a frame whose rest was lost on the radio,
+    followed by a whole frame whose 0x7E arrived, becomes [4 bytes, frame].
+    A piece with no complete frame at either end is returned unchanged, as
+    [piece]. Every part except the last is an `UnterminatedPiece`.
+    """
+    parts, rest = [], bytes(piece)
+    if len(rest) <= FRAME_OVERHEAD:  # too short to hold a frame and anything else
+        return [rest]
+    while rest:
+        if frame_is_complete(rest):
+            parts.append(rest)
+            break
+        # a complete frame at the start: its length comes from its DLC
+        if len(rest) > 6:
+            n = FRAME_OVERHEAD + rest[6]
+            if n < len(rest) and frame_is_complete(rest[:n]):
+                parts.append(rest[:n])
+                rest = rest[n:]
+                continue
+        # a complete frame at the end
+        for n in range(FRAME_OVERHEAD, min(MAX_FRAME_LENGTH, len(rest) - 1) + 1):
+            if frame_is_complete(rest[-n:]):
+                parts += [rest[:-n], rest[-n:]]
+                break
+        else:
+            parts.append(rest)
+        break
+    return [UnterminatedPiece(p) for p in parts[:-1]] + parts[-1:]
+
+
 class FrameAssembler:
     """Re-join frames split by an unescaped end of frame marker.
 
@@ -47,6 +94,7 @@ class FrameAssembler:
     def __init__(self):
         self._pending: list[bytes] = []  # an incomplete piece and the pieces after it
         self.rejoined = 0  # frames recovered by re-joining
+        self.split = 0  # frames recovered from pieces run together (see split_run_together)
 
     def push(self, piece: bytes) -> list[bytes]:
         """Add the next piece; return the frames that are now ready, in order."""
@@ -79,17 +127,25 @@ class FrameAssembler:
                 # No join completed. Wait if one more piece could still fit.
                 if not final and len(joined) < MAX_FRAME_LENGTH:
                     return ready
-                ready.append(self._pending.pop(0))  # give up on this piece
+                ready += self._give_up()
                 continue
             if len(joined) > MAX_FRAME_LENGTH:
-                ready.append(self._pending.pop(0))
+                ready += self._give_up()
         return ready
+
+    def _give_up(self) -> list[bytes]:
+        """The first pending piece cannot be re-joined: pass it on, after
+        splitting off any complete frames at its start and end."""
+        parts = split_run_together(self._pending.pop(0))
+        self.split += sum(frame_is_complete(p) for p in parts) if len(parts) > 1 else 0
+        return parts
 
 
 def read_frames(hex_file) -> list:
     """Read a capture file and return the CAN frames in it.
 
-    Frames split by a 0x7E inside them are re-joined (see `FrameAssembler`).
+    Frames split by a 0x7E inside them are re-joined, and frames run together
+    after bytes were lost are split apart (see `FrameAssembler`).
 
     Args:
         hex_file: path to the .BIN capture

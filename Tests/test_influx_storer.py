@@ -1,3 +1,4 @@
+from numpy import uint32
 from datetime import timezone, datetime
 from typing import NamedTuple
 from unittest.mock import MagicMock
@@ -43,6 +44,7 @@ def test_data_written_to_influx(
     telemetry_parser.last_gps_time = datetime(
         year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc
     )
+    telemetry_parser.time_fetched = uint32(0)  # reference: millis 0 at that time
     # StorerWrapper builds its own parser; hand it this pre-seeded one
     monkeypatch.setattr(
         "Receiver.telemetry_storer.TelemetryParser", lambda: telemetry_parser

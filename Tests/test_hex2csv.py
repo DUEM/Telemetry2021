@@ -1,3 +1,4 @@
+from numpy import uint32
 from datetime import timedelta, timezone, datetime
 
 
@@ -10,6 +11,7 @@ def test_hex2csv(monkeypatch, tmp_path, run_in_receiver):
     tp.last_gps_time = datetime(
         year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc
     )
+    tp.time_fetched = uint32(0)  # reference: millis 0 at that time
     # act
     hex2csv("Tests/data/NRT.BIN", f"{tmp_path}/output.csv", "w", tp)
 
@@ -38,6 +40,7 @@ def test_hex2csv2(monkeypatch, tmp_path, run_in_receiver):
     tp.last_gps_time = datetime(
         year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc
     )
+    tp.time_fetched = uint32(0)  # reference: millis 0 at that time
 
     # act
     hex2csv("Tests/data/MPPT.BIN", f"{tmp_path}/output.csv", "w", tp)
@@ -73,9 +76,10 @@ def test_sessions_do_not_share_clock_state(tmp_path, run_in_receiver):
     # arrange
     from tools.hex2csv import hex2csv
 
-    # act - two sessions, neither passing an explicit parser
-    hex2csv("Tests/data/MPPT.BIN", f"{tmp_path}/session1.csv", "w")
-    hex2csv("Tests/data/MPPT.BIN", f"{tmp_path}/session2.csv", "w")
+    # act - two sessions, neither passing an explicit parser. NRT.BIN starts
+    # with frames sent before its first GPS time, which are timed from now.
+    hex2csv("Tests/data/NRT.BIN", f"{tmp_path}/session1.csv", "w")
+    hex2csv("Tests/data/NRT.BIN", f"{tmp_path}/session2.csv", "w")
 
     # assert - session 2 starts from the current time, not session 1's GPS clock
     with open(f"{tmp_path}/session2.csv") as f2:

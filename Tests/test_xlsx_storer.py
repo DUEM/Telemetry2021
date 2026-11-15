@@ -1,3 +1,4 @@
+from numpy import uint32
 import re
 
 import pytest
@@ -34,6 +35,7 @@ def test_data_written_to_xlsx(nrt_bytes, mock_xlsx_workbook):
         year=1970, month=1, day=1, hour=3, minute=0, second=0,
         tzinfo=timezone.utc
     )
+    telemetry_parser.time_fetched = uint32(0)  # reference: millis 0 at that time
     storer = TelemetryStorer(
         telemetry_parser, storage_plugin_list=[ExcelStorer("mock.xlsx")]
     )

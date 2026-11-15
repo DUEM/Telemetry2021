@@ -172,3 +172,62 @@ def read_pieces(data: bytes) -> list:
     for piece in data.split(EOF):
         out.extend(assembler.push(piece))
     return out + assembler.flush()
+
+
+# --- frames run together after bytes were lost on the radio -----------------
+
+
+def test_frame_after_the_remains_of_a_damaged_frame_is_split_off():
+    """The radio lost all but the millis of one frame, and its 0x7E: the next,
+    whole, frame is recovered, and the 4 bytes left are still passed on."""
+    from Receiver.frame_reader import UnterminatedPiece
+
+    lost = make_frame(0x5BCF17, 0x303, bytes(8))[:4]  # only the millis arrived
+    whole = make_frame(0x5BCF63, 0x303, bytes(8))
+    assembler = FrameAssembler()
+
+    out = assembler.push(lost + whole)
+
+    assert out == [lost, whole]
+    assert isinstance(out[0], UnterminatedPiece)  # no 0x7E after it in the stream
+    assert not isinstance(out[1], UnterminatedPiece)
+    assert assembler.split == 1 and assembler.rejoined == 0
+
+
+def test_frame_before_the_remains_of_a_damaged_frame_is_split_off():
+    """A frame's 0x7E and the start of the next frame were lost."""
+    whole = make_frame(1000, 0x700, b"\x00\x00\x05\x44\x77\x01\x4b\xc4")
+    remains = make_frame(1100, 0x6F9, bytes(8))[6:]  # DLC, data and CRC only
+
+    assert FrameAssembler().push(whole + remains) == [whole, remains]
+
+
+def test_two_frames_whose_marker_was_lost_are_both_recovered():
+    first, second = make_frame(1, 0x711, b""), make_frame(2, 0x712, b"")
+
+    assert FrameAssembler().push(first + second) == [first, second]
+
+
+def test_damaged_piece_without_a_complete_frame_is_passed_on_unchanged():
+    piece = bytes.fromhex("ef99140000f9053dcb004445")  # from Tests/data/NRT.BIN
+
+    assembler = FrameAssembler()
+    # held back until the end, in case the next piece completes it
+    assert assembler.push(piece) + assembler.flush() == [piece]
+    assert assembler.split == 0
+
+
+def test_stream_can_be_rebuilt_from_the_pieces():
+    """Joining the output back together, with a 0x7E after every piece except
+    the ones split off the front of another, gives the bytes received."""
+    from Receiver.frame_reader import UnterminatedPiece
+
+    data = open("Tests/data/NRT.BIN", "rb").read()
+    frames = read_frames("Tests/data/NRT.BIN")
+
+    rebuilt = b"".join(
+        f + (b"" if isinstance(f, UnterminatedPiece) else END_OF_FRAME_MARKER) for f in frames
+    )
+
+    assert rebuilt == data + END_OF_FRAME_MARKER  # read_frames ends with the bytes after the last 0x7E
+    assert sum(isinstance(f, UnterminatedPiece) for f in frames) > 100

@@ -152,7 +152,7 @@ def main(
     distance. Latitude and Longitude from the GPS are in the for DDMM.MMM so
     this script first converts it back to decimal degrees beforehand. Decoded
     latitude, longitude and mapped race distance are written back to the
-    influxdb under the measurement "Calculated"
+    influxdb under the measurement "road_lookup"
 
     Args:
         if_credentials: Credentials for influxDB.

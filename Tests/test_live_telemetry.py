@@ -35,7 +35,7 @@ def test_receive_stores_the_same_frames_as_read_frames(request, capture, chunk):
     stored = []
 
     # act
-    rejoined = receive(port, store=stored.append, keep_running=lambda: not port.finished())
+    assembler = receive(port, store=stored.append, keep_running=lambda: not port.finished())
 
     # assert - the offline reader also returns the bytes after the last marker
     # (empty if the capture ends with one); the live receiver waits for its marker
@@ -43,7 +43,7 @@ def test_receive_stores_the_same_frames_as_read_frames(request, capture, chunk):
     assert offline[-1] == data.split(END_OF_FRAME_MARKER)[-1]
     assert stored == offline[:-1]
     # complete pieces never contain the marker, so these are the re-joined frames
-    assert rejoined == sum(END_OF_FRAME_MARKER in f for f in stored) > 0
+    assert assembler.rejoined == sum(END_OF_FRAME_MARKER in f for f in stored) > 0
 
 
 def test_receive_flushes_a_held_piece_when_stopped():
