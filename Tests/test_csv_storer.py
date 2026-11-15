@@ -129,9 +129,11 @@ def test_csv_storer_with_parser_integration(
 
 
 def test_csv_output_configured_via_receiver_config(tmp_path, nrt_bytes, monkeypatch):
-    """csvOutputFile alone should wire a CSVStorer into the module-level storer."""
+    """csvEnabled wires a CSVStorer into the module-level storer, creating the
+    output folder if needed."""
     # Arrange
-    csv_path = tmp_path / "wired.csv"
+    csv_path = tmp_path / "Output" / "wired.csv"
+    monkeypatch.setattr("Receiver.receiver_config.csvEnabled", True)
     monkeypatch.setattr("Receiver.receiver_config.csvOutputFile", str(csv_path))
 
     from Receiver.telemetry_storer import store_data, end_session
@@ -145,3 +147,16 @@ def test_csv_output_configured_via_receiver_config(tmp_path, nrt_bytes, monkeypa
         rows = list(csv.reader(f))
     assert rows[0] == ["Timestamp", "Source", "Item", "Message Body", "CRC"]
     assert rows[1][1] == "Orion"
+
+
+def test_csv_output_off_when_disabled(tmp_path, nrt_bytes, monkeypatch):
+    """With csvEnabled False, no file is written even though a path is set."""
+    csv_path = tmp_path / "Output" / "unused.csv"
+    monkeypatch.setattr("Receiver.receiver_config.csvOutputFile", str(csv_path))
+
+    from Receiver.telemetry_storer import store_data, end_session
+
+    store_data(nrt_bytes[26])
+    end_session()
+
+    assert not csv_path.parent.exists()

@@ -3,9 +3,13 @@ from typing import NamedTuple
 
 
 # used by all live_calculation scripts
-# Set output file paths to file location to enable storage, or '' to disable
-#xlsxOutputFile: str = './ExcelOutput/ExcelTest.xlsx' #set equal to '' to switch off xlsx output
-xlsxOutputFile: str = ''
+# Each output is switched on or off with its own True/False setting. File paths
+# are relative to the directory the receiver is started from, and the folder is
+# created if it does not exist.
+
+# Excel (.xlsx) output
+xlsxEnabled: bool = False
+xlsxOutputFile: str = './ExcelOutput/ExcelTest.xlsx'
 # Save the xlsx file at most this often (seconds), and when the receiver stops.
 # Saving rewrites the whole workbook, so saving after every message gets slower
 # as the file grows. If the receiver is killed without stopping cleanly, up to
@@ -13,11 +17,11 @@ xlsxOutputFile: str = ''
 # board still has them).
 xlsxSaveInterval: float = 10.0
 
-# CSV output file - set to enable CSV storage
-# Example: csvOutputFile: str = './Output/telemetry.csv'
-csvOutputFile: str = ''
+# CSV output
+csvEnabled: bool = False
+csvOutputFile: str = './Output/telemetry.csv'
 
-
+# InfluxDB output: switched on or off with `enabled` below
 class InfluxCredentials(NamedTuple):
     username: str = "admin"
     password: str = "password"

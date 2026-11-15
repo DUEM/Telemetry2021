@@ -34,7 +34,7 @@ def test_data_written_to_influx(
 
     monkeypatch.setattr("Receiver.receiver_config.ifCredentials", influxCredentials())
 
-    monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "")
+    monkeypatch.setattr("Receiver.receiver_config.xlsxEnabled", False)
 
     from Receiver.telemetry_storer import store_data
     from Receiver.telemetry_parser import TelemetryParser
@@ -92,7 +92,7 @@ def test_influx_closed(monkeypatch, nrt_bytes, run_in_receiver, patch_receiver_c
 
     monkeypatch.setattr("Receiver.receiver_config.ifCredentials", influxCredentials())
 
-    monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "")
+    monkeypatch.setattr("Receiver.receiver_config.xlsxEnabled", False)
 
     from Receiver.telemetry_storer import end_session
 

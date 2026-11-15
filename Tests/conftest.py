@@ -23,8 +23,8 @@ def run_in_receiver():
 def patch_receiver_config(request, monkeypatch):
     # The DBC files are not patched: tests decode with the same files in dbc/
     # that the receiver uses, so a DBC change is caught by the tests.
-    monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "")
-    monkeypatch.setattr("Receiver.receiver_config.csvOutputFile", "")
+    monkeypatch.setattr("Receiver.receiver_config.xlsxEnabled", False)
+    monkeypatch.setattr("Receiver.receiver_config.csvEnabled", False)
 
     class influxCredentials(NamedTuple):
         enabled: bool = False

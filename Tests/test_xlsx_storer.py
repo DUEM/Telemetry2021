@@ -7,7 +7,8 @@ from datetime import datetime, timezone
 # Mock the Workbook and Worksheet
 @pytest.fixture(scope="function")
 def mock_xlsx_workbook(monkeypatch):
-    # dbc_files, ifCredentials and csvOutputFile come from patch_receiver_config
+    # dbc_files, ifCredentials and csvEnabled come from patch_receiver_config
+    monkeypatch.setattr("Receiver.receiver_config.xlsxEnabled", True)
     monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "mock.xlsx")
 
     # patch where the name is looked up, not where it is defined

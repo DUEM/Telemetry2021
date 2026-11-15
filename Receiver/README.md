@@ -39,13 +39,15 @@ Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are cl
 | Serial port | `SERIALPORT` at the top of [LiveTelemetry.py](LiveTelemetry.py) | `/dev/ttyUSB0` |
 | Baud rate | `BAUD` in [LiveTelemetry.py](LiveTelemetry.py) | **115200** (must match the XBee) |
 | InfluxDB host, port, user, password, database | `InfluxCredentials` in [receiver_config.py](receiver_config.py) | `localhost`, `8086`, `admin`, `password`, `DUSCiESC` |
-| InfluxDB on / off | `enabled` in `InfluxCredentials` | on |
-| Excel output | `xlsxOutputFile` in [receiver_config.py](receiver_config.py) | `''` (off) |
+| InfluxDB on / off | `enabled` in `InfluxCredentials` | `True` (on) |
+| Excel on / off | `xlsxEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
+| Excel file | `xlsxOutputFile` in [receiver_config.py](receiver_config.py) | `./ExcelOutput/ExcelTest.xlsx` |
 | Excel save interval | `xlsxSaveInterval` in [receiver_config.py](receiver_config.py) | **10** seconds |
-| CSV output | `csvOutputFile` in [receiver_config.py](receiver_config.py) | `''` (off) |
+| CSV on / off | `csvEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
+| CSV file | `csvOutputFile` in [receiver_config.py](receiver_config.py) | `./Output/telemetry.csv` |
 | CAN database files | `dbc_files` in [receiver_config.py](receiver_config.py) | the four files in [../dbc/](../dbc/) |
 
-Output file paths are relative to the directory the receiver is started from (normally the top of the repository). Existing Excel and CSV files are **appended to**, not overwritten. The `ExcelOutput/` and `Output/` directories are git-ignored, so session logs are not committed by accident.
+Each output is switched on or off with its own `True`/`False` setting; the file path is only used when the output is on. Output file paths are relative to the directory the receiver is started from (normally the top of the repository), and the folder is created if it does not exist. Existing Excel and CSV files are **appended to**, not overwritten. The `ExcelOutput/` and `Output/` directories are git-ignored, so session logs are not committed by accident.
 
 ## Radio frame format
 
@@ -124,8 +126,8 @@ Points are stamped with the **vehicle's GPS time**, not the laptop's receive tim
 
 ## Output files
 
-* **Excel** (`xlsxOutputFile`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. When appending, a three-row gap separates sessions. Saving rewrites the whole workbook, so it is saved at most every `xlsxSaveInterval` seconds (and straight away for the first row), plus once more when the receiver stops. Stop the receiver with Ctrl-C so the last rows are saved.
-* **CSV** (`csvOutputFile`): one row per message: `Timestamp` (ISO 8601), `Source`, `Item`, `Message Body` (`name=value` pairs in one quoted column), `CRC`.
+* **Excel** (`xlsxEnabled`, `xlsxOutputFile`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. When appending, a three-row gap separates sessions. Saving rewrites the whole workbook, so it is saved at most every `xlsxSaveInterval` seconds (and straight away for the first row), plus once more when the receiver stops. Stop the receiver with Ctrl-C so the last rows are saved.
+* **CSV** (`csvEnabled`, `csvOutputFile`): one row per message: `Timestamp` (ISO 8601), `Source`, `Item`, `Message Body` (`name=value` pairs in one quoted column), `CRC`.
 
 Note that `tools/hex2csv.py` (below) writes a **different** CSV layout.
 
@@ -165,7 +167,7 @@ The tests replay the sample captures in [../Tests/data/](../Tests/data/) and com
 * `NRT.BIN`: Ortus-T at iESC 2026 (qualifying, 18 September 2026): two sections of the recording, joined. The first (GPS with a position fix) is about 1 minute long; the second (out on track, with the motor controller, driver controls and current dial) is about 8 minutes long, with radio reception getting worse towards the end. Recorded with the ESC-CODE receiver, whose own decoded output was used to check this branch's decoding.
 * `MPPT.BIN`: an earlier (July 2023) recording with MPPT status messages, which are not in the iESC 2026 recording.
 
-**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off in `receiver_config.py`.
+**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off (`enabled=False` in `InfluxCredentials` in `receiver_config.py`). To check the replay in a file instead, set `csvEnabled` or `xlsxEnabled` to `True`.
 
 ```shell
 # terminal 1: create a one way virtual serial port, and then replay the sample capture through it at about the rate it was received over the radio (250 bytes per second)

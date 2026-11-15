@@ -1,4 +1,5 @@
 import logging
+import os
 from typing import List
 
 from Receiver.telemetry_parser import TelemetryParser
@@ -52,6 +53,13 @@ class TelemetryStorer:
             storage_class.close()
 
 
+def _make_parent_folder(path) -> None:
+    """Create the folder an output file goes in (e.g. ExcelOutput/), if needed."""
+    folder = os.path.dirname(path)
+    if folder:
+        os.makedirs(folder, exist_ok=True)
+
+
 class StorerWrapper:
     """Wrapper to store data and end session via single methods.
 
@@ -75,13 +83,15 @@ class StorerWrapper:
     def init_storer(self):
         # read config at call time so monkeypatching receiver_config takes effect
         storer_extension_list = []
-        if receiver_config.xlsxOutputFile != "":
+        if receiver_config.xlsxEnabled:
+            _make_parent_folder(receiver_config.xlsxOutputFile)
             excel_storer = ExcelStorer(
                 receiver_config.xlsxOutputFile,
                 save_interval=receiver_config.xlsxSaveInterval,
             )
             storer_extension_list.append(excel_storer)
-        if receiver_config.csvOutputFile != "":
+        if receiver_config.csvEnabled:
+            _make_parent_folder(receiver_config.csvOutputFile)
             csv_storer = CSVStorer(receiver_config.csvOutputFile)
             storer_extension_list.append(csv_storer)
         if receiver_config.ifCredentials.enabled:
