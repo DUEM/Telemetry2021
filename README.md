@@ -212,8 +212,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 ## Known limitations
 
 **Radio link and framing**
-* Frames are terminated by `0x7E`, but `0x7E` bytes inside the frame are not escaped. If any timestamp, data or CRC byte equals `0x7E`, the frame is split. The receiver and the offline tools re-join split frames ([frame_reader.py](Receiver/frame_reader.py)), recovering about 2.4% of frames in the iESC 2026 SD card logs. A frame damaged in the radio link as well cannot be re-joined; it fails the CRC check, so the message is lost but does not reach InfluxDB corrupted.
-* The live receiver does not keep a raw copy of the received bytes. The `.BIN` log on the board's SD card is the only raw record of a session.
+* Frames are terminated by `0x7E`, but `0x7E` bytes inside the frame are not escaped. If any timestamp, data or CRC byte equals `0x7E`, the frame is split but the receiver and the offline tools re-join split frames ([frame_reader.py](Receiver/frame_reader.py)), recovering about 2.4% of frames in the iESC 2026 SD card logs (for example). A frame damaged in the radio link as well cannot be re-joined; it then fails the CRC check and so the message is lost and does not reach InfluxDB corrupted.
 
 **Decoding**
 * Only CAN IDs in the `dbc/` files are decoded. Others are written to InfluxDB as `ERROR/ID UNRECOGNISED`. Check the DBC files cover any new hardware on the vehicle.
