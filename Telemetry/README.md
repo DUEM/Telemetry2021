@@ -25,8 +25,8 @@ It relays every CAN message it receives (`PROCESS_ALL_MSG` in [UseMsgList.hpp](U
 
 1. Get the code **including the CANApi submodule**:
    ```shell
-   git switch PERI-DEVELOPMENT-TPB-1126
-   git pull origin PERI-DEVELOPMENT-TPB-1126
+   git switch PERI-PRODUCTION
+   git pull origin PERI-PRODUCTION
    git submodule update --init
    ```
    If `src/CANApi/` is empty, the build fails because `CanApiv04.hpp` cannot be found.

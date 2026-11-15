@@ -35,7 +35,7 @@ _The telemetry system for the Peri vehicle (2026 onwards): the BWSC 2023 on-vehi
 
 | Branch | Contents |
 |---|---|
-| `PERI-DEVELOPMENT-TPB-1126` | **This branch.** The code used with Peri (2026+): BWSC 2023 firmware plus the DBC-based Python receiver, with tests. |
+| `PERI-PRODUCTION` | **This branch.** The code used with Peri (2026+): BWSC 2023 firmware plus the DBC-based Python receiver, with tests. |
 | [`ESC-CODE`](https://github.com/DUEM/Telemetry2021/tree/ESC-CODE) | The cut-down code used at ESC 2024 and ESC 2026. Same firmware, simpler receiver (see [below](#how-this-differs-from-the-esc-code-branch)). |
 | [`nick-22Library`](https://github.com/DUEM/Telemetry2021/tree/nick-22Library) | Default branch. The full BWSC 2023-era code base, including newer firmware (CANApi v1.0-beta.3) not yet merged here. |
 
@@ -65,7 +65,7 @@ For the ESC-CODE version of the race-day steps and limitations, see its [README]
 _This assumes Ubuntu, InfluxDB 1.x and Grafana are already installed and set up. If they are not, or you are new to Linux, follow [SETUP.md](SETUP.md) instead, which covers everything from a fresh Ubuntu install (including in a VirtualBox VM) to a working test. The Grafana dashboard is not stored in this repository._
 
 ```shell
-git clone -b PERI-DEVELOPMENT-TPB-1126 --recurse-submodules git@github.com:DUEM/Telemetry2021.git
+git clone -b PERI-PRODUCTION --recurse-submodules git@github.com:DUEM/Telemetry2021.git
 cd Telemetry2021
 python3 -m venv ~/virtualenvs/telemetry
 source ~/virtualenvs/telemetry/bin/activate
@@ -141,8 +141,8 @@ You need internet access for this.
 
 ```shell
 cd Telemetry2021
-git switch PERI-DEVELOPMENT-TPB-1126
-git pull origin PERI-DEVELOPMENT-TPB-1126
+git switch PERI-PRODUCTION
+git pull origin PERI-PRODUCTION
 git submodule update --init
 git status
 ```
@@ -150,8 +150,8 @@ git status
 The output should show:
 
 ```
-On branch PERI-DEVELOPMENT-TPB-1126
-Your branch is up to date with 'origin/PERI-DEVELOPMENT-TPB-1126'
+On branch PERI-PRODUCTION
+Your branch is up to date with 'origin/PERI-PRODUCTION'
 ```
 
 Then switch back to the telemetry LAN.
