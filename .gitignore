@@ -12,9 +12,8 @@ env/
 .coverage
 htmlcov/
 
-# receiver output, relative to where it is run (see xlsxOutputFile / csvOutputFile in Receiver/receiver_config.py)
-ExcelOutput/
-Output/
+# receiver output (see sessionLogsFolder in Receiver/receiver_config.py)
+session-logs/
 
 # ide files
 .idea/

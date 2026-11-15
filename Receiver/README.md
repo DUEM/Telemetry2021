@@ -41,13 +41,14 @@ Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are cl
 | InfluxDB host, port, user, password, database | `InfluxCredentials` in [receiver_config.py](receiver_config.py) | `localhost`, `8086`, `admin`, `password`, `DUSCiESC` |
 | InfluxDB on / off | `enabled` in `InfluxCredentials` | `True` (on) |
 | Excel on / off | `xlsxEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
-| Excel file | `xlsxOutputFile` in [receiver_config.py](receiver_config.py) | `./ExcelOutput/ExcelTest.xlsx` |
+| Excel folder | `xlsxOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/excel/` |
 | Excel save interval | `xlsxSaveInterval` in [receiver_config.py](receiver_config.py) | **10** seconds |
 | CSV on / off | `csvEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
-| CSV file | `csvOutputFile` in [receiver_config.py](receiver_config.py) | `./Output/telemetry.csv` |
+| CSV folder | `csvOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/csv/` |
+| Output file name | `sessionLogName` in [receiver_config.py](receiver_config.py) | `testlog` (files are `testlog-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv`) |
 | CAN database files | `dbc_files` in [receiver_config.py](receiver_config.py) | the four files in [../dbc/](../dbc/) |
 
-Each output is switched on or off with its own `True`/`False` setting; the file path is only used when the output is on. Output file paths are relative to the directory the receiver is started from (normally the top of the repository), and the folder is created if it does not exist. Existing Excel and CSV files are **appended to**, not overwritten. The `ExcelOutput/` and `Output/` directories are git-ignored, so session logs are not committed by accident.
+Each output is switched on or off with its own `True`/`False` setting. Output files go in the `session-logs/` folder at the top of the repository, whichever directory the receiver is started from: Excel in `session-logs/excel/`, CSV in `session-logs/csv/`. The folders are created when first needed. Each run of the receiver writes **new** files, named after the local date and time it started, e.g. `session-logs/csv/testlog-2026-11-15-143012.csv`; the Excel and CSV files from one run have the same name. `session-logs/` is git-ignored, so session logs are not committed by accident.
 
 ## Radio frame format
 
@@ -126,8 +127,8 @@ Points are stamped with the **vehicle's GPS time**, not the laptop's receive tim
 
 ## Output files
 
-* **Excel** (`xlsxEnabled`, `xlsxOutputFile`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. When appending, a three-row gap separates sessions. Saving rewrites the whole workbook, so it is saved at most every `xlsxSaveInterval` seconds (and straight away for the first row), plus once more when the receiver stops. Stop the receiver with Ctrl-C so the last rows are saved.
-* **CSV** (`csvEnabled`, `csvOutputFile`): one row per message: `Timestamp` (ISO 8601), `Source`, `Item`, `Message Body` (`name=value` pairs in one quoted column), `CRC`.
+* **Excel** (`xlsxEnabled`, in `session-logs/excel/`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. (If a file of the same name already exists, which only happens if the receiver is restarted within the same second, it is appended to after a three-row gap.) Saving rewrites the whole workbook, so it is saved at most every `xlsxSaveInterval` seconds (and straight away for the first row), plus once more when the receiver stops. Stop the receiver with Ctrl-C so the last rows are saved.
+* **CSV** (`csvEnabled`, in `session-logs/csv/`): one row per message: `Timestamp` (ISO 8601), `Source`, `Item`, `Message Body` (`name=value` pairs in one quoted column), `CRC`.
 
 Note that `tools/hex2csv.py` (below) writes a **different** CSV layout.
 

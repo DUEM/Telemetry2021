@@ -53,7 +53,7 @@ Both branches run the **same firmware** on the vehicle (same [Telemetry/](Teleme
 | GPS position | Stored as sent (NMEA `ddmm.mmmm` plus N/S, E/W); converted by `live_calculations` | Converted to decimal degrees in a `location` measurement |
 | Unknown CAN IDs | Stored as `ERROR/ID UNRECOGNISED` | Flagged with sentinel row `99` |
 | Settings | [Receiver/receiver_config.py](Receiver/receiver_config.py) and the top of `LiveTelemetry.py` | Prompted for port and file names on each run; InfluxDB settings hardwired in the script |
-| Live output files | Optional Excel and/or CSV, each switched on in `receiver_config.py` (off by default; appended to) | Raw `.BIN` and decoded `.csv` every session (overwritten) |
+| Live output files | Optional Excel and/or CSV, each switched on in `receiver_config.py` (off by default); a new date-and-time-named file in `session-logs/` every session | Raw `.BIN` and decoded `.csv` every session (overwritten) |
 | Offline tools | [`tools/hex2csv.py`, `tools/hex2influx.py`](Receiver/README.md#offline-tools-sd-card-logs) for SD card logs | None |
 | Extra calculations | [live_calculations](Receiver/live_calculations/README.md), [SolarSim upload](Client/README.md) | None |
 | Tests | pytest suite in [Tests/](Tests/), run by GitHub Actions | None |
@@ -180,7 +180,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   └── requirements.txt           (for check_xbee_settings.py on its own)
 ├── Receiver                       (Python receiver software, see Receiver/README.md)
 │   ├── LiveTelemetry.py           (live receiver: serial → decode → storage plugins)
-│   ├── receiver_config.py         (output on/off switches and files, InfluxDB credentials, DBC file list)
+│   ├── receiver_config.py         (output on/off switches and folders, InfluxDB credentials, DBC file list)
 │   ├── frame_reader.py            (splits a capture into frames on 0x7E, re-joining split frames)
 │   ├── telemetry_parser.py        (CRC check, timestamps, decoding)
 │   ├── can_dbc_decoder.py         (DBC lookup with cantools)
@@ -188,6 +188,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   ├── storer_extension.py        (InfluxDB, Excel and CSV storage plugins)
 │   ├── requirements.txt
 │   └── live_calculations          (route distance, incline and power, see its README.md)
+├── session-logs                   (receiver Excel and CSV output: excel/, csv/; git-ignored, created when needed)
 ├── Client                         (SolarSim strategy upload to InfluxDB, see Client/README.md)
 ├── Tests                          (pytest suite)
 │   └── data                       (sample captures and their expected decoded .csv: NRT.BIN from

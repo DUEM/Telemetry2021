@@ -1,5 +1,7 @@
 import logging
 import os
+from datetime import datetime
+from pathlib import Path
 from typing import List
 
 from Receiver.telemetry_parser import TelemetryParser
@@ -53,11 +55,12 @@ class TelemetryStorer:
             storage_class.close()
 
 
-def _make_parent_folder(path) -> None:
-    """Create the folder an output file goes in (e.g. ExcelOutput/), if needed."""
-    folder = os.path.dirname(path)
-    if folder:
-        os.makedirs(folder, exist_ok=True)
+def session_log_file(folder, extension: str, started: datetime) -> Path:
+    """Path of this session's log file in `folder`, e.g.
+    <folder>/testlog-2026-11-15-143012.csv, creating the folder if needed."""
+    os.makedirs(folder, exist_ok=True)
+    name = f"{receiver_config.sessionLogName}-{started:%Y-%m-%d-%H%M%S}.{extension}"
+    return Path(folder) / name
 
 
 class StorerWrapper:
@@ -83,16 +86,17 @@ class StorerWrapper:
     def init_storer(self):
         # read config at call time so monkeypatching receiver_config takes effect
         storer_extension_list = []
+        started = datetime.now()  # local time, shared by all of this session's files
         if receiver_config.xlsxEnabled:
-            _make_parent_folder(receiver_config.xlsxOutputFile)
             excel_storer = ExcelStorer(
-                receiver_config.xlsxOutputFile,
+                session_log_file(receiver_config.xlsxOutputFolder, "xlsx", started),
                 save_interval=receiver_config.xlsxSaveInterval,
             )
             storer_extension_list.append(excel_storer)
         if receiver_config.csvEnabled:
-            _make_parent_folder(receiver_config.csvOutputFile)
-            csv_storer = CSVStorer(receiver_config.csvOutputFile)
+            csv_storer = CSVStorer(
+                session_log_file(receiver_config.csvOutputFolder, "csv", started)
+            )
             storer_extension_list.append(csv_storer)
         if receiver_config.ifCredentials.enabled:
             influx_storer = Influx1Storer(receiver_config.ifCredentials)

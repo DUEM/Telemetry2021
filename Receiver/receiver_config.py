@@ -2,14 +2,21 @@ from pathlib import PurePath
 from typing import NamedTuple
 
 
+# Paths are resolved relative to this file, so the receiver can be started from
+# any working directory (e.g. as a service on the Pi).
+_repo_root = PurePath(__file__).parent.parent
+
 # used by all live_calculation scripts
-# Each output is switched on or off with its own True/False setting. File paths
-# are relative to the directory the receiver is started from, and the folder is
-# created if it does not exist.
+# Each output is switched on or off with its own True/False setting. Each run of
+# the receiver writes a new file named after the time it started, e.g.
+# session-logs/csv/testlog-2026-11-15-143012.csv. The folders are created if
+# they do not exist.
+sessionLogsFolder = _repo_root / "session-logs"
+sessionLogName: str = "testlog"  # file names are <sessionLogName>-YYYY-MM-DD-HHMMSS.<ext>
 
 # Excel (.xlsx) output
 xlsxEnabled: bool = False
-xlsxOutputFile: str = './ExcelOutput/ExcelTest.xlsx'
+xlsxOutputFolder = sessionLogsFolder / "excel"
 # Save the xlsx file at most this often (seconds), and when the receiver stops.
 # Saving rewrites the whole workbook, so saving after every message gets slower
 # as the file grows. If the receiver is killed without stopping cleanly, up to
@@ -19,7 +26,7 @@ xlsxSaveInterval: float = 10.0
 
 # CSV output
 csvEnabled: bool = False
-csvOutputFile: str = './Output/telemetry.csv'
+csvOutputFolder = sessionLogsFolder / "csv"
 
 # InfluxDB output: switched on or off with `enabled` below
 class InfluxCredentials(NamedTuple):
@@ -32,10 +39,6 @@ class InfluxCredentials(NamedTuple):
 
 
 ifCredentials = InfluxCredentials()
-
-# Paths are resolved relative to this file, so the receiver can be started from
-# any working directory (e.g. as a service on the Pi).
-_repo_root = PurePath(__file__).parent.parent
 
 dbc_folder = _repo_root / "dbc"
 dbc_files = [

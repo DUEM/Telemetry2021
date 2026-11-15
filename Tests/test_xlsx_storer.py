@@ -1,3 +1,5 @@
+import re
+
 import pytest
 from unittest.mock import MagicMock, call, patch
 from datetime import datetime, timezone
@@ -7,9 +9,9 @@ from datetime import datetime, timezone
 # Mock the Workbook and Worksheet
 @pytest.fixture(scope="function")
 def mock_xlsx_workbook(monkeypatch):
-    # dbc_files, ifCredentials and csvEnabled come from patch_receiver_config
+    # dbc_files, ifCredentials, csvEnabled and xlsxOutputFolder (in tmp_path)
+    # come from patch_receiver_config
     monkeypatch.setattr("Receiver.receiver_config.xlsxEnabled", True)
-    monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "mock.xlsx")
 
     # patch where the name is looked up, not where it is defined
     with patch("Receiver.storer_extension.Workbook", spec=True) as mock_workbook:
@@ -74,8 +76,13 @@ def test_xlsx_closed(monkeypatch, nrt_bytes, run_in_receiver, mock_xlsx_workbook
     # Act
     end_session()
 
-    # Assert
-    mock_workbook.save.assert_called_once_with("mock.xlsx")
+    # Assert - saved once, to this session's file in the excel folder
+    from Receiver import receiver_config
+
+    mock_workbook.save.assert_called_once()
+    (saved_to,) = mock_workbook.save.call_args.args
+    assert saved_to.parent == receiver_config.xlsxOutputFolder
+    assert re.fullmatch(r"testlog-\d{4}-\d{2}-\d{2}-\d{6}\.xlsx", saved_to.name)
     mock_workbook.close.assert_called_once_with()
 
 
