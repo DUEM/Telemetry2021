@@ -14,6 +14,8 @@ struct conf {
 
 void setupSD();
 void startSDLog();
+void logNMEAChar(char c); // buffer one raw GPS byte for the NMEA log
+void flushSDLogs();       // write buffered NMEA and flush both log files
 
 void getConfig();
 
