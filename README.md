@@ -227,7 +227,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 * The Orion scalings come from the recorded data and the usual Orion settings, and still need confirming from the Orion BMS profile loaded on Peri. Orion `PackCurrent` is **negative when the battery is discharging**. The MPPT `VoltageOut` and `AmbientTemperature` are still stored as raw values. These and the other gaps are marked `TODO: add ...` in the DBC files and listed at the end of [dbc/SIGNALS.md](dbc/SIGNALS.md#still-to-be-documented).
 * GPS latitude and longitude are stored as sent (NMEA `ddmm.mmmm` with a separate N/S, E/W character), not as decimal degrees, so they cannot be used directly by a Grafana map panel. [road_lookup.py](Receiver/live_calculations/road_lookup.py) does the conversion.
 * Latitude and longitude are sent as separate CAN messages, which can lead to mismatched positions.
-* The decoder does not handle end-of-stream or break in the serial port availability on the system (e.g. USB being unplugged) cleanly and fails with an internal code error.
+* If the serial port is lost (e.g. the XBee's USB is unplugged, or a [software-in-the-loop replay](Receiver/README.md#testing-without-hardware-software-in-the-loop-sil) ends), the receiver logs "Serial port lost" and stops as if Ctrl-C had been pressed, saving and closing its outputs. It does not reconnect: plug the XBee back in and start the receiver again.
 
 **Timestamps**
 * Until the first valid GPS time message arrives, timestamps are based on the laptop's clock when the receiver started plus the board's uptime, so they are only approximate.

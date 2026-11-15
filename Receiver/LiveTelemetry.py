@@ -40,14 +40,19 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     assembler = FrameAssembler()
     frameBuffer = bytearray()
     while keep_running():
-        if connection.in_waiting: #in_waiting returns number of bytes ready to be processed. If greater than 0, process data
-            for byte in connection.read(connection.in_waiting):
-                if byte == END_OF_FRAME_MARKER[0]:
-                    for frame in assembler.push(frameBuffer):
-                        store(frame)
-                    frameBuffer = bytearray()  # reset buffer
-                else:
-                    frameBuffer.append(byte)
+        try:
+            waiting = connection.in_waiting  # number of bytes ready to be processed
+            data = connection.read(waiting) if waiting else b""
+        except OSError as e:  # port gone: USB unplugged, or the SIL replay ended (serial.SerialException is an OSError)
+            logging.error("Serial port lost (%s): stopping the receiver", e)
+            break
+        for byte in data:
+            if byte == END_OF_FRAME_MARKER[0]:
+                for frame in assembler.push(frameBuffer):
+                    store(frame)
+                frameBuffer = bytearray()  # reset buffer
+            else:
+                frameBuffer.append(byte)
     for frame in assembler.flush():  # pieces held back when the loop stopped
         store(frame)
     return assembler.rejoined

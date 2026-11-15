@@ -57,3 +57,36 @@ def test_receive_flushes_a_held_piece_when_stopped():
 
     # the bytes after the last marker are an unfinished frame and are not stored
     assert stored == [b"\x01\x02\x03"]
+
+
+@pytest.mark.parametrize("error", [OSError(5, "Input/output error"), "SerialException"])
+def test_receive_stops_cleanly_when_the_port_is_lost(request, tmp_path, caplog, error):
+    """USB unplugged or the SIL replay ended: frames received so far are kept,
+    and receive() returns normally so the outputs can be saved and closed."""
+    import serial
+    from Receiver.LiveTelemetry import receive
+
+    if error == "SerialException":  # what read() raises when the device has gone
+        error = serial.SerialException("device reports readiness to read but returned no data")
+    data = open(f"{request.config.rootdir}/Tests/data/MPPT.BIN", "rb").read()
+    half = data[: len(data) // 2]
+
+    class LostPort(FakeSerial):
+        @property
+        def in_waiting(self):
+            if self.finished():
+                raise error
+            return super().in_waiting
+
+    port = LostPort(half, chunk=64)
+    stored = []
+
+    receive(port, store=stored.append, keep_running=lambda: True)  # only the error stops it
+
+    # everything received before the disconnection is stored, as the offline
+    # reader would; only the piece cut off after the last marker is lost
+    received = tmp_path / "received.BIN"
+    received.write_bytes(half)
+    assert stored == read_frames(received)[:-1]
+    assert len(stored) > 100
+    assert "Serial port lost" in caplog.text
