@@ -151,6 +151,7 @@ void readGPS() {
   while (GPSSerial.available()) {
     char c = GPS.read();
     if (c) {
+      logNMEAChar(c); // raw byte to SD before parsing: source of truth
 #ifdef GPSECHO
       DEBUG_PRINT(c);
 #endif

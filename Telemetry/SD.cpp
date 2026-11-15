@@ -12,6 +12,39 @@
 conf config;
 extern CANHelper::Messages::Telemetry::_TimeAndFix time;
 File dataFile;
+File nmeaFile; // raw GPS NMEA stream, same YYMMDDNN name as dataFile with .txt extension
+
+// The SD library shares one 512-byte block cache between all open files, so
+// writing NMEA chars one at a time in between dataFile's CAN frames would make
+// it swap blocks constantly. Collect NMEA here and write it out in chunks.
+#define NMEA_BUF_SIZE 256
+static uint8_t nmeaBuf[NMEA_BUF_SIZE];
+static uint16_t nmeaBufLen = 0;
+
+static void writeNMEABuffer() {
+    if (nmeaBufLen > 0 && nmeaFile) {
+        nmeaFile.write(nmeaBuf, nmeaBufLen);
+    }
+    nmeaBufLen = 0;
+}
+
+void logNMEAChar(char c) {
+    /* Record one raw byte from the GPS module, before any parsing, so the file
+     * holds exactly what the module sent (including sentences that later fail
+     * checksum). Standard NMEA, so it opens in any GPS tool.
+     */
+    if (!nmeaFile) return;
+    nmeaBuf[nmeaBufLen++] = c;
+    if (nmeaBufLen >= NMEA_BUF_SIZE) {
+        writeNMEABuffer();
+    }
+}
+
+void flushSDLogs() {
+    writeNMEABuffer();
+    dataFile.flush();
+    nmeaFile.flush();
+}
 
 void set_defaults() {
     /* We run this if for whatever reason we can't read config.txt
@@ -102,11 +135,27 @@ void startSDLog() {
     filename[11] = 'n'; //t
     filename[12] = '\0';
 
+    // NMEA log shares the name, so YYMMDDNN.bin and YYMMDDNN.txt are one session
+    char nmeaFilename[13];
+
     // If we've already recorded today, +1 to trailing number
     for (uint8_t i = 0; i < 100; i++) {
         filename[10-4] = i/10 + '0';
         filename[11-4] = i%10 + '0';
-        if (! SD.exists(filename)) {
+        memcpy(nmeaFilename, filename, sizeof(filename));
+        nmeaFilename[9] = 't';
+        nmeaFilename[10] = 'x';
+        nmeaFilename[11] = 't';
+        if (! SD.exists(filename) && ! SD.exists(nmeaFilename)) {
+            nmeaFile = SD.open(nmeaFilename, FILE_WRITE);
+            if (nmeaFile) {
+                DEBUG_PRINT("Opening NMEA file: ");
+                DEBUG_PRINTLN(nmeaFilename);
+            } else {
+                DEBUG_PRINT("Could not open NMEA file: ");
+                DEBUG_PRINTLN(nmeaFilename);
+            }
+
             dataFile = SD.open(filename, FILE_WRITE); // Only create a new file which doesn't exist
             if (dataFile) {
                 DEBUG_PRINT("Opening file: ");
