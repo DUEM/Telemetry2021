@@ -6,11 +6,11 @@ from typing import NamedTuple
 # any working directory (e.g. as a service on the Pi).
 _repo_root = PurePath(__file__).parent.parent
 
-# used by all live_calculation scripts
 # Each output is switched on or off with its own True/False setting. Each run of
-# the receiver writes a new file named after the time it started, e.g.
-# session-logs/csv/telem-received-2026-11-15-143012.csv. The folders are created if
-# they do not exist.
+# the receiver writes new files, named after the time the first frame arrived,
+# e.g. session-logs/csv/telem-received-2026-11-15-143012.csv. The folders are
+# created if they do not exist. (The live_calculations scripts have their own
+# settings, in Receiver/live_calculations/config.py.)
 sessionLogsFolder = _repo_root / "session-logs"
 sessionLogName: str = "telem-received"  # file names are <sessionLogName>-YYYY-MM-DD-HHMMSS.<ext>
 

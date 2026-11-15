@@ -404,7 +404,7 @@ VS Code's **Source Control** panel (the branching icon on the left) shows your c
 
 ## Part 8: Check it end to end, without the car
 
-You can send a recorded capture through a pair of virtual serial ports, and watch it arrive in InfluxDB and Grafana. This writes the sample data into the `DUSCiESC` database.
+You can send a recorded capture through a virtual serial port, and watch it arrive in InfluxDB and Grafana. This writes the sample data into the `DUSCiESC` database.
 
 1. Install `socat`, a tool that creates virtual serial ports and `pv` a tool that replays data at a given rate:
    ```shell
@@ -415,7 +415,7 @@ You can send a recorded capture through a pair of virtual serial ports, and watc
    ```shell
    influx -database DUSCiESC -execute 'SHOW MEASUREMENTS'
    ```
-4. In Grafana, look at a panel. Set the **time range** (top right) to include **18 September 2026, 10:30 to 11:30 UTC**: the sample capture (iESC 2026 qualifying) takes its timestamps from the GPS in the recording, not from today's date.
+4. In Grafana, look at a panel. Set the **time range** (top right) to include **18 September 2026, 10:30 to 11:30 UTC**: the sample capture (iESC 2026 qualifying) takes its timestamps from the GPS in the recording, not from today's date. Only the first few frames, sent before the recording's first GPS time, are stamped with the time you ran the replay.
 
 If you want an empty database again afterwards, delete and recreate it:
 

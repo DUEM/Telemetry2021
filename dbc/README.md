@@ -116,8 +116,8 @@ So that you can match older data:
 |---|---|---|
 | MPPT `VoltageIn` and `CurrentIn` scaled to V and A | raw (multiply by 0.15049 V and 0.00872 A) | V and A |
 | Motor controller status message renamed | `"Tritium/StausInformation"` | `"Tritium/StatusInformation"` |
-| Motor controller moved to Ortus-T/Peri's CAN IDs | base address 0x600 (0x600 to 0x617) | base address 0x300 (0x300 to 0x317), same message and signal names |
-| Driver controls moved to Ortus-T/Peri's CAN IDs | 0x501, 0x502 | 0x101, 0x102, same names |
+| Motor controller moved to Ortus-T's CAN IDs | base address 0x600 (0x600 to 0x617) | base address 0x300 (0x300 to 0x317), same message and signal names |
+| Driver controls moved to Ortus-T's CAN IDs | 0x501, 0x502 | 0x101, 0x102, same names |
 | Current dial message added | | `"DriverControls/DialCurrent"` (0x500) |
 | Old two-motor set-up removed (`Left_*`, `Right_*`, senders `WaveSculptor20_Right` / `Tritium_Right`, `DriverControls_Right`) | 0x23, 0x41 to 0x43, 0x80 to 0x8E, 0x101 | removed: not on Peri, and 0x080 and 0x101 are used by other devices |
 | Orion messages: 8 bytes, with the checksum in byte 7 | 7 bytes | 8 bytes, new `Checksum` field |
@@ -147,7 +147,7 @@ They all come from the **Orion thermistor expansion module**, which measures ext
 | 0xF380 | 0x1838F380 | Thermistor general broadcast: one thermistor's temperature (°C) each time, cycling through all of them | 8 | 100 ms | `00 21 19 21 11 1a 00 07` |
 | 0xFF80 | 0x18EEFF80 | J1939 address claim (always the same) | 8 | 200 ms | `f3 00 80 f3 00 40 1e 90` |
 
-The last three are 29-bit extended IDs, and the telemetry board only sends the lowest 16 bits of each ID (see `SendMessage.cpp`). So the two temperature messages arrive with the same ID, 0xF380, and cannot be told apart by ID alone (they can by content: only the first passes its checksum). Decoding them properly needs the firmware to send the full 29-bit ID, which changes the radio frame format for the receiver too. The Orion BMS already reports the pack's highest and lowest temperatures in `CellTempsDCL` (0x702), so the thermistor module's own messages add per-thermistor detail only. If that detail is not needed, filtering these IDs out on the board would also cut the radio traffic by about a third.
+The last three are 29-bit extended IDs, and the telemetry board only sends the lowest 16 bits of each ID (see `SendMessage.cpp`). So the two temperature messages arrive with the same ID, 0xF380, and cannot be told apart by ID alone (they can by content: only the first passes its checksum). Decoding them properly needs the firmware to send the full 29-bit ID, which changes the radio frame format for the receiver too. The Orion BMS already reports the pack's highest and lowest temperatures in `CellTempsDCL` (0x701), so the thermistor module's own messages add per-thermistor detail only. If that detail is not needed, filtering these IDs out on the board would also cut the radio traffic by about a third.
 
 ## Glossary
 

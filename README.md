@@ -17,7 +17,7 @@ _The telemetry system for the Peri vehicle (2026 onwards): the BWSC 2023 on-vehi
  XBee (USB) on the telemetry laptop  →  /dev/ttyUSB0
    ▼
  python3 -m Receiver.LiveTelemetry  (CRC check, decode with dbc/*.dbc)
-   │                                 ──►  optional Excel / CSV files
+   │                                 ──►  optional Excel / CSV / raw .BIN files
    ▼
  InfluxDB 1.x (database "DUSCiESC")  ◄──►  Receiver/live_calculations (optional)
    ▼
@@ -113,7 +113,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
 
 5. Open the Grafana dashboard in a browser (Grafana's default address is <http://localhost:3000>).
 
-6. Press **Ctrl-C** to stop the receiver. Any Excel or CSV output files are closed and saved.
+6. Press **Ctrl-C** to stop the receiver. Any Excel, CSV or BIN output files are closed and saved.
 
 ## Maintenance
 
@@ -193,7 +193,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 ├── Client                         (SolarSim strategy upload to InfluxDB, see Client/README.md)
 ├── Tests                          (pytest suite)
 │   └── data                       (sample captures and their expected decoded .csv: NRT.BIN from
-│                                    Peri at iESC 2026 qualifying, MPPT.BIN with MPPT messages)
+│                                    Ortus-T at iESC 2026 qualifying, MPPT.BIN with MPPT messages)
 ├── Telemetry                      (on-vehicle Arduino firmware, see Telemetry/README.md;
 │   │                                same as the ESC-CODE branch)
 │   ├── Telemetry.ino              (setup / main loop)
