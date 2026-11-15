@@ -1,8 +1,6 @@
 #define USE_MSG_Telemetry_SystemStatusMessages
 #define USE_MSG_Telemetry_TimeAndFix
 #define USE_MSG_Telemetry_SpeedAndAngle
-#define USE_MSG_Telemetry_Latitude
-#define USE_MSG_Telemetry_Longitude
 #define USE_MSG_Telemetry_AltitudeAndSatellites
 
 #define USE_MSG_DriverControls_SpeedValCurrVal

@@ -149,8 +149,10 @@ def main(
     road_file_path: os.PathLike = "RoadFile-LatLon-2021.dat",
 ) -> None:
     """Get Latitude and Longitude info off the influxdb and maps it to race
-    distance. Latitude and Longitude from the GPS are in the for DDMM.MMM so
-    this script first converts it back to decimal degrees beforehand. Decoded
+    distance. Positions come from Telemetry/GpsPosition, already in signed
+    decimal degrees. Points recorded before that message existed, in
+    Telemetry/Latitude and Telemetry/Longitude, are in NMEA DDMM.MMM format and
+    are converted to decimal degrees first. Decoded
     latitude, longitude and mapped race distance are written back to the
     influxdb under the measurement "Calculated"
 
@@ -179,38 +181,59 @@ def main(
         password=if_credentials.password,
         database=if_credentials.db,
     )
-    query_where = (
-        'SELECT "GpsLatitude","GpsLongitude","GpsLat","GpsLon" '
-        'FROM "Telemetry/Latitude","Telemetry/Longitude" '
-        "WHERE (\"calc_grad\"::tag != 'True') AND (time > now() - 180d)"
-    )
+    unprocessed = "WHERE (\"calc_grad\"::tag != 'True') AND (time > now() - 180d)"
 
-    ifdfq = influx_df_client.query(query_where)
+    # GpsPosition (0x0FB): signed decimal degrees, no conversion needed.
+    position_q = influx_df_client.query(
+        'SELECT "GpsLatitudeDeg","GpsLongitudeDeg" '
+        'FROM "Telemetry/GpsPosition" ' + unprocessed
+    )
+    # Latitude (0x0F8) / Longitude (0x0F9): no longer sent by the board, but
+    # points recorded before the switch may not have been processed yet.
+    legacy_q = influx_df_client.query(
+        'SELECT "GpsLatitude","GpsLongitude","GpsLat","GpsLon" '
+        'FROM "Telemetry/Latitude","Telemetry/Longitude" ' + unprocessed
+    )
     logger.info("Influx query successful")
 
-    if ifdfq == {}:
+    if position_q == {} and legacy_q == {}:
         logger.info("No new points to process.")
         return
-    # Reformat the data to a single dataframe and decode
-    df = pd.concat([j.copy() for i, j in ifdfq.items()], axis=1)
-    # decode the lat lon coordinates
-    df["GpsLatitude"] = df["GpsLatitude"].apply(
-        lambda x: x // 100 + (x % 100) / 60
-    ) * ((df["GpsLat"] == "N") * 2 - 1)
-    df["GpsLongitude"] = df["GpsLongitude"].apply(
-        lambda x: x // 100 + (x % 100) / 60
-    ) * ((df["GpsLon"] == "E") * 2 - 1)
-    df = df.resample("1s").mean(numeric_only=True).dropna()
+
+    positions = []
+    for df in position_q.values():
+        positions.append(
+            df.rename(
+                columns={"GpsLatitudeDeg": "Latitude", "GpsLongitudeDeg": "Longitude"}
+            )
+        )
+    if legacy_q != {}:
+        # decode NMEA ddmm.mmmm plus hemisphere character to decimal degrees
+        df = pd.concat([j.copy() for i, j in legacy_q.items()], axis=1)
+        df["GpsLatitude"] = df["GpsLatitude"].apply(
+            lambda x: x // 100 + (x % 100) / 60
+        ) * ((df["GpsLat"] == "N") * 2 - 1)
+        df["GpsLongitude"] = df["GpsLongitude"].apply(
+            lambda x: x // 100 + (x % 100) / 60
+        ) * ((df["GpsLon"] == "E") * 2 - 1)
+        positions.append(
+            df.rename(columns={"GpsLatitude": "Latitude", "GpsLongitude": "Longitude"})
+        )
+
+    df = (
+        pd.concat([p[["Latitude", "Longitude"]] for p in positions])
+        .sort_index()
+        .resample("1s")
+        .mean(numeric_only=True)
+        .dropna()
+    )
     logger.info("Lat Lon values decoded and resampled.")
 
     # Lookup
     road = tp.TecplotData(road_file_path)
     road = calc_grad(road)
     mapped_loc = dist_lookup(
-        road.data, df.GpsLatitude.to_numpy(), df.GpsLongitude.to_numpy()
-    )
-    df = df.rename(
-        columns={"GpsLatitude": "Latitude", "GpsLongitude": "Longitude"}
+        road.data, df.Latitude.to_numpy(), df.Longitude.to_numpy()
     )
     merged = (
         df.reset_index()
@@ -230,7 +253,7 @@ def main(
     )
 
     # add tag to processed data
-    for measurement, measurement_df in ifdfq.items():
+    for measurement, measurement_df in {**position_q, **legacy_q}.items():
         influx_df_client.write_points(
             measurement_df,
             measurement,

@@ -24,6 +24,7 @@ Every CAN message the receiver can decode, what each signal means, and where to 
   * [Latitude](#latitude-0x0f8) (0x0F8, from Telemetry)
   * [Longitude](#longitude-0x0f9) (0x0F9, from Telemetry)
   * [AltitudeAndSatellites](#altitudeandsatellites-0x0fa) (0x0FA, from Telemetry)
+  * [GpsPosition](#gpsposition-0x0fb) (0x0FB, from Telemetry)
   * [SystemStatusMessages](#systemstatusmessages-0x111) (0x111, from Telemetry)
 * [wavesculptor_22.dbc](#wavesculptor22)
   * [SpeedValCurrVal](#speedvalcurrval-0x101) (0x101, from DriverControls)
@@ -570,14 +571,14 @@ SELECT "GpsSpeed" FROM "Telemetry/SpeedAndAngle" WHERE time > now() - 1h
 
 ### Latitude (0x0F8)
 
-GPS latitude. Sent every gps_update ms.
+GPS latitude. No longer sent: replaced by GpsPosition (0x0FB) in November 2026, which carries latitude and longitude together in signed decimal degrees. Kept so that older logs still decode.
 
 | | |
 |---|---|
 | From | `Telemetry` |
 | CAN ID | 0x0F8 (248) |
 | Length | 5 bytes |
-| Sent every | 2000 ms |
+| Sent every | not known |
 | InfluxDB measurement | `"Telemetry/Latitude"` |
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
@@ -619,14 +620,14 @@ SELECT "GpsLatitude" FROM "Telemetry/Latitude" WHERE time > now() - 1h
 
 ### Longitude (0x0F9)
 
-GPS longitude. Sent every gps_update ms.
+GPS longitude. No longer sent: replaced by GpsPosition (0x0FB) in November 2026, which carries latitude and longitude together in signed decimal degrees. Kept so that older logs still decode.
 
 | | |
 |---|---|
 | From | `Telemetry` |
 | CAN ID | 0x0F9 (249) |
 | Length | 5 bytes |
-| Sent every | 2000 ms |
+| Sent every | not known |
 | InfluxDB measurement | `"Telemetry/Longitude"` |
 
 | Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
@@ -709,6 +710,61 @@ SELECT "GpsAltitude" FROM "Telemetry/AltitudeAndSatellites" WHERE time > now() -
      4 |<-----------------------------x|
        +---+---+---+---+---+---+---+---+
          +-- GpsSatellites
+```
+
+</details>
+
+<a id="gpsposition-0x0fb"></a>
+
+### GpsPosition (0x0FB)
+
+GPS position: latitude and longitude from the same fix in one message, so they can never be mismatched. Sent every gps_update ms. Replaces the Latitude (248) and Longitude (249) messages. Each is a signed 32-bit whole number of 0.0000001 degree steps (about 1 cm), taken exactly from the GPS's own text output with no floating-point rounding on the board.
+
+| | |
+|---|---|
+| From | `Telemetry` |
+| CAN ID | 0x0FB (251) |
+| Length | 8 bytes |
+| Sent every | 2000 ms |
+| InfluxDB measurement | `"Telemetry/GpsPosition"` |
+
+| Signal (InfluxDB field) | Meaning | Unit | Scaling | Range | Values |
+|---|---|---|---|---|---|
+| `GpsLatitudeDeg` | Latitude in decimal degrees, -90 to 90: positive north, negative south. Ready to use, no conversion needed (unlike GpsLatitude in Latitude, 248). | deg | raw x 1e-07 | -90 to 90 |  |
+| `GpsLongitudeDeg` | Longitude in decimal degrees, -180 to 180: positive east, negative west (so negative in the UK west of Greenwich). Ready to use, no conversion needed (unlike GpsLongitude in Longitude, 249). | deg | raw x 1e-07 | -180 to 180 |  |
+
+Example InfluxDB query:
+
+```
+SELECT "GpsLatitudeDeg" FROM "Telemetry/GpsPosition" WHERE time > now() - 1h
+```
+
+<details><summary>Bit layout</summary>
+
+```
+                      Bit
+
+         7   6   5   4   3   2   1   0
+       +---+---+---+---+---+---+---+---+
+     0 |------------------------------x|
+       +---+---+---+---+---+---+---+---+
+     1 |-------------------------------|
+       +---+---+---+---+---+---+---+---+
+     2 |-------------------------------|
+       +---+---+---+---+---+---+---+---+
+     3 |<------------------------------|
+ B     +---+---+---+---+---+---+---+---+
+ y       +-- GpsLatitudeDeg
+ t     +---+---+---+---+---+---+---+---+
+ e   4 |------------------------------x|
+       +---+---+---+---+---+---+---+---+
+     5 |-------------------------------|
+       +---+---+---+---+---+---+---+---+
+     6 |-------------------------------|
+       +---+---+---+---+---+---+---+---+
+     7 |<------------------------------|
+       +---+---+---+---+---+---+---+---+
+         +-- GpsLongitudeDeg
 ```
 
 </details>

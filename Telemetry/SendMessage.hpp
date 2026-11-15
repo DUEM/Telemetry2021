@@ -2,11 +2,11 @@
 #define SENDMESSAGE_HEADER
 
 #include "src/CANApi/CanApiv04.hpp"
+#include "GpsPosition.hpp"
 
 struct GPSData {
   CANHelper::Messages::Telemetry::_SpeedAndAngle speedAngle;
-  CANHelper::Messages::Telemetry::_Latitude latitude;
-  CANHelper::Messages::Telemetry::_Longitude longitude;
+  CANHelper::Messages::Telemetry::_GpsPosition position;
   CANHelper::Messages::Telemetry::_AltitudeAndSatellites altitudeSatellites;
 };
 

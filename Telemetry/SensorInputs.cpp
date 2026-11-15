@@ -45,15 +45,22 @@ void gps2canMsgs() {
   gpsData.speedAngle.data.GpsAngle = GPS.angle;
   sendMessage(gpsData.speedAngle);
 
-  // Latitude
-  gpsData.latitude.data.GpsLatitude = GPS.latitude;
-  gpsData.latitude.data.GpsLat = GPS.lat;
-  sendMessage(gpsData.latitude);
-
-  // Longitude
-  gpsData.longitude.data.GpsLongitude = GPS.longitude;
-  gpsData.longitude.data.GpsLon = GPS.lon;
-  sendMessage(gpsData.longitude);
+  // Latitude + longitude together (0x0FB), from the same fix. Replaces the
+  // separate Latitude (248) and Longitude (249) messages, which sent NMEA
+  // ddmm.mmmm as a float with the hemisphere as a separate character.
+  // latitude_fixed/longitude_fixed are degrees x 1e7 parsed from the NMEA text
+  // with integer maths only. Don't build them from latitudeDegrees: a double is
+  // only 32-bit on the Mega (about 0.4 m steps at our latitude).
+  // Adafruit_GPS 1.9 already makes south/west negative; older versions gave
+  // the magnitude only. Taking the magnitude and applying the hemisphere here
+  // is correct with either.
+  int32_t lat = labs(GPS.latitude_fixed);
+  int32_t lon = labs(GPS.longitude_fixed);
+  if (GPS.lat == 'S') lat = -lat;
+  if (GPS.lon == 'W') lon = -lon;
+  gpsData.position.data.GpsLatitudeDeg = lat;
+  gpsData.position.data.GpsLongitudeDeg = lon;
+  sendMessage(gpsData.position);
 
   // Altitude + satellites
   gpsData.altitudeSatellites.data.GpsAltitude = GPS.altitude;

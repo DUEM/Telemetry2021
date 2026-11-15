@@ -37,7 +37,7 @@ To run them from somewhere else, add this directory to the Python path first, e.
 
 ## road_lookup.py
 
-Reads the GPS position (`Telemetry/Latitude` and `Telemetry/Longitude`) from InfluxDB and converts it from NMEA `ddmm.mmmm` format to signed decimal degrees. It then uses a SolarSim road file to map each position to the closest distance along the route. The closest road file point is found by Euclidean distance, and a position is only mapped if that point is within 100 m.
+Reads the GPS position (`Telemetry/GpsPosition`, already in signed decimal degrees) from InfluxDB. Unprocessed points from before that message was added, in `Telemetry/Latitude` and `Telemetry/Longitude`, are also read and converted from NMEA `ddmm.mmmm` format to signed decimal degrees. It then uses a SolarSim road file to map each position to the closest distance along the route. The closest road file point is found by Euclidean distance, and a position is only mapped if that point is within 100 m.
 
 The incline is calculated from the altitude in the road file, using the same central difference method as SolarSim.
 

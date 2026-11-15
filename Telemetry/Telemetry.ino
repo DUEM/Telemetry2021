@@ -160,7 +160,5 @@ void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_System
 void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_TimeAndFix& msg) {}
 void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_SpeedAndAngle& msg) {}
 void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_AltitudeAndSatellites& msg) {}
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_Latitude& msg) {}
-void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_Longitude& msg) {}
 void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_MpptPollJaved& msg) {}
 void CANHelper::Messages::processMessage(CANHelper::Messages::Telemetry::_MpptPollWoof& msg) {}

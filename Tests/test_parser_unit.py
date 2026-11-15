@@ -216,6 +216,36 @@ class TestDbcDecoderAsciiSignals:
         assert isinstance(decoded[signal], str)
 
 
+class TestGpsPositionMessage:
+    """GpsPosition (0x0FB): latitude and longitude in one frame, as degrees x 1e7."""
+
+    @pytest.mark.parametrize(
+        "lat_e7, lon_e7, lat, lon",
+        [
+            (544556803, -15555867, 54.4556803, -1.5555867),  # Durham: north, west
+            (-349285000, 1386007000, -34.9285, 138.6007),  # Adelaide: south, east
+            (900000000, -1800000000, 90.0, -180.0),  # range limits
+        ],
+    )
+    def test_decodes_to_signed_decimal_degrees(
+        self, run_in_receiver, patch_receiver_config, lat_e7, lon_e7, lat, lon
+    ):
+        """Frame packed as the Mega lays out _GpsPosition (Telemetry/GpsPosition.hpp).
+
+        Two little-endian int32s. Fails if the dbc treats the signals as floats
+        (SIG_VALTYPE_ ... : 1), loses the sign, or changes the 1e-7 scaling.
+        """
+        import struct
+        from Receiver.telemetry_parser import TelemetryParser
+
+        frame = make_frame(0x0FB, struct.pack("<ii", lat_e7, lon_e7))
+        name, source, body, _, crc_ok = TelemetryParser().translate_msg(frame)
+
+        assert (name, source, crc_ok) == ("GpsPosition", "Telemetry", True)
+        assert body["GpsLatitudeDeg"] == pytest.approx(lat, abs=1e-9)
+        assert body["GpsLongitudeDeg"] == pytest.approx(lon, abs=1e-9)
+
+
 
 def make_frame(can_id, data, dlc=None, extra=b"", millis=1000):
     """A frame as the board sends it (without the end of frame marker), with a valid CRC.
