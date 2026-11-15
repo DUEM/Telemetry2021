@@ -35,8 +35,10 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     The marker is not escaped inside frames, so the pieces go through a
     FrameAssembler, which re-joins frames split by a 0x7E in their timestamp,
     data or CRC (see frame_reader.py). A re-joined frame is stored as soon as
-    its last piece arrives; a piece that cannot be completed is stored
-    unchanged and reported as a CRC failure, as before.
+    its last piece arrives. Complete frames at the start or end of a piece
+    that cannot be completed (frames run together after radio losses) are
+    split off and stored; the bytes left are stored and reported as a CRC
+    failure, as before. Returns the FrameAssembler, for its counts.
     """
     assembler = FrameAssembler()
     frameBuffer = bytearray()
@@ -56,7 +58,7 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
                 frameBuffer.append(byte)
     for frame in assembler.flush():  # pieces held back when the loop stopped
         store(frame)
-    return assembler.rejoined
+    return assembler  # its counts: rejoined, split
 
 
 def open_serial_port(port=SERIALPORT, baud=BAUD):
@@ -92,8 +94,11 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, sigintHandler)
 
     serialConnection = open_serial_port()
-    rejoined = receive(serialConnection)
+    assembler = receive(serialConnection)
 
     end_session()
     serialConnection.close()
-    print(f"Exiting live telemetry ({rejoined} frames split by an unescaped 0x7E were re-joined)")
+    print(
+        f"Exiting live telemetry ({assembler.rejoined} frames split by an unescaped 0x7E "
+        f"were re-joined; {assembler.split} frames run together after radio losses were split apart)"
+    )
