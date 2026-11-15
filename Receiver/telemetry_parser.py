@@ -21,13 +21,15 @@ GPS_YEAR_MAX = 79
 class TelemetryParser:
     def __init__(self):
         self.decoder = DbcDecoder()
-        # use this by default until the pi rtc goes out of sync (i.e the UPS
-        # fails). It can be resynced if reconnected to internet.
+        # Time reference: a frame's time is last_gps_time plus the board's
+        # millis since time_fetched (uint32, so the subtraction wraps around
+        # correctly). Set from each valid TimeAndFix GPS message. Until the
+        # first one arrives, the first frame received sets it to the laptop's
+        # clock at that frame's millis (time_fetched None means not set yet),
+        # so early timestamps are only off by the radio delay, however long
+        # the board has been running.
         self.last_gps_time: datetime = datetime.now(timezone.utc)
-        # Time since time variables were last updated in seconds
-        # #round(time.time() * 1000). Using numpy to force unsigned and integer
-        # overflows are needed.
-        self.time_fetched: uint32 = uint32(0)
+        self.time_fetched: Optional[uint32] = None
         # True while implausible GPS dates are being ignored (logged once per run)
         self._gps_date_rejected = False
 
@@ -72,6 +74,9 @@ class TelemetryParser:
         received_millis_time = np.frombuffer(
             msg_bytes_and_time[:4], dtype=uint32
         )[0]
+        if self.time_fetched is None:  # first frame: no GPS time yet
+            self.last_gps_time = datetime.now(timezone.utc)
+            self.time_fetched = received_millis_time
         msg_time = self.__get_time(received_millis_time)
 
         # do a lookup in spreadsheet using can id to work out can message type
@@ -112,6 +117,7 @@ class TelemetryParser:
 
         if can_id == 0x0F6 and decoded_message["GpsDay"] != 0:
             self.update_last_gps_time(decoded_message, received_millis_time)
+            msg_time = self.__get_time(received_millis_time)  # its own GPS time
         return message_name, message_source, decoded_message, msg_time, msg_crc_status
 
     def update_last_gps_time(self, gps_message, received_millis_time):
