@@ -322,7 +322,7 @@ The code is cloned over **SSH**, so that changes made on this machine can be com
 6. Get the code:
    ```shell
    cd ~
-   git clone -b PERI-DEVELOPMENT-TPB-1126 --recurse-submodules git@github.com:DUEM/Telemetry2021.git
+   git clone -b PERI-PRODUCTION --recurse-submodules git@github.com:DUEM/Telemetry2021.git
    cd Telemetry2021
    ```
    The CANApi submodule (the firmware's CAN library) is cloned over SSH too, using the same key.

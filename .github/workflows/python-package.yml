@@ -5,11 +5,11 @@ name: Pytest
 
 on:
   # Only run when Python code, test data or dependencies change (not for
-  # firmware or docs), on the default and active development branches.
+  # firmware or docs), on the default branch and the Peri production branch.
   push:
     branches:
       - nick-22Library
-      - PERI-DEVELOPMENT-TPB-1126
+      - PERI-PRODUCTION
     paths:
       - "Receiver/**"
       - "Tests/**"
