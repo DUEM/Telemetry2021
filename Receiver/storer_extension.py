@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Union
 
-from Receiver.frame_reader import END_OF_FRAME_MARKER
+from Receiver.frame_reader import END_OF_FRAME_MARKER, UnterminatedPiece
 
 from openpyxl import load_workbook, Workbook
 from os.path import exists as fileExists
@@ -375,7 +375,8 @@ class BinStorer(StorerExtension):
     through a virtual serial port (see the receiver README).
 
     A frame split by an unescaped 0x7E is written as it arrived, marker
-    included, once all its pieces have been received. Bytes after the last
+    included, once all its pieces have been received. Frames split apart
+    after radio losses are written back without the marker they did not have. Bytes after the last
     0x7E when the receiver stops (an unfinished frame) are not written.
     """
 
@@ -385,7 +386,10 @@ class BinStorer(StorerExtension):
         self.bin_file = open(bin_output_file, mode="ab")
 
     def store_raw(self, frame: bytes) -> None:
-        self.bin_file.write(bytes(frame) + END_OF_FRAME_MARKER)
+        # bytes split off the front of a longer piece were not followed by a
+        # marker when received (see frame_reader.split_run_together)
+        marker = b"" if isinstance(frame, UnterminatedPiece) else END_OF_FRAME_MARKER
+        self.bin_file.write(bytes(frame) + marker)
         self.bin_file.flush()  # a crash loses at most the frame in progress
 
     def store_data(
