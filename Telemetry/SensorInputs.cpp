@@ -9,7 +9,7 @@
 using namespace CANHelper::Messages::Telemetry;
 
 #define GPSSerial Serial1 //hardware serial that GPS is connected to
-#define GPSECHO //enables GPS debug messages to serial
+//#define GPSECHO //enables GPS debug messages to serial (echoes every GPS char over USB; bench debugging only)
 
 //Boolean states
 bool car_on; // = !safestate
