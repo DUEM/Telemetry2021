@@ -145,30 +145,27 @@ void setupSensorInputs() {
 }
 
 void readGPS() {
-  //DEBUG_PRINTLN("Poll GPS");
-  if(!GPS.newNMEAreceived()) {
-    //DEBUG_PRINTLN("No new NEMA received");
-#ifdef GPSECHO
+  // Drain everything the GPS has sent since the last loop. The old version read
+  // one char per loop(), so whenever loop() stalled (SD writes, CAN) the 64-byte
+  // Serial1 buffer overflowed and sentences were lost or corrupted.
+  while (GPSSerial.available()) {
     char c = GPS.read();
-    if(c)
+    if (c) {
+#ifdef GPSECHO
       DEBUG_PRINT(c);
-#else
-    GPS.read();
 #endif
-  } else {
-  //if (GPS.newNMEAreceived()) {
-    DEBUG_PRINTLN("New NMEA received");
-    if(GPS.parse(GPS.lastNMEA())) {
-      //print_datetimefix();
-      //print_location();
-      DEBUG_PRINTLN("New NMEA parsed");
-      //gps2canMsgs();  // Convert, send and log time, location etc from GPS
-    } else {
-      DEBUG_PRINTLN("Could not parse new NMEA");            
     }
-    //debug print NMEA
-    DEBUG_PRINT("NMEA: ");
-    DEBUG_PRINTLN(GPS.lastNMEA());
+    if (GPS.newNMEAreceived()) {
+      DEBUG_PRINTLN("New NMEA received");
+      if (GPS.parse(GPS.lastNMEA())) {
+        DEBUG_PRINTLN("New NMEA parsed");
+      } else {
+        DEBUG_PRINTLN("Could not parse new NMEA");
+      }
+      //debug print NMEA
+      DEBUG_PRINT("NMEA: ");
+      DEBUG_PRINTLN(GPS.lastNMEA());
+    }
   }
 }
 
