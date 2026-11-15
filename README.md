@@ -37,7 +37,7 @@ _The telemetry system for the Peri vehicle (2026 onwards): the BWSC 2023 on-vehi
 |---|---|
 | `PERI-PRODUCTION` | **This branch.** The code used with Peri (2026+): BWSC 2023 firmware plus the DBC-based Python receiver, with tests. |
 | [`ESC-CODE`](https://github.com/DUEM/Telemetry2021/tree/ESC-CODE) | The cut-down code used at ESC 2024 and ESC 2026. Same firmware, simpler receiver (see [below](#how-this-differs-from-the-esc-code-branch)). |
-| [`nick-22Library`](https://github.com/DUEM/Telemetry2021/tree/nick-22Library) | Default branch. The full BWSC 2023-era code base, including newer firmware (CANApi v1.0-beta.3) not yet merged here. |
+| [`nick-22Library`](https://github.com/DUEM/Telemetry2021/tree/nick-22Library) | Former default branch. The full BWSC 2023-era code base, including newer firmware (CANApi v1.0-beta.3) not yet merged here. |
 
 ## How this differs from the ESC-CODE branch
 
