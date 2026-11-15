@@ -66,7 +66,7 @@ class TelemetryStorer:
 
 def session_log_file(folder, extension: str, started: datetime) -> Path:
     """Path of this session's log file in `folder`, e.g.
-    <folder>/testlog-2026-11-15-143012.csv, creating the folder if needed."""
+    <folder>/telem-received-2026-11-15-143012.csv, creating the folder if needed."""
     os.makedirs(folder, exist_ok=True)
     name = f"{receiver_config.sessionLogName}-{started:%Y-%m-%d-%H%M%S}.{extension}"
     return Path(folder) / name

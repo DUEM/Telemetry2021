@@ -82,7 +82,7 @@ def test_xlsx_closed(monkeypatch, nrt_bytes, run_in_receiver, mock_xlsx_workbook
     mock_workbook.save.assert_called_once()
     (saved_to,) = mock_workbook.save.call_args.args
     assert saved_to.parent == receiver_config.xlsxOutputFolder
-    assert re.fullmatch(r"testlog-\d{4}-\d{2}-\d{2}-\d{6}\.xlsx", saved_to.name)
+    assert re.fullmatch(r"telem-received-\d{4}-\d{2}-\d{2}-\d{6}\.xlsx", saved_to.name)
     mock_workbook.close.assert_called_once_with()
 
 

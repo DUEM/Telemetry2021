@@ -48,10 +48,10 @@ Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are cl
 | CSV folder | `csvOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/csv/` |
 | BIN (raw) on / off | `binEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
 | BIN folder | `binOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/BIN/` |
-| Output file name | `sessionLogName` in [receiver_config.py](receiver_config.py) | `testlog` (files are `testlog-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv` / `.BIN`) |
+| Output file name | `sessionLogName` in [receiver_config.py](receiver_config.py) | `telem-received` (files are `telem-received-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv` / `.BIN`) |
 | CAN database files | `dbc_files` in [receiver_config.py](receiver_config.py) | the four files in [../dbc/](../dbc/) |
 
-Each output is switched on or off with its own `True`/`False` setting. Output files go in the `session-logs/` folder at the top of the repository, whichever directory the receiver is started from: Excel in `session-logs/excel/`, CSV in `session-logs/csv/`, BIN in `session-logs/BIN/`. The folders are created when first needed. Each run of the receiver writes **new** files, named after the local date and time it started, e.g. `session-logs/csv/testlog-2026-11-15-143012.csv`; the files from one run have the same name. `session-logs/` is git-ignored, so session logs are not committed by accident.
+Each output is switched on or off with its own `True`/`False` setting. Output files go in the `session-logs/` folder at the top of the repository, whichever directory the receiver is started from: Excel in `session-logs/excel/`, CSV in `session-logs/csv/`, BIN in `session-logs/BIN/`. The folders are created when first needed. Each run of the receiver writes **new** files, named after the local date and time it started, e.g. `session-logs/csv/telem-received-2026-11-15-143012.csv`; the files from one run have the same name. `session-logs/` is git-ignored, so session logs are not committed by accident.
 
 ## Radio frame format
 

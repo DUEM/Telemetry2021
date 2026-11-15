@@ -146,7 +146,7 @@ def test_csv_output_configured_via_receiver_config(nrt_bytes, monkeypatch):
 
     # Assert
     (csv_path,) = folder.iterdir()
-    assert re.fullmatch(r"testlog-\d{4}-\d{2}-\d{2}-\d{6}\.csv", csv_path.name)
+    assert re.fullmatch(r"telem-received-\d{4}-\d{2}-\d{2}-\d{6}\.csv", csv_path.name)
     with open(csv_path) as f:
         rows = list(csv.reader(f))
     assert rows[0] == ["Timestamp", "Source", "Item", "Message Body", "CRC"]
@@ -171,5 +171,5 @@ def test_session_log_file_name(tmp_path):
 
     path = session_log_file(tmp_path / "csv", "csv", datetime(2026, 9, 18, 7, 5, 3))
 
-    assert path == tmp_path / "csv" / "testlog-2026-09-18-070503.csv"
+    assert path == tmp_path / "csv" / "telem-received-2026-09-18-070503.csv"
     assert path.parent.is_dir()

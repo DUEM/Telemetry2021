@@ -9,10 +9,10 @@ _repo_root = PurePath(__file__).parent.parent
 # used by all live_calculation scripts
 # Each output is switched on or off with its own True/False setting. Each run of
 # the receiver writes a new file named after the time it started, e.g.
-# session-logs/csv/testlog-2026-11-15-143012.csv. The folders are created if
+# session-logs/csv/telem-received-2026-11-15-143012.csv. The folders are created if
 # they do not exist.
 sessionLogsFolder = _repo_root / "session-logs"
-sessionLogName: str = "testlog"  # file names are <sessionLogName>-YYYY-MM-DD-HHMMSS.<ext>
+sessionLogName: str = "telem-received"  # file names are <sessionLogName>-YYYY-MM-DD-HHMMSS.<ext>
 
 # Excel (.xlsx) output
 xlsxEnabled: bool = False
