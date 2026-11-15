@@ -33,6 +33,8 @@ python3 -m Receiver.LiveTelemetry
 
 Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly.
 
+If the serial port cannot be opened, the receiver prints `Cannot open serial port ...` with the reason and what to check, and exits without creating any output: for example, if the XBee is not plugged in or `SERIALPORT` names the wrong port (`... does not exist`), or you do not have permission to use it (on Linux, add yourself to the `dialout` group).
+
 ## Configuration
 
 | Setting | Where | Default |

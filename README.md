@@ -104,6 +104,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    python3 -m Receiver.LiveTelemetry
    ```
    Every decoded message is printed to the terminal, with `CRC OK` or `CRC FAIL`.
+   If it stops straight away with `Cannot open serial port`, follow the advice it prints: usually the XBee is not plugged in, or `SERIALPORT` (step 1) is wrong.
 
 4. Check that data is reaching InfluxDB:
    ```shell

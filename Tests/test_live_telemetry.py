@@ -90,3 +90,21 @@ def test_receive_stops_cleanly_when_the_port_is_lost(request, tmp_path, caplog, 
     assert stored == read_frames(received)[:-1]
     assert len(stored) > 100
     assert "Serial port lost" in caplog.text
+
+
+@pytest.mark.parametrize(
+    "port, expected",
+    [
+        ("/dev/ttyNoSuchXBee", "does not exist"),  # XBee not plugged in
+        ("/", "Check that / is the XBee's port"),  # any other open failure
+    ],
+)
+def test_open_serial_port_exits_with_a_message_when_it_cannot_open(port, expected):
+    from Receiver.LiveTelemetry import open_serial_port
+
+    with pytest.raises(SystemExit) as exited:
+        open_serial_port(port)
+
+    message = str(exited.value.code)  # sys.exit(message) prints it and exits with 1
+    assert message.startswith(f"Cannot open serial port {port}:")
+    assert expected in message

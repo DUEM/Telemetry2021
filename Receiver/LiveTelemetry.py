@@ -2,6 +2,7 @@ import serial
 from Receiver.frame_reader import END_OF_FRAME_MARKER, FrameAssembler
 from Receiver.telemetry_storer import store_data, end_session
 import atexit
+import errno
 import logging
 import signal
 import sys
@@ -58,11 +59,39 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     return assembler.rejoined
 
 
+def open_serial_port(port=SERIALPORT, baud=BAUD):
+    """Open the XBee's serial port, or exit with an explanation if it cannot
+    be opened (e.g. the XBee is not plugged in)."""
+    try:
+        return serial.Serial(port, baud)
+    except serial.SerialException as e:
+        if e.errno == errno.ENOENT:
+            hint = (
+                f"{port} does not exist. Check the XBee's USB adapter is plugged in "
+                "and find its name (Linux: ls /dev/ttyUSB* /dev/ttyACM*; macOS: "
+                "ls /dev/cu.*; Windows: Device Manager > Ports), then set SERIALPORT "
+                "at the top of Receiver/LiveTelemetry.py. For a software-in-the-loop "
+                "replay, start socat first so that it creates the port."
+            )
+        elif e.errno == errno.EACCES:
+            hint = (
+                f"No permission to open {port}. On Linux, add yourself to the group "
+                "that owns it (usually dialout: sudo usermod -aG dialout $USER), then "
+                "log out and back in."
+            )
+        else:
+            hint = (
+                f"Check that {port} is the XBee's port and that no other program "
+                "(XCTU, a serial monitor, another receiver) has it open."
+            )
+        sys.exit(f"Cannot open serial port {port}: {e}\n{hint}")
+
+
 if __name__ == "__main__":
     atexit.register(onProgramExit)
     signal.signal(signal.SIGINT, sigintHandler)
 
-    serialConnection = serial.Serial(SERIALPORT, BAUD)
+    serialConnection = open_serial_port()
     rejoined = receive(serialConnection)
 
     end_session()
