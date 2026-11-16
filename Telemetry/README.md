@@ -1,6 +1,6 @@
 # Telemetry board firmware (on vehicle)
 
-This Arduino firmware runs on the vehicle telemetry board. It is the same firmware as on the [`ESC-CODE`](https://github.com/DUEM/Telemetry2021/tree/ESC-CODE/Telemetry) branch, including the same CANApi submodule commit (`8d050b1`, the `CanApiv04` API). The default branch [`nick-22Library`](https://github.com/DUEM/Telemetry2021/tree/nick-22Library) has newer firmware updated to CANApi v1.0-beta.3, which has **not** been merged into this branch.
+This Arduino firmware runs on the vehicle telemetry board. It is the same firmware as on the [`ESC-CODE`](https://github.com/DUEM/Telemetry2021/tree/ESC-CODE/Telemetry) branch, including the same CANApi submodule commit (`8d050b1`, the `CanApiv04` API). The old default branch [`nick-22Library`](https://github.com/DUEM/Telemetry2021/tree/nick-22Library) has newer firmware updated to CANApi v1.0-beta.3, which has **not** been merged into this branch.
 
 It relays every CAN message it receives (`PROCESS_ALL_MSG` in [UseMsgList.hpp](UseMsgList.hpp)) over the XBee radio and logs it to the SD card. It also:
 
@@ -25,8 +25,8 @@ It relays every CAN message it receives (`PROCESS_ALL_MSG` in [UseMsgList.hpp](U
 
 1. Get the code **including the CANApi submodule**:
    ```shell
-   git switch PERI-DEVELOPMENT-TPB-1126
-   git pull origin PERI-DEVELOPMENT-TPB-1126
+   git switch PERI-PRODUCTION
+   git pull origin PERI-PRODUCTION
    git submodule update --init
    ```
    If `src/CANApi/` is empty, the build fails because `CanApiv04.hpp` cannot be found.

@@ -17,7 +17,7 @@ _The telemetry system for the Peri vehicle (2026 onwards): the BWSC 2023 on-vehi
  XBee (USB) on the telemetry laptop  →  /dev/ttyUSB0
    ▼
  python3 -m Receiver.LiveTelemetry  (CRC check, decode with dbc/*.dbc)
-   │                                 ──►  optional Excel / CSV files
+   │                                 ──►  optional Excel / CSV / raw .BIN files
    ▼
  InfluxDB 1.x (database "DUSCiESC")  ◄──►  Receiver/live_calculations (optional)
    ▼
@@ -35,9 +35,9 @@ _The telemetry system for the Peri vehicle (2026 onwards): the BWSC 2023 on-vehi
 
 | Branch | Contents |
 |---|---|
-| `PERI-DEVELOPMENT-TPB-1126` | **This branch.** The code used with Peri (2026+): BWSC 2023 firmware plus the DBC-based Python receiver, with tests. |
+| `PERI-PRODUCTION` | **This branch.** The code used with Peri (2026+): BWSC 2023 firmware plus the DBC-based Python receiver, with tests. |
 | [`ESC-CODE`](https://github.com/DUEM/Telemetry2021/tree/ESC-CODE) | The cut-down code used at ESC 2024 and ESC 2026. Same firmware, simpler receiver (see [below](#how-this-differs-from-the-esc-code-branch)). |
-| [`nick-22Library`](https://github.com/DUEM/Telemetry2021/tree/nick-22Library) | Default branch. The full BWSC 2023-era code base, including newer firmware (CANApi v1.0-beta.3) not yet merged here. |
+| [`nick-22Library`](https://github.com/DUEM/Telemetry2021/tree/nick-22Library) | Former default branch. The full BWSC 2023-era code base, including newer firmware (CANApi v1.0-beta.3) not yet merged here. |
 
 ## How this differs from the ESC-CODE branch
 
@@ -53,7 +53,7 @@ Both branches run the **same firmware** on the vehicle (same [Telemetry/](Teleme
 | GPS position | Stored as sent (NMEA `ddmm.mmmm` plus N/S, E/W); converted by `live_calculations` | Converted to decimal degrees in a `location` measurement |
 | Unknown CAN IDs | Stored as `ERROR/ID UNRECOGNISED` | Flagged with sentinel row `99` |
 | Settings | [Receiver/receiver_config.py](Receiver/receiver_config.py); serial port asked at start up and saved in `Receiver/serial.env` | Prompted for port and file names on each run; InfluxDB settings hardwired in the script |
-| Live output files | Optional Excel and/or CSV (appended to) | Raw `.BIN` and decoded `.csv` every session (overwritten) |
+| Live output files | Optional Excel, CSV and/or raw `.BIN` (same format as the SD card log), each switched on in `receiver_config.py` (off by default); a new date-and-time-named file in `session-logs/` every session | Raw `.BIN` and decoded `.csv` every session (overwritten) |
 | Offline tools | [`tools/hex2csv.py`, `tools/hex2influx.py`](Receiver/README.md#offline-tools-sd-card-logs) for SD card logs | None |
 | Extra calculations | [live_calculations](Receiver/live_calculations/README.md), [SolarSim upload](Client/README.md) | None |
 | Tests | pytest suite in [Tests/](Tests/), run by GitHub Actions | None |
@@ -65,7 +65,7 @@ For the ESC-CODE version of the race-day steps and limitations, see its [README]
 _This assumes Ubuntu, InfluxDB 1.x and Grafana are already installed and set up. If they are not, or you are new to Linux, follow [SETUP.md](SETUP.md) instead, which covers everything from a fresh Ubuntu install (including in a VirtualBox VM) to a working test. The Grafana dashboard is not stored in this repository._
 
 ```shell
-git clone -b PERI-DEVELOPMENT-TPB-1126 --recurse-submodules git@github.com:DUEM/Telemetry2021.git
+git clone -b PERI-PRODUCTION --recurse-submodules git@github.com:DUEM/Telemetry2021.git
 cd Telemetry2021
 python3 -m venv ~/virtualenvs/telemetry
 source ~/virtualenvs/telemetry/bin/activate
@@ -104,6 +104,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    python3 -m Receiver.LiveTelemetry
    ```
    It lists the serial ports and suggests one: press **Enter** to use it, or type the XBee's port. Then press **Enter** to keep the baud rate of 115200. Then every decoded message is printed to the terminal, with `CRC OK` or `CRC FAIL`.
+   If it says `Cannot open serial port`, follow the advice it prints (usually the XBee is not plugged in, or it is a different port in the list), then type the right port when it asks again.
 
 4. Check that data is reaching InfluxDB:
    ```shell
@@ -112,7 +113,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
 
 5. Open the Grafana dashboard in a browser (Grafana's default address is <http://localhost:3000>).
 
-6. Press **Ctrl-C** to stop the receiver. Any Excel or CSV output files are closed and saved.
+6. Press **Ctrl-C** to stop the receiver. Any Excel, CSV or BIN output files are closed and saved.
 
 ## Maintenance
 
@@ -140,8 +141,8 @@ You need internet access for this.
 
 ```shell
 cd Telemetry2021
-git switch PERI-DEVELOPMENT-TPB-1126
-git pull origin PERI-DEVELOPMENT-TPB-1126
+git switch PERI-PRODUCTION
+git pull origin PERI-PRODUCTION
 git submodule update --init
 git status
 ```
@@ -149,8 +150,8 @@ git status
 The output should show:
 
 ```
-On branch PERI-DEVELOPMENT-TPB-1126
-Your branch is up to date with 'origin/PERI-DEVELOPMENT-TPB-1126'
+On branch PERI-PRODUCTION
+Your branch is up to date with 'origin/PERI-PRODUCTION'
 ```
 
 Then switch back to the telemetry LAN.
@@ -181,18 +182,19 @@ Update the code as above (the `git submodule update --init` step is required, be
 ├── Receiver                       (Python receiver software, see Receiver/README.md)
 │   ├── LiveTelemetry.py           (live receiver: serial → decode → storage plugins)
 │   ├── serial_port.py             (lists serial ports, asks which to use, saves it in serial.env)
-│   ├── receiver_config.py         (InfluxDB credentials, output files, DBC file list)
-│   ├── frame_reader.py            (splits a capture into frames on 0x7E, re-joining split frames)
+│   ├── receiver_config.py         (output on/off switches and folders, InfluxDB credentials, DBC file list)
+│   ├── frame_reader.py            (splits a capture into frames on 0x7E, re-joining split frames and splitting frames run together)
 │   ├── telemetry_parser.py        (CRC check, timestamps, decoding)
 │   ├── can_dbc_decoder.py         (DBC lookup with cantools)
 │   ├── telemetry_storer.py        (passes decoded messages to the storage plugins)
-│   ├── storer_extension.py        (InfluxDB, Excel and CSV storage plugins)
+│   ├── storer_extension.py        (InfluxDB, Excel, CSV and BIN storage plugins)
 │   ├── requirements.txt
 │   └── live_calculations          (route distance, incline and power, see its README.md)
+├── session-logs                   (receiver output: excel/, csv/, BIN/; git-ignored, created when needed)
 ├── Client                         (SolarSim strategy upload to InfluxDB, see Client/README.md)
 ├── Tests                          (pytest suite)
 │   └── data                       (sample captures and their expected decoded .csv: NRT.BIN from
-│                                    Peri at iESC 2026 qualifying, MPPT.BIN with MPPT messages)
+│                                    Ortus-T at iESC 2026 qualifying, MPPT.BIN with MPPT messages)
 ├── Telemetry                      (on-vehicle Arduino firmware, see Telemetry/README.md;
 │   │                                same as the ESC-CODE branch)
 │   ├── Telemetry.ino              (setup / main loop)
@@ -212,8 +214,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 ## Known limitations
 
 **Radio link and framing**
-* Frames are terminated by `0x7E`, but `0x7E` bytes inside the frame are not escaped. If any timestamp, data or CRC byte equals `0x7E`, the frame is split. The receiver and the offline tools re-join split frames ([frame_reader.py](Receiver/frame_reader.py)), recovering about 2.4% of frames in the iESC 2026 SD card logs. A frame damaged in the radio link as well cannot be re-joined; it fails the CRC check, so the message is lost but does not reach InfluxDB corrupted.
-* The live receiver does not keep a raw copy of the received bytes. The `.BIN` log on the board's SD card is the only raw record of a session.
+* Frames are terminated by `0x7E`, but `0x7E` bytes inside the frame are not escaped. If any timestamp, data or CRC byte equals `0x7E`, the frame is split but the receiver and the offline tools re-join split frames ([frame_reader.py](Receiver/frame_reader.py)), recovering about 2.4% of frames in the iESC 2026 SD card logs (for example). A frame damaged in the radio link cannot be repaired: it fails the CRC check and so the message is lost and does not reach InfluxDB corrupted. A whole frame run into what is left of a damaged one is split off and kept.
 
 **Decoding**
 * Only CAN IDs in the `dbc/` files are decoded. Others are written to InfluxDB as `ERROR/ID UNRECOGNISED`. Check the DBC files cover any new hardware on the vehicle.
@@ -228,10 +229,10 @@ Update the code as above (the `git submodule update --init` step is required, be
 * The Orion scalings come from the recorded data and the usual Orion settings, and still need confirming from the Orion BMS profile loaded on Peri. Orion `PackCurrent` is **negative when the battery is discharging**. The MPPT `VoltageOut` and `AmbientTemperature` are still stored as raw values. These and the other gaps are marked `TODO: add ...` in the DBC files and listed at the end of [dbc/SIGNALS.md](dbc/SIGNALS.md#still-to-be-documented).
 * GPS latitude and longitude are stored as sent (NMEA `ddmm.mmmm` with a separate N/S, E/W character), not as decimal degrees, so they cannot be used directly by a Grafana map panel. [road_lookup.py](Receiver/live_calculations/road_lookup.py) does the conversion.
 * Latitude and longitude are sent as separate CAN messages, which can lead to mismatched positions.
-* The decoder does not handle end-of-stream or break in the serial port availability on the system (e.g. USB being unplugged) cleanly and fails with an internal code error.
+* If the serial port is lost (e.g. the XBee's USB is unplugged, or a [software-in-the-loop replay](Receiver/README.md#testing-without-hardware-software-in-the-loop-sil) ends), the receiver logs "Serial port lost" and stops as if Ctrl-C had been pressed, saving and closing its outputs. It does not reconnect: plug the XBee back in and start the receiver again.
 
 **Timestamps**
-* Until the first valid GPS time message arrives, timestamps are based on the laptop's clock when the receiver started plus the board's uptime, so they are only approximate.
+* Until the first valid GPS time message arrives, timestamps are based on the laptop's clock when the first frame arrived, so they are only as accurate as the laptop's clock.
 
 **Usability**
 * InfluxDB details (host, port, user `admin`, password) are stored in plain text, in [Receiver/receiver_config.py](Receiver/receiver_config.py) (also used by `tools/hex2influx.py`), and separately in `Receiver/live_calculations/config.py` and `Client/upload_solarsim.py`. All use the database `DUSCiESC`; keep them in step if you change it.

@@ -20,11 +20,17 @@ def run_in_receiver():
 
 
 @pytest.fixture(autouse=True)
-def patch_receiver_config(request, monkeypatch):
+def patch_receiver_config(request, monkeypatch, tmp_path):
     # The DBC files are not patched: tests decode with the same files in dbc/
     # that the receiver uses, so a DBC change is caught by the tests.
-    monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "")
-    monkeypatch.setattr("Receiver.receiver_config.csvOutputFile", "")
+    # Outputs are off, and a test that turns one on writes to tmp_path, never
+    # to the real session-logs/ folder.
+    monkeypatch.setattr("Receiver.receiver_config.xlsxEnabled", False)
+    monkeypatch.setattr("Receiver.receiver_config.csvEnabled", False)
+    monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFolder", tmp_path / "session-logs" / "excel")
+    monkeypatch.setattr("Receiver.receiver_config.csvOutputFolder", tmp_path / "session-logs" / "csv")
+    monkeypatch.setattr("Receiver.receiver_config.binEnabled", False)
+    monkeypatch.setattr("Receiver.receiver_config.binOutputFolder", tmp_path / "session-logs" / "BIN")
 
     class influxCredentials(NamedTuple):
         enabled: bool = False

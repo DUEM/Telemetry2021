@@ -1,3 +1,6 @@
+from numpy import uint32
+import re
+
 import pytest
 from unittest.mock import MagicMock, call, patch
 from datetime import datetime, timezone
@@ -7,8 +10,9 @@ from datetime import datetime, timezone
 # Mock the Workbook and Worksheet
 @pytest.fixture(scope="function")
 def mock_xlsx_workbook(monkeypatch):
-    # dbc_files, ifCredentials and csvOutputFile come from patch_receiver_config
-    monkeypatch.setattr("Receiver.receiver_config.xlsxOutputFile", "mock.xlsx")
+    # dbc_files, ifCredentials, csvEnabled and xlsxOutputFolder (in tmp_path)
+    # come from patch_receiver_config
+    monkeypatch.setattr("Receiver.receiver_config.xlsxEnabled", True)
 
     # patch where the name is looked up, not where it is defined
     with patch("Receiver.storer_extension.Workbook", spec=True) as mock_workbook:
@@ -31,6 +35,7 @@ def test_data_written_to_xlsx(nrt_bytes, mock_xlsx_workbook):
         year=1970, month=1, day=1, hour=3, minute=0, second=0,
         tzinfo=timezone.utc
     )
+    telemetry_parser.time_fetched = uint32(0)  # reference: millis 0 at that time
     storer = TelemetryStorer(
         telemetry_parser, storage_plugin_list=[ExcelStorer("mock.xlsx")]
     )
@@ -73,8 +78,13 @@ def test_xlsx_closed(monkeypatch, nrt_bytes, run_in_receiver, mock_xlsx_workbook
     # Act
     end_session()
 
-    # Assert
-    mock_workbook.save.assert_called_once_with("mock.xlsx")
+    # Assert - saved once, to this session's file in the excel folder
+    from Receiver import receiver_config
+
+    mock_workbook.save.assert_called_once()
+    (saved_to,) = mock_workbook.save.call_args.args
+    assert saved_to.parent == receiver_config.xlsxOutputFolder
+    assert re.fullmatch(r"telem-received-\d{4}-\d{2}-\d{2}-\d{6}\.xlsx", saved_to.name)
     mock_workbook.close.assert_called_once_with()
 
 

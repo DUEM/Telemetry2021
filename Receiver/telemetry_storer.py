@@ -1,9 +1,18 @@
 import logging
+import os
+from datetime import datetime
+from pathlib import Path
 from typing import List
 
 from Receiver.telemetry_parser import TelemetryParser
 from Receiver import receiver_config
-from Receiver.storer_extension import StorerExtension, ExcelStorer, Influx1Storer, CSVStorer
+from Receiver.storer_extension import (
+    StorerExtension,
+    ExcelStorer,
+    Influx1Storer,
+    CSVStorer,
+    BinStorer,
+)
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -25,6 +34,9 @@ class TelemetryStorer:
             msg: The message in byte array
 
         """
+        # raw frame first, so it is kept even if decoding fails
+        for storage_plugin in self.storage_plugin_list:
+            storage_plugin.store_raw(msg)
         (
             msg_item,
             msg_source,
@@ -52,6 +64,14 @@ class TelemetryStorer:
             storage_class.close()
 
 
+def session_log_file(folder, extension: str, started: datetime) -> Path:
+    """Path of this session's log file in `folder`, e.g.
+    <folder>/telem-received-2026-11-15-143012.csv, creating the folder if needed."""
+    os.makedirs(folder, exist_ok=True)
+    name = f"{receiver_config.sessionLogName}-{started:%Y-%m-%d-%H%M%S}.{extension}"
+    return Path(folder) / name
+
+
 class StorerWrapper:
     """Wrapper to store data and end session via single methods.
 
@@ -75,15 +95,23 @@ class StorerWrapper:
     def init_storer(self):
         # read config at call time so monkeypatching receiver_config takes effect
         storer_extension_list = []
-        if receiver_config.xlsxOutputFile != "":
+        started = datetime.now()  # local time, shared by all of this session's files
+        if receiver_config.xlsxEnabled:
             excel_storer = ExcelStorer(
-                receiver_config.xlsxOutputFile,
+                session_log_file(receiver_config.xlsxOutputFolder, "xlsx", started),
                 save_interval=receiver_config.xlsxSaveInterval,
             )
             storer_extension_list.append(excel_storer)
-        if receiver_config.csvOutputFile != "":
-            csv_storer = CSVStorer(receiver_config.csvOutputFile)
+        if receiver_config.csvEnabled:
+            csv_storer = CSVStorer(
+                session_log_file(receiver_config.csvOutputFolder, "csv", started)
+            )
             storer_extension_list.append(csv_storer)
+        if receiver_config.binEnabled:
+            bin_storer = BinStorer(
+                session_log_file(receiver_config.binOutputFolder, "BIN", started)
+            )
+            storer_extension_list.append(bin_storer)
         if receiver_config.ifCredentials.enabled:
             influx_storer = Influx1Storer(receiver_config.ifCredentials)
             storer_extension_list.append(influx_storer)

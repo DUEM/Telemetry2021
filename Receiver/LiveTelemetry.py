@@ -3,6 +3,7 @@ from Receiver.frame_reader import END_OF_FRAME_MARKER, FrameAssembler
 from Receiver.serial_port import DEFAULT_BAUD, describe_port, get_port_and_baud, list_serial_ports, save_settings
 from Receiver.telemetry_storer import store_data, end_session
 import atexit
+import errno
 import logging
 import signal
 import sys
@@ -16,6 +17,27 @@ logging.basicConfig(
 
 # The serial port and baud rate are asked for at start up and saved in
 # Receiver/serial.env. The baud rate must match the XBee's (115200).
+
+def cannot_open_hint(port, e):
+    """What to check when serial port `port` could not be opened (error `e`)."""
+    if e.errno == errno.ENOENT:
+        return (
+            f"{port} does not exist. Check the XBee's USB adapter is plugged in "
+            "and pick its port from the list above (Windows: Device Manager > "
+            "Ports). For a software-in-the-loop replay, start socat first so "
+            "that it creates the port."
+        )
+    if e.errno == errno.EACCES:
+        return (
+            f"No permission to open {port}. On Linux, add yourself to the group "
+            "that owns it (usually dialout: sudo usermod -aG dialout $USER), then "
+            "log out and back in."
+        )
+    return (
+        f"Check that {port} is the XBee's port and that no other program "
+        "(XCTU, a serial monitor, another receiver) has it open."
+    )
+
 
 def open_serial_port(suggested, reason, baud):
     """Ask for a serial port until one opens. Enter uses the suggested port.
@@ -35,7 +57,7 @@ def open_serial_port(suggested, reason, baud):
         try:
             connection = serial.Serial(port, baud)
         except serial.SerialException as e:  # wrong name, unplugged, in use, no permission
-            logging.warning(f"Could not open {port}: {e}")
+            logging.warning(f"Cannot open serial port {port}: {e}\n{cannot_open_hint(port, e)}")
             continue  # ask again
         return connection, port
 
@@ -67,23 +89,30 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     The marker is not escaped inside frames, so the pieces go through a
     FrameAssembler, which re-joins frames split by a 0x7E in their timestamp,
     data or CRC (see frame_reader.py). A re-joined frame is stored as soon as
-    its last piece arrives; a piece that cannot be completed is stored
-    unchanged and reported as a CRC failure, as before.
+    its last piece arrives. Complete frames at the start or end of a piece
+    that cannot be completed (frames run together after radio losses) are
+    split off and stored; the bytes left are stored and reported as a CRC
+    failure, as before. Returns the FrameAssembler, for its counts.
     """
     assembler = FrameAssembler()
     frameBuffer = bytearray()
     while keep_running():
-        if connection.in_waiting: #in_waiting returns number of bytes ready to be processed. If greater than 0, process data
-            for byte in connection.read(connection.in_waiting):
-                if byte == END_OF_FRAME_MARKER[0]:
-                    for frame in assembler.push(frameBuffer):
-                        store(frame)
-                    frameBuffer = bytearray()  # reset buffer
-                else:
-                    frameBuffer.append(byte)
+        try:
+            waiting = connection.in_waiting  # number of bytes ready to be processed
+            data = connection.read(waiting) if waiting else b""
+        except OSError as e:  # port gone: USB unplugged, or the SIL replay ended (serial.SerialException is an OSError)
+            logging.error("Serial port lost (%s): stopping the receiver", e)
+            break
+        for byte in data:
+            if byte == END_OF_FRAME_MARKER[0]:
+                for frame in assembler.push(frameBuffer):
+                    store(frame)
+                frameBuffer = bytearray()  # reset buffer
+            else:
+                frameBuffer.append(byte)
     for frame in assembler.flush():  # pieces held back when the loop stopped
         store(frame)
-    return assembler.rejoined
+    return assembler  # its counts: rejoined, split
 
 
 if __name__ == "__main__":
@@ -119,8 +148,11 @@ if __name__ == "__main__":
     atexit.register(onProgramExit)
     signal.signal(signal.SIGINT, sigintHandler)
 
-    rejoined = receive(serialConnection)
+    assembler = receive(serialConnection)
 
     end_session()
     serialConnection.close()
-    logging.info(f"Exiting live telemetry ({rejoined} frames split by an unescaped 0x7E were re-joined)")
+    print(
+        f"Exiting live telemetry ({assembler.rejoined} frames split by an unescaped 0x7E "
+        f"were re-joined; {assembler.split} frames run together after radio losses were split apart)"
+    )

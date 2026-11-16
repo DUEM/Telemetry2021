@@ -8,9 +8,14 @@ and tests silently run against production config. Modules must reach through
 
 CONFIG_NAMES = (
     "dbc_files",
-    "xlsxOutputFile",
+    "sessionLogName",
+    "xlsxEnabled",
+    "xlsxOutputFolder",
     "xlsxSaveInterval",
-    "csvOutputFile",
+    "csvEnabled",
+    "csvOutputFolder",
+    "binEnabled",
+    "binOutputFolder",
     "ifCredentials",
 )
 

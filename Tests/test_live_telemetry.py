@@ -35,7 +35,7 @@ def test_receive_stores_the_same_frames_as_read_frames(request, capture, chunk):
     stored = []
 
     # act
-    rejoined = receive(port, store=stored.append, keep_running=lambda: not port.finished())
+    assembler = receive(port, store=stored.append, keep_running=lambda: not port.finished())
 
     # assert - the offline reader also returns the bytes after the last marker
     # (empty if the capture ends with one); the live receiver waits for its marker
@@ -43,7 +43,7 @@ def test_receive_stores_the_same_frames_as_read_frames(request, capture, chunk):
     assert offline[-1] == data.split(END_OF_FRAME_MARKER)[-1]
     assert stored == offline[:-1]
     # complete pieces never contain the marker, so these are the re-joined frames
-    assert rejoined == sum(END_OF_FRAME_MARKER in f for f in stored) > 0
+    assert assembler.rejoined == sum(END_OF_FRAME_MARKER in f for f in stored) > 0
 
 
 def test_receive_flushes_a_held_piece_when_stopped():
@@ -57,3 +57,63 @@ def test_receive_flushes_a_held_piece_when_stopped():
 
     # the bytes after the last marker are an unfinished frame and are not stored
     assert stored == [b"\x01\x02\x03"]
+
+
+@pytest.mark.parametrize("error", [OSError(5, "Input/output error"), "SerialException"])
+def test_receive_stops_cleanly_when_the_port_is_lost(request, tmp_path, caplog, error):
+    """USB unplugged or the SIL replay ended: frames received so far are kept,
+    and receive() returns normally so the outputs can be saved and closed."""
+    import serial
+    from Receiver.LiveTelemetry import receive
+
+    if error == "SerialException":  # what read() raises when the device has gone
+        error = serial.SerialException("device reports readiness to read but returned no data")
+    data = open(f"{request.config.rootdir}/Tests/data/MPPT.BIN", "rb").read()
+    half = data[: len(data) // 2]
+
+    class LostPort(FakeSerial):
+        @property
+        def in_waiting(self):
+            if self.finished():
+                raise error
+            return super().in_waiting
+
+    port = LostPort(half, chunk=64)
+    stored = []
+
+    receive(port, store=stored.append, keep_running=lambda: True)  # only the error stops it
+
+    # everything received before the disconnection is stored, as the offline
+    # reader would; only the piece cut off after the last marker is lost
+    received = tmp_path / "received.BIN"
+    received.write_bytes(half)
+    assert stored == read_frames(received)[:-1]
+    assert len(stored) > 100
+    assert "Serial port lost" in caplog.text
+
+
+@pytest.mark.parametrize(
+    "port, expected",
+    [
+        ("/dev/ttyNoSuchXBee", "does not exist"),  # XBee not plugged in
+        ("/", "Check that / is the XBee's port"),  # any other open failure
+    ],
+)
+def test_open_serial_port_explains_and_asks_again_when_it_cannot_open(port, expected, monkeypatch, caplog):
+    from Receiver.LiveTelemetry import open_serial_port
+
+    # the user types `port`; when asked again, stop the test there
+    replies = iter([port])
+
+    def ask(prompt):
+        try:
+            return next(replies)
+        except StopIteration:
+            raise EOFError  # asked again
+    monkeypatch.setattr("builtins.input", ask)
+
+    with pytest.raises(EOFError):
+        open_serial_port(None, None, 115200)
+
+    assert f"Cannot open serial port {port}:" in caplog.text
+    assert expected in caplog.text

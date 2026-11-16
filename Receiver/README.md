@@ -5,6 +5,7 @@
 * InfluxDB 1.x, database `DUSCiESC` on `localhost:8086`, for the Grafana dashboard to display (on by default)
 * an Excel workbook (off by default)
 * a CSV file (off by default)
+* a raw `.BIN` file of every frame as received, in the same format as the SD card log (off by default)
 
 Every decoded message is also printed to the terminal.
 
@@ -45,6 +46,8 @@ Press **Enter** to use it, or type a port yourself (it does not have to be in th
 
 Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly.
 
+If the serial port cannot be opened, the receiver prints `Cannot open serial port ...` with the reason and what to check, and asks for the port again; no output is created until a port opens. For example, the XBee is not plugged in or the wrong port was chosen (`... does not exist`), or you do not have permission to use it (on Linux, add yourself to the `dialout` group).
+
 ## Configuration
 
 | Setting | Where | Default |
@@ -52,13 +55,18 @@ Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are cl
 | Serial port | Asked at start up and saved in `Receiver/serial.env` (suggestion from [serial_port.py](serial_port.py), or the `SERIALPORT` environment variable) | suggested: last used, else a USB serial device |
 | Baud rate | Asked at start up and saved in `Receiver/serial.env` (Enter keeps the saved rate), or the `BAUD` environment variable | **115200** (must match the XBee) |
 | InfluxDB host, port, user, password, database | `InfluxCredentials` in [receiver_config.py](receiver_config.py) | `localhost`, `8086`, `admin`, `password`, `DUSCiESC` |
-| InfluxDB on / off | `enabled` in `InfluxCredentials` | on |
-| Excel output | `xlsxOutputFile` in [receiver_config.py](receiver_config.py) | `''` (off) |
+| InfluxDB on / off | `enabled` in `InfluxCredentials` | `True` (on) |
+| Excel on / off | `xlsxEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
+| Excel folder | `xlsxOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/excel/` |
 | Excel save interval | `xlsxSaveInterval` in [receiver_config.py](receiver_config.py) | **10** seconds |
-| CSV output | `csvOutputFile` in [receiver_config.py](receiver_config.py) | `''` (off) |
+| CSV on / off | `csvEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
+| CSV folder | `csvOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/csv/` |
+| BIN (raw) on / off | `binEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
+| BIN folder | `binOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/BIN/` |
+| Output file name | `sessionLogName` in [receiver_config.py](receiver_config.py) | `telem-received` (files are `telem-received-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv` / `.BIN`) |
 | CAN database files | `dbc_files` in [receiver_config.py](receiver_config.py) | the four files in [../dbc/](../dbc/) |
 
-Output file paths are relative to the directory the receiver is started from (normally the top of the repository). Existing Excel and CSV files are **appended to**, not overwritten. The `ExcelOutput/` and `Output/` directories are git-ignored, so session logs are not committed by accident.
+Each output is switched on or off with its own `True`/`False` setting. Output files go in the `session-logs/` folder at the top of the repository, whichever directory the receiver is started from: Excel in `session-logs/excel/`, CSV in `session-logs/csv/`, BIN in `session-logs/BIN/`. The folders are created when first needed. Each run of the receiver writes **new** files, named after the local date and time the **first frame arrived**, e.g. `session-logs/csv/telem-received-2026-11-15-143012.csv`; the files from one run have the same name. The files (and the InfluxDB connection) are only set up when the first frame arrives: if none arrives, empty files are created when the receiver stops. If the serial port cannot be opened, no files are created. `session-logs/` is git-ignored, so session logs are not committed by accident.
 
 ## Radio frame format
 
@@ -71,7 +79,7 @@ Each frame from the vehicle is:
 * `millis` is the board's uptime in ms when the frame was sent. It is used for the timestamp (see [Timestamps](#timestamps)).
 * The CRC is CRC-16/MODBUS (reflected polynomial `0xA001`, initial value `0xFFFF`), the same as AVR `_crc16_update` on the board. It is calculated over the millis, CAN ID, DLC and data bytes. The receiver **does** check it: frames that fail are dropped from InfluxDB and flagged `False` in the Excel/CSV output.
 * Only the `DLC` data bytes are decoded. A frame with more or fewer data bytes than its DLC is rejected even if its CRC passes: frames run together after a lost end of frame marker can pass the 16-bit CRC by chance. A frame with fewer data bytes than its message's length in the DBC file is not decoded either (see below).
-* `0x7E` marks the end of a frame and is **not** escaped inside the frame (see Known limitations in the top-level [README](../README.md#known-limitations)), so a `0x7E` in the millis, data or CRC splits the frame. Splitting a capture into frames is done in [frame_reader.py](frame_reader.py). It re-joins split frames: a piece that is not a complete frame (length matching its DLC, valid CRC) is joined back, with the `0x7E`, to the pieces after it until the result is complete. A piece that is a complete frame on its own is never joined, and a piece that cannot be completed is passed on unchanged, so it is still reported as a CRC failure. On the iESC 2026 SD card logs this recovers about 2.4% of frames, which were previously lost. The live receiver `LiveTelemetry.py` and the offline tools (`hex2csv`, `hex2influx`, `batch_Read_Hex`) both use it, so they store the same frames from the same bytes. Live, a split frame is stored as soon as its last piece arrives.
+* `0x7E` marks the end of a frame and is **not** escaped inside the frame (see Known limitations in the top-level [README](../README.md#known-limitations)), so a `0x7E` in the millis, data or CRC splits the frame. Splitting a capture into frames is done in [frame_reader.py](frame_reader.py). It re-joins split frames: a piece that is not a complete frame (length matching its DLC, valid CRC) is joined back, with the `0x7E`, to the pieces after it until the result is complete. A piece that is a complete frame on its own is never joined. Bytes lost on the radio, sometimes including a `0x7E`, can leave what is left of one frame run into the next (often just the 4 `millis` bytes of a frame, followed by a whole frame). So before giving up on a piece, complete frames at its start and end are split off it and passed on separately; the bytes left are passed on unchanged, so they are still reported as a CRC failure. On the iESC 2026 SD card logs re-joining recovers about 2.4% of frames, which were previously lost (the SD card logs have no radio losses, so nothing is split there). On radio captures, splitting recovers about 6 to 8% more frames (`Tests/data/NRT.BIN`: 284). The live receiver `LiveTelemetry.py` and the offline tools (`hex2csv`, `hex2influx`, `batch_Read_Hex`) both use it, so they store the same frames from the same bytes. Live, a split frame is stored as soon as its last piece arrives.
 
 ## CAN decoding (DBC files)
 
@@ -132,13 +140,14 @@ The [live calculations](live_calculations/README.md) write their results back to
 Points are stamped with the **vehicle's GPS time**, not the laptop's receive time:
 
 * Each `TimeAndFix` message (CAN ID 0xF6) with a valid date sets the reference time to the GPS time, along with the board's `millis` value when it was sent.
-* Every other frame is stamped with that GPS time plus the difference between its `millis` and the reference `millis`.
-* Until the first valid GPS time arrives, the reference is the laptop's clock when the receiver started, plus the board's uptime. Timestamps from before the first GPS fix are therefore only approximate.
+* Every frame is stamped with that GPS time plus the difference between its `millis` and the reference `millis`. The `TimeAndFix` frame itself is stamped with its own GPS time.
+* Until the first valid GPS time arrives, the first frame received sets the reference: the laptop's clock when it arrived, at that frame's `millis`. Timestamps from before the first GPS fix are therefore only as accurate as the laptop's clock (plus the radio delay), however long the board has been running. When reading an SD card log or a replay with the offline tools, the laptop's clock is the time of the conversion, so frames before the first GPS time in the file are stamped with that.
 
 ## Output files
 
-* **Excel** (`xlsxOutputFile`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. When appending, a three-row gap separates sessions. Saving rewrites the whole workbook, so it is saved at most every `xlsxSaveInterval` seconds (and straight away for the first row), plus once more when the receiver stops. Stop the receiver with Ctrl-C so the last rows are saved.
-* **CSV** (`csvOutputFile`): one row per message: `Timestamp` (ISO 8601), `Source`, `Item`, `Message Body` (`name=value` pairs in one quoted column), `CRC`.
+* **Excel** (`xlsxEnabled`, in `session-logs/excel/`): sheet `Translated Messages`, one row per message: `Date`, `Time`, `Source`, `Item`, then pairs of field name and value, with the CRC result in column U. (If a file of the same name already exists, which only happens if the receiver is restarted within the same second, it is appended to after a three-row gap.) Saving rewrites the whole workbook, so it is saved at most every `xlsxSaveInterval` seconds (and straight away for the first row), plus once more when the receiver stops. Stop the receiver with Ctrl-C so the last rows are saved.
+* **CSV** (`csvEnabled`, in `session-logs/csv/`): one row per message: `Timestamp` (ISO 8601), `Source`, `Item`, `Message Body` (`name=value` pairs in one quoted column), `CRC`.
+* **BIN** (`binEnabled`, in `session-logs/BIN/`): the raw radio data, exactly the bytes received, `0x7E` markers included, with frames that fail their CRC or have an unknown CAN ID kept too (bytes split off the front of a damaged piece are written without a marker, as they had none). This is the same format as the SD card log and the ESC-CODE receiver's `BIN/` files, so it can be decoded later with [hex2csv.py or hex2influx.py](#offline-tools-sd-card-logs), or replayed through a virtual serial port (see [Testing without hardware](#testing-without-hardware-software-in-the-loop-sil)). Each frame is written as soon as its end of frame marker arrives (a frame split by an unescaped `0x7E` once all its pieces have arrived); bytes after the last marker when the receiver stops are an unfinished frame and are not written.
 
 Note that `tools/hex2csv.py` (below) writes a **different** CSV layout.
 
@@ -178,7 +187,7 @@ The tests replay the sample captures in [../Tests/data/](../Tests/data/) and com
 * `NRT.BIN`: Ortus-T at iESC 2026 (qualifying, 18 September 2026): two sections of the recording, joined. The first (GPS with a position fix) is about 1 minute long; the second (out on track, with the motor controller, driver controls and current dial) is about 8 minutes long, with radio reception getting worse towards the end. Recorded with the ESC-CODE receiver, whose own decoded output was used to check this branch's decoding.
 * `MPPT.BIN`: an earlier (July 2023) recording with MPPT status messages, which are not in the iESC 2026 recording.
 
-**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off in `receiver_config.py`.
+**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off (`enabled=False` in `InfluxCredentials` in `receiver_config.py`). To check the replay in a file instead, set `csvEnabled`, `xlsxEnabled` or `binEnabled` to `True` (the BIN log of a replay should match the capture, up to its last `0x7E`).
 
 ```shell
 # terminal 1: create a one way virtual serial port, and then replay the sample capture through it at about the rate it was received over the radio (250 bytes per second)
@@ -207,4 +216,4 @@ The replay rate does not change the stored data: timestamps come from the GPS ti
 
 ## Adding a storage option
 
-Subclass `StorerExtension` in [storer_extension.py](storer_extension.py), implementing `store_data` and `close`. Then enable it in `StorerWrapper.init_storer` in [telemetry_storer.py](telemetry_storer.py), behind a setting in [receiver_config.py](receiver_config.py), following how `CSVStorer` is wired up.
+Subclass `StorerExtension` in [storer_extension.py](storer_extension.py), implementing `store_data` (called with each decoded message) and `close`. To keep the raw frames as well, also override `store_raw`, which is called with each frame exactly as received, before decoding (see `BinStorer`). Then enable it in `StorerWrapper.init_storer` in [telemetry_storer.py](telemetry_storer.py), behind a setting in [receiver_config.py](receiver_config.py), following how `CSVStorer` is wired up.

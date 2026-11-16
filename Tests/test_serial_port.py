@@ -117,8 +117,8 @@ def test_port_that_will_not_open_asks_again(fake_open, caplog):
 
     assert open_serial_port("/dev/ttyUSB0", "last used", 115200)[1] == "/dev/ttyUSB1"
     assert len(asked) == 3
-    assert "Could not open /dev/ttyUSB0" in caplog.text
-    assert "Could not open /dev/ttyUSB9" in caplog.text
+    assert "Cannot open serial port /dev/ttyUSB0" in caplog.text
+    assert "Cannot open serial port /dev/ttyUSB9" in caplog.text
 
 
 def test_without_suggestion_asks_until_a_port_is_typed(fake_open):

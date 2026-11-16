@@ -7,6 +7,8 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Union
 
+from Receiver.frame_reader import END_OF_FRAME_MARKER, UnterminatedPiece
+
 from openpyxl import load_workbook, Workbook
 from os.path import exists as fileExists
 
@@ -20,8 +22,9 @@ logger.addHandler(logging.NullHandler())
 class StorerExtension(ABC):
     """Represents a storage option.
 
-    Each class represents a storage option (e.g. csv, excel, influx...)
-    The methods `store_data` and `close` must be implemented.
+    Each class represents a storage option (e.g. csv, excel, influx, bin...)
+    The methods `store_data` and `close` must be implemented. `store_raw`
+    can be overridden to receive each frame as received, before decoding.
 
     Additional methods can be implemented to be called by either `store_data`
     or `close`.
@@ -46,6 +49,13 @@ class StorerExtension(ABC):
     @abstractmethod
     def close(self) -> None:
         raise NotImplementedError
+
+    def store_raw(self, frame: bytes) -> None:
+        """Called with each frame exactly as received, before it is decoded.
+
+        Does nothing unless overridden: only storers that keep the raw radio
+        data (e.g. `BinStorer`) need it.
+        """
 
 
 class ExcelStorer(StorerExtension):
@@ -352,3 +362,46 @@ class CSVStorer(StorerExtension):
             finally:
                 self.csv_file = None
                 self.csv_writer = None
+
+
+class BinStorer(StorerExtension):
+    """Storer for the raw radio data, as received (a .BIN file).
+
+    Writes every frame exactly as it arrived from the radio, each followed by
+    the end of frame marker 0x7E, so the file has the same format as the SD
+    card log on the vehicle (and the ESC-CODE receiver's BIN files). Frames
+    that fail their CRC or have an unknown CAN ID are kept too. The file can
+    be decoded later with tools/hex2csv.py or tools/hex2influx.py, or replayed
+    through a virtual serial port (see the receiver README).
+
+    A frame split by an unescaped 0x7E is written as it arrived, marker
+    included, once all its pieces have been received. Frames split apart
+    after radio losses are written back without the marker they did not have. Bytes after the last
+    0x7E when the receiver stops (an unfinished frame) are not written.
+    """
+
+    def __init__(self, bin_output_file: Union[str, os.PathLike]):
+        self.bin_output_file = bin_output_file
+        # append, like the other storers, so an existing file is never lost
+        self.bin_file = open(bin_output_file, mode="ab")
+
+    def store_raw(self, frame: bytes) -> None:
+        # bytes split off the front of a longer piece were not followed by a
+        # marker when received (see frame_reader.split_run_together)
+        marker = b"" if isinstance(frame, UnterminatedPiece) else END_OF_FRAME_MARKER
+        self.bin_file.write(bytes(frame) + marker)
+        self.bin_file.flush()  # a crash loses at most the frame in progress
+
+    def store_data(
+        self,
+        msg_item: str,
+        msg_source: str,
+        msg_body: dict,
+        msg_time: datetime,
+        msg_crc_status: bool,
+    ) -> None:
+        pass  # the raw frame was already written by store_raw
+
+    def close(self) -> None:
+        logger.info("Closing BIN output file: %s", self.bin_output_file)
+        self.bin_file.close()

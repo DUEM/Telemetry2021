@@ -1,4 +1,4 @@
-01/01/1970 03:00:00.000000,TimeAndFix,Telemetry,GpsHour,14,GpsMinute,5,GpsSeconds,36,GpsDay,18,GpsMonth,7,GpsYear,23,GpsFix,1,GpsFixquality,1,True,0
+18/07/2023 14:05:36.000000,TimeAndFix,Telemetry,GpsHour,14,GpsMinute,5,GpsSeconds,36,GpsDay,18,GpsMonth,7,GpsYear,23,GpsFix,1,GpsFixquality,1,True,0
 18/07/2023 14:05:37.000000,Javed,Mppt,OverTemperature,0,NoCharge,1,UnderVoltage,1,BatteryVoltageLevelReached,0,VoltageIn,88.18714000000001,CurrentIn,0.0,VoltageOut,610,AmbientTemperature,20,True,1000
 18/07/2023 14:05:38.000000,Woof,Mppt,OverTemperature,0,NoCharge,1,UnderVoltage,1,BatteryVoltageLevelReached,0,VoltageIn,76.14794,CurrentIn,0.0,VoltageOut,614,AmbientTemperature,15,True,2000
 18/07/2023 14:05:39.000000,Javed,Mppt,OverTemperature,0,NoCharge,1,UnderVoltage,1,BatteryVoltageLevelReached,0,VoltageIn,87.88616,CurrentIn,0.00872,VoltageOut,611,AmbientTemperature,15,True,3000

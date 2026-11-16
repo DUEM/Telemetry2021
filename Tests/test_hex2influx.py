@@ -1,3 +1,4 @@
+from numpy import uint32
 from datetime import timezone, datetime
 from unittest.mock import MagicMock
 
@@ -15,6 +16,7 @@ def test_hex2influx_writes_decoded_points(monkeypatch, run_in_receiver):
     telemetry_parser.last_gps_time = datetime(
         year=1970, month=1, day=1, hour=3, minute=0, second=0, tzinfo=timezone.utc
     )
+    telemetry_parser.time_fetched = uint32(0)  # reference: millis 0 at that time
 
     # the receiver's real influx settings (conftest replaces them with a stub)
     from Receiver.receiver_config import InfluxCredentials

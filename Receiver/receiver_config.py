@@ -2,10 +2,21 @@ from pathlib import PurePath
 from typing import NamedTuple
 
 
-# used by all live_calculation scripts
-# Set output file paths to file location to enable storage, or '' to disable
-#xlsxOutputFile: str = './ExcelOutput/ExcelTest.xlsx' #set equal to '' to switch off xlsx output
-xlsxOutputFile: str = ''
+# Paths are resolved relative to this file, so the receiver can be started from
+# any working directory (e.g. as a service on the Pi).
+_repo_root = PurePath(__file__).parent.parent
+
+# Each output is switched on or off with its own True/False setting. Each run of
+# the receiver writes new files, named after the time the first frame arrived,
+# e.g. session-logs/csv/telem-received-2026-11-15-143012.csv. The folders are
+# created if they do not exist. (The live_calculations scripts have their own
+# settings, in Receiver/live_calculations/config.py.)
+sessionLogsFolder = _repo_root / "session-logs"
+sessionLogName: str = "telem-received"  # file names are <sessionLogName>-YYYY-MM-DD-HHMMSS.<ext>
+
+# Excel (.xlsx) output
+xlsxEnabled: bool = False
+xlsxOutputFolder = sessionLogsFolder / "excel"
 # Save the xlsx file at most this often (seconds), and when the receiver stops.
 # Saving rewrites the whole workbook, so saving after every message gets slower
 # as the file grows. If the receiver is killed without stopping cleanly, up to
@@ -13,11 +24,17 @@ xlsxOutputFile: str = ''
 # board still has them).
 xlsxSaveInterval: float = 10.0
 
-# CSV output file - set to enable CSV storage
-# Example: csvOutputFile: str = './Output/telemetry.csv'
-csvOutputFile: str = ''
+# CSV output
+csvEnabled: bool = False
+csvOutputFolder = sessionLogsFolder / "csv"
 
+# Raw radio data (.BIN), every frame as received, in the same format as the SD
+# card log on the vehicle. Can be decoded later with tools/hex2csv.py or
+# tools/hex2influx.py, or replayed through a virtual serial port.
+binEnabled: bool = False
+binOutputFolder = sessionLogsFolder / "BIN"
 
+# InfluxDB output: switched on or off with `enabled` below
 class InfluxCredentials(NamedTuple):
     username: str = "admin"
     password: str = "password"
@@ -28,10 +45,6 @@ class InfluxCredentials(NamedTuple):
 
 
 ifCredentials = InfluxCredentials()
-
-# Paths are resolved relative to this file, so the receiver can be started from
-# any working directory (e.g. as a service on the Pi).
-_repo_root = PurePath(__file__).parent.parent
 
 dbc_folder = _repo_root / "dbc"
 dbc_files = [
