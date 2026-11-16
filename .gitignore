@@ -26,3 +26,6 @@ Output/
 .Trashes/
 Thumbs.db
 desktop.ini
+
+# receiver serial port settings, saved by LiveTelemetry (differ between laptops)
+Receiver/serial.env

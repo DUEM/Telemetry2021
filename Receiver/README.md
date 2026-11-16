@@ -30,14 +30,27 @@ The receiver is a Python package, so run it as a module from the **top** of the 
 python3 -m Receiver.LiveTelemetry
 ```
 
+Before anything else it lists the serial ports and suggests one, saying why: `last used` (the port used last time, if it is plugged in), `FTDI USB serial, probably the XBee`, or `USB serial`. Then it asks for the baud rate:
+
+```
+INFO root: Serial ports found:
+INFO root:   /dev/ttyS0
+INFO root:   /dev/ttyUSB0  (FT231X USB UART, FTDI)
+Use /dev/ttyUSB0 (FTDI USB serial, probably the XBee)? Press Enter to use it, or type another port:
+Use a baud rate of 115200? Press Enter to use it, or type another:
+INFO root: Opened /dev/ttyUSB0 at 115200 baud
+```
+
+Press **Enter** to use it, or type a port yourself (it does not have to be in the list, e.g. `/tmp/ttyV0` or `COM8`). If the port can't be opened (wrong name, XBee not plugged in, port in use by another program), it says why and asks again. A port that opens is not proof the XBee is working: if nothing is printed, or every frame is `CRC FAIL`, check it with [tools/check_xbee_settings.py](../tools/check_xbee_settings.py). The baud rate must match the XBee's (115200): a wrong rate gives no error, only `CRC FAIL` frames, so you get a warning if it is not 115200. The port and baud rate used are saved in `Receiver/serial.env` (not committed, as they differ between laptops) and suggested next time. Setting the `SERIALPORT` environment variable changes the suggestion; you are still asked.
+
 Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly.
 
 ## Configuration
 
 | Setting | Where | Default |
 |---|---|---|
-| Serial port | `SERIALPORT` at the top of [LiveTelemetry.py](LiveTelemetry.py) | `/dev/ttyUSB0` |
-| Baud rate | `BAUD` in [LiveTelemetry.py](LiveTelemetry.py) | **115200** (must match the XBee) |
+| Serial port | Asked at start up and saved in `Receiver/serial.env` (suggestion from [serial_port.py](serial_port.py), or the `SERIALPORT` environment variable) | suggested: last used, else a USB serial device |
+| Baud rate | Asked at start up and saved in `Receiver/serial.env` (Enter keeps the saved rate), or the `BAUD` environment variable | **115200** (must match the XBee) |
 | InfluxDB host, port, user, password, database | `InfluxCredentials` in [receiver_config.py](receiver_config.py) | `localhost`, `8086`, `admin`, `password`, `DUSCiESC` |
 | InfluxDB on / off | `enabled` in `InfluxCredentials` | on |
 | Excel output | `xlsxOutputFile` in [receiver_config.py](receiver_config.py) | `''` (off) |
@@ -172,13 +185,13 @@ The tests replay the sample captures in [../Tests/data/](../Tests/data/) and com
 
 pv -L 250 Tests/data/NRT.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0,wait-slave
 
-# terminal 2: set SERIALPORT in Receiver/LiveTelemetry.py to the /tmp/ttyV0 name, then
+# terminal 2: type /tmp/ttyV0 when asked which port to use
 
 python3 -m Receiver.LiveTelemetry
 
 ```
 
-Stop the receiver with Ctrl-C when the output stops. Remember to set `SERIALPORT` back afterwards.
+Stop the receiver with Ctrl-C when the output stops.
 
 Start terminal 1 first, as it creates `/tmp/ttyV0`. With `wait-slave`, `socat` sends nothing until the receiver opens the port, so the start of the capture is not lost while you start terminal 2.
 

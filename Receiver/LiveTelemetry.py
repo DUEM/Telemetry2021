@@ -1,5 +1,6 @@
 import serial
 from Receiver.frame_reader import END_OF_FRAME_MARKER, FrameAssembler
+from Receiver.serial_port import DEFAULT_BAUD, describe_port, get_port_and_baud, list_serial_ports, save_settings
 from Receiver.telemetry_storer import store_data, end_session
 import atexit
 import logging
@@ -13,10 +14,42 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",
 )
 
-SERIALPORT = '/dev/ttyUSB0' # Raspberry Pi
-#SERIALPORT = '/dev/cu.usbmodem14101' # macOS
-#SERIALPORT = 'COM8' #Windows
-BAUD = 115200
+# The serial port and baud rate are asked for at start up and saved in
+# Receiver/serial.env. The baud rate must match the XBee's (115200).
+
+def open_serial_port(suggested, reason, baud):
+    """Ask for a serial port until one opens. Enter uses the suggested port.
+
+    Returns (connection, port). Only opening the port is inside the try, so
+    this catches a wrong port name or an unplugged radio, nothing else.
+    """
+    while True:
+        if suggested:
+            typed = input(f"Use {suggested} ({reason})? Press Enter to use it, or type another port: ")
+        else:
+            typed = input("Type the serial port to use: ")
+        port = typed.strip() or suggested
+        if not port:
+            continue  # nothing suggested and nothing typed: ask again
+
+        try:
+            connection = serial.Serial(port, baud)
+        except serial.SerialException as e:  # wrong name, unplugged, in use, no permission
+            logging.warning(f"Could not open {port}: {e}")
+            continue  # ask again
+        return connection, port
+
+
+def ask_baud(suggested):
+    """Ask for the baud rate. Enter uses the suggested rate."""
+    while True:
+        typed = input(f"Use a baud rate of {suggested}? Press Enter to use it, or type another: ").strip()
+        if not typed:
+            return suggested
+        if typed.isdigit():
+            return int(typed)
+        logging.warning(f"'{typed}' is not a number")
+
 
 #trying to exit gracefully
 keepLooping = True
@@ -54,12 +87,40 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
 
 
 if __name__ == "__main__":
+    #list the serial ports and ask which one to use, before anything else
+    ports = list_serial_ports()
+    logging.info("Serial ports found:")
+    for p in ports:
+        logging.info(f"  {describe_port(p)}")
+    if not ports:
+        logging.info("no ports found")
+    suggested, reason, baud = get_port_and_baud(ports)
+
+    # asks again until the port opens; Ctrl-C here quits as normal
+    serialConnection, port = open_serial_port(suggested, reason, baud)
+
+    # the rate can be changed on an open port, so a port that fails to open
+    # doesn't make you answer this again
+    baud = ask_baud(baud)
+    serialConnection.baudrate = baud
+    if baud != DEFAULT_BAUD:
+        # a wrong rate gives no error, only CRC FAIL frames
+        logging.warning(f"{baud} is not {DEFAULT_BAUD}: it must match the XBee's baud rate (BD). "
+                        "If every frame is CRC FAIL, check with tools/check_xbee_settings.py")
+    logging.info(f"Opened {port} at {baud} baud")
+
+    # save only once the port has opened, so a mistyped port is never suggested
+    try:
+        save_settings(port, baud)
+    except OSError as e:  # e.g. read-only checkout: not worth stopping for
+        logging.warning(f"Could not save the serial port to Receiver/serial.env: {e}")
+
+    # take over Ctrl-C only now, so it stops the receive loop cleanly
     atexit.register(onProgramExit)
     signal.signal(signal.SIGINT, sigintHandler)
 
-    serialConnection = serial.Serial(SERIALPORT, BAUD)
     rejoined = receive(serialConnection)
 
     end_session()
     serialConnection.close()
-    print(f"Exiting live telemetry ({rejoined} frames split by an unescaped 0x7E were re-joined)")
+    logging.info(f"Exiting live telemetry ({rejoined} frames split by an unescaped 0x7E were re-joined)")
