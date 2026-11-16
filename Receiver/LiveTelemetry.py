@@ -1,6 +1,12 @@
 import serial
 from Receiver.frame_reader import END_OF_FRAME_MARKER, FrameAssembler
-from Receiver.serial_port import DEFAULT_BAUD, describe_port, get_port_and_baud, list_serial_ports, save_settings
+from Receiver.serial_port import (
+    DEFAULT_BAUD,
+    describe_port,
+    get_port_and_baud,
+    list_serial_ports,
+    save_settings,
+)
 from Receiver.telemetry_storer import store_data, end_session
 import atexit
 import errno
@@ -18,20 +24,21 @@ logging.basicConfig(
 # The serial port and baud rate are asked for at start up and saved in
 # Receiver/serial.env. The baud rate must match the XBee's (115200).
 
+
 def cannot_open_hint(port, e):
-    """What to check when serial port `port` could not be opened (error `e`)."""
+    """What to check when serial port `port` could not be opened (error e)."""
     if e.errno == errno.ENOENT:
         return (
-            f"{port} does not exist. Check the XBee's USB adapter is plugged in "
-            "and pick its port from the list above (Windows: Device Manager > "
-            "Ports). For a software-in-the-loop replay, start socat first so "
-            "that it creates the port."
+            f"{port} does not exist. Check the XBee's USB adapter is "
+            "plugged in and pick its port from the list above (Windows: "
+            "Device Manager > Ports). For a software-in-the-loop replay, "
+            "start socat first so that it creates the port."
         )
     if e.errno == errno.EACCES:
         return (
-            f"No permission to open {port}. On Linux, add yourself to the group "
-            "that owns it (usually dialout: sudo usermod -aG dialout $USER), then "
-            "log out and back in."
+            f"No permission to open {port}. On Linux, add yourself to the "
+            "group that owns it (usually dialout: sudo usermod -aG dialout "
+            "$USER), then log out and back in."
         )
     return (
         f"Check that {port} is the XBee's port and that no other program "
@@ -47,7 +54,8 @@ def open_serial_port(suggested, reason, baud):
     """
     while True:
         if suggested:
-            typed = input(f"Use {suggested} ({reason})? Press Enter to use it, or type another port: ")
+            typed = input(f"Use {suggested} ({reason})? Press Enter to use "
+                          "it, or type another port: ")
         else:
             typed = input("Type the serial port to use: ")
         port = typed.strip() or suggested
@@ -56,8 +64,10 @@ def open_serial_port(suggested, reason, baud):
 
         try:
             connection = serial.Serial(port, baud)
-        except serial.SerialException as e:  # wrong name, unplugged, in use, no permission
-            logging.warning(f"Cannot open serial port {port}: {e}\n{cannot_open_hint(port, e)}")
+        except serial.SerialException as e:
+            # wrong name, unplugged, in use by another program, no permission
+            logging.warning(f"Cannot open serial port {port}: {e}\n"
+                            f"{cannot_open_hint(port, e)}")
             continue  # ask again
         return connection, port
 
@@ -65,7 +75,8 @@ def open_serial_port(suggested, reason, baud):
 def ask_baud(suggested):
     """Ask for the baud rate. Enter uses the suggested rate."""
     while True:
-        typed = input(f"Use a baud rate of {suggested}? Press Enter to use it, or type another: ").strip()
+        typed = input(f"Use a baud rate of {suggested}? Press Enter to use "
+                      "it, or type another: ").strip()
         if not typed:
             return suggested
         if typed.isdigit():
@@ -116,7 +127,7 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
 
 
 if __name__ == "__main__":
-    #list the serial ports and ask which one to use, before anything else
+    # list the serial ports and ask which one to use, before anything else
     ports = list_serial_ports()
     logging.info("Serial ports found:")
     for p in ports:
@@ -134,15 +145,17 @@ if __name__ == "__main__":
     serialConnection.baudrate = baud
     if baud != DEFAULT_BAUD:
         # a wrong rate gives no error, only CRC FAIL frames
-        logging.warning(f"{baud} is not {DEFAULT_BAUD}: it must match the XBee's baud rate (BD). "
-                        "If every frame is CRC FAIL, check with tools/check_xbee_settings.py")
+        logging.warning(f"{baud} is not {DEFAULT_BAUD}: it must match the "
+                        "XBee's baud rate (BD). If every frame is CRC FAIL, "
+                        "check with tools/check_xbee_settings.py")
     logging.info(f"Opened {port} at {baud} baud")
 
-    # save only once the port has opened, so a mistyped port is never suggested
+    # save only once the port has opened, so a mistyped port is not saved
     try:
         save_settings(port, baud)
     except OSError as e:  # e.g. read-only checkout: not worth stopping for
-        logging.warning(f"Could not save the serial port to Receiver/serial.env: {e}")
+        logging.warning(f"Could not save the serial port to "
+                        f"Receiver/serial.env: {e}")
 
     # take over Ctrl-C only now, so it stops the receive loop cleanly
     atexit.register(onProgramExit)

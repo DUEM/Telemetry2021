@@ -37,7 +37,7 @@ def load_settings(path=None):
 
 def save_settings(port, baud, path=None):
     Path(path or SETTINGS_FILE).write_text(
-        "# Saved by Receiver/LiveTelemetry.py: the serial port used last time.\n"
+        "# Saved by Receiver/LiveTelemetry.py: the port used last time.\n"
         "# Not committed (differs between laptops). Delete to reset.\n"
         f"SERIALPORT={port}\n"
         f"BAUD={baud}\n"
@@ -55,10 +55,10 @@ def describe_port(p):
 
 
 def suggest_port(ports, saved_port=None):
-    """Return (port, reason) for the port most likely to be the XBee, or (None, None).
+    """Return (port, reason) for the port most likely to be the XBee.
 
     The saved port if it is plugged in, then an FTDI device, then any USB
-    serial device.
+    serial device. (None, None) if there is none.
     """
     for p in ports:
         if p.device == saved_port:

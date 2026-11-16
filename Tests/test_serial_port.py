@@ -3,20 +3,29 @@ from types import SimpleNamespace
 import pytest
 import serial
 
-from Receiver.serial_port import describe_port, get_port_and_baud, load_settings, save_settings, suggest_port
+from Receiver.serial_port import (
+    describe_port,
+    get_port_and_baud,
+    load_settings,
+    save_settings,
+    suggest_port,
+)
 
 
 def port(device, vid=None, description="n/a", manufacturer=None):
-    return SimpleNamespace(device=device, vid=vid, description=description, manufacturer=manufacturer)
+    return SimpleNamespace(device=device, vid=vid, description=description,
+                           manufacturer=manufacturer)
 
 
 BLUETOOTH = port("/dev/cu.Bluetooth-Incoming-Port")
-FTDI = port("/dev/ttyUSB1", vid=0x0403, description="FT231X USB UART", manufacturer="FTDI")
+FTDI = port("/dev/ttyUSB1", vid=0x0403, description="FT231X USB UART",
+            manufacturer="FTDI")
+FTDI_REASON = "FTDI USB serial, probably the XBee"
 OTHER_USB = port("/dev/ttyACM0", vid=0x2341, description="Arduino Uno")
 
 
 def answers(*replies):
-    """An `ask` function that gives `replies` in turn and records the prompts."""
+    """An `ask` function: gives `replies` in turn, records the prompts."""
     it = iter(replies)
     asked = []
 
@@ -28,15 +37,18 @@ def answers(*replies):
 
 
 def test_suggests_ftdi_over_other_usb_and_non_usb():
-    assert suggest_port([BLUETOOTH, OTHER_USB, FTDI]) == ("/dev/ttyUSB1", "FTDI USB serial, probably the XBee")
+    assert suggest_port([BLUETOOTH, OTHER_USB, FTDI]) == (
+        "/dev/ttyUSB1", FTDI_REASON)
 
 
 def test_suggests_any_usb_when_no_ftdi():
-    assert suggest_port([BLUETOOTH, OTHER_USB]) == ("/dev/ttyACM0", "USB serial")
+    assert suggest_port([BLUETOOTH, OTHER_USB]) == (
+        "/dev/ttyACM0", "USB serial")
 
 
 def test_suggests_saved_port_when_plugged_in():
-    assert suggest_port([OTHER_USB, FTDI], saved_port="/dev/ttyACM0") == ("/dev/ttyACM0", "last used")
+    assert suggest_port([OTHER_USB, FTDI], saved_port="/dev/ttyACM0") == (
+        "/dev/ttyACM0", "last used")
 
 
 def test_ignores_saved_port_when_not_plugged_in():
@@ -49,23 +61,26 @@ def test_no_suggestion_without_usb():
 
 def test_get_port_and_baud_suggests_without_asking():
     assert get_port_and_baud([BLUETOOTH, FTDI], settings={}, environ={}) == (
-        "/dev/ttyUSB1", "FTDI USB serial, probably the XBee", 115200)
+        "/dev/ttyUSB1", FTDI_REASON, 115200)
 
 
 def test_get_port_and_baud_nothing_to_suggest():
-    assert get_port_and_baud([BLUETOOTH], settings={}, environ={}) == (None, None, 115200)
+    assert get_port_and_baud([BLUETOOTH], settings={}, environ={}) == (
+        None, None, 115200)
 
 
 def test_get_port_and_baud_uses_saved_settings():
     settings = {"SERIALPORT": "/dev/ttyACM0", "BAUD": "9600"}
 
-    assert get_port_and_baud([OTHER_USB, FTDI], settings, environ={}) == ("/dev/ttyACM0", "last used", 9600)
+    assert get_port_and_baud([OTHER_USB, FTDI], settings, environ={}) == (
+        "/dev/ttyACM0", "last used", 9600)
 
 
 def test_get_port_and_baud_environment_wins():
     environ = {"SERIALPORT": "/tmp/ttyV0", "BAUD": "57600"}
 
-    assert get_port_and_baud([FTDI], {"BAUD": "9600"}, environ) == ("/tmp/ttyV0", "set by SERIALPORT", 57600)
+    assert get_port_and_baud([FTDI], {"BAUD": "9600"}, environ) == (
+        "/tmp/ttyV0", "set by SERIALPORT", 57600)
 
 
 def test_describe_port_shows_description_and_manufacturer():
@@ -99,7 +114,8 @@ def test_enter_opens_suggested_port(fake_open):
     from Receiver.LiveTelemetry import open_serial_port
     asked = fake_open([""], working=["/dev/ttyUSB0"])
 
-    assert open_serial_port("/dev/ttyUSB0", "last used", 115200) == (("connection", "/dev/ttyUSB0", 115200), "/dev/ttyUSB0")
+    assert open_serial_port("/dev/ttyUSB0", "last used", 115200) == (
+        ("connection", "/dev/ttyUSB0", 115200), "/dev/ttyUSB0")
     assert asked[0].startswith("Use /dev/ttyUSB0 (last used)?")
 
 
@@ -107,15 +123,20 @@ def test_typed_port_replaces_suggested_port(fake_open):
     from Receiver.LiveTelemetry import open_serial_port
     fake_open(["  /tmp/ttyV0 "], working=["/dev/ttyUSB0", "/tmp/ttyV0"])
 
-    assert open_serial_port("/dev/ttyUSB0", "USB serial", 115200)[1] == "/tmp/ttyV0"
+    connection, port = open_serial_port("/dev/ttyUSB0", "USB serial", 115200)
+
+    assert port == "/tmp/ttyV0"
 
 
 def test_port_that_will_not_open_asks_again(fake_open, caplog):
     from Receiver.LiveTelemetry import open_serial_port
     # the suggested port is unplugged, then a typo, then the right port
-    asked = fake_open(["", "/dev/ttyUSB9", "/dev/ttyUSB1"], working=["/dev/ttyUSB1"])
+    asked = fake_open(["", "/dev/ttyUSB9", "/dev/ttyUSB1"],
+                      working=["/dev/ttyUSB1"])
 
-    assert open_serial_port("/dev/ttyUSB0", "last used", 115200)[1] == "/dev/ttyUSB1"
+    connection, port = open_serial_port("/dev/ttyUSB0", "last used", 115200)
+
+    assert port == "/dev/ttyUSB1"
     assert len(asked) == 3
     assert "Cannot open serial port /dev/ttyUSB0" in caplog.text
     assert "Cannot open serial port /dev/ttyUSB9" in caplog.text
@@ -160,7 +181,8 @@ def test_settings_round_trip(tmp_path):
 
     save_settings("/dev/ttyUSB0", 115200, path)
 
-    assert load_settings(path) == {"SERIALPORT": "/dev/ttyUSB0", "BAUD": "115200"}
+    assert load_settings(path) == {
+        "SERIALPORT": "/dev/ttyUSB0", "BAUD": "115200"}
 
 
 def test_load_settings_ignores_comments_blanks_and_quotes(tmp_path):

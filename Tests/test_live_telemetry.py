@@ -99,7 +99,8 @@ def test_receive_stops_cleanly_when_the_port_is_lost(request, tmp_path, caplog, 
         ("/", "Check that / is the XBee's port"),  # any other open failure
     ],
 )
-def test_open_serial_port_explains_and_asks_again_when_it_cannot_open(port, expected, monkeypatch, caplog):
+def test_open_serial_port_explains_and_asks_again_when_it_cannot_open(
+        port, expected, monkeypatch, caplog):
     from Receiver.LiveTelemetry import open_serial_port
 
     # the user types `port`; when asked again, stop the test there
