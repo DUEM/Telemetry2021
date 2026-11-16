@@ -82,7 +82,7 @@ void loop() {
   /* Flush SD file at interval defined in config file */
   if ((millis() - sd_timer) > config.sd_update) {
     sd_timer = millis();
-    dataFile.flush();
+    flushSDLogs(); // CAN binary log + raw NMEA log
     DEBUG_PRINTLN("SD Flush");
   }
 
