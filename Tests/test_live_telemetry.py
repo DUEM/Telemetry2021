@@ -99,12 +99,22 @@ def test_receive_stops_cleanly_when_the_port_is_lost(request, tmp_path, caplog, 
         ("/", "Check that / is the XBee's port"),  # any other open failure
     ],
 )
-def test_open_serial_port_exits_with_a_message_when_it_cannot_open(port, expected):
+def test_open_serial_port_explains_and_asks_again_when_it_cannot_open(
+        port, expected, monkeypatch, caplog):
     from Receiver.LiveTelemetry import open_serial_port
 
-    with pytest.raises(SystemExit) as exited:
-        open_serial_port(port)
+    # the user types `port`; when asked again, stop the test there
+    replies = iter([port])
 
-    message = str(exited.value.code)  # sys.exit(message) prints it and exits with 1
-    assert message.startswith(f"Cannot open serial port {port}:")
-    assert expected in message
+    def ask(prompt):
+        try:
+            return next(replies)
+        except StopIteration:
+            raise EOFError  # asked again
+    monkeypatch.setattr("builtins.input", ask)
+
+    with pytest.raises(EOFError):
+        open_serial_port(None, None, 115200)
+
+    assert f"Cannot open serial port {port}:" in caplog.text
+    assert expected in caplog.text
