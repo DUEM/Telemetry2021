@@ -37,7 +37,7 @@ If the serial port cannot be opened, the receiver prints `Cannot open serial por
 
 ## Configuration
 
-All the receiver's settings are in [config.yml](config.yml), in this folder; [receiver_config.py](receiver_config.py) reads it when the receiver starts. Relative folders are relative to the top of the repository. Every setting must be present: if one is missing, misspelt or the wrong type (for example `"false"` in quotes instead of `false`), the receiver stops with an error naming the file and the setting. The file has a comment explaining each one.
+All the receiver's settings are in [config.yml](config.yml), in this folder; [receiver_config.py](receiver_config.py) reads it when the receiver starts. Relative folders are relative to the top of the repository, except the three output folders, which are always inside `sessionLogsFolder` (`session-logs`). Every setting must be present: if one is missing, misspelt or the wrong type (for example `"false"` in quotes instead of `false`), the receiver stops with an error naming the file and the setting. The file has a comment explaining each one.
 
 | Setting | Name in `config.yml` | Default |
 |---|---|---|
@@ -46,12 +46,12 @@ All the receiver's settings are in [config.yml](config.yml), in this folder; [re
 | InfluxDB host, port, user, password, database | `host`, `port`, `username`, `password`, `db` under `ifCredentials` | `localhost`, `8086`, `admin`, `password`, `DUSCiESC` |
 | InfluxDB on / off | `enabled` under `ifCredentials` | `true` (on) |
 | Excel on / off | `xlsxEnabled` | `false` (off) |
-| Excel folder | `xlsxOutputFolder` | `session-logs/excel` |
+| Excel folder, inside `sessionLogsFolder` | `xlsxOutputFolder` | `excel` |
 | Excel save interval | `xlsxSaveInterval` | **10** seconds |
 | CSV on / off | `csvEnabled` | `false` (off) |
-| CSV folder | `csvOutputFolder` | `session-logs/csv` |
+| CSV folder, inside `sessionLogsFolder` | `csvOutputFolder` | `csv` |
 | BIN (raw) on / off | `binEnabled` | `false` (off) |
-| BIN folder | `binOutputFolder` | `session-logs/BIN` |
+| BIN folder, inside `sessionLogsFolder` | `binOutputFolder` | `BIN` |
 | Output file name | `sessionLogName` | `telem-received` (files are `telem-received-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv` / `.BIN`) |
 | CAN database files | `dbc_files`, in folder `dbc_folder` | the four files in [../dbc/](../dbc/) |
 

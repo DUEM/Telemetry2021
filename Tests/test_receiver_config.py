@@ -67,9 +67,16 @@ def test_serial_port_can_be_changed(write_config):
     assert load_config(write_config(serialPort="COM8"))["serialPort"] == "COM8"
 
 
-def test_absolute_folder_is_kept(write_config, tmp_path):
-    settings = load_config(write_config(csvOutputFolder=str(tmp_path / "logs")))
-    assert settings["csvOutputFolder"] == tmp_path / "logs"
+def test_absolute_session_logs_folder_is_kept(write_config, tmp_path):
+    settings = load_config(write_config(sessionLogsFolder=str(tmp_path / "logs")))
+    assert settings["sessionLogsFolder"] == tmp_path / "logs"
+
+
+def test_output_folders_are_always_inside_session_logs_folder(write_config, tmp_path):
+    settings = load_config(write_config(sessionLogsFolder=str(tmp_path / "logs"), csvOutputFolder="race/csv"))
+    assert settings["xlsxOutputFolder"] == tmp_path / "logs" / "excel"
+    assert settings["csvOutputFolder"] == tmp_path / "logs" / "race" / "csv"
+    assert settings["binOutputFolder"] == tmp_path / "logs" / "BIN"
 
 
 def test_whole_number_is_accepted_as_a_number(write_config):
@@ -86,6 +93,8 @@ def test_whole_number_is_accepted_as_a_number(write_config):
         ({"serialBaud": True}, "serialBaud must be a whole number, not True"),
         ({"xlsxSaveInterval": "10s"}, "xlsxSaveInterval must be a number, not '10s'"),
         ({"dbc_files": "Orion.dbc"}, "dbc_files must be a list of file names"),
+        ({"csvOutputFolder": "/tmp/csv"}, "csvOutputFolder must be a folder name inside sessionLogsFolder (e.g. csv), not '/tmp/csv'"),
+        ({"binOutputFolder": "~/BIN"}, "binOutputFolder must be a folder name inside sessionLogsFolder (e.g. csv), not '~/BIN'"),
         ({"ifCredentials": {"db": "DUSCiESC"}}, "missing: ifCredentials.username"),
         (
             {"ifCredentials": {"username": "a", "password": "b", "db": "c", "host": "d", "port": "8086", "enabled": True}},

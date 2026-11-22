@@ -34,19 +34,20 @@ class InfluxCredentials(NamedTuple):
 
 
 # The type each setting must have. "path" is a folder, relative to the
-# repository root unless absolute.
+# repository root unless absolute. "subfolder" is a folder inside
+# sessionLogsFolder.
 _SETTINGS = {
     "serialPort": str,
     "serialBaud": int,
     "sessionLogsFolder": "path",
     "sessionLogName": str,
     "xlsxEnabled": bool,
-    "xlsxOutputFolder": "path",
+    "xlsxOutputFolder": "subfolder",
     "xlsxSaveInterval": float,
     "csvEnabled": bool,
-    "csvOutputFolder": "path",
+    "csvOutputFolder": "subfolder",
     "binEnabled": bool,
-    "binOutputFolder": "path",
+    "binOutputFolder": "subfolder",
     "ifCredentials": InfluxCredentials,
     "dbc_folder": "path",
     "dbc_files": List[str],
@@ -59,6 +60,13 @@ def _check(value, expected, where):
     """Return `value` converted to `expected`, or raise ConfigError."""
     if expected == "path":
         return _repo_root / Path(_check(value, str, where)).expanduser()
+    if expected == "subfolder":
+        folder = Path(_check(value, str, where))
+        if folder.is_absolute() or folder.parts[:1] == ("~",):
+            raise ConfigError(
+                f"{where} must be a folder name inside sessionLogsFolder (e.g. csv), not {value!r}"
+            )
+        return folder
     if expected is InfluxCredentials:
         if not isinstance(value, dict):
             raise ConfigError(f"{where} must be a group of settings: {', '.join(InfluxCredentials._fields)}")
@@ -116,6 +124,10 @@ def load_config(path=CONFIG_FILE) -> dict:
         settings = {name: _check(raw[name], kind, name) for name, kind in _SETTINGS.items()}
     except ConfigError as e:
         raise ConfigError(f"{path}: {e}") from None
+    # the output folders are always inside sessionLogsFolder
+    for name, kind in _SETTINGS.items():
+        if kind == "subfolder":
+            settings[name] = settings["sessionLogsFolder"] / settings[name]
     settings["dbc_files"] = [settings["dbc_folder"] / name for name in settings["dbc_files"]]
     return settings
 
