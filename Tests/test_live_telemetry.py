@@ -122,8 +122,41 @@ def test_open_serial_port_uses_the_port_in_config_yml(monkeypatch):
     assert "set serialPort in Receiver/config.yml" in message
 
 
+class FakeInflux:
+    """Stands in for InfluxDBClient: a server with the databases in `databases`."""
+
+    databases = ["_internal", "DUSCiESC"]
+    created = []
+    error = None  # raised by get_list_database, e.g. InfluxDB not running
+    create_error = None
+
+    def __init__(self, **connection):
+        self.connection = connection
+
+    def get_list_database(self):
+        if self.error:
+            raise self.error
+        return [{"name": name} for name in self.databases]
+
+    def create_database(self, name):
+        if self.create_error:
+            raise self.create_error
+        self.created.append(name)
+        self.databases.append(name)
+
+
 @pytest.fixture
-def session_settings(monkeypatch):
+def fake_influx(monkeypatch):
+    class Server(FakeInflux):
+        databases = list(FakeInflux.databases)
+        created = []
+
+    monkeypatch.setattr("Receiver.LiveTelemetry.InfluxDBClient", Server)
+    return Server
+
+
+@pytest.fixture
+def session_settings(monkeypatch, fake_influx):
     """Known defaults for the prompted settings; all restored after the test."""
     from Receiver.receiver_config import InfluxCredentials
 
@@ -189,6 +222,7 @@ def test_answers_are_used_for_this_session(session_settings):
 
     prompt_settings(answering(
         "/tmp/ttyV0", "qualifying-day1", "yes", "n", "FALSE", "y", "OldSession", "dusc", "secret",
+        "create",  # OldSession is not in the fake InfluxDB
     ))
 
     assert receiver_config.serialPort == "/tmp/ttyV0"
@@ -244,3 +278,120 @@ def test_no_input_uses_the_defaults(session_settings):
 
     assert receiver_config.serialPort == "/dev/ttyUSB0"
     assert receiver_config.ifCredentials.db == "DUSCiESC"
+
+
+def influx_settings(db, answers_after_db=()):
+    """Answers: defaults for everything, InfluxDB on, database `db`, then `answers_after_db`."""
+    return answering("", "", "", "", "", "", db, "", "", *answers_after_db)
+
+
+def test_existing_database_is_used(session_settings, fake_influx, capsys):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    ask = influx_settings("DUSCiESC")
+    prompt_settings(ask)
+
+    assert len(ask.prompts) == 9  # no question about creating it
+    assert receiver_config.ifCredentials.db == "DUSCiESC"
+    assert fake_influx.created == []
+    assert "InfluxDB database 'DUSCiESC' found" in capsys.readouterr().out
+
+
+def test_new_database_is_created_if_asked(session_settings, fake_influx, capsys):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    ask = influx_settings("Race2027", ["create"])
+    prompt_settings(ask)
+
+    assert ask.prompts[-1] == (
+        "InfluxDB database 'Race2027' does not exist. Create it, or use the default "
+        "'DUSCiESC'? (create/default) [ default: default ]: "
+    )
+    assert fake_influx.created == ["Race2027"]
+    assert receiver_config.ifCredentials.db == "Race2027"
+    out = capsys.readouterr().out
+    assert "Creating InfluxDB database 'Race2027'" in out
+    assert "Reminder: Grafana" in out and "change the data source's Database to 'Race2027'" in out
+
+
+def test_missing_database_falls_back_to_the_default(session_settings, fake_influx, capsys):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    prompt_settings(influx_settings("Typo", ["maybe", ""]))  # asked again, then the default
+
+    assert fake_influx.created == []
+    assert receiver_config.ifCredentials.db == "DUSCiESC"
+    out = capsys.readouterr().out
+    assert "Please answer create or default" in out
+    assert "Using InfluxDB database 'DUSCiESC'" in out
+
+
+def test_missing_default_database_is_created_without_the_grafana_reminder(session_settings, fake_influx, capsys):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    fake_influx.databases = ["_internal"]  # e.g. a new laptop
+    ask = influx_settings("", [""])
+    prompt_settings(ask)
+
+    assert ask.prompts[-1] == "InfluxDB database 'DUSCiESC' does not exist. Create it? (true/false) [ default: true ]: "
+    assert fake_influx.created == ["DUSCiESC"]
+    assert receiver_config.ifCredentials.db == "DUSCiESC"
+    assert "Reminder: Grafana" not in capsys.readouterr().out
+
+
+def test_default_database_not_created_if_declined(session_settings, fake_influx, capsys):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    fake_influx.databases = ["_internal"]
+    prompt_settings(influx_settings("", ["no"]))
+
+    assert fake_influx.created == []
+    assert "nothing will be stored in InfluxDB until database 'DUSCiESC' exists" in capsys.readouterr().out
+
+
+def test_influx_not_running_is_reported_and_the_receiver_carries_on(session_settings, fake_influx, capsys):
+    from requests.exceptions import ConnectionError
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    fake_influx.error = ConnectionError("Connection refused")
+    ask = influx_settings("Race2027")
+    prompt_settings(ask)
+
+    assert len(ask.prompts) == 9
+    assert receiver_config.ifCredentials.db == "Race2027"
+    assert "Cannot check the InfluxDB databases at localhost:8086" in capsys.readouterr().out
+
+
+def test_failed_create_uses_the_default(session_settings, fake_influx, capsys):
+    from influxdb.exceptions import InfluxDBClientError
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    fake_influx.create_error = InfluxDBClientError("forbidden", 403)
+    prompt_settings(influx_settings("Race2027", ["c"]))
+
+    assert receiver_config.ifCredentials.db == "DUSCiESC"
+    out = capsys.readouterr().out
+    assert "Could not create database 'Race2027'" in out
+    assert "Using the default database 'DUSCiESC' instead" in out
+    assert "Reminder: Grafana" not in out
+
+
+def test_database_check_uses_the_credentials_given(session_settings, fake_influx, monkeypatch):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    seen = {}
+
+    class Recording(fake_influx):
+        def __init__(self, **connection):
+            seen.update(connection)
+
+    monkeypatch.setattr("Receiver.LiveTelemetry.InfluxDBClient", Recording)
+    prompt_settings(answering("", "", "", "", "", "", "", "dusc", "secret"))
+
+    assert (seen["host"], seen["port"], seen["username"], seen["password"]) == ("localhost", 8086, "dusc", "secret")

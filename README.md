@@ -103,7 +103,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    source ~/virtualenvs/telemetry/bin/activate
    python3 -m Receiver.LiveTelemetry
    ```
-   It first asks for the serial port, the session name (used in the output file names), which outputs to turn on (Excel, BIN, CSV, InfluxDB) and, if InfluxDB is on, its database name, username and password. The session name cannot contain spaces. Each question shows its default from [Receiver/config.yml](Receiver/config.yml), e.g. `Serial port [ default: /dev/ttyUSB0 ]:`; press Enter to use it.
+   It first asks for the serial port, the session name (used in the output file names), which outputs to turn on (Excel, BIN, CSV, InfluxDB) and, if InfluxDB is on, its database name, username and password. The session name cannot contain spaces. If the InfluxDB database does not exist, it offers to create it or use the default (see [Receiver/README.md](Receiver/README.md#running)). Each question shows its default from [Receiver/config.yml](Receiver/config.yml), e.g. `Serial port [ default: /dev/ttyUSB0 ]:`; press Enter to use it.
    Every decoded message is then printed to the terminal, with `CRC OK` or `CRC FAIL`.
    If it stops straight away with `Cannot open serial port`, follow the advice it prints: usually the XBee is not plugged in, or the serial port (step 1) is wrong.
 

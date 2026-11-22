@@ -1,4 +1,7 @@
 import serial
+from influxdb import InfluxDBClient
+from influxdb.exceptions import InfluxDBClientError, InfluxDBServerError
+from requests.exceptions import RequestException
 from Receiver import receiver_config
 from Receiver.frame_reader import END_OF_FRAME_MARKER, FrameAssembler
 from Receiver.telemetry_storer import store_data, end_session
@@ -131,12 +134,89 @@ def _file_name(answer):
     return answer, None
 
 
+def _create_or_default(answer):
+    word = answer.lower()
+    if word in ("create", "c"):
+        return "create", None
+    if word in ("default", "d"):
+        return "default", None
+    return None, "Please answer create or default, or press Enter for the default"
+
+
+def check_influx_database(credentials, default_db, ask=input):
+    """Check that the InfluxDB database in `credentials` exists. If it does
+    not, ask whether to create it or use `default_db` (the one in
+    config.yml). Returns the credentials to use."""
+    db = credentials.db
+    try:
+        client = InfluxDBClient(
+            host=credentials.host, port=credentials.port,
+            username=credentials.username, password=credentials.password, timeout=5,
+        )
+        existing = {d["name"] for d in client.get_list_database()}
+    except (RequestException, InfluxDBClientError, InfluxDBServerError, OSError) as e:
+        # a connection error's text is very long: just say there was no answer
+        reason = "no response" if isinstance(e, RequestException) else e
+        print(
+            f"  Cannot check the InfluxDB databases at {credentials.host}:{credentials.port} ({reason}). "
+            "Is InfluxDB running (systemctl status influxd.service)? The receiver will start, "
+            "but data is only stored once InfluxDB can be reached and the database exists."
+        )
+        return credentials
+    if db in existing:
+        print(f"  InfluxDB database '{db}' found.")
+        return credentials
+
+    if db != default_db:
+        choice = _ask(
+            f"InfluxDB database '{db}' does not exist. Create it, or use the default "
+            f"'{default_db}'? (create/default)",
+            "default", ask, _create_or_default,
+        )
+        if choice == "default":
+            credentials = credentials._replace(db=default_db)
+            db = default_db
+            if db in existing:
+                print(f"  Using InfluxDB database '{db}'.")
+                return credentials
+            # the default does not exist either: offer to create it below
+        else:
+            return _create_database(client, credentials, default_db)
+
+    if _ask(f"InfluxDB database '{db}' does not exist. Create it? (true/false)", True, ask, _true_or_false):
+        return _create_database(client, credentials, default_db)
+    print(f"  Not created: nothing will be stored in InfluxDB until database '{db}' exists.")
+    return credentials
+
+
+def _create_database(client, credentials, default_db):
+    db = credentials.db
+    print(f"  Creating InfluxDB database '{db}'.")
+    try:
+        client.create_database(db)
+    except (RequestException, InfluxDBClientError, InfluxDBServerError, OSError) as e:
+        print(f"  Could not create database '{db}' ({e}).")
+        if db != default_db:
+            print(f"  Using the default database '{default_db}' instead.")
+            return credentials._replace(db=default_db)
+        return credentials
+    if db != default_db:
+        print(
+            f"  Reminder: Grafana reads from the database set in its InfluxDB data source "
+            f"(normally '{default_db}'). To see this session's data in Grafana, change the "
+            f"data source's Database to '{db}' (Connections > Data sources > InfluxDB), "
+            f"or add a second data source for '{db}'."
+        )
+    return credentials
+
+
 def prompt_settings(ask=input):
     """Ask for this session's settings, with the values in Receiver/config.yml
     as the defaults (press Enter to keep one), and use the answers for this run
     of the receiver. config.yml itself is not changed. Only these settings are
     asked for; the others are always taken from config.yml. The InfluxDB
-    database name and credentials are only asked for if InfluxDB is on."""
+    database name and credentials are only asked for if InfluxDB is on, and
+    the database is then checked (see check_influx_database)."""
     cfg = receiver_config
     influx = cfg.ifCredentials
     print("Receiver settings for this session (press Enter to use the default from Receiver/config.yml)")
@@ -152,6 +232,7 @@ def prompt_settings(ask=input):
             username=_ask("InfluxDB username", influx.username, ask),
             password=_ask("InfluxDB password", influx.password, ask),
         )
+        influx = check_influx_database(influx, cfg.ifCredentials.db, ask)
     cfg.ifCredentials = influx._replace(enabled=enabled)
 
 

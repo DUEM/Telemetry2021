@@ -45,7 +45,12 @@ InfluxDB username [ default: admin ]:
 InfluxDB password [ default: password ]:
 ```
 
-The InfluxDB database name, username and password are only asked for if you answer `true` to `InfluxDB logging`. The session name starts each output file's name (`<session name>-YEAR-MONTH-DAY-HHMMSS.csv`), so it cannot contain spaces (use `-` or `_`) or `/ \ : * ? " < > |`. The other settings in the table below are always taken from `config.yml`. If there is no keyboard input (for example, the receiver is started as a service), the defaults are used.
+The InfluxDB database name, username and password are only asked for if you answer `true` to `InfluxDB logging`. The receiver then checks that the database exists:
+
+* If it does, it says `InfluxDB database '...' found` and carries on.
+* If it does not, it asks whether to **create** it or use the **default** (the database in `config.yml`, `DUSCiESC`); pressing Enter uses the default, which guards against a mistyped name. If you choose create, it says it is creating the database, and reminds you that Grafana reads from the database set in its InfluxDB data source: to see this session in Grafana, change that data source's **Database** to the new name (**Connections → Data sources → InfluxDB**), or add a second data source for it.
+* If the default database itself does not exist (e.g. on a new laptop), it asks whether to create it.
+* If InfluxDB cannot be reached (not running, or wrong username or password with authentication on), it says so and starts anyway; nothing is stored in InfluxDB until it can be reached and the database exists. The session name starts each output file's name (`<session name>-YEAR-MONTH-DAY-HHMMSS.csv`), so it cannot contain spaces (use `-` or `_`) or `/ \ : * ? " < > |`. The other settings in the table below are always taken from `config.yml`. If there is no keyboard input (for example, the receiver is started as a service), the defaults are used.
 
 Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly. Ctrl-C at one of the questions quits without starting the receiver.
 
