@@ -156,9 +156,12 @@ def fake_influx(monkeypatch):
 
 
 @pytest.fixture
-def session_settings(monkeypatch, fake_influx):
-    """Known defaults for the prompted settings; all restored after the test."""
+def session_settings(monkeypatch, fake_influx, tmp_path):
+    """Known defaults for the prompted settings; all restored after the test.
+    Runs in tmp_path, so the .env file of last used settings is written there."""
     from Receiver.receiver_config import InfluxCredentials
+
+    monkeypatch.chdir(tmp_path)
 
     for name, value in {
         "serialPort": "/dev/ttyUSB0",
@@ -327,7 +330,7 @@ def test_missing_database_falls_back_to_the_default(session_settings, fake_influ
     assert fake_influx.created == []
     assert receiver_config.ifCredentials.db == "DUSCiESC"
     out = capsys.readouterr().out
-    assert "Please answer create or default" in out
+    assert "Please answer create (c) or default (d)" in out
     assert "Using InfluxDB database 'DUSCiESC'" in out
 
 
@@ -450,3 +453,141 @@ def test_pause_waits_for_return_or_q(session_settings, fake_influx, capsys):
     ask = influx_settings("DUSCiESC", ["x", ""])
     prompt_settings(ask)  # Return carries on
     assert ask.prompts[-2:] == ["Press Return to continue, or q to quit: "] * 2
+
+
+# --- last used settings, in .env in the directory the receiver is run from ---
+
+ALL_DEFAULTS = [""] * 9  # Enter at every question (InfluxDB on, database found)
+
+
+def first_run_then_defaults_back(monkeypatch):
+    """Answer a first run (saving .env), then put the config defaults back, as
+    a new start of the receiver would."""
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    before = {n: getattr(receiver_config, n) for n in
+              ("serialPort", "sessionLogName", "xlsxEnabled", "binEnabled", "csvEnabled", "ifCredentials")}
+    prompt_settings(answering("/dev/ttyUSB1", "race-day1", "yes", "no", "no", "", "", "dusc", "secret"))
+    for name, value in before.items():
+        monkeypatch.setattr(f"Receiver.receiver_config.{name}", value)
+
+
+def test_settings_are_saved_in_env_in_the_run_directory(session_settings, tmp_path):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    prompt_settings(answering("/dev/ttyUSB1", "race-day1", "yes", "", "no", "", "", "dusc", "secret"))
+
+    lines = [l for l in (tmp_path / ".env").read_text().splitlines() if not l.startswith("#")]
+    assert lines == [
+        "SERIAL_PORT=/dev/ttyUSB1",
+        "SESSION_NAME=race-day1",
+        "EXCEL_LOGGING=true",
+        "BIN_LOGGING=true",
+        "CSV_LOGGING=false",
+        "INFLUX_LOGGING=true",
+        "INFLUX_DATABASE=DUSCiESC",
+        "INFLUX_USERNAME=dusc",
+        "INFLUX_PASSWORD=secret",
+    ]
+
+
+def test_without_env_the_prompts_show_only_the_default(session_settings, tmp_path):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    ask = answering(*ALL_DEFAULTS)
+    prompt_settings(ask)
+
+    assert ask.prompts[0] == "Serial port [ default: /dev/ttyUSB0 ]: "
+    assert all("last used" not in p for p in ask.prompts)
+    assert (tmp_path / ".env").exists()  # but next time they will
+
+
+def test_with_env_the_prompts_show_the_last_used_values(session_settings, monkeypatch):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    first_run_then_defaults_back(monkeypatch)
+    ask = answering(*ALL_DEFAULTS)
+    prompt_settings(ask)
+
+    assert ask.prompts == [
+        "Serial port [ default: /dev/ttyUSB0, last used: /dev/ttyUSB1 ]: ",
+        "Telemetry Session Name (no spaces) [ default: telem-received, last used: race-day1 ]: ",
+        "Excel logging (true/false) [ default: false, last used: true ]: ",
+        "BIN logging (true/false) [ default: true, last used: false ]: ",
+        "CSV logging (true/false) [ default: true, last used: false ]: ",
+        "InfluxDB logging (true/false) [ default: true, last used: true ]: ",
+        "InfluxDB database name [ default: DUSCiESC, last used: DUSCiESC ]: ",
+        "InfluxDB username [ default: admin, last used: dusc ]: ",
+        "InfluxDB password [ default: password, last used: secret ]: ",
+    ]
+
+
+def test_l_uses_the_last_used_value_and_d_or_enter_the_default(session_settings, monkeypatch):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    first_run_then_defaults_back(monkeypatch)
+    prompt_settings(answering("l", "L", "l", "d", "", "l", "d", "l", "D"))
+
+    assert receiver_config.serialPort == "/dev/ttyUSB1"
+    assert receiver_config.sessionLogName == "race-day1"
+    assert receiver_config.xlsxEnabled is True
+    assert receiver_config.binEnabled is True  # d: default
+    assert receiver_config.csvEnabled is True  # Enter: default
+    credentials = receiver_config.ifCredentials
+    assert (credentials.enabled, credentials.db, credentials.username, credentials.password) == (
+        True, "DUSCiESC", "dusc", "password")
+
+
+def test_d_and_l_are_ordinary_answers_without_a_last_used_value(session_settings):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    prompt_settings(answering("l", "d", *[""] * 7))  # no .env yet
+
+    assert receiver_config.serialPort == "l"
+    assert receiver_config.sessionLogName == "d"
+
+
+def test_influx_settings_are_kept_when_influx_is_off(session_settings, tmp_path):
+    from Receiver.LiveTelemetry import prompt_settings, read_last_used
+
+    prompt_settings(answering("", "", "", "", "", "", "", "dusc", "secret"))
+    prompt_settings(answering("", "", "", "", "", "false"))  # not asked this time
+
+    saved = read_last_used(tmp_path / ".env")
+    assert saved["influxEnabled"] == "false"
+    assert (saved["influxUsername"], saved["influxPassword"]) == ("dusc", "secret")
+
+
+def test_bad_or_missing_last_used_values_are_not_offered(session_settings, tmp_path):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    (tmp_path / ".env").write_text(
+        "# edited by hand\n"
+        "SERIAL_PORT = /dev/ttyACM0\n"
+        "SESSION_NAME=race day\n"  # space: not a valid session name
+        "EXCEL_LOGGING=maybe\n"
+        "UNKNOWN=1\n"
+        "INFLUX_PASSWORD=pa=ss word\n"
+    )
+    ask = answering(*ALL_DEFAULTS)
+    prompt_settings(ask)
+
+    assert ask.prompts[0] == "Serial port [ default: /dev/ttyUSB0, last used: /dev/ttyACM0 ]: "
+    assert ask.prompts[1] == "Telemetry Session Name (no spaces) [ default: telem-received ]: "
+    assert ask.prompts[2] == "Excel logging (true/false) [ default: false ]: "
+    assert ask.prompts[3] == "BIN logging (true/false) [ default: true ]: "
+    assert ask.prompts[8] == "InfluxDB password [ default: password, last used: pa=ss word ]: "
+
+
+def test_quitting_at_a_warning_does_not_save_the_settings(session_settings, fake_influx, tmp_path):
+    from requests.exceptions import ConnectionError
+    from Receiver.LiveTelemetry import prompt_settings
+
+    fake_influx.error = ConnectionError("Connection refused")
+    with pytest.raises(SystemExit):
+        prompt_settings(influx_settings("DUSCiESC", ["q"]))
+
+    assert not (tmp_path / ".env").exists()

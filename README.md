@@ -103,7 +103,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    source ~/virtualenvs/telemetry/bin/activate
    python3 -m Receiver.LiveTelemetry
    ```
-   It first asks for the serial port, the session name (used in the output file names), which outputs to turn on (Excel, BIN, CSV, InfluxDB) and, if InfluxDB is on, its database name, username and password. The session name cannot contain spaces. If the InfluxDB database does not exist, it offers to create it or use the default (see [Receiver/README.md](Receiver/README.md#running)). Each question shows its default from [Receiver/config.yml](Receiver/config.yml), e.g. `Serial port [ default: /dev/ttyUSB0 ]:`; press Enter to use it.
+   It first asks for the serial port, the session name (used in the output file names), which outputs to turn on (Excel, BIN, CSV, InfluxDB) and, if InfluxDB is on, its database name, username and password. The session name cannot contain spaces. If the InfluxDB database does not exist, it offers to create it or use the default (see [Receiver/README.md](Receiver/README.md#running)). Each question shows its default from [Receiver/config.yml](Receiver/config.yml), e.g. `Serial port [ default: /dev/ttyUSB0 ]:`; press Enter to use it. The answers are saved in `.env` in the directory you started it from, and from then on each question also shows the last used value, e.g. `[ default: /dev/ttyUSB0, last used: /dev/ttyUSB1 ]`: type `l` to use it, or `d` (or Enter) for the default.
    Every decoded message is then printed to the terminal, with `CRC OK` or `CRC FAIL`.
    If it stops straight away with `Cannot open serial port`, follow the advice it prints: usually the XBee is not plugged in, or the serial port (step 1) is wrong.
 
@@ -192,6 +192,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   ├── requirements.txt
 │   └── live_calculations          (route distance, incline and power, see its README.md)
 ├── session-logs                   (receiver output: excel/, csv/, BIN/; git-ignored, created when needed)
+├── .env                           (the receiver's last used settings, if it was started here; git-ignored)
 ├── Client                         (SolarSim strategy upload to InfluxDB, see Client/README.md)
 ├── Tests                          (pytest suite)
 │   └── data                       (sample captures and their expected decoded .csv: NRT.BIN from

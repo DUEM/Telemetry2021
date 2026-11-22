@@ -12,8 +12,11 @@ env/
 .coverage
 htmlcov/
 
-# receiver output (see sessionLogsFolder in Receiver/receiver_config.py)
+# receiver output (see sessionLogsFolder in Receiver/config.yml)
 session-logs/
+
+# receiver's last used settings, including the InfluxDB password (Receiver/LiveTelemetry.py)
+.env
 
 # ide files
 .idea/

@@ -10,6 +10,7 @@ import errno
 import logging
 import signal
 import sys
+from pathlib import Path
 
 # print every decoded CAN message (logged at INFO by telemetry_storer) to stdout
 logging.basicConfig(
@@ -96,19 +97,32 @@ _TRUE_WORDS = ("true", "t", "yes", "y", "on", "1")
 _FALSE_WORDS = ("false", "f", "no", "n", "off", "0")
 
 
-def _ask(question, default, ask, check=None):
-    """Ask `question`, showing `default`; return the answer, or `default` if
-    the answer is blank (or there is no input, e.g. stdin is not a terminal).
+def _shown(value):
+    return str(value).lower() if isinstance(value, bool) else value
+
+
+def _ask(question, default, ask, check=None, last=None):
+    """Ask `question`, showing `default` (and `last`, the value used last time,
+    if there is one); return the answer, or `default` if the answer is blank
+    (or there is no input, e.g. stdin is not a terminal). When `last` is
+    shown, d also gives the default and l gives `last`.
     `check(text)` returns (value, None) or (None, reason to ask again)."""
-    shown = str(default).lower() if isinstance(default, bool) else default
+    if last is None:
+        brackets = f"[ default: {_shown(default)} ]"
+    else:
+        brackets = f"[ default: {_shown(default)}, last used: {_shown(last)} ]"
     while True:
         try:
-            answer = ask(f"{question} [ default: {shown} ]: ").strip()
+            answer = ask(f"{question} {brackets}: ").strip()
         except EOFError:  # no input: use the default
             print()
             return default
         if not answer:
             return default
+        if last is not None and answer.lower() == "d":
+            return default
+        if last is not None and answer.lower() == "l":
+            return last
         if check is None:
             return answer
         value, problem = check(answer)
@@ -228,30 +242,113 @@ def _create_database(client, credentials, default_db, ask):
     return credentials
 
 
-def prompt_settings(ask=input):
+# The prompted settings, as stored in the .env file of last used settings
+LAST_USED_FILE_NAME = ".env"
+_LAST_USED_KEYS = {
+    "serialPort": "SERIAL_PORT",
+    "sessionLogName": "SESSION_NAME",
+    "xlsxEnabled": "EXCEL_LOGGING",
+    "binEnabled": "BIN_LOGGING",
+    "csvEnabled": "CSV_LOGGING",
+    "influxEnabled": "INFLUX_LOGGING",
+    "influxDb": "INFLUX_DATABASE",
+    "influxUsername": "INFLUX_USERNAME",
+    "influxPassword": "INFLUX_PASSWORD",
+}
+
+
+def read_last_used(path):
+    """The settings in a .env file of last used settings, as {setting: text},
+    or None if there is no such file. Lines are KEY=value; blank lines and
+    lines starting with # are ignored, as are unknown keys."""
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except FileNotFoundError:
+        return None
+    except (OSError, UnicodeDecodeError) as e:
+        print(f"  Cannot read the last used settings in {path} ({e}): ignoring them")
+        return None
+    names = {key: name for name, key in _LAST_USED_KEYS.items()}
+    found = {}
+    for line in text.splitlines():
+        key, sep, value = line.partition("=")
+        key = key.strip()
+        if sep and not key.startswith("#") and key in names and value.strip():
+            found[names[key]] = value.strip()
+    return found
+
+
+def write_last_used(path, values):
+    """Write {setting: value} to the .env file of last used settings."""
+    lines = [
+        "# Telemetry receiver: the settings used the last time it was started from",
+        "# this folder, offered as 'last used' at its questions. Written by",
+        "# Receiver/LiveTelemetry.py. It holds the InfluxDB password: do not commit",
+        "# or share it.",
+    ]
+    lines += [f"{key}={_shown(values[name])}" for name, key in _LAST_USED_KEYS.items() if name in values]
+    try:
+        Path(path).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    except OSError as e:
+        print(f"  Cannot save these settings as the last used ones in {path} ({e})")
+
+
+def prompt_settings(ask=input, last_used_file=None):
     """Ask for this session's settings, with the values in Receiver/config.yml
     as the defaults (press Enter to keep one), and use the answers for this run
     of the receiver. config.yml itself is not changed. Only these settings are
     asked for; the others are always taken from config.yml. The InfluxDB
     database name and credentials are only asked for if InfluxDB is on, and
-    the database is then checked (see check_influx_database)."""
+    the database is then checked (see check_influx_database).
+
+    The answers are saved in `last_used_file` (.env in the current working
+    directory, i.e. the directory the receiver was started from). If that
+    file exists, each question also shows the value used last time, which l
+    selects (d, like Enter, selects the default)."""
+    path = Path.cwd() / LAST_USED_FILE_NAME if last_used_file is None else Path(last_used_file)
+    saved = read_last_used(path)
+
+    def last(name, check=None):
+        """The last used value of a setting, or None if there is none (or it is
+        not a valid answer, e.g. the file was edited by hand)."""
+        if saved is None or name not in saved:
+            return None
+        if check is None:
+            return saved[name]
+        value, problem = check(saved[name])
+        return None if problem else value
+
     cfg = receiver_config
     influx = cfg.ifCredentials
     print("Receiver settings for this session (press Enter to use the default from Receiver/config.yml)")
-    cfg.serialPort = _ask("Serial port", cfg.serialPort, ask)
-    cfg.sessionLogName = _ask("Telemetry Session Name (no spaces)", cfg.sessionLogName, ask, _file_name)
-    cfg.xlsxEnabled = _ask("Excel logging (true/false)", cfg.xlsxEnabled, ask, _true_or_false)
-    cfg.binEnabled = _ask("BIN logging (true/false)", cfg.binEnabled, ask, _true_or_false)
-    cfg.csvEnabled = _ask("CSV logging (true/false)", cfg.csvEnabled, ask, _true_or_false)
-    enabled = _ask("InfluxDB logging (true/false)", influx.enabled, ask, _true_or_false)
+    if saved is not None:
+        print(f"Last used settings from {path}: type l to use the last used value, d (or Enter) for the default")
+    cfg.serialPort = _ask("Serial port", cfg.serialPort, ask, last=last("serialPort"))
+    cfg.sessionLogName = _ask("Telemetry Session Name (no spaces)", cfg.sessionLogName, ask, _file_name,
+                              last("sessionLogName", _file_name))
+    cfg.xlsxEnabled = _ask("Excel logging (true/false)", cfg.xlsxEnabled, ask, _true_or_false,
+                           last("xlsxEnabled", _true_or_false))
+    cfg.binEnabled = _ask("BIN logging (true/false)", cfg.binEnabled, ask, _true_or_false,
+                          last("binEnabled", _true_or_false))
+    cfg.csvEnabled = _ask("CSV logging (true/false)", cfg.csvEnabled, ask, _true_or_false,
+                          last("csvEnabled", _true_or_false))
+    enabled = _ask("InfluxDB logging (true/false)", influx.enabled, ask, _true_or_false,
+                   last("influxEnabled", _true_or_false))
     if enabled:  # the database and credentials are only needed with InfluxDB on
         influx = influx._replace(
-            db=_ask("InfluxDB database name", influx.db, ask),
-            username=_ask("InfluxDB username", influx.username, ask),
-            password=_ask("InfluxDB password", influx.password, ask),
+            db=_ask("InfluxDB database name", influx.db, ask, last=last("influxDb")),
+            username=_ask("InfluxDB username", influx.username, ask, last=last("influxUsername")),
+            password=_ask("InfluxDB password", influx.password, ask, last=last("influxPassword")),
         )
         influx = check_influx_database(influx, cfg.ifCredentials.db, ask)
     cfg.ifCredentials = influx._replace(enabled=enabled)
+
+    used = dict(saved or {})  # keeps the InfluxDB ones if not asked this time
+    used.update(serialPort=cfg.serialPort, sessionLogName=cfg.sessionLogName, xlsxEnabled=cfg.xlsxEnabled,
+                binEnabled=cfg.binEnabled, csvEnabled=cfg.csvEnabled, influxEnabled=enabled)
+    if enabled:
+        used.update(influxDb=influx.db, influxUsername=influx.username, influxPassword=influx.password)
+    write_last_used(path, used)
 
 
 if __name__ == "__main__":

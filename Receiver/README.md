@@ -52,6 +52,14 @@ The InfluxDB database name, username and password are only asked for if you answ
 * If the default database itself does not exist (e.g. on a new laptop), it asks whether to create it.
 * If InfluxDB cannot be reached (not running, or wrong username or password with authentication on), it says so and waits until you press Return on its own to start anyway (nothing is stored in InfluxDB until it can be reached and the database exists), or `q` (or `Q`) then Return to quit; any other answer asks again. The session name starts each output file's name (`<session name>-YEAR-MONTH-DAY-HHMMSS.csv`), so it cannot contain spaces (use `-` or `_`) or `/ \ : * ? " < > |`. The other settings in the table below are always taken from `config.yml`. If there is no keyboard input (for example, the receiver is started as a service), the defaults are used.
 
+**Last used settings.** Once the questions are answered, the answers are saved in a file called `.env` in the directory the receiver was started from (normally the top of the repository). The next time it is started from that directory, each question also shows the value used last time:
+
+```
+Serial port [ default: /dev/ttyUSB0, last used: /dev/ttyUSB1 ]:
+```
+
+Type `l` to use the last used value, or `d` (or press Enter) for the default from `config.yml`; you can still type a new value instead. (So while a last used value is shown, `d` and `l` cannot be used as a serial port or session name.) If InfluxDB is off, the InfluxDB database name, username and password from the time before are kept in `.env`. A setting that is missing from `.env`, or not a valid answer (e.g. after editing the file by hand), is shown without a last used value. The settings are not saved if you quit at one of the questions. `.env` holds the InfluxDB password in plain text, so it is git-ignored: do not commit or share it. Delete it to go back to the defaults only.
+
 Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly. Ctrl-C at one of the questions quits without starting the receiver.
 
 If the serial port cannot be opened, the receiver prints `Cannot open serial port ...` with the reason and what to check, and exits without creating any output: for example, if the XBee is not plugged in or the serial port is the wrong one (`... does not exist`), or you do not have permission to use it (on Linux, add yourself to the `dialout` group).
