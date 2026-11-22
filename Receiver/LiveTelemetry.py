@@ -140,7 +140,7 @@ def _create_or_default(answer):
         return "create", None
     if word in ("default", "d"):
         return "default", None
-    return None, "Please answer create or default, or press Enter for the default"
+    return None, "Please answer create (c) or default (d), or press Enter for the default"
 
 
 def _continue_or_quit(ask):
