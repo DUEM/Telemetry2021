@@ -144,14 +144,19 @@ def _create_or_default(answer):
 
 
 def _continue_or_quit(ask):
-    """Pause after a warning: Return carries on, q quits without starting."""
-    try:
-        answer = ask("Press Return to continue, or q to quit: ")
-    except EOFError:  # no input: carry on
-        print()
-        return
-    if answer.strip().lower() == "q":
-        sys.exit("Quit: the receiver was not started")
+    """Pause after a warning until Return (carry on) or q / Q (quit without
+    starting). Any other answer asks again."""
+    while True:
+        try:
+            answer = ask("Press Return to continue, or q to quit: ").strip()
+        except EOFError:  # no input (not run from a terminal): carry on
+            print()
+            return
+        if answer == "":
+            return
+        if answer.lower() == "q":
+            sys.exit("Quit: the receiver was not started")
+        print("  Please press Return on its own to continue, or q then Return to quit")
 
 
 def check_influx_database(credentials, default_db, ask=input):

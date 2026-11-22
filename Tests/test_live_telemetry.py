@@ -429,3 +429,24 @@ def test_no_pause_without_a_warning(session_settings, fake_influx):
     prompt_settings(ask)
 
     assert "Press Return to continue, or q to quit: " not in ask.prompts
+
+
+def test_pause_waits_for_return_or_q(session_settings, fake_influx, capsys):
+    """Anything else at the pause asks again, rather than carrying on."""
+    from requests.exceptions import ConnectionError
+    from Receiver.LiveTelemetry import prompt_settings
+
+    fake_influx.error = ConnectionError("Connection refused")
+    ask = influx_settings("DUSCiESC", ["x", "yes", "continue"])
+    with pytest.raises(StopIteration):  # still waiting after three other answers
+        prompt_settings(ask)
+    assert ask.prompts[-3:] == ["Press Return to continue, or q to quit: "] * 3
+    assert "Please press Return on its own to continue, or q then Return to quit" in capsys.readouterr().out
+
+    ask = influx_settings("DUSCiESC", ["x", "Q"])
+    with pytest.raises(SystemExit):
+        prompt_settings(ask)
+
+    ask = influx_settings("DUSCiESC", ["x", ""])
+    prompt_settings(ask)  # Return carries on
+    assert ask.prompts[-2:] == ["Press Return to continue, or q to quit: "] * 2
