@@ -39,13 +39,13 @@ xlsxOutputFolder: excel  # inside sessionLogsFolder
 xlsxSaveInterval: 10.0
 
 # CSV output
-csvEnabled: false
+csvEnabled: true
 csvOutputFolder: csv  # inside sessionLogsFolder
 
 # Raw radio data (.BIN), every frame as received, in the same format as the SD
 # card log on the vehicle. Can be decoded later with tools/hex2csv.py or
 # tools/hex2influx.py, or replayed through a virtual serial port.
-binEnabled: false
+binEnabled: true
 binOutputFolder: BIN  # inside sessionLogsFolder
 
 # InfluxDB output (read by the Grafana dashboards), switched on or off with
