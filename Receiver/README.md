@@ -33,6 +33,18 @@ python3 -m Receiver.LiveTelemetry
 
 It first asks for these settings for this session, showing each default from [config.yml](config.yml) in square brackets. Press Enter to use the default, or type a new value; true/false questions also accept yes/no. The answers apply to this run only: `config.yml` is not changed.
 
+Before the `Serial port` question it lists the USB serial ports, with what each one is (the XBee is always a USB device; any other serial ports are summarised on one line). If the default port is not plugged in, it also suggests the port most likely to be the XBee: the last used port if it is plugged in (type `l`), otherwise an FTDI device ("probably the XBee"), otherwise any USB serial device (type its name):
+
+```
+Serial ports found:
+  /dev/ttyUSB1  (FT231X USB UART, FTDI)
+  (and 32 other serial ports, not USB so not the XBee: /dev/ttyS0 to /dev/ttyS31)
+Suggested: /dev/ttyUSB1 (FTDI USB serial, probably the XBee): type it to use it
+Serial port [ default: /dev/ttyUSB0 ]:
+```
+
+The port listing and suggestion come from Ben Jennery's `PERI-DEVELOPMENT-BBJ-1126` branch ([serial_port.py](serial_port.py)).
+
 ```
 Serial port [ default: /dev/ttyUSB0 ]:
 Telemetry Session Name (no spaces) [ default: telem-received ]:
@@ -52,17 +64,19 @@ The InfluxDB database name, username and password are only asked for if you answ
 * If the default database itself does not exist (e.g. on a new laptop), it asks whether to create it.
 * If InfluxDB cannot be reached (not running, or wrong username or password with authentication on), it says so and waits until you press Return on its own to start anyway (nothing is stored in InfluxDB until it can be reached and the database exists), or `q` (or `Q`) then Return to quit; any other answer asks again. The session name starts each output file's name (`<session name>-YEAR-MONTH-DAY-HHMMSS.csv`), so it cannot contain spaces (use `-` or `_`) or `/ \ : * ? " < > |`. The other settings in the table below are always taken from `config.yml`. If there is no keyboard input (for example, the receiver is started as a service), the defaults are used.
 
-**Last used settings.** Once the questions are answered, the answers are saved in a file called `.env` in the directory the receiver was started from (normally the top of the repository). The next time it is started from that directory, each question also shows the value used last time:
+**Last used settings.** Once the serial port has opened, the answers are saved in a file called `.env` in the directory the receiver was started from (normally the top of the repository). The next time it is started from that directory, each question also shows the value used last time:
 
 ```
 Serial port [ default: /dev/ttyUSB0, last used: /dev/ttyUSB1 ]:
 ```
 
-Type `l` to use the last used value, or `d` (or press Enter) for the default from `config.yml`; you can still type a new value instead. (So while a last used value is shown, `d` and `l` cannot be used as a serial port or session name.) If InfluxDB is off, the InfluxDB database name, username and password from the time before are kept in `.env`. A setting that is missing from `.env`, or not a valid answer (e.g. after editing the file by hand), is shown without a last used value. The settings are not saved if you quit at one of the questions. `.env` holds the InfluxDB password in plain text, so it is git-ignored: do not commit or share it. Delete it to go back to the defaults only.
+Type `l` to use the last used value, or `d` (or press Enter) for the default from `config.yml`; you can still type a new value instead. (So while a last used value is shown, `d` and `l` cannot be used as a serial port or session name.) If InfluxDB is off, the InfluxDB database name, username and password from the time before are kept in `.env`. A setting that is missing from `.env`, or not a valid answer (e.g. after editing the file by hand), is shown without a last used value. The settings are not saved if you quit at one of the questions, or before a serial port opens (so a mistyped port is not saved). `.env` holds the InfluxDB password in plain text, so it is git-ignored: do not commit or share it. Delete it to go back to the defaults only.
 
 Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly. Ctrl-C at one of the questions quits without starting the receiver.
 
-If the serial port cannot be opened, the receiver prints `Cannot open serial port ...` with the reason and what to check, and exits without creating any output: for example, if the XBee is not plugged in or the serial port is the wrong one (`... does not exist`), or you do not have permission to use it (on Linux, add yourself to the `dialout` group).
+If the serial port cannot be opened, the receiver prints `Cannot open serial port ...` with the reason and what to check, lists the ports again and asks for the port again (Enter tries the default again, e.g. after plugging the XBee in); no output is created until a port opens. For example, the XBee is not plugged in or the port is the wrong one (`... does not exist`), another program has it open, or you do not have permission to use it (on Linux, add yourself to the `dialout` group). Ctrl-C at the question quits. If there is no keyboard input to ask with (e.g. started as a service), it exits instead.
+
+Once the port is open it prints `Opened <port> at <baud> baud`. If `serialBaud` in `config.yml` is not 115200, it also warns that it must match the XBee's baud rate: a wrong rate gives no error, only `CRC FAIL` frames. A port that opens is not proof the XBee is working: if nothing is printed, or every frame is `CRC FAIL`, check it with [tools/check_xbee_settings.py](../tools/check_xbee_settings.py).
 
 ## Configuration
 

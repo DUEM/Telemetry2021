@@ -89,7 +89,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    ```shell
    ls /dev/ttyUSB*
    ```
-   You would normally expect `/dev/ttyUSB0`. If it is different, type it at the `Serial port` prompt in step 3 (or change the default, `serialPort` in [Receiver/config.yml](Receiver/config.yml)).
+   You would normally expect `/dev/ttyUSB0`. If it is different, type it at the `Serial port` question in step 3 (or change the default, `serialPort` in [Receiver/config.yml](Receiver/config.yml)). The receiver also lists the USB serial ports before that question and, if the default is not plugged in, suggests the one most likely to be the XBee.
 
 2. Make sure InfluxDB is running:
    ```shell
@@ -105,7 +105,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    ```
    It first asks for the serial port, the session name (used in the output file names), which outputs to turn on (Excel, BIN, CSV, InfluxDB) and, if InfluxDB is on, its database name, username and password. The session name cannot contain spaces. If the InfluxDB database does not exist, it offers to create it or use the default (see [Receiver/README.md](Receiver/README.md#running)). Each question shows its default from [Receiver/config.yml](Receiver/config.yml), e.g. `Serial port [ default: /dev/ttyUSB0 ]:`; press Enter to use it. The answers are saved in `.env` in the directory you started it from, and from then on each question also shows the last used value, e.g. `[ default: /dev/ttyUSB0, last used: /dev/ttyUSB1 ]`: type `l` to use it, or `d` (or Enter) for the default.
    Every decoded message is then printed to the terminal, with `CRC OK` or `CRC FAIL`.
-   If it stops straight away with `Cannot open serial port`, follow the advice it prints: usually the XBee is not plugged in, or the serial port (step 1) is wrong.
+   If it says `Cannot open serial port`, follow the advice it prints (usually the XBee is not plugged in, or it is a different port in the list), then type the right port, or plug the XBee in and press Enter, when it asks again.
 
 4. Check that data is reaching InfluxDB:
    ```shell
@@ -181,7 +181,8 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   ├── check_xbee_settings.py     (reads and reports all the settings of an XBee radio)
 │   └── requirements.txt           (for check_xbee_settings.py on its own)
 ├── Receiver                       (Python receiver software, see Receiver/README.md)
-│   ├── LiveTelemetry.py           (live receiver: serial → decode → storage plugins)
+│   ├── LiveTelemetry.py           (live receiver: start-up questions, serial → decode → storage plugins)
+│   ├── serial_port.py             (lists the serial ports and suggests which is the XBee)
 │   ├── config.yml                 (receiver settings: serial port, output on/off switches and folders, InfluxDB credentials, DBC file list)
 │   ├── receiver_config.py         (reads and checks config.yml)
 │   ├── frame_reader.py            (splits a capture into frames on 0x7E, re-joining split frames and splitting frames run together)
