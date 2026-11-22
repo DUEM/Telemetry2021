@@ -223,6 +223,7 @@ def test_answers_are_used_for_this_session(session_settings):
     prompt_settings(answering(
         "/tmp/ttyV0", "qualifying-day1", "yes", "n", "FALSE", "y", "OldSession", "dusc", "secret",
         "create",  # OldSession is not in the fake InfluxDB
+        "",  # Return after the Grafana reminder
     ))
 
     assert receiver_config.serialPort == "/tmp/ttyV0"
@@ -302,10 +303,11 @@ def test_new_database_is_created_if_asked(session_settings, fake_influx, capsys)
     from Receiver import receiver_config
     from Receiver.LiveTelemetry import prompt_settings
 
-    ask = influx_settings("Race2027", ["create"])
+    ask = influx_settings("Race2027", ["create", ""])
     prompt_settings(ask)
 
-    assert ask.prompts[-1] == (
+    assert ask.prompts[-1] == "Press Return to continue, or q to quit: "
+    assert ask.prompts[-2] == (
         "InfluxDB database 'Race2027' does not exist. Create it, or use the default "
         "'DUSCiESC'? (create/default) [ default: default ]: "
     )
@@ -359,10 +361,11 @@ def test_influx_not_running_is_reported_and_the_receiver_carries_on(session_sett
     from Receiver.LiveTelemetry import prompt_settings
 
     fake_influx.error = ConnectionError("Connection refused")
-    ask = influx_settings("Race2027")
+    ask = influx_settings("Race2027", [""])
     prompt_settings(ask)
 
-    assert len(ask.prompts) == 9
+    assert len(ask.prompts) == 10
+    assert ask.prompts[-1] == "Press Return to continue, or q to quit: "
     assert receiver_config.ifCredentials.db == "Race2027"
     assert "Cannot check the InfluxDB databases at localhost:8086" in capsys.readouterr().out
 
@@ -395,3 +398,34 @@ def test_database_check_uses_the_credentials_given(session_settings, fake_influx
     prompt_settings(answering("", "", "", "", "", "", "", "dusc", "secret"))
 
     assert (seen["host"], seen["port"], seen["username"], seen["password"]) == ("localhost", 8086, "dusc", "secret")
+
+
+@pytest.mark.parametrize("quit_answer", ["q", "Q", " q "])
+def test_q_after_the_grafana_reminder_quits(session_settings, fake_influx, quit_answer):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    with pytest.raises(SystemExit) as exited:
+        prompt_settings(influx_settings("Race2027", ["create", quit_answer]))
+
+    assert exited.value.code == "Quit: the receiver was not started"
+    assert fake_influx.created == ["Race2027"]  # already created before the reminder
+
+
+def test_q_after_influx_cannot_be_reached_quits(session_settings, fake_influx):
+    from requests.exceptions import ConnectionError
+    from Receiver.LiveTelemetry import prompt_settings
+
+    fake_influx.error = ConnectionError("Connection refused")
+    with pytest.raises(SystemExit) as exited:
+        prompt_settings(influx_settings("DUSCiESC", ["q"]))
+
+    assert exited.value.code == "Quit: the receiver was not started"
+
+
+def test_no_pause_without_a_warning(session_settings, fake_influx):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    ask = influx_settings("DUSCiESC")
+    prompt_settings(ask)
+
+    assert "Press Return to continue, or q to quit: " not in ask.prompts

@@ -143,6 +143,17 @@ def _create_or_default(answer):
     return None, "Please answer create or default, or press Enter for the default"
 
 
+def _continue_or_quit(ask):
+    """Pause after a warning: Return carries on, q quits without starting."""
+    try:
+        answer = ask("Press Return to continue, or q to quit: ")
+    except EOFError:  # no input: carry on
+        print()
+        return
+    if answer.strip().lower() == "q":
+        sys.exit("Quit: the receiver was not started")
+
+
 def check_influx_database(credentials, default_db, ask=input):
     """Check that the InfluxDB database in `credentials` exists. If it does
     not, ask whether to create it or use `default_db` (the one in
@@ -159,9 +170,10 @@ def check_influx_database(credentials, default_db, ask=input):
         reason = "no response" if isinstance(e, RequestException) else e
         print(
             f"  Cannot check the InfluxDB databases at {credentials.host}:{credentials.port} ({reason}). "
-            "Is InfluxDB running (systemctl status influxd.service)? The receiver will start, "
-            "but data is only stored once InfluxDB can be reached and the database exists."
+            "Is InfluxDB running (systemctl status influxd.service)? If you continue, data is "
+            "only stored in InfluxDB once it can be reached and the database exists."
         )
+        _continue_or_quit(ask)
         return credentials
     if db in existing:
         print(f"  InfluxDB database '{db}' found.")
@@ -181,15 +193,15 @@ def check_influx_database(credentials, default_db, ask=input):
                 return credentials
             # the default does not exist either: offer to create it below
         else:
-            return _create_database(client, credentials, default_db)
+            return _create_database(client, credentials, default_db, ask)
 
     if _ask(f"InfluxDB database '{db}' does not exist. Create it? (true/false)", True, ask, _true_or_false):
-        return _create_database(client, credentials, default_db)
+        return _create_database(client, credentials, default_db, ask)
     print(f"  Not created: nothing will be stored in InfluxDB until database '{db}' exists.")
     return credentials
 
 
-def _create_database(client, credentials, default_db):
+def _create_database(client, credentials, default_db, ask):
     db = credentials.db
     print(f"  Creating InfluxDB database '{db}'.")
     try:
@@ -207,6 +219,7 @@ def _create_database(client, credentials, default_db):
             f"data source's Database to '{db}' (Connections > Data sources > InfluxDB), "
             f"or add a second data source for '{db}'."
         )
+        _continue_or_quit(ask)
     return credentials
 
 
