@@ -53,7 +53,7 @@ Both branches run the **same firmware** on the vehicle (same [Telemetry/](Teleme
 | GPS position | Stored as sent (NMEA `ddmm.mmmm` plus N/S, E/W); converted by `live_calculations` | Converted to decimal degrees in a `location` measurement |
 | Unknown CAN IDs | Stored as `ERROR/ID UNRECOGNISED` | Flagged with sentinel row `99` |
 | Settings | [Receiver/config.yml](Receiver/config.yml): serial port, outputs, InfluxDB, DBC files | Prompted for port and file names on each run; InfluxDB settings hardwired in the script |
-| Live output files | Optional Excel, CSV and/or raw `.BIN` (same format as the SD card log), each switched on in `config.yml` (off by default); a new date-and-time-named file in `session-logs/` every session | Raw `.BIN` and decoded `.csv` every session (overwritten) |
+| Live output files | Optional Excel, CSV and/or raw `.BIN` (same format as the SD card log), each switched on or off when the receiver starts (defaults in `config.yml`: CSV and BIN on, Excel off); a new date-and-time-named file in `session-logs/` every session | Raw `.BIN` and decoded `.csv` every session (overwritten) |
 | Offline tools | [`tools/hex2csv.py`, `tools/hex2influx.py`](Receiver/README.md#offline-tools-sd-card-logs) for SD card logs | None |
 | Extra calculations | [live_calculations](Receiver/live_calculations/README.md), [SolarSim upload](Client/README.md) | None |
 | Tests | pytest suite in [Tests/](Tests/), run by GitHub Actions | None |
@@ -89,7 +89,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    ```shell
    ls /dev/ttyUSB*
    ```
-   You would normally expect `/dev/ttyUSB0`. If it is different, change `serialPort` in [Receiver/config.yml](Receiver/config.yml).
+   You would normally expect `/dev/ttyUSB0`. If it is different, type it at the `Serial port` prompt in step 3 (or change the default, `serialPort` in [Receiver/config.yml](Receiver/config.yml)).
 
 2. Make sure InfluxDB is running:
    ```shell
@@ -103,8 +103,9 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    source ~/virtualenvs/telemetry/bin/activate
    python3 -m Receiver.LiveTelemetry
    ```
-   Every decoded message is printed to the terminal, with `CRC OK` or `CRC FAIL`.
-   If it stops straight away with `Cannot open serial port`, follow the advice it prints: usually the XBee is not plugged in, or `serialPort` (step 1) is wrong.
+   It first asks for the serial port, the session name (used in the output file names), which outputs to turn on (Excel, BIN, CSV, InfluxDB) and, if InfluxDB is on, its database name, username and password. The session name cannot contain spaces. Each question shows its default from [Receiver/config.yml](Receiver/config.yml), e.g. `Serial port [ default: /dev/ttyUSB0 ]:`; press Enter to use it.
+   Every decoded message is then printed to the terminal, with `CRC OK` or `CRC FAIL`.
+   If it stops straight away with `Cannot open serial port`, follow the advice it prints: usually the XBee is not plugged in, or the serial port (step 1) is wrong.
 
 4. Check that data is reaching InfluxDB:
    ```shell

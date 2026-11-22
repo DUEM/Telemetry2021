@@ -4,8 +4,8 @@
 
 * InfluxDB 1.x, database `DUSCiESC` on `localhost:8086`, for the Grafana dashboard to display (on by default)
 * an Excel workbook (off by default)
-* a CSV file (off by default)
-* a raw `.BIN` file of every frame as received, in the same format as the SD card log (off by default)
+* a CSV file (on by default)
+* a raw `.BIN` file of every frame as received, in the same format as the SD card log (on by default)
 
 Every decoded message is also printed to the terminal.
 
@@ -31,13 +31,29 @@ The receiver is a Python package, so run it as a module from the **top** of the 
 python3 -m Receiver.LiveTelemetry
 ```
 
-Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly.
+It first asks for these settings for this session, showing each default from [config.yml](config.yml) in square brackets. Press Enter to use the default, or type a new value; true/false questions also accept yes/no. The answers apply to this run only: `config.yml` is not changed.
 
-If the serial port cannot be opened, the receiver prints `Cannot open serial port ...` with the reason and what to check, and exits without creating any output: for example, if the XBee is not plugged in or `serialPort` names the wrong port (`... does not exist`), or you do not have permission to use it (on Linux, add yourself to the `dialout` group).
+```
+Serial port [ default: /dev/ttyUSB0 ]:
+Telemetry Session Name (no spaces) [ default: telem-received ]:
+Excel logging (true/false) [ default: false ]:
+BIN logging (true/false) [ default: true ]:
+CSV logging (true/false) [ default: true ]:
+InfluxDB logging (true/false) [ default: true ]:
+InfluxDB database name [ default: DUSCiESC ]:
+InfluxDB username [ default: admin ]:
+InfluxDB password [ default: password ]:
+```
+
+The InfluxDB database name, username and password are only asked for if you answer `true` to `InfluxDB logging`. The session name starts each output file's name (`<session name>-YEAR-MONTH-DAY-HHMMSS.csv`), so it cannot contain spaces (use `-` or `_`) or `/ \ : * ? " < > |`. The other settings in the table below are always taken from `config.yml`. If there is no keyboard input (for example, the receiver is started as a service), the defaults are used.
+
+Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly. Ctrl-C at one of the questions quits without starting the receiver.
+
+If the serial port cannot be opened, the receiver prints `Cannot open serial port ...` with the reason and what to check, and exits without creating any output: for example, if the XBee is not plugged in or the serial port is the wrong one (`... does not exist`), or you do not have permission to use it (on Linux, add yourself to the `dialout` group).
 
 ## Configuration
 
-All the receiver's settings are in [config.yml](config.yml), in this folder; [receiver_config.py](receiver_config.py) reads it when the receiver starts. Relative folders are relative to the top of the repository, except the three output folders, which are always inside `sessionLogsFolder` (`session-logs`). Every setting must be present: if one is missing, misspelt or the wrong type (for example `"false"` in quotes instead of `false`), the receiver stops with an error naming the file and the setting. The file has a comment explaining each one.
+All the receiver's settings are in [config.yml](config.yml), in this folder; [receiver_config.py](receiver_config.py) reads it when the receiver starts. For the settings asked for when the receiver starts (see [Running](#running)), the values in `config.yml` are the defaults. Relative folders are relative to the top of the repository, except the three output folders, which are always inside `sessionLogsFolder` (`session-logs`). Every setting must be present: if one is missing, misspelt or the wrong type (for example `"false"` in quotes instead of `false`), the receiver stops with an error naming the file and the setting. The file has a comment explaining each one.
 
 | Setting | Name in `config.yml` | Default |
 |---|---|---|
@@ -48,9 +64,9 @@ All the receiver's settings are in [config.yml](config.yml), in this folder; [re
 | Excel on / off | `xlsxEnabled` | `false` (off) |
 | Excel folder, inside `sessionLogsFolder` | `xlsxOutputFolder` | `excel` |
 | Excel save interval | `xlsxSaveInterval` | **10** seconds |
-| CSV on / off | `csvEnabled` | `false` (off) |
+| CSV on / off | `csvEnabled` | `true` (on) |
 | CSV folder, inside `sessionLogsFolder` | `csvOutputFolder` | `csv` |
-| BIN (raw) on / off | `binEnabled` | `false` (off) |
+| BIN (raw) on / off | `binEnabled` | `true` (on) |
 | BIN folder, inside `sessionLogsFolder` | `binOutputFolder` | `BIN` |
 | Output file name | `sessionLogName` | `telem-received` (files are `telem-received-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv` / `.BIN`) |
 | CAN database files | `dbc_files`, in folder `dbc_folder` | the four files in [../dbc/](../dbc/) |
@@ -176,20 +192,20 @@ The tests replay the sample captures in [../Tests/data/](../Tests/data/) and com
 * `NRT.BIN`: Ortus-T at iESC 2026 (qualifying, 18 September 2026): two sections of the recording, joined. The first (GPS with a position fix) is about 1 minute long; the second (out on track, with the motor controller, driver controls and current dial) is about 8 minutes long, with radio reception getting worse towards the end. Recorded with the ESC-CODE receiver, whose own decoded output was used to check this branch's decoding.
 * `MPPT.BIN`: an earlier (July 2023) recording with MPPT status messages, which are not in the iESC 2026 recording.
 
-**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off (`enabled: false` under `ifCredentials` in `config.yml`). To check the replay in a file instead, set `csvEnabled`, `xlsxEnabled` or `binEnabled` to `true` (the BIN log of a replay should match the capture, up to its last `0x7E`).
+**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you answer `false` to `InfluxDB logging` when the receiver starts. To check the replay in a file instead, answer `true` to `Excel logging`, `BIN logging` or `CSV logging` (the BIN log of a replay should match the capture, up to its last `0x7E`).
 
 ```shell
 # terminal 1: create a one way virtual serial port, and then replay the sample capture through it at about the rate it was received over the radio (250 bytes per second)
 
 pv -L 250 Tests/data/NRT.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0,wait-slave
 
-# terminal 2: set serialPort in Receiver/config.yml to /tmp/ttyV0, then
+# terminal 2: start the receiver and enter /tmp/ttyV0 at the Serial port prompt
 
 python3 -m Receiver.LiveTelemetry
 
 ```
 
-Stop the receiver with Ctrl-C when the output stops. Remember to set `serialPort` back afterwards.
+Stop the receiver with Ctrl-C when the output stops.
 
 Start terminal 1 first, as it creates `/tmp/ttyV0`. With `wait-slave`, `socat` sends nothing until the receiver opens the port, so the start of the capture is not lost while you start terminal 2.
 

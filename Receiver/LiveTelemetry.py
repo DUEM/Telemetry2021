@@ -71,8 +71,8 @@ def open_serial_port(port=None, baud=None):
             hint = (
                 f"{port} does not exist. Check the XBee's USB adapter is plugged in "
                 "and find its name (Linux: ls /dev/ttyUSB* /dev/ttyACM*; macOS: "
-                "ls /dev/cu.*; Windows: Device Manager > Ports), then set serialPort "
-                "in Receiver/config.yml. For a software-in-the-loop "
+                "ls /dev/cu.*; Windows: Device Manager > Ports), then enter it at the "
+                "Serial port prompt, or set serialPort in Receiver/config.yml. For a software-in-the-loop "
                 "replay, start socat first so that it creates the port."
             )
         elif e.errno == errno.EACCES:
@@ -89,7 +89,79 @@ def open_serial_port(port=None, baud=None):
         sys.exit(f"Cannot open serial port {port}: {e}\n{hint}")
 
 
+_TRUE_WORDS = ("true", "t", "yes", "y", "on", "1")
+_FALSE_WORDS = ("false", "f", "no", "n", "off", "0")
+
+
+def _ask(question, default, ask, check=None):
+    """Ask `question`, showing `default`; return the answer, or `default` if
+    the answer is blank (or there is no input, e.g. stdin is not a terminal).
+    `check(text)` returns (value, None) or (None, reason to ask again)."""
+    shown = str(default).lower() if isinstance(default, bool) else default
+    while True:
+        try:
+            answer = ask(f"{question} [ default: {shown} ]: ").strip()
+        except EOFError:  # no input: use the default
+            print()
+            return default
+        if not answer:
+            return default
+        if check is None:
+            return answer
+        value, problem = check(answer)
+        if problem is None:
+            return value
+        print(f"  {problem}")
+
+
+def _true_or_false(answer):
+    word = answer.lower()
+    if word in _TRUE_WORDS:
+        return True, None
+    if word in _FALSE_WORDS:
+        return False, None
+    return None, "Please answer true or false (or yes / no), or press Enter for the default"
+
+
+def _file_name(answer):
+    if any(c.isspace() for c in answer):
+        return None, "The session name cannot contain spaces: use - or _ instead (e.g. race-day1)"
+    if any(c in answer for c in '/\\:*?"<>|'):
+        return None, 'The session name is used in file names: it cannot contain / \\ : * ? " < > |'
+    return answer, None
+
+
+def prompt_settings(ask=input):
+    """Ask for this session's settings, with the values in Receiver/config.yml
+    as the defaults (press Enter to keep one), and use the answers for this run
+    of the receiver. config.yml itself is not changed. Only these settings are
+    asked for; the others are always taken from config.yml. The InfluxDB
+    database name and credentials are only asked for if InfluxDB is on."""
+    cfg = receiver_config
+    influx = cfg.ifCredentials
+    print("Receiver settings for this session (press Enter to use the default from Receiver/config.yml)")
+    cfg.serialPort = _ask("Serial port", cfg.serialPort, ask)
+    cfg.sessionLogName = _ask("Telemetry Session Name (no spaces)", cfg.sessionLogName, ask, _file_name)
+    cfg.xlsxEnabled = _ask("Excel logging (true/false)", cfg.xlsxEnabled, ask, _true_or_false)
+    cfg.binEnabled = _ask("BIN logging (true/false)", cfg.binEnabled, ask, _true_or_false)
+    cfg.csvEnabled = _ask("CSV logging (true/false)", cfg.csvEnabled, ask, _true_or_false)
+    enabled = _ask("InfluxDB logging (true/false)", influx.enabled, ask, _true_or_false)
+    if enabled:  # the database and credentials are only needed with InfluxDB on
+        influx = influx._replace(
+            db=_ask("InfluxDB database name", influx.db, ask),
+            username=_ask("InfluxDB username", influx.username, ask),
+            password=_ask("InfluxDB password", influx.password, ask),
+        )
+    cfg.ifCredentials = influx._replace(enabled=enabled)
+
+
 if __name__ == "__main__":
+    # before the Ctrl-C handler is installed, so Ctrl-C at a prompt still quits
+    try:
+        prompt_settings()
+    except KeyboardInterrupt:
+        sys.exit("\nCancelled: the receiver was not started")
+
     atexit.register(onProgramExit)
     signal.signal(signal.SIGINT, sigintHandler)
 

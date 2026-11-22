@@ -120,3 +120,127 @@ def test_open_serial_port_uses_the_port_in_config_yml(monkeypatch):
     message = str(exited.value.code)
     assert message.startswith("Cannot open serial port /dev/ttyNoSuchXBee:")
     assert "set serialPort in Receiver/config.yml" in message
+
+
+@pytest.fixture
+def session_settings(monkeypatch):
+    """Known defaults for the prompted settings; all restored after the test."""
+    from Receiver.receiver_config import InfluxCredentials
+
+    for name, value in {
+        "serialPort": "/dev/ttyUSB0",
+        "sessionLogName": "telem-received",
+        "xlsxEnabled": False,
+        "binEnabled": True,
+        "csvEnabled": True,
+    }.items():
+        monkeypatch.setattr(f"Receiver.receiver_config.{name}", value)
+    monkeypatch.setattr(
+        "Receiver.receiver_config.ifCredentials",
+        InfluxCredentials("admin", "password", "DUSCiESC", "localhost", 8086, True),
+    )
+
+
+def answering(*answers):
+    """A stand-in for input() that records the prompts and gives `answers` in turn."""
+    prompts, replies = [], iter(answers)
+
+    def ask(prompt):
+        prompts.append(prompt)
+        return next(replies)
+
+    ask.prompts = prompts
+    return ask
+
+
+def test_prompts_show_the_config_defaults(session_settings):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    ask = answering(*[""] * 9)
+    prompt_settings(ask)
+
+    assert ask.prompts == [
+        "Serial port [ default: /dev/ttyUSB0 ]: ",
+        "Telemetry Session Name (no spaces) [ default: telem-received ]: ",
+        "Excel logging (true/false) [ default: false ]: ",
+        "BIN logging (true/false) [ default: true ]: ",
+        "CSV logging (true/false) [ default: true ]: ",
+        "InfluxDB logging (true/false) [ default: true ]: ",
+        "InfluxDB database name [ default: DUSCiESC ]: ",
+        "InfluxDB username [ default: admin ]: ",
+        "InfluxDB password [ default: password ]: ",
+    ]
+
+
+def test_blank_answers_keep_the_defaults(session_settings):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    before = {n: getattr(receiver_config, n) for n in
+              ("serialPort", "sessionLogName", "xlsxEnabled", "binEnabled", "csvEnabled", "ifCredentials")}
+    prompt_settings(answering(*["", "  "] * 4, ""))
+
+    assert {n: getattr(receiver_config, n) for n in before} == before
+
+
+def test_answers_are_used_for_this_session(session_settings):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    prompt_settings(answering(
+        "/tmp/ttyV0", "qualifying-day1", "yes", "n", "FALSE", "y", "OldSession", "dusc", "secret",
+    ))
+
+    assert receiver_config.serialPort == "/tmp/ttyV0"
+    assert receiver_config.sessionLogName == "qualifying-day1"
+    assert (receiver_config.xlsxEnabled, receiver_config.binEnabled, receiver_config.csvEnabled) == (True, False, False)
+    credentials = receiver_config.ifCredentials
+    assert (credentials.enabled, credentials.db, credentials.username, credentials.password) == (
+        True, "OldSession", "dusc", "secret")
+    # not prompted for: unchanged
+    assert (credentials.host, credentials.port) == ("localhost", 8086)
+
+
+def test_bad_answers_are_asked_again(session_settings, capsys):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    ask = answering("", "race day1", "race/day1", "race-day1", "maybe", "true", *[""] * 6)
+    prompt_settings(ask)
+
+    assert receiver_config.sessionLogName == "race-day1"
+    assert receiver_config.xlsxEnabled is True
+    assert len(ask.prompts) == 12  # session name asked three times, Excel twice
+    out = capsys.readouterr().out
+    assert "cannot contain spaces" in out
+    assert "cannot contain / \\" in out
+    assert "Please answer true or false" in out
+
+
+def test_influx_database_and_credentials_only_asked_if_influx_is_on(session_settings):
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    ask = answering("", "", "", "", "", "false")
+    prompt_settings(ask)
+
+    assert ask.prompts[-1] == "InfluxDB logging (true/false) [ default: true ]: "
+    assert len(ask.prompts) == 6
+    credentials = receiver_config.ifCredentials
+    assert credentials.enabled is False
+    # left as in config.yml
+    assert (credentials.db, credentials.username, credentials.password) == ("DUSCiESC", "admin", "password")
+
+
+def test_no_input_uses_the_defaults(session_settings):
+    """e.g. the receiver started as a service, with no terminal."""
+    from Receiver import receiver_config
+    from Receiver.LiveTelemetry import prompt_settings
+
+    def no_input(prompt):
+        raise EOFError
+
+    prompt_settings(no_input)
+
+    assert receiver_config.serialPort == "/dev/ttyUSB0"
+    assert receiver_config.ifCredentials.db == "DUSCiESC"
