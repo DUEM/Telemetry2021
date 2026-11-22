@@ -1,11 +1,11 @@
 # Receiver (telemetry laptop)
 
-[LiveTelemetry.py](LiveTelemetry.py) reads radio frames from the XBee serial port, checks each frame's CRC and decodes it using the CAN database files in [../dbc/](../dbc/). Each decoded message is passed to the storage plugins enabled in [receiver_config.py](receiver_config.py):
+[LiveTelemetry.py](LiveTelemetry.py) reads radio frames from the XBee serial port, checks each frame's CRC and decodes it using the CAN database files in [../dbc/](../dbc/). Each decoded message is passed to the storage plugins enabled in [config.yml](config.yml):
 
 * InfluxDB 1.x, database `DUSCiESC` on `localhost:8086`, for the Grafana dashboard to display (on by default)
 * an Excel workbook (off by default)
-* a CSV file (off by default)
-* a raw `.BIN` file of every frame as received, in the same format as the SD card log (off by default)
+* a CSV file (on by default)
+* a raw `.BIN` file of every frame as received, in the same format as the SD card log (on by default)
 
 Every decoded message is also printed to the terminal.
 
@@ -31,29 +31,60 @@ The receiver is a Python package, so run it as a module from the **top** of the 
 python3 -m Receiver.LiveTelemetry
 ```
 
-Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly.
+It first asks for these settings for this session, showing each default from [config.yml](config.yml) in square brackets. Press Enter to use the default, or type a new value; true/false questions also accept yes/no. The answers apply to this run only: `config.yml` is not changed.
 
-If the serial port cannot be opened, the receiver prints `Cannot open serial port ...` with the reason and what to check, and exits without creating any output: for example, if the XBee is not plugged in or `SERIALPORT` names the wrong port (`... does not exist`), or you do not have permission to use it (on Linux, add yourself to the `dialout` group).
+```
+Serial port [ default: /dev/ttyUSB0 ]:
+Telemetry Session Name (no spaces) [ default: telem-received ]:
+Excel logging (true/false) [ default: false ]:
+BIN logging (true/false) [ default: true ]:
+CSV logging (true/false) [ default: true ]:
+InfluxDB logging (true/false) [ default: true ]:
+InfluxDB database name [ default: DUSCiESC ]:
+InfluxDB username [ default: admin ]:
+InfluxDB password [ default: password ]:
+```
+
+The InfluxDB database name, username and password are only asked for if you answer `true` to `InfluxDB logging`. The receiver then checks that the database exists:
+
+* If it does, it says `InfluxDB database '...' found` and carries on.
+* If it does not, it asks whether to **create** it or use the **default** (the database in `config.yml`, `DUSCiESC`); pressing Enter uses the default, which guards against a mistyped name. If you choose create, it says it is creating the database, and reminds you that Grafana reads from the database set in its InfluxDB data source: to see this session in Grafana, change that data source's **Database** to the new name (**Connections → Data sources → InfluxDB**), or add a second data source for it. It then waits until you press Return on its own to continue, or `q` (or `Q`) then Return to quit without starting the receiver (the new database is kept); any other answer asks again.
+* If the default database itself does not exist (e.g. on a new laptop), it asks whether to create it.
+* If InfluxDB cannot be reached (not running, or wrong username or password with authentication on), it says so and waits until you press Return on its own to start anyway (nothing is stored in InfluxDB until it can be reached and the database exists), or `q` (or `Q`) then Return to quit; any other answer asks again. The session name starts each output file's name (`<session name>-YEAR-MONTH-DAY-HHMMSS.csv`), so it cannot contain spaces (use `-` or `_`) or `/ \ : * ? " < > |`. The other settings in the table below are always taken from `config.yml`. If there is no keyboard input (for example, the receiver is started as a service), the defaults are used.
+
+**Last used settings.** Once the questions are answered, the answers are saved in a file called `.env` in the directory the receiver was started from (normally the top of the repository). The next time it is started from that directory, each question also shows the value used last time:
+
+```
+Serial port [ default: /dev/ttyUSB0, last used: /dev/ttyUSB1 ]:
+```
+
+Type `l` to use the last used value, or `d` (or press Enter) for the default from `config.yml`; you can still type a new value instead. (So while a last used value is shown, `d` and `l` cannot be used as a serial port or session name.) If InfluxDB is off, the InfluxDB database name, username and password from the time before are kept in `.env`. A setting that is missing from `.env`, or not a valid answer (e.g. after editing the file by hand), is shown without a last used value. The settings are not saved if you quit at one of the questions. `.env` holds the InfluxDB password in plain text, so it is git-ignored: do not commit or share it. Delete it to go back to the defaults only.
+
+Press **Ctrl-C** to stop it. The output files and the InfluxDB connection are closed cleanly. Ctrl-C at one of the questions quits without starting the receiver.
+
+If the serial port cannot be opened, the receiver prints `Cannot open serial port ...` with the reason and what to check, and exits without creating any output: for example, if the XBee is not plugged in or the serial port is the wrong one (`... does not exist`), or you do not have permission to use it (on Linux, add yourself to the `dialout` group).
 
 ## Configuration
 
-| Setting | Where | Default |
-|---|---|---|
-| Serial port | `SERIALPORT` at the top of [LiveTelemetry.py](LiveTelemetry.py) | `/dev/ttyUSB0` |
-| Baud rate | `BAUD` in [LiveTelemetry.py](LiveTelemetry.py) | **115200** (must match the XBee) |
-| InfluxDB host, port, user, password, database | `InfluxCredentials` in [receiver_config.py](receiver_config.py) | `localhost`, `8086`, `admin`, `password`, `DUSCiESC` |
-| InfluxDB on / off | `enabled` in `InfluxCredentials` | `True` (on) |
-| Excel on / off | `xlsxEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
-| Excel folder | `xlsxOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/excel/` |
-| Excel save interval | `xlsxSaveInterval` in [receiver_config.py](receiver_config.py) | **10** seconds |
-| CSV on / off | `csvEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
-| CSV folder | `csvOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/csv/` |
-| BIN (raw) on / off | `binEnabled` in [receiver_config.py](receiver_config.py) | `False` (off) |
-| BIN folder | `binOutputFolder` in [receiver_config.py](receiver_config.py) | `session-logs/BIN/` |
-| Output file name | `sessionLogName` in [receiver_config.py](receiver_config.py) | `telem-received` (files are `telem-received-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv` / `.BIN`) |
-| CAN database files | `dbc_files` in [receiver_config.py](receiver_config.py) | the four files in [../dbc/](../dbc/) |
+All the receiver's settings are in [config.yml](config.yml), in this folder; [receiver_config.py](receiver_config.py) reads it when the receiver starts. For the settings asked for when the receiver starts (see [Running](#running)), the values in `config.yml` are the defaults. Relative folders are relative to the top of the repository, except the three output folders, which are always inside `sessionLogsFolder` (`session-logs`). Every setting must be present: if one is missing, misspelt or the wrong type (for example `"false"` in quotes instead of `false`), the receiver stops with an error naming the file and the setting. The file has a comment explaining each one.
 
-Each output is switched on or off with its own `True`/`False` setting. Output files go in the `session-logs/` folder at the top of the repository, whichever directory the receiver is started from: Excel in `session-logs/excel/`, CSV in `session-logs/csv/`, BIN in `session-logs/BIN/`. The folders are created when first needed. Each run of the receiver writes **new** files, named after the local date and time the **first frame arrived**, e.g. `session-logs/csv/telem-received-2026-11-15-143012.csv`; the files from one run have the same name. The files (and the InfluxDB connection) are only set up when the first frame arrives: if none arrives, empty files are created when the receiver stops. If the serial port cannot be opened, no files are created. `session-logs/` is git-ignored, so session logs are not committed by accident.
+| Setting | Name in `config.yml` | Default |
+|---|---|---|
+| Serial port | `serialPort` | `/dev/ttyUSB0` |
+| Baud rate | `serialBaud` | **115200** (must match the XBee) |
+| InfluxDB host, port, user, password, database | `host`, `port`, `username`, `password`, `db` under `ifCredentials` | `localhost`, `8086`, `admin`, `password`, `DUSCiESC` |
+| InfluxDB on / off | `enabled` under `ifCredentials` | `true` (on) |
+| Excel on / off | `xlsxEnabled` | `false` (off) |
+| Excel folder, inside `sessionLogsFolder` | `xlsxOutputFolder` | `excel` |
+| Excel save interval | `xlsxSaveInterval` | **10** seconds |
+| CSV on / off | `csvEnabled` | `true` (on) |
+| CSV folder, inside `sessionLogsFolder` | `csvOutputFolder` | `csv` |
+| BIN (raw) on / off | `binEnabled` | `true` (on) |
+| BIN folder, inside `sessionLogsFolder` | `binOutputFolder` | `BIN` |
+| Output file name | `sessionLogName` | `telem-received` (files are `telem-received-YEAR-MONTH-DAY-HHMMSS.xlsx` / `.csv` / `.BIN`) |
+| CAN database files | `dbc_files`, in folder `dbc_folder` | the four files in [../dbc/](../dbc/) |
+
+Each output is switched on or off with its own `true`/`false` setting. Output files go in the `session-logs/` folder at the top of the repository, whichever directory the receiver is started from: Excel in `session-logs/excel/`, CSV in `session-logs/csv/`, BIN in `session-logs/BIN/`. The folders are created when first needed. Each run of the receiver writes **new** files, named after the local date and time the **first frame arrived**, e.g. `session-logs/csv/telem-received-2026-11-15-143012.csv`; the files from one run have the same name. The files (and the InfluxDB connection) are only set up when the first frame arrives: if none arrives, empty files are created when the receiver stops. If the serial port cannot be opened, no files are created. `session-logs/` is git-ignored, so session logs are not committed by accident.
 
 ## Radio frame format
 
@@ -95,7 +126,7 @@ The tests decode with the same `dbc/` files, so `pytest` catches a DBC change th
 
 ### Adding a new CAN message
 
-Follow the steps in [dbc/README.md](../dbc/README.md#changing-or-adding-a-message-or-signal): edit the `.dbc` file (including a plain-English comment), regenerate `dbc/SIGNALS.md`, and run `pytest`. If you add a new `.dbc` file, also list it in `dbc_files` in [receiver_config.py](receiver_config.py). Then replay a capture that contains the message (see [Testing without hardware](#testing-without-hardware-software-in-the-loop-sil)) and check the decoded values.
+Follow the steps in [dbc/README.md](../dbc/README.md#changing-or-adding-a-message-or-signal): edit the `.dbc` file (including a plain-English comment), regenerate `dbc/SIGNALS.md`, and run `pytest`. If you add a new `.dbc` file, also list it in `dbc_files` in [config.yml](config.yml). Then replay a capture that contains the message (see [Testing without hardware](#testing-without-hardware-software-in-the-loop-sil)) and check the decoded values.
 
 Renaming a message, sender or signal, or changing its scaling, changes what is stored in InfluxDB; see the warning in [dbc/README.md](../dbc/README.md#changing-or-adding-a-message-or-signal).
 
@@ -156,7 +187,7 @@ python3 tools/batch_Read_Hex.py -d /media/$USER/SDCARD
 
 Add `-h` to any of these scripts to see all its options.
 
-[hex2influx.py](../tools/hex2influx.py) uses the receiver's InfluxDB settings in [receiver_config.py](receiver_config.py) (database `DUSCiESC`). To import into a different database, e.g. to keep an old session apart from live data, add `-d <database>`. Unlike the live receiver, it skips frames with unrecognised CAN IDs.
+[hex2influx.py](../tools/hex2influx.py) uses the receiver's InfluxDB settings in [config.yml](config.yml) (database `DUSCiESC`). To import into a different database, e.g. to keep an old session apart from live data, add `-d <database>`. Unlike the live receiver, it skips frames with unrecognised CAN IDs.
 
 [batch_Read_Hex.py](../tools/batch_Read_Hex.py) runs `hex2influx.py` on each file in the directory given with `-d`, in name order. By default it picks the board's log files, named `YYMMDDNN.BIN` (in upper or lower case). To choose other files, give a regular expression that the whole file name must match with `-p`; for example, `-p "231018[0-9]{2}\.BIN"` picks only the files from 18 October 2023. At the end it reports how many files were imported, and lists any that failed.
 
@@ -174,20 +205,20 @@ The tests replay the sample captures in [../Tests/data/](../Tests/data/) and com
 * `NRT.BIN`: Ortus-T at iESC 2026 (qualifying, 18 September 2026): two sections of the recording, joined. The first (GPS with a position fix) is about 1 minute long; the second (out on track, with the motor controller, driver controls and current dial) is about 8 minutes long, with radio reception getting worse towards the end. Recorded with the ESC-CODE receiver, whose own decoded output was used to check this branch's decoding.
 * `MPPT.BIN`: an earlier (July 2023) recording with MPPT status messages, which are not in the iESC 2026 recording.
 
-**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you turn InfluxDB off (`enabled=False` in `InfluxCredentials` in `receiver_config.py`). To check the replay in a file instead, set `csvEnabled`, `xlsxEnabled` or `binEnabled` to `True` (the BIN log of a replay should match the capture, up to its last `0x7E`).
+**Live replay.** You can replay a capture through a virtual serial port. Note that this **writes to the live `DUSCiESC` database** unless you answer `false` to `InfluxDB logging` when the receiver starts. To check the replay in a file instead, answer `true` to `Excel logging`, `BIN logging` or `CSV logging` (the BIN log of a replay should match the capture, up to its last `0x7E`).
 
 ```shell
 # terminal 1: create a one way virtual serial port, and then replay the sample capture through it at about the rate it was received over the radio (250 bytes per second)
 
 pv -L 250 Tests/data/NRT.BIN | socat - PTY,link=/tmp/ttyV0,raw,echo=0,wait-slave
 
-# terminal 2: set SERIALPORT in Receiver/LiveTelemetry.py to the /tmp/ttyV0 name, then
+# terminal 2: start the receiver and enter /tmp/ttyV0 at the Serial port prompt
 
 python3 -m Receiver.LiveTelemetry
 
 ```
 
-Stop the receiver with Ctrl-C when the output stops. Remember to set `SERIALPORT` back afterwards.
+Stop the receiver with Ctrl-C when the output stops.
 
 Start terminal 1 first, as it creates `/tmp/ttyV0`. With `wait-slave`, `socat` sends nothing until the receiver opens the port, so the start of the capture is not lost while you start terminal 2.
 
@@ -203,4 +234,4 @@ The replay rate does not change the stored data: timestamps come from the GPS ti
 
 ## Adding a storage option
 
-Subclass `StorerExtension` in [storer_extension.py](storer_extension.py), implementing `store_data` (called with each decoded message) and `close`. To keep the raw frames as well, also override `store_raw`, which is called with each frame exactly as received, before decoding (see `BinStorer`). Then enable it in `StorerWrapper.init_storer` in [telemetry_storer.py](telemetry_storer.py), behind a setting in [receiver_config.py](receiver_config.py), following how `CSVStorer` is wired up.
+Subclass `StorerExtension` in [storer_extension.py](storer_extension.py), implementing `store_data` (called with each decoded message) and `close`. To keep the raw frames as well, also override `store_raw`, which is called with each frame exactly as received, before decoding (see `BinStorer`). Then enable it in `StorerWrapper.init_storer` in [telemetry_storer.py](telemetry_storer.py), behind a setting in [config.yml](config.yml) (also add it to `_SETTINGS` and the module values in [receiver_config.py](receiver_config.py)), following how `CSVStorer` is wired up.

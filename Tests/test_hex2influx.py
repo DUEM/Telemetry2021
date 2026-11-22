@@ -18,9 +18,9 @@ def test_hex2influx_writes_decoded_points(monkeypatch, run_in_receiver):
     )
     telemetry_parser.time_fetched = uint32(0)  # reference: millis 0 at that time
 
-    # the receiver's real influx settings (conftest replaces them with a stub)
-    from Receiver.receiver_config import InfluxCredentials
-    monkeypatch.setattr("Receiver.receiver_config.ifCredentials", InfluxCredentials())
+    # the receiver's real influx settings, from config.yml (conftest replaces them with a stub)
+    from Receiver.receiver_config import load_config
+    monkeypatch.setattr("Receiver.receiver_config.ifCredentials", load_config()["ifCredentials"])
 
     # act
     hex2influx_module.hex2influx("Tests/data/MPPT.BIN", telemetry_parser)
@@ -46,11 +46,11 @@ def test_hex2influx_writes_decoded_points(monkeypatch, run_in_receiver):
 
 def test_hex2influx_database_option(monkeypatch, run_in_receiver):
     import tools.hex2influx as hex2influx_module
-    from Receiver.receiver_config import InfluxCredentials
+    from Receiver.receiver_config import load_config
 
     mock_client = MagicMock()
     monkeypatch.setattr("tools.hex2influx.InfluxDBClient", mock_client)
-    monkeypatch.setattr("Receiver.receiver_config.ifCredentials", InfluxCredentials())
+    monkeypatch.setattr("Receiver.receiver_config.ifCredentials", load_config()["ifCredentials"])
 
     hex2influx_module.hex2influx("Tests/data/MPPT.BIN", database="OldSession")
 

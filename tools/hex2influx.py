@@ -3,7 +3,7 @@
 Does it in batch instead of by line and will be significantly faster compared to
 telemetry Storer.
 
-Uses the receiver's influx settings (ifCredentials in Receiver/receiver_config.py,
+Uses the receiver's influx settings (ifCredentials in Receiver/config.yml,
 database DUSCiESC). Use -d to import into a different database, e.g. to keep an
 old session apart from live data.
 
@@ -109,7 +109,7 @@ def to_point(msgItem: str, msgSource: str, msgBody: dict, msgTime: datetime,
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Import hex file to influxdb, using the influx settings "
-                    "in Receiver/receiver_config.py"
+                    "in Receiver/config.yml"
     )
     parser.add_argument(
         "-i",
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         "--database",
         action="store",
         type=str,
-        help="Database to import into (default: the receiver's, set in Receiver/receiver_config.py)",
+        help="Database to import into (default: the receiver's, set in Receiver/config.yml)",
         default=None,
     )
     args = parser.parse_args()

@@ -231,16 +231,16 @@ These steps follow the official InfluxData instructions at <https://docs.influxd
    systemctl is-enabled influxdb           # should say "enabled"
    curl -sl -I http://localhost:8086/ping  # should say "HTTP/1.1 204 No Content"
    ```
-5. Create the database the receiver writes to (its name is set in [Receiver/receiver_config.py](Receiver/receiver_config.py)):
+5. Create the database the receiver writes to (its name is set in [Receiver/config.yml](Receiver/config.yml)):
    ```shell
    influx -execute 'CREATE DATABASE "DUSCiESC"'
    influx -execute 'SHOW DATABASES'        # DUSCiESC should be listed
    ```
 
-**About passwords.** InfluxDB 1.x has authentication **turned off** by default, so it accepts any user name and password, including the `admin` / `password` in `receiver_config.py`. That is fine on a closed telemetry network. To turn authentication on:
+**About passwords.** InfluxDB 1.x has authentication **turned off** by default, so it accepts any user name and password, including the `admin` / `password` in `Receiver/config.yml`. That is fine on a closed telemetry network. To turn authentication on:
 1. Create a user with `influx -execute "CREATE USER admin WITH PASSWORD '<a password>' WITH ALL PRIVILEGES"`.
 2. Set `auth-enabled = true` in the `[http]` section of `/etc/influxdb/influxdb.conf` (`sudo nano /etc/influxdb/influxdb.conf`), then `sudo systemctl restart influxdb`.
-3. Put the same password in `Receiver/receiver_config.py` and in the Grafana data source below.
+3. Put the same password in `Receiver/config.yml` and in the Grafana data source below.
 
 InfluxDB keeps its data in `/var/lib/influxdb`.
 
