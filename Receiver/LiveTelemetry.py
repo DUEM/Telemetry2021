@@ -4,13 +4,16 @@ from influxdb.exceptions import InfluxDBClientError, InfluxDBServerError
 from requests.exceptions import RequestException
 from Receiver import receiver_config
 from Receiver.frame_reader import END_OF_FRAME_MARKER, FrameAssembler
+from Receiver.serial_port import DEFAULT_BAUD, describe_port, list_serial_ports, suggest_port
 from Receiver.telemetry_storer import store_data, end_session
 import atexit
 import errno
 import logging
+import re
 import signal
 import sys
 from pathlib import Path
+from typing import NamedTuple, Optional
 
 # print every decoded CAN message (logged at INFO by telemetry_storer) to stdout
 logging.basicConfig(
@@ -61,36 +64,70 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     return assembler  # its counts: rejoined, split
 
 
-def open_serial_port(port=None, baud=None):
-    """Open the XBee's serial port, or exit with an explanation if it cannot
-    be opened (e.g. the XBee is not plugged in). The port and baud rate are
-    serialPort and serialBaud in Receiver/config.yml unless given."""
-    # read at call time so monkeypatching receiver_config takes effect
-    port = receiver_config.serialPort if port is None else port
-    baud = receiver_config.serialBaud if baud is None else baud
+def cannot_open_hint(port, e):
+    """What to check when serial port `port` could not be opened (error e)."""
+    if e.errno == errno.ENOENT:
+        return (
+            f"{port} does not exist. Check the XBee's USB adapter is plugged in and "
+            "pick its port from the list (Windows: Device Manager > Ports). For a "
+            "software-in-the-loop replay, start socat first so that it creates the port."
+        )
+    if e.errno == errno.EACCES:
+        return (
+            f"No permission to open {port}. On Linux, add yourself to the group "
+            "that owns it (usually dialout: sudo usermod -aG dialout $USER), then "
+            "log out and back in."
+        )
+    return (
+        f"Check that {port} is the XBee's port and that no other program "
+        "(XCTU, a serial monitor, another receiver) has it open."
+    )
+
+
+def try_open_serial_port(port, baud):
+    """Open serial port `port`, or say why it cannot be opened (e.g. the XBee
+    is not plugged in) and what to check, and return None."""
     try:
         return serial.Serial(port, baud)
     except serial.SerialException as e:
-        if e.errno == errno.ENOENT:
-            hint = (
-                f"{port} does not exist. Check the XBee's USB adapter is plugged in "
-                "and find its name (Linux: ls /dev/ttyUSB* /dev/ttyACM*; macOS: "
-                "ls /dev/cu.*; Windows: Device Manager > Ports), then enter it at the "
-                "Serial port prompt, or set serialPort in Receiver/config.yml. For a software-in-the-loop "
-                "replay, start socat first so that it creates the port."
-            )
-        elif e.errno == errno.EACCES:
-            hint = (
-                f"No permission to open {port}. On Linux, add yourself to the group "
-                "that owns it (usually dialout: sudo usermod -aG dialout $USER), then "
-                "log out and back in."
-            )
-        else:
-            hint = (
-                f"Check that {port} is the XBee's port and that no other program "
-                "(XCTU, a serial monitor, another receiver) has it open."
-            )
-        sys.exit(f"Cannot open serial port {port}: {e}\n{hint}")
+        # wrong name, unplugged, in use by another program, no permission
+        print(f"Cannot open serial port {port}: {e}\n{cannot_open_hint(port, e)}")
+        return None
+
+
+def _natural_order(name):
+    """Sort key: /dev/ttyS2 before /dev/ttyS10."""
+    return [int(part) if part.isdigit() else part for part in re.split(r"(\d+)", name)]
+
+
+def print_serial_ports(ports):
+    """List the USB serial ports in full; the XBee is always one of these.
+    Other ports (e.g. the 32 /dev/ttyS* most Linux PCs have, mostly with no
+    hardware behind them) are summarised on one line."""
+    if not ports:
+        print("Serial ports found: none")
+        return
+    usb = sorted((p for p in ports if p.vid is not None), key=lambda p: _natural_order(p.device))
+    other = sorted((p.device for p in ports if p.vid is None), key=_natural_order)
+    print("Serial ports found:" if usb else "Serial ports found: no USB serial ports")
+    for p in usb:
+        print(f"  {describe_port(p)}")
+    if other:
+        names = ", ".join(other) if len(other) <= 3 else f"{other[0]} to {other[-1]}"
+        print(f"  (and {len(other)} other serial port{'s' if len(other) > 1 else ''}, not USB so not the XBee: {names})")
+
+
+def ask_serial_port(default, ask, last=None):
+    """List the serial ports, suggest one if the default port is not plugged
+    in, and ask which port to use (the Serial port question)."""
+    ports = list_serial_ports()
+    print_serial_ports(ports)
+    if default not in {p.device for p in ports}:
+        suggested, reason = suggest_port(ports, saved_port=last)
+        if suggested:
+            how = "type l to use it" if suggested == last else "type it to use it"
+            print(f"Suggested: {suggested} ({reason}): {how}")
+    return _ask("Serial port", default, ask, last=last)
 
 
 _TRUE_WORDS = ("true", "t", "yes", "y", "on", "1")
@@ -293,6 +330,15 @@ def write_last_used(path, values):
         print(f"  Cannot save these settings as the last used ones in {path} ({e})")
 
 
+class SessionAnswers(NamedTuple):
+    """What prompt_settings needs to hand on to open_serial_port."""
+
+    last_used_file: Path  # where to save the last used settings
+    last_used: dict  # the settings to save there, once the serial port opens
+    port_default: str  # for asking for the serial port again
+    port_last: Optional[str]
+
+
 def prompt_settings(ask=input, last_used_file=None):
     """Ask for this session's settings, with the values in Receiver/config.yml
     as the defaults (press Enter to keep one), and use the answers for this run
@@ -302,9 +348,10 @@ def prompt_settings(ask=input, last_used_file=None):
     the database is then checked (see check_influx_database).
 
     The answers are saved in `last_used_file` (.env in the current working
-    directory, i.e. the directory the receiver was started from). If that
-    file exists, each question also shows the value used last time, which l
-    selects (d, like Enter, selects the default)."""
+    directory, i.e. the directory the receiver was started from) by
+    open_serial_port, once the serial port has opened. If that file exists,
+    each question also shows the value used last time, which l selects (d,
+    like Enter, selects the default). Returns a SessionAnswers."""
     path = Path.cwd() / LAST_USED_FILE_NAME if last_used_file is None else Path(last_used_file)
     saved = read_last_used(path)
 
@@ -323,7 +370,8 @@ def prompt_settings(ask=input, last_used_file=None):
     print("Receiver settings for this session (press Enter to use the default from Receiver/config.yml)")
     if saved is not None:
         print(f"Last used settings from {path}: type l to use the last used value, d (or Enter) for the default")
-    cfg.serialPort = _ask("Serial port", cfg.serialPort, ask, last=last("serialPort"))
+    port_default, port_last = cfg.serialPort, last("serialPort")
+    cfg.serialPort = ask_serial_port(port_default, ask, port_last)
     cfg.sessionLogName = _ask("Telemetry Session Name (no spaces)", cfg.sessionLogName, ask, _file_name,
                               last("sessionLogName", _file_name))
     cfg.xlsxEnabled = _ask("Excel logging (true/false)", cfg.xlsxEnabled, ask, _true_or_false,
@@ -348,20 +396,54 @@ def prompt_settings(ask=input, last_used_file=None):
                 binEnabled=cfg.binEnabled, csvEnabled=cfg.csvEnabled, influxEnabled=enabled)
     if enabled:
         used.update(influxDb=influx.db, influxUsername=influx.username, influxPassword=influx.password)
-    write_last_used(path, used)
+    return SessionAnswers(path, used, port_default, port_last)
+
+
+def open_serial_port(answers, ask=input):
+    """Open the serial port chosen at the questions. If it cannot be opened,
+    say why and ask for the port again, until one opens (Enter tries the
+    default again, e.g. after plugging the XBee in). Then save the settings as
+    the last used ones: only now, so a port that would not open is not saved.
+    Returns the open connection."""
+    cfg = receiver_config
+    while True:
+        connection = try_open_serial_port(cfg.serialPort, cfg.serialBaud)
+        if connection is not None:
+            break
+        no_input = []
+
+        def ask_noting_no_input(prompt):
+            try:
+                return ask(prompt)
+            except EOFError:
+                no_input.append(True)
+                raise
+
+        cfg.serialPort = ask_serial_port(answers.port_default, ask_noting_no_input, answers.port_last)
+        if no_input:  # e.g. started as a service: asking again would loop for ever
+            sys.exit("Cannot ask for another serial port: there is no keyboard input")
+    if cfg.serialBaud != DEFAULT_BAUD:
+        # a wrong rate gives no error, only CRC FAIL frames
+        print(
+            f"Warning: serialBaud in Receiver/config.yml is {cfg.serialBaud}, not {DEFAULT_BAUD}. "
+            "It must match the XBee's baud rate (BD): a wrong rate gives no error, only "
+            "CRC FAIL frames. Check the XBee with tools/check_xbee_settings.py."
+        )
+    print(f"Opened {cfg.serialPort} at {cfg.serialBaud} baud")
+    write_last_used(answers.last_used_file, dict(answers.last_used, serialPort=cfg.serialPort))
+    return connection
 
 
 if __name__ == "__main__":
-    # before the Ctrl-C handler is installed, so Ctrl-C at a prompt still quits
+    # before the Ctrl-C handler is installed, so Ctrl-C at a question still quits
     try:
-        prompt_settings()
+        serialConnection = open_serial_port(prompt_settings())
     except KeyboardInterrupt:
         sys.exit("\nCancelled: the receiver was not started")
 
     atexit.register(onProgramExit)
     signal.signal(signal.SIGINT, sigintHandler)
 
-    serialConnection = open_serial_port()
     assembler = receive(serialConnection)
 
     end_session()

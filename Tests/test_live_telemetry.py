@@ -1,4 +1,5 @@
 import pytest
+import serial
 
 from Receiver.frame_reader import END_OF_FRAME_MARKER, read_frames
 
@@ -99,27 +100,52 @@ def test_receive_stops_cleanly_when_the_port_is_lost(request, tmp_path, caplog, 
         ("/", "Check that / is the XBee's port"),  # any other open failure
     ],
 )
-def test_open_serial_port_exits_with_a_message_when_it_cannot_open(port, expected):
-    from Receiver.LiveTelemetry import open_serial_port
+def test_port_that_cannot_open_is_explained(port, expected, capsys):
+    from Receiver.LiveTelemetry import try_open_serial_port
 
-    with pytest.raises(SystemExit) as exited:
-        open_serial_port(port)
+    assert try_open_serial_port(port, 115200) is None
 
-    message = str(exited.value.code)  # sys.exit(message) prints it and exits with 1
-    assert message.startswith(f"Cannot open serial port {port}:")
-    assert expected in message
+    out = capsys.readouterr().out
+    assert out.startswith(f"Cannot open serial port {port}:")
+    assert expected in out
 
 
-def test_open_serial_port_uses_the_port_in_config_yml(monkeypatch):
-    from Receiver.LiveTelemetry import open_serial_port
+def port_info(device, vid=None, description="n/a", manufacturer=None):
+    """Like an entry of serial.tools.list_ports.comports()."""
+    from types import SimpleNamespace
 
-    monkeypatch.setattr("Receiver.receiver_config.serialPort", "/dev/ttyNoSuchXBee")
-    with pytest.raises(SystemExit) as exited:
-        open_serial_port()
+    return SimpleNamespace(device=device, vid=vid, description=description, manufacturer=manufacturer)
 
-    message = str(exited.value.code)
-    assert message.startswith("Cannot open serial port /dev/ttyNoSuchXBee:")
-    assert "set serialPort in Receiver/config.yml" in message
+
+FTDI_XBEE = port_info("/dev/ttyUSB1", vid=0x0403, description="FT231X USB UART", manufacturer="FTDI")
+ONBOARD = port_info("/dev/ttyS0")
+
+
+@pytest.fixture
+def serial_ports(monkeypatch):
+    """The serial ports the receiver sees: `listed` (what list_serial_ports
+    returns) and which open (all except those in `wont_open`). `opened` records
+    the ports and baud rates opened."""
+    from types import SimpleNamespace
+
+    ports = SimpleNamespace(listed=[], wont_open=set(), opened=[])
+
+    def fake_serial(port, baud):
+        if port in ports.wont_open:
+            raise serial.SerialException(2, "could not open port", port)
+        ports.opened.append((port, baud))
+        return ("connection", port)
+
+    monkeypatch.setattr("Receiver.LiveTelemetry.serial.Serial", fake_serial)
+    monkeypatch.setattr("Receiver.LiveTelemetry.list_serial_ports", lambda: list(ports.listed))
+    return ports
+
+
+def start_receiver(ask):
+    """Answer the questions and open the serial port, as the receiver does at start up."""
+    from Receiver.LiveTelemetry import open_serial_port, prompt_settings
+
+    return open_serial_port(prompt_settings(ask), ask)
 
 
 class FakeInflux:
@@ -156,15 +182,17 @@ def fake_influx(monkeypatch):
 
 
 @pytest.fixture
-def session_settings(monkeypatch, fake_influx, tmp_path):
+def session_settings(monkeypatch, fake_influx, serial_ports, tmp_path):
     """Known defaults for the prompted settings; all restored after the test.
-    Runs in tmp_path, so the .env file of last used settings is written there."""
+    Runs in tmp_path, so the .env file of last used settings is written there.
+    No serial ports are listed, and every port opens (see serial_ports)."""
     from Receiver.receiver_config import InfluxCredentials
 
     monkeypatch.chdir(tmp_path)
 
     for name, value in {
         "serialPort": "/dev/ttyUSB0",
+        "serialBaud": 115200,
         "sessionLogName": "telem-received",
         "xlsxEnabled": False,
         "binEnabled": True,
@@ -468,7 +496,7 @@ def first_run_then_defaults_back(monkeypatch):
 
     before = {n: getattr(receiver_config, n) for n in
               ("serialPort", "sessionLogName", "xlsxEnabled", "binEnabled", "csvEnabled", "ifCredentials")}
-    prompt_settings(answering("/dev/ttyUSB1", "race-day1", "yes", "no", "no", "", "", "dusc", "secret"))
+    start_receiver(answering("/dev/ttyUSB1", "race-day1", "yes", "no", "no", "", "", "dusc", "secret"))
     for name, value in before.items():
         monkeypatch.setattr(f"Receiver.receiver_config.{name}", value)
 
@@ -476,7 +504,7 @@ def first_run_then_defaults_back(monkeypatch):
 def test_settings_are_saved_in_env_in_the_run_directory(session_settings, tmp_path):
     from Receiver.LiveTelemetry import prompt_settings
 
-    prompt_settings(answering("/dev/ttyUSB1", "race-day1", "yes", "", "no", "", "", "dusc", "secret"))
+    start_receiver(answering("/dev/ttyUSB1", "race-day1", "yes", "", "no", "", "", "dusc", "secret"))
 
     lines = [l for l in (tmp_path / ".env").read_text().splitlines() if not l.startswith("#")]
     assert lines == [
@@ -496,7 +524,7 @@ def test_without_env_the_prompts_show_only_the_default(session_settings, tmp_pat
     from Receiver.LiveTelemetry import prompt_settings
 
     ask = answering(*ALL_DEFAULTS)
-    prompt_settings(ask)
+    start_receiver(ask)
 
     assert ask.prompts[0] == "Serial port [ default: /dev/ttyUSB0 ]: "
     assert all("last used" not in p for p in ask.prompts)
@@ -553,8 +581,8 @@ def test_d_and_l_are_ordinary_answers_without_a_last_used_value(session_settings
 def test_influx_settings_are_kept_when_influx_is_off(session_settings, tmp_path):
     from Receiver.LiveTelemetry import prompt_settings, read_last_used
 
-    prompt_settings(answering("", "", "", "", "", "", "", "dusc", "secret"))
-    prompt_settings(answering("", "", "", "", "", "false"))  # not asked this time
+    start_receiver(answering("", "", "", "", "", "", "", "dusc", "secret"))
+    start_receiver(answering("", "", "", "", "", "false"))  # not asked this time
 
     saved = read_last_used(tmp_path / ".env")
     assert saved["influxEnabled"] == "false"
@@ -591,3 +619,142 @@ def test_quitting_at_a_warning_does_not_save_the_settings(session_settings, fake
         prompt_settings(influx_settings("DUSCiESC", ["q"]))
 
     assert not (tmp_path / ".env").exists()
+
+
+
+# --- serial port: list, suggestion, asking again (from the BBJ-1126 branch) ---
+
+def test_serial_ports_are_listed_before_the_question(session_settings, serial_ports, capsys):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    serial_ports.listed = [ONBOARD, port_info("/dev/ttyUSB0", vid=0x0403, description="FT231X USB UART")]
+    prompt_settings(answering(*ALL_DEFAULTS))
+
+    out = capsys.readouterr().out
+    assert ("Serial ports found:\n  /dev/ttyUSB0  (FT231X USB UART)\n"
+            "  (and 1 other serial port, not USB so not the XBee: /dev/ttyS0)\n") in out
+    assert "Suggested" not in out  # the default, /dev/ttyUSB0, is plugged in
+
+
+def test_many_non_usb_ports_are_summarised_in_number_order(session_settings, serial_ports, capsys):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    serial_ports.listed = [port_info(f"/dev/ttyS{n}") for n in range(32)] + [
+        port_info("/dev/ttyUSB10", vid=0x0403), port_info("/dev/ttyUSB2", vid=0x0403)]
+    prompt_settings(answering(*ALL_DEFAULTS))
+
+    out = capsys.readouterr().out
+    assert ("Serial ports found:\n  /dev/ttyUSB2\n  /dev/ttyUSB10\n"
+            "  (and 32 other serial ports, not USB so not the XBee: /dev/ttyS0 to /dev/ttyS31)\n") in out
+
+
+def test_only_non_usb_ports(session_settings, serial_ports, capsys):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    serial_ports.listed = [ONBOARD]
+    prompt_settings(answering(*ALL_DEFAULTS))
+
+    out = capsys.readouterr().out
+    assert "Serial ports found: no USB serial ports\n  (and 1 other serial port" in out
+    assert "Suggested" not in out
+
+
+def test_no_serial_ports(session_settings, capsys):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    prompt_settings(answering(*ALL_DEFAULTS))
+
+    out = capsys.readouterr().out
+    assert "Serial ports found: none" in out
+    assert "Suggested" not in out
+
+
+def test_a_port_is_suggested_when_the_default_is_not_plugged_in(session_settings, serial_ports, capsys):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    serial_ports.listed = [ONBOARD, FTDI_XBEE]
+    ask = answering(*ALL_DEFAULTS)
+    prompt_settings(ask)
+
+    assert "Suggested: /dev/ttyUSB1 (FTDI USB serial, probably the XBee): type it to use it" in capsys.readouterr().out
+    assert ask.prompts[0] == "Serial port [ default: /dev/ttyUSB0 ]: "  # the question is unchanged
+
+
+def test_last_used_port_is_suggested_with_l(session_settings, serial_ports, tmp_path, capsys):
+    from Receiver.LiveTelemetry import prompt_settings
+
+    (tmp_path / ".env").write_text("SERIAL_PORT=/dev/ttyACM0\n")
+    serial_ports.listed = [FTDI_XBEE, port_info("/dev/ttyACM0", vid=0x2341)]
+    prompt_settings(answering(*ALL_DEFAULTS))
+
+    assert "Suggested: /dev/ttyACM0 (last used): type l to use it" in capsys.readouterr().out
+
+
+def test_port_that_will_not_open_is_asked_for_again(session_settings, serial_ports, tmp_path, capsys):
+    from Receiver import receiver_config
+
+    serial_ports.wont_open = {"/dev/ttyUSB0", "/dev/ttyUSB9"}
+    # the default is unplugged; then a typo; then the right port
+    ask = answering(*ALL_DEFAULTS, "/dev/ttyUSB9", "/dev/ttyUSB1")
+    connection = start_receiver(ask)
+
+    assert connection == ("connection", "/dev/ttyUSB1")
+    assert receiver_config.serialPort == "/dev/ttyUSB1"
+    assert ask.prompts[-2:] == ["Serial port [ default: /dev/ttyUSB0 ]: "] * 2
+    out = capsys.readouterr().out
+    assert "Cannot open serial port /dev/ttyUSB0" in out and "Cannot open serial port /dev/ttyUSB9" in out
+    assert "Opened /dev/ttyUSB1 at 115200 baud" in out
+    # only the port that opened is saved
+    assert "SERIAL_PORT=/dev/ttyUSB1" in (tmp_path / ".env").read_text()
+
+
+def test_enter_tries_the_default_port_again(session_settings, serial_ports):
+    """e.g. the XBee was plugged in after the first try."""
+    from Receiver.LiveTelemetry import open_serial_port, prompt_settings
+
+    answers = prompt_settings(answering(*ALL_DEFAULTS))
+    serial_ports.wont_open = {"/dev/ttyUSB0"}
+
+    def plug_in_then_enter(prompt):
+        serial_ports.wont_open.clear()
+        return ""
+
+    assert open_serial_port(answers, plug_in_then_enter) == ("connection", "/dev/ttyUSB0")
+
+
+def test_settings_are_not_saved_until_the_port_opens(session_settings, serial_ports, tmp_path):
+    serial_ports.wont_open = {"/dev/ttyUSB0"}
+    with pytest.raises(StopIteration):  # still asking for a port that opens
+        start_receiver(answering(*ALL_DEFAULTS))
+
+    assert not (tmp_path / ".env").exists()
+
+
+def test_port_that_will_not_open_without_keyboard_input_exits(session_settings, serial_ports):
+    from Receiver.LiveTelemetry import open_serial_port, prompt_settings
+
+    answers = prompt_settings(answering(*ALL_DEFAULTS))
+    serial_ports.wont_open = {"/dev/ttyUSB0"}
+
+    def no_input(prompt):
+        raise EOFError
+
+    with pytest.raises(SystemExit) as exited:
+        open_serial_port(answers, no_input)
+    assert "there is no keyboard input" in exited.value.code
+
+
+def test_baud_rate_other_than_115200_gives_a_warning(session_settings, serial_ports, monkeypatch, capsys):
+    monkeypatch.setattr("Receiver.receiver_config.serialBaud", 9600)
+    start_receiver(answering(*ALL_DEFAULTS))
+
+    assert serial_ports.opened == [("/dev/ttyUSB0", 9600)]
+    out = capsys.readouterr().out
+    assert "Warning: serialBaud in Receiver/config.yml is 9600, not 115200" in out
+    assert "tools/check_xbee_settings.py" in out
+
+
+def test_no_baud_rate_warning_at_115200(session_settings, capsys):
+    start_receiver(answering(*ALL_DEFAULTS))
+
+    assert "Warning: serialBaud" not in capsys.readouterr().out
