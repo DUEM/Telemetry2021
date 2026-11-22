@@ -31,7 +31,7 @@ class StorerExtension(ABC):
 
     To add a new storage option, subclass this and then add it to
     `StorerWrapper.init_storer` in `telemetry_storer.py` behind a setting in
-    `receiver_config.py`, following how `CSVStorer` is wired up. Storers can
+    `config.yml` (read by `receiver_config.py`), following how `CSVStorer` is wired up. Storers can
     also be passed directly to `TelemetryStorer` if the wrapper is not used.
     """
 

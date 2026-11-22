@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
 # used by all live_calculation scripts: the same database the receiver writes to
-# (Receiver/receiver_config.py)
+# (Receiver/config.yml)
 class influxCredentials(NamedTuple):
     username: str = "admin"
     password: str = "password"

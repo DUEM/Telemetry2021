@@ -1,0 +1,61 @@
+# Receiver settings, read by receiver_config.py when the receiver starts.
+#
+# Relative folder paths are relative to the repository root (the folder that
+# contains Receiver/ and dbc/), so the receiver can be started from any
+# working directory. Absolute paths can be used too.
+#
+# All settings must be present. If one is missing, misspelt or the wrong type
+# (e.g. "false" in quotes instead of false), the receiver stops and says which.
+
+# XBee radio serial port, e.g. /dev/ttyUSB0 (Linux), /dev/cu.usbserial-XXXX
+# (macOS) or COM8 (Windows). To find it on Linux: ls /dev/ttyUSB* /dev/ttyACM*
+serialPort: /dev/ttyUSB0
+# Must match the XBee's BD setting (115200 is BD=7)
+serialBaud: 115200
+
+# Each output is switched on or off with its own true/false setting. Each run
+# of the receiver writes new files, named after the time the first frame
+# arrived, e.g. session-logs/csv/telem-received-2026-11-15-143012.csv. The
+# folders are created if they do not exist. (The live_calculations scripts
+# have their own settings, in Receiver/live_calculations/config.py.)
+sessionLogsFolder: session-logs
+# file names are <sessionLogName>-YYYY-MM-DD-HHMMSS.<ext>
+sessionLogName: telem-received
+
+# Excel (.xlsx) output
+xlsxEnabled: false
+xlsxOutputFolder: session-logs/excel
+# Save the xlsx file at most this often (seconds), and when the receiver stops.
+# Saving rewrites the whole workbook, so saving after every message gets slower
+# as the file grows. If the receiver is killed without stopping cleanly, up to
+# this many seconds of rows are missing from the xlsx (the SD card log on the
+# board still has them).
+xlsxSaveInterval: 10.0
+
+# CSV output
+csvEnabled: false
+csvOutputFolder: session-logs/csv
+
+# Raw radio data (.BIN), every frame as received, in the same format as the SD
+# card log on the vehicle. Can be decoded later with tools/hex2csv.py or
+# tools/hex2influx.py, or replayed through a virtual serial port.
+binEnabled: false
+binOutputFolder: session-logs/BIN
+
+# InfluxDB output (read by the Grafana dashboards), switched on or off with
+# `enabled`. Also used by tools/hex2influx.py.
+ifCredentials:
+  username: admin
+  password: password
+  db: DUSCiESC
+  host: localhost
+  port: 8086
+  enabled: true
+
+# CAN database files used to decode the messages, in dbc_folder
+dbc_folder: dbc
+dbc_files:
+  - wavesculptor_22.dbc
+  - MPPT.dbc
+  - Telemetry.dbc
+  - Orion.dbc

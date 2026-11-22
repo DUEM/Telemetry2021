@@ -1,4 +1,5 @@
 import serial
+from Receiver import receiver_config
 from Receiver.frame_reader import END_OF_FRAME_MARKER, FrameAssembler
 from Receiver.telemetry_storer import store_data, end_session
 import atexit
@@ -13,11 +14,6 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",
 )
-
-SERIALPORT = '/dev/ttyUSB0' # Raspberry Pi
-#SERIALPORT = '/dev/cu.usbmodem14101' # macOS
-#SERIALPORT = 'COM8' #Windows
-BAUD = 115200
 
 #trying to exit gracefully
 keepLooping = True
@@ -61,9 +57,13 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     return assembler  # its counts: rejoined, split
 
 
-def open_serial_port(port=SERIALPORT, baud=BAUD):
+def open_serial_port(port=None, baud=None):
     """Open the XBee's serial port, or exit with an explanation if it cannot
-    be opened (e.g. the XBee is not plugged in)."""
+    be opened (e.g. the XBee is not plugged in). The port and baud rate are
+    serialPort and serialBaud in Receiver/config.yml unless given."""
+    # read at call time so monkeypatching receiver_config takes effect
+    port = receiver_config.serialPort if port is None else port
+    baud = receiver_config.serialBaud if baud is None else baud
     try:
         return serial.Serial(port, baud)
     except serial.SerialException as e:
@@ -71,8 +71,8 @@ def open_serial_port(port=SERIALPORT, baud=BAUD):
             hint = (
                 f"{port} does not exist. Check the XBee's USB adapter is plugged in "
                 "and find its name (Linux: ls /dev/ttyUSB* /dev/ttyACM*; macOS: "
-                "ls /dev/cu.*; Windows: Device Manager > Ports), then set SERIALPORT "
-                "at the top of Receiver/LiveTelemetry.py. For a software-in-the-loop "
+                "ls /dev/cu.*; Windows: Device Manager > Ports), then set serialPort "
+                "in Receiver/config.yml. For a software-in-the-loop "
                 "replay, start socat first so that it creates the port."
             )
         elif e.errno == errno.EACCES:

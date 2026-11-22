@@ -108,3 +108,15 @@ def test_open_serial_port_exits_with_a_message_when_it_cannot_open(port, expecte
     message = str(exited.value.code)  # sys.exit(message) prints it and exits with 1
     assert message.startswith(f"Cannot open serial port {port}:")
     assert expected in message
+
+
+def test_open_serial_port_uses_the_port_in_config_yml(monkeypatch):
+    from Receiver.LiveTelemetry import open_serial_port
+
+    monkeypatch.setattr("Receiver.receiver_config.serialPort", "/dev/ttyNoSuchXBee")
+    with pytest.raises(SystemExit) as exited:
+        open_serial_port()
+
+    message = str(exited.value.code)
+    assert message.startswith("Cannot open serial port /dev/ttyNoSuchXBee:")
+    assert "set serialPort in Receiver/config.yml" in message

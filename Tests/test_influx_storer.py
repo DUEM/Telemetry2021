@@ -117,14 +117,14 @@ def test_influx_closed(monkeypatch, nrt_bytes, run_in_receiver, patch_receiver_c
 def test_influx_client_error_logged_not_raised(mock_influxdb_client, caplog):
     # Arrange
     from influxdb.exceptions import InfluxDBClientError
-    from Receiver.receiver_config import InfluxCredentials
+    from Receiver.receiver_config import load_config
     from Receiver.storer_extension import Influx1Storer
 
     _, mock_client_instance = mock_influxdb_client
     mock_client_instance.write_points.side_effect = InfluxDBClientError(
         '{"error":"database not found: \\"mockDB\\""}', 404
     )
-    storer = Influx1Storer(InfluxCredentials(db="mockDB"))
+    storer = Influx1Storer(load_config()["ifCredentials"]._replace(db="mockDB"))
     msg_time = datetime(1970, 1, 1, tzinfo=timezone.utc)
 
     # Act

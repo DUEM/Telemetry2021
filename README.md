@@ -52,8 +52,8 @@ Both branches run the **same firmware** on the vehicle (same [Telemetry/](Teleme
 | InfluxDB measurements | One per CAN message, `<Source>/<Item>` (e.g. `Orion/PackParameters`), one field per signal ([schema](Receiver/README.md#influxdb-schema)) | One per signal (e.g. `Pack SOC`), field `Float_value` ([schema](https://github.com/DUEM/Telemetry2021/blob/ESC-CODE/Receiver/README.md#influxdb-schema)) |
 | GPS position | Stored as sent (NMEA `ddmm.mmmm` plus N/S, E/W); converted by `live_calculations` | Converted to decimal degrees in a `location` measurement |
 | Unknown CAN IDs | Stored as `ERROR/ID UNRECOGNISED` | Flagged with sentinel row `99` |
-| Settings | [Receiver/receiver_config.py](Receiver/receiver_config.py) and the top of `LiveTelemetry.py` | Prompted for port and file names on each run; InfluxDB settings hardwired in the script |
-| Live output files | Optional Excel, CSV and/or raw `.BIN` (same format as the SD card log), each switched on in `receiver_config.py` (off by default); a new date-and-time-named file in `session-logs/` every session | Raw `.BIN` and decoded `.csv` every session (overwritten) |
+| Settings | [Receiver/config.yml](Receiver/config.yml): serial port, outputs, InfluxDB, DBC files | Prompted for port and file names on each run; InfluxDB settings hardwired in the script |
+| Live output files | Optional Excel, CSV and/or raw `.BIN` (same format as the SD card log), each switched on in `config.yml` (off by default); a new date-and-time-named file in `session-logs/` every session | Raw `.BIN` and decoded `.csv` every session (overwritten) |
 | Offline tools | [`tools/hex2csv.py`, `tools/hex2influx.py`](Receiver/README.md#offline-tools-sd-card-logs) for SD card logs | None |
 | Extra calculations | [live_calculations](Receiver/live_calculations/README.md), [SolarSim upload](Client/README.md) | None |
 | Tests | pytest suite in [Tests/](Tests/), run by GitHub Actions | None |
@@ -73,7 +73,7 @@ pip install -r Receiver/requirements.txt
 sudo usermod -aG dialout $USER     # serial port access; log out and in again afterwards
 ```
 
-Create the database the receiver writes to (set in [Receiver/receiver_config.py](Receiver/receiver_config.py)):
+Create the database the receiver writes to (set in [Receiver/config.yml](Receiver/config.yml)):
 
 ```shell
 influx
@@ -89,7 +89,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    ```shell
    ls /dev/ttyUSB*
    ```
-   You would normally expect `/dev/ttyUSB0`. If it is different, change `SERIALPORT` at the top of [Receiver/LiveTelemetry.py](Receiver/LiveTelemetry.py).
+   You would normally expect `/dev/ttyUSB0`. If it is different, change `serialPort` in [Receiver/config.yml](Receiver/config.yml).
 
 2. Make sure InfluxDB is running:
    ```shell
@@ -104,7 +104,7 @@ The [live calculations](Receiver/live_calculations/README.md) and the [SolarSim 
    python3 -m Receiver.LiveTelemetry
    ```
    Every decoded message is printed to the terminal, with `CRC OK` or `CRC FAIL`.
-   If it stops straight away with `Cannot open serial port`, follow the advice it prints: usually the XBee is not plugged in, or `SERIALPORT` (step 1) is wrong.
+   If it stops straight away with `Cannot open serial port`, follow the advice it prints: usually the XBee is not plugged in, or `serialPort` (step 1) is wrong.
 
 4. Check that data is reaching InfluxDB:
    ```shell
@@ -181,7 +181,8 @@ Update the code as above (the `git submodule update --init` step is required, be
 │   └── requirements.txt           (for check_xbee_settings.py on its own)
 ├── Receiver                       (Python receiver software, see Receiver/README.md)
 │   ├── LiveTelemetry.py           (live receiver: serial → decode → storage plugins)
-│   ├── receiver_config.py         (output on/off switches and folders, InfluxDB credentials, DBC file list)
+│   ├── config.yml                 (receiver settings: serial port, output on/off switches and folders, InfluxDB credentials, DBC file list)
+│   ├── receiver_config.py         (reads and checks config.yml)
 │   ├── frame_reader.py            (splits a capture into frames on 0x7E, re-joining split frames and splitting frames run together)
 │   ├── telemetry_parser.py        (CRC check, timestamps, decoding)
 │   ├── can_dbc_decoder.py         (DBC lookup with cantools)
@@ -234,8 +235,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 * Until the first valid GPS time message arrives, timestamps are based on the laptop's clock when the first frame arrived, so they are only as accurate as the laptop's clock.
 
 **Usability**
-* The serial port is hardwired in [Receiver/LiveTelemetry.py](Receiver/LiveTelemetry.py).
-* InfluxDB details (host, port, user `admin`, password) are stored in plain text, in [Receiver/receiver_config.py](Receiver/receiver_config.py) (also used by `tools/hex2influx.py`), and separately in `Receiver/live_calculations/config.py` and `Client/upload_solarsim.py`. All use the database `DUSCiESC`; keep them in step if you change it.
+* InfluxDB details (host, port, user `admin`, password) are stored in plain text, in [Receiver/config.yml](Receiver/config.yml) (also used by `tools/hex2influx.py`), and separately in `Receiver/live_calculations/config.py` and `Client/upload_solarsim.py`. All use the database `DUSCiESC`; keep them in step if you change it.
 * The Excel output is saved every 10 s (`xlsxSaveInterval`) and when the receiver stops. If the receiver is killed without Ctrl-C, up to that many seconds of rows are missing from the Excel file (the SD card log still has them).
 * The Grafana dashboard is not stored in this repository.
 

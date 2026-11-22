@@ -7,6 +7,8 @@ and tests silently run against production config. Modules must reach through
 """
 
 CONFIG_NAMES = (
+    "serialPort",
+    "serialBaud",
     "dbc_files",
     "sessionLogName",
     "xlsxEnabled",
@@ -23,10 +25,11 @@ CONFIG_NAMES = (
 def test_config_is_read_at_call_time():
     import Receiver.can_dbc_decoder as can_dbc_decoder
     import Receiver.telemetry_storer as telemetry_storer
+    import Receiver.LiveTelemetry as live_telemetry
 
     leaked = [
         f"{module.__name__}.{name}"
-        for module in (can_dbc_decoder, telemetry_storer)
+        for module in (can_dbc_decoder, telemetry_storer, live_telemetry)
         for name in CONFIG_NAMES
         if hasattr(module, name)
     ]

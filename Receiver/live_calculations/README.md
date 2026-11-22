@@ -21,7 +21,7 @@ All the scripts read their settings from [config.py](config.py):
 | `TDELTA`, `NPOINTS` | `live_power.py` | How far back to query (e.g. `"2h"`) and the maximum number of points |
 | `VEHICLE_MASS`, `MOTOR_EFF`, `CRR`, `CDA`, `RHO`, `G` | `live_power.py` | Vehicle and physical constants for the power model |
 
-`config.py` points at database `DUSCiESC`, the one the receiver writes to (set in [Receiver/receiver_config.py](../receiver_config.py)). If you change one, change the other.
+`config.py` points at database `DUSCiESC`, the one the receiver writes to (set in [Receiver/config.yml](../config.yml)). If you change one, change the other.
 
 ## Running
 
