@@ -158,6 +158,27 @@ def test_slow_storing_does_not_lose_radio_data(request):
     assert stored == read_frames(path)[:-1]
 
 
+def test_bandwidth_is_logged(request, monkeypatch, caplog):
+    import logging
+    from Receiver.LiveTelemetry import receive
+    from Receiver.frame_reader import frame_is_complete
+
+    monkeypatch.setattr("Receiver.LiveTelemetry.BANDWIDTH_REPORT_INTERVAL", 0)  # report after every read
+    path = f"{request.config.rootdir}/Tests/data/MPPT.BIN"
+    data = open(path, "rb").read()
+    port = FakeSerial(data, chunk=len(data))  # the whole capture in one read
+    caplog.set_level(logging.INFO)
+
+    receive(port, store=lambda frame: None, keep_running=lambda: not port.finished())
+
+    frames = read_frames(path)[:-1]
+    crc_fails = sum(not frame_is_complete(f) for f in frames)
+    report = next(r.getMessage() for r in caplog.records if r.getMessage().startswith("Radio, last"))
+    assert "of 115200 baud" in report  # FakeSerial has no baudrate: the default is used
+    assert f"{crc_fails} CRC fails" in report
+    assert len(frames) > 100
+
+
 def test_a_frame_that_cannot_be_stored_does_not_stop_storing(caplog):
     from Receiver.LiveTelemetry import receive
 

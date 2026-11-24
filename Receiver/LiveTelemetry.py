@@ -3,7 +3,7 @@ from influxdb import InfluxDBClient
 from influxdb.exceptions import InfluxDBClientError, InfluxDBServerError
 from requests.exceptions import RequestException
 from Receiver import receiver_config
-from Receiver.frame_reader import END_OF_FRAME_MARKER, FrameAssembler
+from Receiver.frame_reader import END_OF_FRAME_MARKER, FrameAssembler, frame_is_complete
 from Receiver.serial_port import DEFAULT_BAUD, describe_port, list_serial_ports, suggest_port
 from Receiver.telemetry_storer import store_data, end_session
 import atexit
@@ -44,7 +44,54 @@ BACKLOG_WARNING_INTERVAL = 10.0
 # of radio traffic), so this is far too short to lose data.
 IDLE_SLEEP = 0.005
 
+# Log the radio bandwidth this often (seconds)
+BANDWIDTH_REPORT_INTERVAL = 5.0
+
 _STOP = object()  # put on the queue to tell the storing thread to finish
+
+
+class BandwidthCounter:
+    """Counts the radio data received and logs it every
+    BANDWIDTH_REPORT_INTERVAL seconds, e.g.
+    "Radio, last 5.0 s: 1,240 B/s (11% of 115200 baud), 68 frames/s, 2 CRC fails, 0 waiting to be stored"
+
+    TEMPORARY SOLUTION: part of testing whether the receiver's lack of
+    buffering is why radio data was lost (see receive()).
+    """
+
+    def __init__(self, baud):
+        self.baud = baud
+        self.link_bytes_per_s = baud / 10  # each byte takes 10 bits on the serial line
+        self._reset()
+
+    def _reset(self):
+        self.started = time.monotonic()
+        self.bytes = 0
+        self.frames = 0
+        self.crc_fails = 0
+
+    def add_bytes(self, count):
+        self.bytes += count
+
+    def add_frame(self, frame):
+        self.frames += 1
+        if not frame_is_complete(frame):
+            self.crc_fails += 1
+
+    def log_if_due(self, waiting):
+        """Log the counts if BANDWIDTH_REPORT_INTERVAL has passed, then start
+        counting again. `waiting` is the number of frames not stored yet."""
+        elapsed = time.monotonic() - self.started
+        if elapsed < BANDWIDTH_REPORT_INTERVAL:
+            return
+        elapsed = max(elapsed, 1e-6)  # never divide by zero
+        bytes_per_s = self.bytes / elapsed
+        logging.info(
+            "Radio, last %.1f s: %s B/s (%.0f%% of %i baud), %.0f frames/s, %i CRC fails, %i waiting to be stored",
+            elapsed, f"{bytes_per_s:,.0f}", 100 * bytes_per_s / self.link_bytes_per_s, self.baud,
+            self.frames / elapsed, self.crc_fails, waiting,
+        )
+        self._reset()
 
 
 def _store_frames(frames, store):
@@ -91,6 +138,7 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     frames = queue.Queue()
     storer = threading.Thread(target=_store_frames, args=(frames, store), name="storer", daemon=True)
     storer.start()
+    bandwidth = BandwidthCounter(getattr(connection, "baudrate", DEFAULT_BAUD))
     last_warning = 0.0
     try:
         while keep_running():
@@ -102,14 +150,16 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
                 break
             if not data:
                 time.sleep(IDLE_SLEEP)
-                continue
             for byte in data:
                 if byte == END_OF_FRAME_MARKER[0]:
                     for frame in assembler.push(frameBuffer):
+                        bandwidth.add_frame(frame)
                         frames.put(frame)
                     frameBuffer = bytearray()  # reset buffer
                 else:
                     frameBuffer.append(byte)
+            bandwidth.add_bytes(len(data))
+            bandwidth.log_if_due(frames.qsize())  # also when nothing arrives, to show 0 B/s
             backlog = frames.qsize()
             if backlog > BACKLOG_WARNING_FRAMES and time.monotonic() - last_warning > BACKLOG_WARNING_INTERVAL:
                 last_warning = time.monotonic()
