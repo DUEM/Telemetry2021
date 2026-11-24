@@ -218,6 +218,7 @@ Update the code as above (the `git submodule update --init` step is required, be
 
 **Radio link and framing**
 * Frames are terminated by `0x7E`, but `0x7E` bytes inside the frame are not escaped. If any timestamp, data or CRC byte equals `0x7E`, the frame is split but the receiver and the offline tools re-join split frames ([frame_reader.py](Receiver/frame_reader.py)), recovering about 2.4% of frames in the iESC 2026 SD card logs (for example). A frame damaged in the radio link cannot be repaired: it fails the CRC check and so the message is lost and does not reach InfluxDB corrupted. A whole frame run into what is left of a damaged one is split off and kept.
+* Radio captures made before the receiver read the serial port on its own thread (e.g. `Tests/data/NRT.BIN`) are missing most of their data, wherever the car was. The receiver stored each frame before reading the next, and wrote each one to InfluxDB as a separate request. Whenever storing fell behind, the laptop's 4096-byte serial buffer filled and the radio data after that was thrown away: the data in `NRT.BIN` arrives in bursts of up to about 4100 bytes (about 5 s) with 10 to 50 s gaps between them. Reading and storing are now separate and InfluxDB writes are batched (see [Receiver/README.md](Receiver/README.md#configuration)). The SD card logs were never affected.
 
 **Decoding**
 * Only CAN IDs in the `dbc/` files are decoded. Others are written to InfluxDB as `ERROR/ID UNRECOGNISED`. Check the DBC files cover any new hardware on the vehicle.

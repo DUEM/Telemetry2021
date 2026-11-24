@@ -13,10 +13,19 @@ from openpyxl import load_workbook, Workbook
 from os.path import exists as fileExists
 
 from influxdb import InfluxDBClient
-from influxdb.exceptions import InfluxDBClientError
+from influxdb.exceptions import InfluxDBClientError, InfluxDBServerError
+from requests.exceptions import RequestException
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
+
+# InfluxDB points are written in batches: when this many seconds have passed
+# since the last write, or this many points are waiting, whichever comes
+# first. Grafana therefore shows data up to about this much later.
+INFLUX_BATCH_SECONDS = 0.5
+INFLUX_BATCH_POINTS = 500
+# Seconds to wait for InfluxDB to answer a write before giving up on it
+INFLUX_TIMEOUT = 5
 
 
 class StorerExtension(ABC):
@@ -185,6 +194,11 @@ class Influx1Storer(StorerExtension):
     """
 
     def __init__(self, if_credentials):
+        # Points waiting to be written, and when the last batch was written.
+        # Writing one point per request is too slow for the radio traffic (each
+        # is an HTTP request), so points are written in batches (see _flush).
+        self._pending = []
+        self._last_flush = time.monotonic()
         # if false, do not initialise or enable influx output
         if if_credentials.enabled:
             self.influx_client = InfluxDBClient(
@@ -193,6 +207,9 @@ class Influx1Storer(StorerExtension):
                 username=if_credentials.username,
                 password=if_credentials.password,
                 database=if_credentials.db,
+                # without a timeout, a slow or lost network connection
+                # could stop storing for good
+                timeout=INFLUX_TIMEOUT,
             )
         else:
             logger.error("Influx credentials not enable.")
@@ -220,8 +237,7 @@ class Influx1Storer(StorerExtension):
             logger.debug("No fields to store for %s/%s", msg_source, msg_item)
             return
 
-        # Write data and check if successful
-        body = [
+        self._pending.append(
             {
                 # NOTE: Should check format.
                 # Old format was "measurement": msgSource but assumes that
@@ -231,24 +247,51 @@ class Influx1Storer(StorerExtension):
                 # dictionary of all fields and corresponding values in CAN message
                 "fields": msg_body,
             }
-        ]
+        )
+        if (
+            len(self._pending) >= INFLUX_BATCH_POINTS
+            or time.monotonic() - self._last_flush >= INFLUX_BATCH_SECONDS
+        ):
+            self._flush()
+
+    def _flush(self) -> None:
+        """Write the waiting points to InfluxDB in one request.
+
+        If the write fails, the batch is logged and dropped rather than kept
+        for another try, so a database or network problem cannot stop the
+        receiver or fill the memory. The BIN, CSV and Excel outputs still have
+        the data, and tools/hex2influx.py can load it into InfluxDB afterwards.
+        """
+        self._last_flush = time.monotonic()
+        if not self._pending:
+            return
+        batch, self._pending = self._pending, []
+        measurements = sorted({point["measurement"] for point in batch})
         try:
             influx_success = self.influx_client.write_points(
-                body, time_precision="ms", protocol="json"
+                batch, time_precision="ms", protocol="json"
             )
         except InfluxDBClientError as e:
-            # e.g. database missing or bad credentials. Log and drop this
-            # message rather than letting it stop the receiver.
+            # e.g. database missing or bad credentials
             logger.error(
-                "Influx rejected write for %s/%s: %s", msg_source, msg_item, e
+                "Influx rejected write of %i points (%s): %s",
+                len(batch), ", ".join(measurements), e,
+            )
+            return
+        except (InfluxDBServerError, RequestException) as e:
+            # e.g. timeout, connection lost, or the server failed
+            logger.error(
+                "Could not write %i points to Influx (%s): %s",
+                len(batch), ", ".join(measurements), e,
             )
             return
         if influx_success is False:
             logger.warning(
-                "Error writing to Influx for %s/%s (%s)", msg_source, msg_item, msg_body
+                "Error writing %i points to Influx (%s)", len(batch), ", ".join(measurements)
             )
 
     def close(self) -> None:
+        self._flush()  # the points from the last fraction of a second
         logger.info("Closing InfluxDB connection")
         self.influx_client.close()
 

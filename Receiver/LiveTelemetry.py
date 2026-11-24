@@ -9,9 +9,12 @@ from Receiver.telemetry_storer import store_data, end_session
 import atexit
 import errno
 import logging
+import queue
 import re
 import signal
 import sys
+import threading
+import time
 from pathlib import Path
 from typing import NamedTuple, Optional
 
@@ -31,6 +34,32 @@ def sigintHandler(sig, frame):
     onProgramExit()
 
 
+# Warn when this many frames are waiting to be stored (about 30 s of radio
+# traffic), at most once every BACKLOG_WARNING_INTERVAL seconds
+BACKLOG_WARNING_FRAMES = 2000
+BACKLOG_WARNING_INTERVAL = 10.0
+# With no bytes waiting, sleep this long (s) before checking the port again,
+# rather than spinning and taking CPU time from the storing thread. The
+# operating system buffers the port meanwhile (4096 bytes on Linux, about 3 s
+# of radio traffic), so this is far too short to lose data.
+IDLE_SLEEP = 0.005
+
+_STOP = object()  # put on the queue to tell the storing thread to finish
+
+
+def _store_frames(frames, store):
+    """Storing thread: pass each frame from the queue `frames` to `store`, in
+    order, until the stop marker arrives."""
+    while True:
+        frame = frames.get()
+        if frame is _STOP:
+            return
+        try:
+            store(frame)
+        except Exception:  # an error must not stop the thread: every later frame would be lost
+            logging.exception("Could not store a frame (%s): it is lost, carrying on", bytes(frame).hex())
+
+
 def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     """Radio listen loop: split the byte stream on the end of frame marker and
     pass each frame to `store`.
@@ -42,25 +71,52 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     that cannot be completed (frames run together after radio losses) are
     split off and stored; the bytes left are stored and reported as a CRC
     failure, as before. Returns the FrameAssembler, for its counts.
+
+    Reading and storing run on separate threads, joined by a queue. Storing
+    can be slow (an InfluxDB write over the network, the Excel file being
+    saved), and while this loop waited for it the serial port was not read:
+    its buffer filled and the radio data after that was thrown away, which
+    lost most of the frames in Tests/data/NRT.BIN. Now this loop only reads,
+    and frames wait in the queue until the storing thread gets to them. When
+    the loop stops, every frame already received is stored before this
+    function returns.
     """
     assembler = FrameAssembler()
     frameBuffer = bytearray()
-    while keep_running():
-        try:
-            waiting = connection.in_waiting  # number of bytes ready to be processed
-            data = connection.read(waiting) if waiting else b""
-        except OSError as e:  # port gone: USB unplugged, or the SIL replay ended (serial.SerialException is an OSError)
-            logging.error("Serial port lost (%s): stopping the receiver", e)
-            break
-        for byte in data:
-            if byte == END_OF_FRAME_MARKER[0]:
-                for frame in assembler.push(frameBuffer):
-                    store(frame)
-                frameBuffer = bytearray()  # reset buffer
-            else:
-                frameBuffer.append(byte)
-    for frame in assembler.flush():  # pieces held back when the loop stopped
-        store(frame)
+    frames = queue.Queue()
+    storer = threading.Thread(target=_store_frames, args=(frames, store), name="storer", daemon=True)
+    storer.start()
+    last_warning = 0.0
+    try:
+        while keep_running():
+            try:
+                waiting = connection.in_waiting  # number of bytes ready to be processed
+                data = connection.read(waiting) if waiting else b""
+            except OSError as e:  # port gone: USB unplugged, or the SIL replay ended (serial.SerialException is an OSError)
+                logging.error("Serial port lost (%s): stopping the receiver", e)
+                break
+            if not data:
+                time.sleep(IDLE_SLEEP)
+                continue
+            for byte in data:
+                if byte == END_OF_FRAME_MARKER[0]:
+                    for frame in assembler.push(frameBuffer):
+                        frames.put(frame)
+                    frameBuffer = bytearray()  # reset buffer
+                else:
+                    frameBuffer.append(byte)
+            backlog = frames.qsize()
+            if backlog > BACKLOG_WARNING_FRAMES and time.monotonic() - last_warning > BACKLOG_WARNING_INTERVAL:
+                last_warning = time.monotonic()
+                logging.warning(
+                    "%i frames waiting to be stored: the outputs (e.g. InfluxDB) are slower than the radio",
+                    backlog,
+                )
+        for frame in assembler.flush():  # pieces held back when the loop stopped
+            frames.put(frame)
+    finally:
+        frames.put(_STOP)
+        storer.join()  # store everything received before the outputs are closed
     return assembler  # its counts: rejoined, split
 
 

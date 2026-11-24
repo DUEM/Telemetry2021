@@ -1,3 +1,5 @@
+import time
+
 import pytest
 import serial
 
@@ -91,6 +93,87 @@ def test_receive_stops_cleanly_when_the_port_is_lost(request, tmp_path, caplog, 
     assert stored == read_frames(received)[:-1]
     assert len(stored) > 100
     assert "Serial port lost" in caplog.text
+
+
+class RealTimePort:
+    """A serial port fed by a radio: bytes arrive at `rate` bytes/s whether or
+    not anything reads them. Like the operating system's buffer for a real
+    port (4096 bytes on Linux), it holds at most `size` bytes, and bytes that
+    arrive while it is full are lost."""
+
+    def __init__(self, data: bytes, rate: float, size: int = 4096):
+        self.data, self.rate, self.size = data, rate, size
+        self.start = time.monotonic()
+        self.arrived = 0  # bytes that have arrived so far, kept or lost
+        self.held = bytearray()
+        self.lost = 0
+
+    def _arrive(self):
+        now = min(len(self.data), int((time.monotonic() - self.start) * self.rate))
+        new = self.data[self.arrived:now]
+        self.arrived = now
+        room = self.size - len(self.held)
+        self.held += new[:room]
+        self.lost += max(0, len(new) - room)
+
+    @property
+    def in_waiting(self):
+        self._arrive()
+        return len(self.held)
+
+    def read(self, size):
+        out = bytes(self.held[:size])
+        del self.held[:size]
+        return out
+
+    def finished(self):
+        self._arrive()
+        return self.arrived >= len(self.data) and not self.held
+
+
+def test_slow_storing_does_not_lose_radio_data(request):
+    """Storing can be slow (InfluxDB over the network, the Excel file being
+    saved). When the receiver waited for it before reading the port again, the
+    port's buffer filled and the radio data after that was lost: data arrived
+    in bursts of about 4096 bytes with long gaps between, as in NRT.BIN. Reading
+    must carry on while frames are stored."""
+    from Receiver.LiveTelemetry import receive
+
+    path = f"{request.config.rootdir}/Tests/data/NRT.BIN"
+    data = open(path, "rb").read()
+    # about 4 times the radio's 115200 baud, to keep the test short
+    port = RealTimePort(data, rate=50_000)
+    stored = []
+
+    def slow_store(frame):
+        # pauses long enough for over 4096 bytes to arrive, as a slow
+        # InfluxDB write or an Excel save would
+        if len(stored) % 400 == 0:
+            time.sleep(0.2)
+        stored.append(frame)
+
+    receive(port, store=slow_store, keep_running=lambda: not port.finished())
+
+    assert port.lost == 0
+    assert stored == read_frames(path)[:-1]
+
+
+def test_a_frame_that_cannot_be_stored_does_not_stop_storing(caplog):
+    from Receiver.LiveTelemetry import receive
+
+    frames = [b"\x01\x02", b"\x03\x04", b"\x05\x06"]
+    port = FakeSerial(END_OF_FRAME_MARKER.join(frames) + END_OF_FRAME_MARKER, chunk=64)
+    stored = []
+
+    def store(frame):
+        if frame == b"\x03\x04":
+            raise ValueError("cannot decode")
+        stored.append(frame)
+
+    receive(port, store=store, keep_running=lambda: not port.finished())
+
+    assert stored == [b"\x01\x02", b"\x05\x06"]
+    assert "Could not store a frame (0304)" in caplog.text
 
 
 @pytest.mark.parametrize(
