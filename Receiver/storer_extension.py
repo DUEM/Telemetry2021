@@ -20,9 +20,11 @@ logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
 # TEMPORARY SOLUTION: the InfluxDB batching (these constants, Influx1Storer
-# _flush) was added with the receiver's reading thread to test whether slow,
-# unbuffered storing is why most radio data was lost. Once that is confirmed
-# on the car, it should be rewritten more simply and readably.
+# _flush) was added with the receiver's reading thread as a test to see
+# whether the receiving end (slow, unbuffered storing) is causing some of the
+# radio data loss. The main suspect for the rest is the sending side (the
+# car's XBee). Once the cause is known, it should be rewritten more simply
+# and readably, or removed.
 #
 # InfluxDB points are written in batches: when this many seconds have passed
 # since the last write, or this many points are waiting, whichever comes

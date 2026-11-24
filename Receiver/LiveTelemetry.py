@@ -111,10 +111,11 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     """Radio listen loop: split the byte stream on the end of frame marker and
     pass each frame to `store`.
 
-    TEMPORARY SOLUTION: the threading and queue below were added to test
-    whether the receiver not reading the port while it stored data (no
-    buffering) is why most radio data was lost. Once that is confirmed on the
-    car, this should be rewritten more simply and readably.
+    TEMPORARY SOLUTION: the threading and queue below are a test to see
+    whether the receiving end (not reading the port while it stored data, so
+    no buffering) is causing some of the radio data loss. The main suspect for
+    the rest is the sending side (the car's XBee). Once the cause is known,
+    this should be rewritten more simply and readably, or removed.
 
     The marker is not escaped inside frames, so the pieces go through a
     FrameAssembler, which re-joins frames split by a 0x7E in their timestamp,
@@ -127,8 +128,9 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     Reading and storing run on separate threads, joined by a queue. Storing
     can be slow (an InfluxDB write over the network, the Excel file being
     saved), and while this loop waited for it the serial port was not read:
-    its buffer filled and the radio data after that was thrown away, which
-    lost most of the frames in Tests/data/NRT.BIN. Now this loop only reads,
+    its buffer could fill and the radio data after that be thrown away. This
+    is suspected of causing the 10 to 50 s gaps in Tests/data/NRT.BIN, and is
+    being tested. Now this loop only reads,
     and frames wait in the queue until the storing thread gets to them. When
     the loop stops, every frame already received is stored before this
     function returns.

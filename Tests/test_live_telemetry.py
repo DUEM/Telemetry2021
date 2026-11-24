@@ -133,9 +133,8 @@ class RealTimePort:
 
 def test_slow_storing_does_not_lose_radio_data(request):
     """Storing can be slow (InfluxDB over the network, the Excel file being
-    saved). When the receiver waited for it before reading the port again, the
-    port's buffer filled and the radio data after that was lost: data arrived
-    in bursts of about 4096 bytes with long gaps between, as in NRT.BIN. Reading
+    saved). If the receiver waits for it before reading the port again, the
+    port's buffer can fill and the radio data after that is lost. Reading
     must carry on while frames are stored."""
     from Receiver.LiveTelemetry import receive
 
