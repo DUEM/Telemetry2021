@@ -64,6 +64,11 @@ def receive(connection, store=store_data, keep_running=lambda: keepLooping):
     """Radio listen loop: split the byte stream on the end of frame marker and
     pass each frame to `store`.
 
+    TEMPORARY SOLUTION: the threading and queue below were added to test
+    whether the receiver not reading the port while it stored data (no
+    buffering) is why most radio data was lost. Once that is confirmed on the
+    car, this should be rewritten more simply and readably.
+
     The marker is not escaped inside frames, so the pieces go through a
     FrameAssembler, which re-joins frames split by a 0x7E in their timestamp,
     data or CRC (see frame_reader.py). A re-joined frame is stored as soon as

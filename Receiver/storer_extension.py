@@ -19,6 +19,11 @@ from requests.exceptions import RequestException
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
+# TEMPORARY SOLUTION: the InfluxDB batching (these constants, Influx1Storer
+# _flush) was added with the receiver's reading thread to test whether slow,
+# unbuffered storing is why most radio data was lost. Once that is confirmed
+# on the car, it should be rewritten more simply and readably.
+#
 # InfluxDB points are written in batches: when this many seconds have passed
 # since the last write, or this many points are waiting, whichever comes
 # first. Grafana therefore shows data up to about this much later.
